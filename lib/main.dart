@@ -13,7 +13,7 @@ class MyCrystallizeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ValueNotifier<Client> client = ValueNotifier(
       Client(
-        endPoint: Crystallize.CRYSTALLIZE_API_URL,
+        endPoint: Crystallize.CRYSTALLIZE_API_URL + '/graphql',
         cache: InMemoryCache(),
       ),
     );
@@ -26,8 +26,9 @@ class MyCrystallizeApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
+          initialRoute: '/',
           routes: <String, WidgetBuilder>{
-            '/home': (BuildContext context) => new HomePage(),
+            '/': (BuildContext context) => new HomePage(),
             '/product': (BuildContext context) => new ProductPage(),
             '/cart': (BuildContext context) => new CartPage(),
             '/checkout': (BuildContext context) => new CheckoutPage(),

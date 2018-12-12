@@ -14,13 +14,9 @@ class GetCataloguesWidget extends StatelessWidget {
     // Replace this with your build function
     return Query(
         getCatalogues,
-        variables: {
-          'url': this.url,
-          'tenantID': Crystallize.CRYSTALLIZE_TENANT_ID
-        },
         builder: ({bool loading, Map<String, dynamic> data, Exception error}) {
           if (loading) {
-            return Text('Loading');
+            return Text('Loading data');
           }
 
           if (error != null) {
