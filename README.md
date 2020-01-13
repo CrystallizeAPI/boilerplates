@@ -21,7 +21,7 @@ Check it out, the boilerplate is Open Source and MIT licensed.
 ## Getting Started
 
 You can use [Crystallize CLI][17] to bootstrap a project with this
-`Next.js + React` boilerplate.
+`Gatsby + React` boilerplate.
 
 Simply run the following command (>= Node 8 required):
 
@@ -30,7 +30,7 @@ npx @crystallize/cli my-project
 ```
 
 This will walk you through the steps of specifying your tenant, choosing the
-template (Next.js + React) and adding additional features such as ZEIT Now.
+template (Gatsby.js + React) and adding additional features such as Netlify.
 
 Once your project has been created, you can simply navigate into your project's
 directory and run the following to start up your development server:
@@ -41,68 +41,31 @@ npm run dev
 yarn dev
 ```
 
-This will start up the server on http://localhost:3000 for development.
+This will start up the server on http://localhost:8000 for development.
 
 ## App Structure
 
-### `components/`
+### `src/page-templates`
 
-All your shared React components.
-
-### `lib/`
-
-Library code to enable GraphQL and REST API communication and more
-
-### `page-components/`
-
-We use the `page-components/` directory to hold the actual component content
-related to entries in the `pages/` directory. This is because we store our
-styled components in separate files to our default exported components, which
-causes some conflict with the way Next.js handles files in the `pages/`
-directory.
-
-### `pages/`
-
-Put all your entry pages here. These are interpreted as separate routes by
-Next.js.
-
-### `pages/api/`
-
-All your ZEIT Now [serverless functions][18]. You can delete this folder if you
-are not using ZEIT Now.
-
-### `server/`
-
-This is where the ultra-light frontend server lives. Its primary function is to
-render the React app in response to a request.
-
-You can delete this folder if you intend to use [ZEIT Now][19] instead of a
-custom server.
-
-### `static/`
-
-Static resources used by the web server.
-
-### `ui/`
-
-UI related components live her. Color variables and simple shared components
+We use the `src/page-components/` directory to hold the actual entry pages
+related to query result in `gatsby-node.js`.
 
 ## Deploying Your Project
 
-There are multiple alternatives for deployments, however for the easiest hosting
-of a Node application, one option is [ZEIT Now][20].
+There are multiple alternatives for deployments, since all you need is static
+hosting. One great option is [Netlify][18].
 
-### Deploying with ZEIT Now
+### Deploying with Netlify
 
-- Register a ZEIT Now account
-- Run `npm install --global now`
-- Navigate to your project folder
-- Run `now`
+- Register a Netlify account
+- Create a new project
+- Link it with your Git repository
+- Push to `master`
 
 [0]: https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square
 [1]: https://github.com/facebook/react
 [2]: https://img.shields.io/badge/next-latest-44cc11.svg?style=flat-square
-[3]: https://github.com/zeit/next.js
+[3]: https://www.gatsbyjs.org/
 [4]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [5]: https://github.com/prettier/prettier
 [6]: https://img.shields.io/badge/code_linter-eslint-463fd4.svg?style=flat-square
@@ -117,6 +80,4 @@ of a Node application, one option is [ZEIT Now][20].
 [15]: https://crystallize.com/blog/content-rich-storytelling-makes-juicy-ecommerce
 [16]: https://snowball.digital/blog/content-strategy-for-exponential-growth-marketing
 [17]: https://github.com/crystallizeapi/crystallize-cli
-[18]: https://zeit.co/docs/v2/serverless-functions/introduction
-[19]: https://zeit.co/guides/deploying-nextjs-with-now/
-[20]: https://zeit.co/now
+[18]: https://www.netlify.com/
