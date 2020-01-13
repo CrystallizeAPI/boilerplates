@@ -1,97 +1,122 @@
-<!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
-<p align="center">
-  <a href="https://www.gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby's default starter
-</h1>
+# Crystallize Gatsby Boilerplate
 
-Kick off your project with this default boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.
+[![React: latest][0]][1] [![Gatsby: latest][2]][3]
 
-_Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.org/docs/gatsby-starters/)._
+The bare minimum skeleton you need to get a frontend up and running on the
+[headless ecommerce][8] & GraphQL based [product Information Management][9]
+service [Crystallize][10]. [React commerce with Gatsby][11].
 
-## 🚀 Quick start
+This frontend boilerplate is a great starting point when building [React
+ecommerce][11] experiences with [frontend performance][12] in focus. You can
+have rich ecommerce content with the super structured [PIM][13] engine in
+Crystallize powering your product catalogue.
 
-1.  **Create a Gatsby site.**
+Fast frontend performance delivers a better ecommerce experience and is a key
+ingredient in the [ecommerce SEO checklist][14]. [Rich content driven ecommerce
+experiences][15] builds the foundation for a [content strategy for exponential
+growth marketing][16].
 
-    Use the Gatsby CLI to create a new site, specifying the default starter.
+Check it out, the boilerplate is Open Source and MIT licensed.
 
-    ```shell
-    # create a new Gatsby site using the default starter
-    gatsby new my-default-starter https://github.com/gatsbyjs/gatsby-starter-default
-    ```
+## Getting Started
 
-1.  **Start developing.**
+You can use [Crystallize CLI][17] to bootstrap a project with this
+`Next.js + React` boilerplate.
 
-    Navigate into your new site’s directory and start it up.
+Simply run the following command (>= Node 8 required):
 
-    ```shell
-    cd my-default-starter/
-    gatsby develop
-    ```
+```sh
+npx @crystallize/cli my-project
+```
 
-1.  **Open the source code and start editing!**
+This will walk you through the steps of specifying your tenant, choosing the
+template (Next.js + React) and adding additional features such as ZEIT Now.
 
-    Your site is now running at `http://localhost:8000`!
+Once your project has been created, you can simply navigate into your project's
+directory and run the following to start up your development server:
 
-    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
+```sh
+npm run dev
+# or
+yarn dev
+```
 
-    Open the `my-default-starter` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
+This will start up the server on http://localhost:3000 for development.
 
-## 🧐 What's inside?
+## App Structure
 
-A quick look at the top-level files and directories you'll see in a Gatsby project.
+### `components/`
 
-    .
-    ├── node_modules
-    ├── src
-    ├── .gitignore
-    ├── .prettierrc
-    ├── gatsby-browser.js
-    ├── gatsby-config.js
-    ├── gatsby-node.js
-    ├── gatsby-ssr.js
-    ├── LICENSE
-    ├── package-lock.json
-    ├── package.json
-    └── README.md
+All your shared React components.
 
-1.  **`/node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages) are automatically installed.
+### `lib/`
 
-2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
+Library code to enable GraphQL and REST API communication and more
 
-3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
+### `page-components/`
 
-4.  **`.prettierrc`**: This is a configuration file for [Prettier](https://prettier.io/). Prettier is a tool to help keep the formatting of your code consistent.
+We use the `page-components/` directory to hold the actual component content
+related to entries in the `pages/` directory. This is because we store our
+styled components in separate files to our default exported components, which
+causes some conflict with the way Next.js handles files in the `pages/`
+directory.
 
-5.  **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](https://www.gatsbyjs.org/docs/browser-apis/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
+### `pages/`
 
-6.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. (Check out the [config docs](https://www.gatsbyjs.org/docs/gatsby-config/) for more detail).
+Put all your entry pages here. These are interpreted as separate routes by
+Next.js.
 
-7.  **`gatsby-node.js`**: This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.org/docs/node-apis/) (if any). These allow customization/extension of default Gatsby settings affecting pieces of the site build process.
+### `pages/api/`
 
-8.  **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](https://www.gatsbyjs.org/docs/ssr-apis/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
+All your ZEIT Now [serverless functions][18]. You can delete this folder if you
+are not using ZEIT Now.
 
-9.  **`LICENSE`**: Gatsby is licensed under the MIT license.
+### `server/`
 
-10. **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
+This is where the ultra-light frontend server lives. Its primary function is to
+render the React app in response to a request.
 
-11. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
+You can delete this folder if you intend to use [ZEIT Now][19] instead of a
+custom server.
 
-12. **`README.md`**: A text file containing useful reference information about your project.
+### `static/`
 
-## 🎓 Learning Gatsby
+Static resources used by the web server.
 
-Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
+### `ui/`
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+UI related components live her. Color variables and simple shared components
 
-- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the _Guides_, _API Reference_, and _Advanced Tutorials_ sections in the sidebar.
+## Deploying Your Project
 
-## 💫 Deploy
+There are multiple alternatives for deployments, however for the easiest hosting
+of a Node application, one option is [ZEIT Now][20].
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
+### Deploying with ZEIT Now
 
-<!-- AUTO-GENERATED-CONTENT:END -->
+- Register a ZEIT Now account
+- Run `npm install --global now`
+- Navigate to your project folder
+- Run `now`
+
+[0]: https://img.shields.io/badge/react-latest-44cc11.svg?style=flat-square
+[1]: https://github.com/facebook/react
+[2]: https://img.shields.io/badge/next-latest-44cc11.svg?style=flat-square
+[3]: https://github.com/zeit/next.js
+[4]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[5]: https://github.com/prettier/prettier
+[6]: https://img.shields.io/badge/code_linter-eslint-463fd4.svg?style=flat-square
+[7]: https://github.com/prettier/prettier
+[8]: https://crystallize.com/product
+[9]: https://crystallize.com/product/product-information-management
+[10]: https://crystallize.com
+[11]: https://crystallize.com/developers
+[12]: https://crystallize.com/blog/frontend-performance-measuring-kpis
+[13]: https://crystallize.com/product/product-information-management
+[14]: https://crystallize.com/blog/ecommerce-seo-checklist
+[15]: https://crystallize.com/blog/content-rich-storytelling-makes-juicy-ecommerce
+[16]: https://snowball.digital/blog/content-strategy-for-exponential-growth-marketing
+[17]: https://github.com/crystallizeapi/crystallize-cli
+[18]: https://zeit.co/docs/v2/serverless-functions/introduction
+[19]: https://zeit.co/guides/deploying-nextjs-with-now/
+[20]: https://zeit.co/now
