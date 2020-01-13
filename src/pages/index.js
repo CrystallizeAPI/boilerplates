@@ -1,17 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Grid from "@crystallize/grid-renderer/react"
-import styled from "styled-components"
 
 import Layout from "components/layout"
 import Product from "components/category-item"
 import { H1, Outer, Header } from "ui"
-
-const GridStyler = styled.div`
-  .grid-renderer {
-    grid-auto-rows: auto;
-  }
-`
 
 export default function IndexPage({ data }) {
   const {
@@ -29,13 +22,11 @@ export default function IndexPage({ data }) {
           <p>Cool of you to join us.</p>
         </Header>
 
-        <GridStyler>
-          <Grid
-            className="grid-renderer"
-            model={grid}
-            renderCellContent={cell => <Product data={cell.item} />}
-          />
-        </GridStyler>
+        <Grid
+          className="grid-renderer"
+          model={grid}
+          renderCellContent={cell => <Product data={cell.item} />}
+        />
       </Outer>
     </Layout>
   )

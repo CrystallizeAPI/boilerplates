@@ -11,6 +11,7 @@ export const List = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
+  grid-auto-rows: 300px;
 
   ${responsive.sm} {
     grid-template-columns: repeat(3, 1fr);
