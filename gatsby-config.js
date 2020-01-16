@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `crystallize-config`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Crystallize`,
@@ -24,14 +28,6 @@ module.exports = {
           ui: "./ui", // <- will become ./src/components
           utils: "./utils", // <- will become ./src/components
         },
-        // aliases: {
-        //   components: "./components", // <- will become ./src/components
-        //   helpers: "./helpers", // <- will become ./src/helpers
-        //   static: {
-        //     root: "./public", // <- will used as this alias' root dir
-        //     alias: "./static", // <- will become ./public/static
-        //   },
-        // },
       },
     },
     {
@@ -54,7 +50,7 @@ module.exports = {
         // This is the field under which it's accessible
         fieldName: "crystallize",
         // URL to query from
-        url: "https://graph.crystallize.com/tenant/teddy-bear-shop",
+        url: `${process.env.CRYSTALLIZE_API_BASE}/tenant/${process.env.CRYSTALLIZE_TENANT_ID}`,
       },
     },
     "gatsby-plugin-styled-components",
