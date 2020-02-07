@@ -73,8 +73,9 @@ exports.createPages = ({ graphql, actions }) => {
           if (shape.name in templates) {
             items.push({ path, shape, component: templates[shape.name] })
           } else {
+            items.push({ path, shape, component: templates.Folder })
             console.log(
-              `Cannot create page "${path}". No template was found for shape "${shape.name}"`
+              `No template was found for shape "${shape.name}". "${path}" is rendered using the Folder template`
             )
           }
         }
