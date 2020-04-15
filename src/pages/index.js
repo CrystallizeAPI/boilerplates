@@ -1,10 +1,16 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Grid from "@crystallize/grid-renderer/react"
+import styled from "styled-components"
 
 import Layout from "components/layout"
 import Product from "components/category-item"
+
 import { H1, Outer, Header } from "ui"
+
+const StyledGrid = styled(Grid)`
+  grid-gap: 1rem;
+`
 
 export default function IndexPage({ data }) {
   const {
@@ -22,10 +28,9 @@ export default function IndexPage({ data }) {
           <p>Cool of you to join us.</p>
         </Header>
 
-        <Grid
-          className="grid-renderer"
+        <StyledGrid
           model={grid}
-          renderCellContent={cell => <Product data={cell.item} />}
+          cellComponent={({ cell }) => <Product data={cell.item} />}
         />
       </Outer>
     </Layout>
@@ -41,8 +46,7 @@ export const query = graphql`
           path
         }
       }
-
-      grid(id: "5dc3fe4d43b90109229ee27b", language: "en") {
+      grid(id: "5dc3fe4d43b90109229ee27b") {
         id
         name
         rows {
