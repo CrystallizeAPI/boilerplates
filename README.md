@@ -52,10 +52,15 @@ related to query result in `gatsby-node.js`.
 
 ## Deploying Your Project
 
-There are multiple alternatives for deployments, since all you need is static
-hosting. One great option is [Netlify][18].
+There are multiple alternatives for deployments, check out one of the ones below:
 
-### Deploying with Netlify
+### Deploying with [Vercel Now][19]
+
+- Register a Vercel account
+- Install Vercel Now: `npm i -g now`
+- Run `now`
+
+### Deploying with [Netlify][18]
 
 - Register a Netlify account
 - Create a new project
@@ -81,3 +86,4 @@ hosting. One great option is [Netlify][18].
 [16]: https://snowball.digital/blog/content-strategy-for-exponential-growth-marketing
 [17]: https://github.com/crystallizeapi/crystallize-cli
 [18]: https://www.netlify.com/
+[19]: https://vercel.com
