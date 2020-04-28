@@ -13,9 +13,26 @@ export const query = graphql`
       width
     }
   }
+  fragment crystallize_video on CRYSTALLIZE_Video {
+    title
+    playlists
+    thumbnails {
+      key
+      url
+      variants {
+        url
+        width
+      }
+    }
+  }
   fragment crystallize_imageContent on CRYSTALLIZE_ImageContent {
     images {
       ...crystallize_image
+    }
+  }
+  fragment crystallize_videoContent on CRYSTALLIZE_VideoContent {
+    videos {
+      ...crystallize_video
     }
   }
   fragment crystallize_singleLineContent on CRYSTALLIZE_SingleLineContent {
@@ -36,6 +53,9 @@ export const query = graphql`
       }
       images {
         ...crystallize_image
+      }
+      videos {
+        ...crystallize_video
       }
     }
   }
@@ -65,6 +85,7 @@ export const query = graphql`
         ...crystallize_singleLineContent
         ...crystallize_richTextContent
         ...crystallize_imageContent
+        ...crystallize_videoContent
         ...crystallize_paragraphCollectionContent
       }
     }

@@ -28,10 +28,12 @@ export default function IndexPage({ data }) {
           <p>Cool of you to join us.</p>
         </Header>
 
-        <StyledGrid
-          model={grid}
-          cellComponent={({ cell }) => <Product data={cell.item} />}
-        />
+        {grid && (
+          <StyledGrid
+            model={grid}
+            cellComponent={({ cell }) => <Product data={cell.item} />}
+          />
+        )}
       </Outer>
     </Layout>
   )
@@ -40,7 +42,7 @@ export default function IndexPage({ data }) {
 export const query = graphql`
   query getIndex {
     crystallize {
-      headerItems: catalogue(path: "/") {
+      headerItems: catalogue(language: "en", path: "/") {
         children {
           name
           path

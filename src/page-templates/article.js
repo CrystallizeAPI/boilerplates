@@ -60,7 +60,7 @@ export default DocumentPage
 export const query = graphql`
   query getArticle($path: String!) {
     crystallize {
-      headerItems: catalogue(path: "/") {
+      headerItems: catalogue(language: "en", path: "/") {
         children {
           name
           path

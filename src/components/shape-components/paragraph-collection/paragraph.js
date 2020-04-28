@@ -2,9 +2,11 @@ import React from "react"
 import CrystallizeContent from "@crystallize/content-transformer/react"
 import Image from "@crystallize/react-image"
 
-import { Outer, Title, Body, Images } from "./styles"
+import VideoPlayer from "components/video-player"
 
-const Paragraph = ({ body, title, images }) => {
+import { Outer, Title, Body, Images, Videos } from "./styles"
+
+const Paragraph = ({ body, title, images, videos }) => {
   return (
     <Outer>
       {!!title && title.text && (
@@ -23,6 +25,13 @@ const Paragraph = ({ body, title, images }) => {
             <Image key={index} {...image} />
           ))}
         </Images>
+      )}
+      {!!videos && videos.length > 0 && (
+        <Videos>
+          {videos.map((video, index) => (
+            <VideoPlayer key={index} {...video} />
+          ))}
+        </Videos>
       )}
     </Outer>
   )

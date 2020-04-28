@@ -58,7 +58,7 @@ export default function FolderPage({ data }) {
 export const query = graphql`
   query getFolder($path: String!) {
     crystallize {
-      headerItems: catalogue(path: "/") {
+      headerItems: catalogue(language: "en", path: "/") {
         children {
           name
           path

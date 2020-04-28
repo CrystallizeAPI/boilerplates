@@ -4,7 +4,8 @@ import CrystallizeContent from "@crystallize/content-transformer/react"
 import Image from "@crystallize/react-image"
 
 import ParagraphCollection from "./paragraph-collection"
-import { Images } from "./paragraph-collection/styles"
+import { Images, Videos } from "./paragraph-collection/styles"
+import VideoPlayer from "components/video-player"
 
 const ShapeComponents = ({ components, overrides }) => {
   if (!components) {
@@ -29,13 +30,26 @@ const ShapeComponents = ({ components, overrides }) => {
 
       if (type === "images") {
         return (
-          component.content && (
-            <Images>
+          component.content?.images && (
+            <Images key={key}>
               {component.content.images.map((image, idx) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <Image key={idx} {...image} />
               ))}
             </Images>
+          )
+        )
+      }
+
+      if (type === "videos") {
+        return (
+          component.content?.videos && (
+            <Videos key={key}>
+              {component.content.videos.map((video, idx) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <VideoPlayer key={idx} {...video} />
+              ))}
+            </Videos>
           )
         )
       }

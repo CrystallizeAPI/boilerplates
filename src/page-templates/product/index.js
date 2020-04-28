@@ -163,7 +163,7 @@ const ProductPageDataLoader = ({ data: { crystallize } }) => {
 export const query = graphql`
   query getProduct($path: String!) {
     crystallize {
-      headerItems: catalogue(path: "/") {
+      headerItems: catalogue(language: "en", path: "/") {
         children {
           name
           path
