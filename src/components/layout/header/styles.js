@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import is from "styled-is"
 
 import { responsive } from "ui"
 
@@ -32,6 +33,28 @@ export const Nav = styled.nav`
   width: 100%;
   border-left: 1px solid #dfdfdf;
   padding-left: 15px;
+
+  ${responsive.smAndLess} {
+    display: none;
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    border: none;
+    background: #fafafa;
+    margin: 0;
+    padding: 2em;
+    font-size: 1.5rem;
+
+    ${is("open")`
+      display: block;
+    `};
+  }
 `
 
 export const NavList = styled.ul`
@@ -55,5 +78,10 @@ export const NavListItem = styled.li`
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  ${responsive.smAndLess} {
+    display: block;
+    margin: 15px 0;
   }
 `
