@@ -10,11 +10,11 @@ import SEO from "components/seo"
 
 export * from "./crystallize-fragments"
 
-const Layout = ({ headerItems, children, title }) => {
+const Layout = ({ headerItems, children, title, language }) => {
   return (
-    <IntlProvider locale="en">
+    <IntlProvider locale={language}>
       <SEO title={title} />
-      <Header headerItems={headerItems} />
+      <Header headerItems={headerItems} language={language} />
       <main>{children}</main>
       <footer style={{ margin: "2rem 0" }}>
         <Outer>

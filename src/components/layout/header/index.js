@@ -6,23 +6,29 @@ import { IconLogo } from "ui"
 import { Outer, Nav, Logo, NavList, NavListItem } from "./styles"
 import BurgerButton from "./burger-button"
 
-const Header = ({ headerItems }) => {
+const Header = ({ headerItems, language }) => {
   const [navOpen, setNavOpen] = useState(false)
 
   return (
     <Outer>
-      <Link to="/">
+      <Link to={`/${language}`}>
         <Logo>
           <IconLogo />
         </Logo>
       </Link>
       <Nav open={navOpen}>
         <NavList>
-          {headerItems?.map(headerItem => (
-            <NavListItem key={headerItem.path}>
-              <Link to={headerItem.path}>{headerItem.name}</Link>
-            </NavListItem>
-          ))}
+          {headerItems
+            ?.filter(i => !i.name.startsWith("_"))
+            .map(headerItem => {
+              const { name, language, path } = headerItem
+
+              return (
+                <NavListItem key={path}>
+                  <Link to={`/${language}${path}`}>{name}</Link>
+                </NavListItem>
+              )
+            })}
         </NavList>
       </Nav>
       <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />

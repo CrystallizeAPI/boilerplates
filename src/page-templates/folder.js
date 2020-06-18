@@ -26,7 +26,11 @@ export const List = styled.div`
   }
 `
 
-export default function FolderPage({ data }) {
+export default function FolderPage(props) {
+  const {
+    data,
+    pageContext: { language },
+  } = props
   const {
     crystallize: {
       folder,
@@ -37,7 +41,7 @@ export default function FolderPage({ data }) {
   const { children } = folder
 
   return (
-    <Layout title={folder.name} headerItems={headerItems}>
+    <Layout title={folder.name} headerItems={headerItems} language={language}>
       <Outer>
         <Header centerContent={!children}>
           <H1>{folder.name}</H1>
@@ -56,16 +60,17 @@ export default function FolderPage({ data }) {
 }
 
 export const query = graphql`
-  query getFolder($path: String!) {
+  query getFolder($cataloguePath: String!, $language: String!) {
     crystallize {
-      headerItems: catalogue(language: "en", path: "/") {
+      headerItems: catalogue(language: $language, path: "/") {
         children {
           name
           path
+          language
         }
       }
 
-      folder: catalogue(language: "en", path: $path) {
+      folder: catalogue(language: $language, path: $cataloguePath) {
         ...crystallize_item
 
         children {

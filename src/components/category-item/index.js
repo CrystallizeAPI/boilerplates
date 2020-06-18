@@ -24,13 +24,14 @@ class CategoryItem extends React.Component {
       return null
     }
 
-    const { name, path, type, variants } = data
+    const { name, path, type, variants, language } = data
 
     if (type === "folder" || type === "document") {
       const images = data.components.find(c => c.type === "images")
       const image = images && images.content ? images.content.images[0] : null
+
       return (
-        <Outer type={type} to={path}>
+        <Outer type={type} to={`/${language}${path}`}>
           <Inner>
             <ImageWrapper>
               {image && (
@@ -55,7 +56,7 @@ class CategoryItem extends React.Component {
       : {}
 
     return (
-      <ProductOuter to={path}>
+      <ProductOuter to={`/${language}${path}`}>
         <ProductInner>
           <ContentLine>
             <span>{name}</span>

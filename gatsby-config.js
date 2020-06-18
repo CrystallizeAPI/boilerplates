@@ -7,6 +7,7 @@ module.exports = {
     title: `Crystallize`,
     description: `Headless ecommerce running on Crystallize and Gatsby`,
     author: `@crystallizeapi`,
+    supportedLanguages: ["en"],
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

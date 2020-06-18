@@ -138,19 +138,25 @@ const ProductPage = ({ product, defaultVariant }) => {
   )
 }
 
-const ProductPageDataLoader = ({ data: { crystallize } }) => {
+const ProductPageDataLoader = props => {
+  const {
+    data: { crystallize },
+    pageContext: { language },
+  } = props
   const { product } = crystallize
   const headerItems = crystallize.headerItems?.children
   const defaultVariant = product.variants?.find(v => v.isDefault)
 
   if (!defaultVariant) {
     return (
-      <Layout headerItems={headerItems}>This product has no variants</Layout>
+      <Layout headerItems={headerItems} language={language}>
+        This product has no variants
+      </Layout>
     )
   }
 
   return (
-    <Layout headerItems={headerItems} title={product.name}>
+    <Layout headerItems={headerItems} title={product.name} language={language}>
       <ProductPage
         key={product.id}
         product={product}
@@ -161,16 +167,17 @@ const ProductPageDataLoader = ({ data: { crystallize } }) => {
 }
 
 export const query = graphql`
-  query getProduct($path: String!) {
+  query getProduct($cataloguePath: String!, $language: String!) {
     crystallize {
-      headerItems: catalogue(language: "en", path: "/") {
+      headerItems: catalogue(language: $language, path: "/") {
         children {
           name
           path
+          language
         }
       }
 
-      product: catalogue(language: "en", path: $path) {
+      product: catalogue(language: $language, path: $cataloguePath) {
         ...crystallize_item
         ...crystallize_product
 
