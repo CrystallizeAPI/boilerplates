@@ -1,6 +1,22 @@
 const path = require(`path`)
 const config = require("./gatsby-config")
 
+/**
+ * give the root path the correct path e.g.: /en
+ */
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions
+  const oldPage = Object.assign({}, page)
+
+  config.siteMetadata.supportedLanguages.map(language => {
+    if (page.path === "/") {
+      page.path = `/${language}`
+      deletePage(oldPage)
+      createPage({ ...page, context: { language } })
+    }
+  })
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
 
@@ -89,16 +105,17 @@ exports.createPages = async ({ graphql, actions }) => {
         }
 
         items.forEach(({ path, component }) => {
-          //   createRedirect({
-          //     fromPath: "/",
-          //     toPath: `/${language}`,
-          //     isPermanent: true,
-          //     redirectInBrowser: true,
-          //     statusCode: 301,
-          //     context: {
-          //       language,
-          //     },
-          //   })
+          // Redirect the root path to the correct language root path
+          createRedirect({
+            fromPath: "/",
+            toPath: `/${language}`,
+            isPermanent: true,
+            redirectInBrowser: true,
+            statusCode: 301,
+            context: {
+              language,
+            },
+          })
 
           // Create pages for each node
           createPage({

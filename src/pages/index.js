@@ -16,7 +16,7 @@ const StyledGrid = styled(Grid)`
   }
 `
 
-export default function IndexPage({ data }) {
+export default function IndexPage({ data, pageContext: { language } }) {
   const {
     crystallize: {
       grid,
@@ -25,7 +25,7 @@ export default function IndexPage({ data }) {
   } = data
 
   return (
-    <Layout title="Home" headerItems={headerItems}>
+    <Layout title="Home" headerItems={headerItems} language={language}>
       <Outer>
         <Header>
           <H1>Oh hi there!</H1>
@@ -44,12 +44,13 @@ export default function IndexPage({ data }) {
 }
 
 export const query = graphql`
-  query getIndex {
+  query getIndex($language: String!) {
     crystallize {
-      headerItems: catalogue(language: "en", path: "/") {
+      headerItems: catalogue(language: $language, path: "/") {
         children {
           name
           path
+          language
         }
       }
       grid(id: "5dc3fe4d43b90109229ee27b") {
