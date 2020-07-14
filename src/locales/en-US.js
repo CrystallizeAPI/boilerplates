@@ -2,7 +2,6 @@ module.exports = {
   translation: {
     common: {
       price: "{{value, currency}}",
-      vat: "VAT: {{value, currency}}",
       related: "Related",
     },
     frontpage: {
