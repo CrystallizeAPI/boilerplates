@@ -4,4 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-require("video.js/dist/video-js.css")
+import wrapWithLocaleProvider from "./wrap-with-locale-provider"
+import "video.js/dist/video-js.css"
+
+export const wrapPageElement = wrapWithLocaleProvider

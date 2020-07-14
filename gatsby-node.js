@@ -1,5 +1,38 @@
 const path = require(`path`)
-const config = require("./gatsby-config")
+const fs = require("fs")
+
+/**
+ * Get all the locaes from the config and
+ * populate each with the locale resources
+ */
+const getLocales = (function () {
+  let locales
+
+  return () => {
+    if (locales) {
+      return locales
+    }
+
+    const config = JSON.parse(
+      fs.readFileSync(path.resolve("app.config.json"), "utf-8")
+    )
+
+    locales = config.locales.map((locale) => {
+      const resourcesPath = `src/locales/${locale.appLanguage}.js`
+      try {
+        const resources = require(path.resolve(resourcesPath))
+        return {
+          ...locale,
+          resources,
+        }
+      } catch (e) {
+        throw new Error(`Cannot find locale resouce (${resourcesPath})`)
+      }
+    })
+
+    return locales
+  }
+})()
 
 /**
  * give the root path the correct path e.g.: /en
@@ -8,11 +41,11 @@ exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions
   const oldPage = Object.assign({}, page)
 
-  config.siteMetadata.supportedLanguages.map(language => {
+  getLocales().map((locale) => {
     if (page.path === "/") {
-      page.path = `/${language}`
+      page.path = `/${locale.urlPrefix}`
       deletePage(oldPage)
-      createPage({ ...page, context: { language } })
+      createPage({ ...page, context: { locale } })
     }
   })
 }
@@ -27,8 +60,50 @@ exports.createPages = async ({ graphql, actions }) => {
     Folder: path.resolve(`src/page-templates/folder.js`),
   }
 
+  const locales = getLocales()
+
+  const defaultLocale = locales.find((l) => l.isDefault)
+  if (!defaultLocale) {
+    throw new Error("app.config.json: missing default locale (isDefault: true)")
+  }
+
+  // Redirect the root path to the correct locale root path
+  if (defaultLocale.urlPrefix) {
+    createRedirect({
+      fromPath: "/",
+      toPath: `/${defaultLocale.urlPrefix}`,
+      isPermanent: true,
+      redirectInBrowser: true,
+      statusCode: 301,
+      context: {
+        locale: defaultLocale,
+      },
+    })
+  }
+
+  // Create all other pages
   await Promise.all(
-    config.siteMetadata.supportedLanguages.map(async language => {
+    locales.map(async (locale) => {
+      const sharedPageProps = {
+        crystallizeCatalogueLanguage: locale.crystallizeCatalogueLanguage,
+        locales: locales.map((l) => ({
+          name: l.displayName,
+          urlPrefix: l.urlPrefix,
+        })),
+        locale,
+      }
+
+      // Create the frontpage
+      createPage({
+        path: `/${locale.urlPrefix}`,
+        component: path.resolve(`src/page-templates/frontpage.js`),
+        context: {
+          cataloguePath: `/${locale.urlPrefix}`,
+          ...sharedPageProps,
+        },
+      })
+
+      // Create all other pages
       try {
         /**
          * Get items 5 levels deep from Crystallize.
@@ -43,7 +118,7 @@ exports.createPages = async ({ graphql, actions }) => {
         const { data, errors } = await graphql(`
           query loadAllCrystallizeCatalogueItems {
             crystallize {
-              catalogue(language: "${language}", path: "/") {
+              catalogue(language: "${locale.crystallizeCatalogueLanguage}", path: "/") {
                 children {
                   path
                   shape {
@@ -105,25 +180,13 @@ exports.createPages = async ({ graphql, actions }) => {
         }
 
         items.forEach(({ path, component }) => {
-          // Redirect the root path to the correct language root path
-          createRedirect({
-            fromPath: "/",
-            toPath: `/${language}`,
-            isPermanent: true,
-            redirectInBrowser: true,
-            statusCode: 301,
-            context: {
-              language,
-            },
-          })
-
           // Create pages for each node
           createPage({
-            path: `/${language}${path}`,
+            path: locale.urlPrefix ? `/${locale.urlPrefix}${path}` : path,
             component,
             context: {
               cataloguePath: path,
-              language,
+              ...sharedPageProps,
               // Add optional context data to be inserted
               // as props into the page component..
               //

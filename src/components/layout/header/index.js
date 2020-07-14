@@ -1,17 +1,17 @@
 import React, { useState } from "react"
-import { Link } from "gatsby"
 
 import { IconLogo } from "ui"
+import Link from "components/link"
 
 import { Outer, Nav, Logo, NavList, NavListItem } from "./styles"
 import BurgerButton from "./burger-button"
 
-const Header = ({ headerItems, language }) => {
+export default function Header({ headerItems }) {
   const [navOpen, setNavOpen] = useState(false)
 
   return (
     <Outer>
-      <Link to={`/${language}`}>
+      <Link to="/">
         <Logo>
           <IconLogo />
         </Logo>
@@ -19,13 +19,13 @@ const Header = ({ headerItems, language }) => {
       <Nav open={navOpen}>
         <NavList>
           {headerItems
-            ?.filter(i => !i.name.startsWith("_"))
-            .map(headerItem => {
-              const { name, language, path } = headerItem
+            ?.filter((i) => !i.name.startsWith("_"))
+            .map((headerItem) => {
+              const { name, path } = headerItem
 
               return (
                 <NavListItem key={path}>
-                  <Link to={`/${language}${path}`}>{name}</Link>
+                  <Link to={path}>{name}</Link>
                 </NavListItem>
               )
             })}
@@ -35,5 +35,3 @@ const Header = ({ headerItems, language }) => {
     </Outer>
   )
 }
-
-export default Header

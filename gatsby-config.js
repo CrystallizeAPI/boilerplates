@@ -7,7 +7,6 @@ module.exports = {
     title: `Crystallize`,
     description: `Headless ecommerce running on Crystallize and Gatsby`,
     author: `@crystallizeapi`,
-    supportedLanguages: ["en"],
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -27,7 +26,7 @@ module.exports = {
         aliases: {
           components: "./components", // <- will become ./src/components
           ui: "./ui", // <- will become ./src/components
-          utils: "./utils", // <- will become ./src/components
+          lib: "./lib", // <- will become ./src/components
         },
       },
     },
@@ -51,7 +50,7 @@ module.exports = {
         // This is the field under which it's accessible
         fieldName: "crystallize",
         // URL to query from
-        url: `${process.env.CRYSTALLIZE_API_BASE}/${process.env.CRYSTALLIZE_TENANT_ID}/catalogue`,
+        url: `https://api.crystallize.com/${process.env.CRYSTALLIZE_TENANT_ID}/catalogue`,
       },
     },
     "gatsby-plugin-styled-components",

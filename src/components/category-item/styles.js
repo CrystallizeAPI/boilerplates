@@ -1,13 +1,8 @@
 import styled from "styled-components"
 import Image from "@crystallize/react-image"
-import { Link } from "gatsby"
 
+import Link from "components/link"
 import { colors, responsive } from "ui"
-
-export const imageSize = {
-  lg: "300px",
-  xs: "150px",
-}
 
 export const ProductOuter = styled(Link)`
   display: flex;
@@ -118,7 +113,7 @@ export const ContentLine = styled.div`
   display: flex;
   padding: 15px;
   margin: 8px;
-  flex-direction: ${p => (p.right ? "row-reverse" : "row")};
+  flex-direction: ${(p) => (p.right ? "row-reverse" : "row")};
   justify-content: space-between;
   align-items: stretch;
   text-overflow: ellipsis;

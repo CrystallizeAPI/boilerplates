@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import { Paragraphs } from "./styles"
 import Paragraph from "./paragraph"
 
-const ParagraphCollection = ({ paragraphs }) => {
+export default function ParagraphCollection({ paragraphs }) {
   if (!paragraphs) {
     return null
   }
@@ -19,7 +19,5 @@ const ParagraphCollection = ({ paragraphs }) => {
 }
 
 ParagraphCollection.propTypes = {
-  paragraphs: PropTypes.array.isRequired,
+  paragraphs: PropTypes.array,
 }
-
-export default ParagraphCollection

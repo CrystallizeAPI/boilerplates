@@ -4,12 +4,12 @@ import Img from "@crystallize/react-image"
 import isEqual from "lodash/isEqual"
 import { graphql } from "gatsby"
 
-import { H1, H2, Button, screen, Outer } from "ui"
+import { H1, H2, screen, Outer } from "ui"
 import CategoryItem from "components/category-item"
-import { CurrencyValue } from "components/currency-value"
 import VariantSelector from "components/variant-selector"
 import ShapeComponents from "components/shape-components"
-import { attributesToObject } from "utils/variants"
+import { useT } from "lib/i18n"
+import { attributesToObject } from "lib/variants"
 
 import Layout from "components/layout"
 
@@ -29,13 +29,14 @@ import {
 } from "./styles"
 
 const ProductPage = ({ product, defaultVariant }) => {
+  const t = useT()
   const [selectedVariant, setSelectedVariant] = useState(defaultVariant)
 
   const onAttributeChange = (attributes, newAttribute) => {
     const newAttributes = attributesToObject(attributes)
     newAttributes[newAttribute.attribute] = newAttribute.value
 
-    const newSelectedVariant = product.variants.find(variant => {
+    const newSelectedVariant = product.variants.find((variant) => {
       const variantAttributes = attributesToObject(variant.attributes)
       return isEqual(variantAttributes, newAttributes)
     })
@@ -43,14 +44,10 @@ const ProductPage = ({ product, defaultVariant }) => {
     setSelectedVariant(newSelectedVariant)
   }
 
-  const onVariantChange = variant => setSelectedVariant(variant)
+  const onVariantChange = (variant) => setSelectedVariant(variant)
 
-  const buy = async () => {
-    console.log("todo: buy")
-  }
-
-  const summaryComponent = product.components.find(c => c.name === "Summary")
-  const description = product.components.find(c => c.name === "Description")
+  const summaryComponent = product.components.find((c) => c.name === "Summary")
+  const description = product.components.find((c) => c.name === "Description")
   const { topics } = product
 
   const selectedVariantImg = (selectedVariant.image || {}).url
@@ -63,7 +60,7 @@ const ProductPage = ({ product, defaultVariant }) => {
           <MediaInner>
             <Img
               src={selectedVariantImg || placeHolderImg}
-              onError={e => {
+              onError={(e) => {
                 e.target.onerror = null
                 e.target.src = placeHolderImg
               }}
@@ -92,10 +89,9 @@ const ProductPage = ({ product, defaultVariant }) => {
           <ProductFooter>
             <Price>
               <strong>
-                <CurrencyValue value={selectedVariant.price} />
+                {t("common.price", { value: selectedVariant.price })}
               </strong>
             </Price>
-            <Button onClick={buy}>Add to Basket</Button>
           </ProductFooter>
         </Info>
       </Sections>
@@ -106,9 +102,9 @@ const ProductPage = ({ product, defaultVariant }) => {
 
       {topics && topics.length && (
         <RelatedTopics>
-          <H2>Related</H2>
+          <H2>{t("common.related")}</H2>
 
-          {topics.map(topic => {
+          {topics.map((topic) => {
             // We only want to show the first 4 products for a topic
             const cells = topic.items.edges
               .filter(({ node }) => node.id !== product.id)
@@ -125,7 +121,7 @@ const ProductPage = ({ product, defaultVariant }) => {
               <TopicMap>
                 <TopicTitle>{topic.name}</TopicTitle>
                 <List>
-                  {cells.map(cell => (
+                  {cells.map((cell) => (
                     <CategoryItem data={cell.item} key={cell.id} />
                   ))}
                 </List>
@@ -138,25 +134,18 @@ const ProductPage = ({ product, defaultVariant }) => {
   )
 }
 
-const ProductPageDataLoader = props => {
-  const {
-    data: { crystallize },
-    pageContext: { language },
-  } = props
+const ProductPageDataLoader = ({ data: { crystallize } }) => {
+  const t = useT()
   const { product } = crystallize
   const headerItems = crystallize.headerItems?.children
-  const defaultVariant = product.variants?.find(v => v.isDefault)
+  const defaultVariant = product.variants?.find((v) => v.isDefault)
 
   if (!defaultVariant) {
-    return (
-      <Layout headerItems={headerItems} language={language}>
-        This product has no variants
-      </Layout>
-    )
+    return <Layout headerItems={headerItems}>{t("product.noVariants")}</Layout>
   }
 
   return (
-    <Layout headerItems={headerItems} title={product.name} language={language}>
+    <Layout headerItems={headerItems} title={product.name}>
       <ProductPage
         key={product.id}
         product={product}
@@ -167,9 +156,15 @@ const ProductPageDataLoader = props => {
 }
 
 export const query = graphql`
-  query getProduct($cataloguePath: String!, $language: String!) {
+  query getProduct(
+    $cataloguePath: String!
+    $crystallizeCatalogueLanguage: String!
+  ) {
     crystallize {
-      headerItems: catalogue(language: $language, path: "/") {
+      headerItems: catalogue(
+        language: $crystallizeCatalogueLanguage
+        path: "/"
+      ) {
         children {
           name
           path
@@ -177,7 +172,10 @@ export const query = graphql`
         }
       }
 
-      product: catalogue(language: $language, path: $cataloguePath) {
+      product: catalogue(
+        language: $crystallizeCatalogueLanguage
+        path: $cataloguePath
+      ) {
         ...crystallize_item
         ...crystallize_product
 

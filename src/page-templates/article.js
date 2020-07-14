@@ -31,11 +31,8 @@ const Document = styled(Header)`
   }
 `
 
-const DocumentPage = props => {
-  const {
-    data,
-    pageContext: { language },
-  } = props
+const DocumentPage = (props) => {
+  const { data } = props
   const {
     crystallize: {
       article,
@@ -44,7 +41,7 @@ const DocumentPage = props => {
   } = data
 
   return (
-    <Layout title={article.name} headerItems={headerItems} language={language}>
+    <Layout title={article.name} headerItems={headerItems}>
       <Outer>
         <Document>
           <ShapeComponents
@@ -62,9 +59,15 @@ const DocumentPage = props => {
 export default DocumentPage
 
 export const query = graphql`
-  query getArticle($cataloguePath: String!, $language: String!) {
+  query getArticle(
+    $cataloguePath: String!
+    $crystallizeCatalogueLanguage: String!
+  ) {
     crystallize {
-      headerItems: catalogue(language: $language, path: "/") {
+      headerItems: catalogue(
+        language: $crystallizeCatalogueLanguage
+        path: "/"
+      ) {
         children {
           name
           path
@@ -72,7 +75,10 @@ export const query = graphql`
         }
       }
 
-      article: catalogue(language: $language, path: $cataloguePath) {
+      article: catalogue(
+        language: $crystallizeCatalogueLanguage
+        path: $cataloguePath
+      ) {
         id
         name
 
