@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useRef, useEffect } from "react"
 import videojs from "video.js"
 import styled from "styled-components"
@@ -31,11 +32,11 @@ export default function VideoPlayer({
 
   const sources =
     playlists
-      ?.map(playlist => ({
+      ?.map((playlist) => ({
         type: getVideoType(playlist),
         src: playlist,
       }))
-      .sort(s => (HLS_EXTENSION.test(s.src) ? -1 : 1)) || []
+      .sort((s) => (HLS_EXTENSION.test(s.src) ? -1 : 1)) || []
 
   useEffect(() => {
     if (el.current) {

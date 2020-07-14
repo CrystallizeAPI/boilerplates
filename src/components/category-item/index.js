@@ -1,7 +1,6 @@
 import React from "react"
 
-import { CurrencyValue } from "components/currency-value"
-
+import { useT } from "lib/i18n"
 import { screen, H3 } from "ui"
 import {
   Outer,
@@ -13,69 +12,59 @@ import {
   Img,
   ContentLine,
   Price,
-  imageSize,
 } from "./styles"
 
-class CategoryItem extends React.Component {
-  render() {
-    const { data } = this.props
+export default function CategoryItem({ data, gridCell, gridTotalColSpan }) {
+  const t = useT()
+  if (!data) {
+    return null
+  }
 
-    if (!data) {
-      return null
-    }
+  const { name, path, type, variants } = data
+  const imageSizes =
+    gridCell && gridTotalColSpan
+      ? `(min-width ${screen.md}px) ${parseInt(
+          (gridCell.layout.colspan / gridTotalColSpan) * 100,
+          10
+        )}vw, 90vw`
+      : "90vw"
 
-    const { name, path, type, variants } = data
-
-    if (type === "folder" || type === "document") {
-      const images = data.components.find(c => c.type === "images")
-      const image = images && images.content ? images.content.images[0] : null
-      return (
-        <Outer type={type} to={path}>
-          <Inner>
-            <ImageWrapper>
-              {image && (
-                <Img
-                  {...image}
-                  alt={name}
-                  sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
-                />
-              )}
-            </ImageWrapper>
-
-            <MicroFormat>
-              <H3>{name}</H3>
-            </MicroFormat>
-          </Inner>
-        </Outer>
-      )
-    }
-
-    const { price, image } = variants
-      ? variants.find(variant => variant.isDefault)
-      : {}
+  if (type === "folder" || type === "document") {
+    const images = data.components.find((c) => c.type === "images")
+    const image = images && images.content ? images.content.images[0] : null
 
     return (
-      <ProductOuter to={path}>
-        <ProductInner>
-          <ContentLine>
-            <span>{name}</span>
-          </ContentLine>
+      <Outer type={type} to={path}>
+        <Inner>
           <ImageWrapper>
-            <Img
-              {...image}
-              alt={name}
-              sizes={`(min-width ${screen.md}px) ${imageSize.lg}, ${imageSize.xs}`}
-            />
+            {image && <Img {...image} alt={name} sizes={imageSizes} />}
           </ImageWrapper>
-          <ContentLine right>
-            <Price>
-              <CurrencyValue value={price} />
-            </Price>
-          </ContentLine>
-        </ProductInner>
-      </ProductOuter>
+
+          <MicroFormat>
+            <H3>{name}</H3>
+          </MicroFormat>
+        </Inner>
+      </Outer>
     )
   }
-}
 
-export default CategoryItem
+  const { price, image } = variants
+    ? variants.find((variant) => variant.isDefault)
+    : {}
+
+  return (
+    <ProductOuter to={path}>
+      <ProductInner>
+        <ContentLine>
+          <span>{name}</span>
+        </ContentLine>
+        <ImageWrapper>
+          <Img {...image} alt={name} sizes={imageSizes} />
+        </ImageWrapper>
+        <ContentLine right>
+          <Price>{t("common.price", { value: price })}</Price>
+        </ContentLine>
+      </ProductInner>
+    </ProductOuter>
+  )
+}

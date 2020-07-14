@@ -65,6 +65,7 @@ export const query = graphql`
     name
     type
     path
+    language
     topics {
       name
       children {
@@ -93,6 +94,7 @@ export const query = graphql`
 
   fragment crystallize_product on CRYSTALLIZE_Product {
     id
+    language
     vatType {
       name
       percent
