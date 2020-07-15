@@ -32,7 +32,7 @@ export default function LocaleSwitcher() {
     window.location = `/${e.target.value}`
   }
 
-  if (locales.length === 0) {
+  if (locales.length <= 1) {
     return null
   }
 
