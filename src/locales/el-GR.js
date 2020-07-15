@@ -9,6 +9,12 @@ module.exports = {
     },
     product: {
       noVariants: "This product has no variants",
+      attributes: {
+        color: "Color",
+        green: "Green",
+        blue: "Blue",
+        black: "Black",
+      },
     },
     layout: {
       builtWith: "Built with {{- link}}",

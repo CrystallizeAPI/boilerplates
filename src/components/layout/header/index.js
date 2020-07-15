@@ -5,6 +5,7 @@ import Link from "components/link"
 
 import { Outer, Nav, Logo, NavList, NavListItem } from "./styles"
 import BurgerButton from "./burger-button"
+import LocaleSwitcher from "./locale-switcher"
 
 export default function Header({ headerItems }) {
   const [navOpen, setNavOpen] = useState(false)
@@ -31,6 +32,7 @@ export default function Header({ headerItems }) {
             })}
         </NavList>
       </Nav>
+      <LocaleSwitcher />
       <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
     </Outer>
   )

@@ -15,7 +15,13 @@ export const useLocale = () => {
   return c?.locale
 }
 
-export function I18nextProvider({ locale = {}, children }) {
+export const useLocales = () => {
+  const c = useContext(I18NextContext)
+
+  return c?.locales
+}
+
+export function I18nextProvider({ locale = {}, locales = [], children }) {
   const lng = locale.appLanguage || "en-US"
 
   const currencyFormatter = new Intl.NumberFormat(locale, {
@@ -46,7 +52,7 @@ export function I18nextProvider({ locale = {}, children }) {
   })
 
   return (
-    <I18NextContext.Provider value={{ i18n, locale }}>
+    <I18NextContext.Provider value={{ i18n, locale, locales }}>
       {children}
     </I18NextContext.Provider>
   )

@@ -14,7 +14,7 @@ export default function Link({ children, ...props }) {
   }
 
   const { to, ...restProps } = props
-  console.log(locale)
+
   return (
     <GatsbyLink
       to={`/${locale.urlPrefix}/${to}`.replace(/\/{2,}/g, "/")}

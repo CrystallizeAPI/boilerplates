@@ -87,7 +87,7 @@ exports.createPages = async ({ graphql, actions }) => {
       const sharedPageProps = {
         crystallizeCatalogueLanguage: locale.crystallizeCatalogueLanguage,
         locales: locales.map((l) => ({
-          name: l.displayName,
+          displayName: l.displayName,
           urlPrefix: l.urlPrefix,
         })),
         locale,

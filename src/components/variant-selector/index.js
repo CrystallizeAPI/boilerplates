@@ -1,5 +1,7 @@
 import React from "react"
 
+import { useT } from "lib/i18n"
+
 import {
   Outer,
   AttributeName,
@@ -10,7 +12,7 @@ import {
   Button,
 } from "./styles"
 
-const reduceAttributes = variants =>
+const reduceAttributes = (variants) =>
   variants.reduce((acc, variant) => {
     const attrs = acc
 
@@ -21,7 +23,7 @@ const reduceAttributes = variants =>
         return
       }
 
-      const valueExists = currentAttribute.find(str => str === value)
+      const valueExists = currentAttribute.find((str) => str === value)
       if (!valueExists) {
         attrs[attribute].push(value)
       }
@@ -36,12 +38,13 @@ export default ({
   onVariantChange,
   onAttributeChange,
 }) => {
+  const t = useT()
   const attributes = reduceAttributes(variants)
 
   if (!Object.keys(attributes).length) {
     return (
       <Outer>
-        {variants.map(variant => (
+        {variants.map((variant) => (
           <Variant key={variant.id}>
             <Values>
               <Button
@@ -60,10 +63,10 @@ export default ({
 
   return (
     <Outer>
-      {Object.keys(attributes).map(name => {
+      {Object.keys(attributes).map((name) => {
         const attr = attributes[name]
         const selectedAttr = selectedVariant.attributes.find(
-          a => a.attribute === name
+          (a) => a.attribute === name
         )
 
         if (!selectedAttr) {
@@ -72,9 +75,9 @@ export default ({
 
         return (
           <div key={name}>
-            <AttributeName>{name}</AttributeName>
+            <AttributeName>{t(`product.attributes.${name}`)}</AttributeName>
             <AttributeSelector>
-              {attr.map(value => (
+              {attr.map((value) => (
                 <AttributeButton
                   key={`${value}-${name}`}
                   onClick={() =>
@@ -86,7 +89,7 @@ export default ({
                   type="button"
                   selected={value === selectedAttr.value}
                 >
-                  {value}
+                  {t(`product.attributes.${value}`)}
                 </AttributeButton>
               ))}
             </AttributeSelector>
