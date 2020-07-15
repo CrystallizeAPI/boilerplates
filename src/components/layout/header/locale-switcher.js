@@ -1,5 +1,4 @@
 import React from "react"
-import { navigate } from "@reach/router"
 import styled from "styled-components"
 
 import { useLocale, useLocales } from "lib/i18n"
@@ -30,7 +29,7 @@ export default function LocaleSwitcher() {
   const locales = useLocales()
 
   function onBlur(e) {
-    navigate(`/${e.target.value}`)
+    window.location = `/${e.target.value}`
   }
 
   if (locales.length === 0) {
