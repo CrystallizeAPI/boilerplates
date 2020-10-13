@@ -1,14 +1,14 @@
-import useSWR from 'swr'
-import Head from 'next/head'
-import styled from 'styled-components'
-import Image from '@crystallize/react-image'
-import CrystallizeContent from '@crystallize/content-transformer/react'
-import { useRouter } from 'next/router'
+import useSWR from "swr";
+import styled from "styled-components";
+import Image from "@crystallize/react-image";
+import CrystallizeContent from "@crystallize/content-transformer/react";
+import { useRouter } from "next/router";
 
-import { fetcher } from 'lib/graphql'
-import Layout from 'components/layout'
+import { fetcher } from "lib/graphql";
+import Layout from "components/layout";
+import Meta from "components/meta";
 
-const Outer = styled.div``
+const Outer = styled.div``;
 const ProductWrapper = styled.section`
   background: #fff;
   display: grid;
@@ -16,7 +16,7 @@ const ProductWrapper = styled.section`
     grid-template-columns: 1fr 1fr;
     min-height: 90vh;
   }
-`
+`;
 
 const Btn = styled.button`
   border: 3px solid black;
@@ -24,13 +24,13 @@ const Btn = styled.button`
   font-size: 20px;
   margin-top: 35px;
   font-weight: 800;
-  padding: 12px 35px;
+  padding: 20px 45px;
   border-radius: 45px;
   &:hover {
     color: #fff;
     background: black;
   }
-`
+`;
 
 const ImgWrapper = styled.div`
   background: ${({ theme }) => theme.colors.productBg};
@@ -54,7 +54,7 @@ const ImgWrapper = styled.div`
       object-fit: contain;
     }
   }
-`
+`;
 const Content = styled.div`
   padding: 50px 25px;
   text-align: center;
@@ -81,7 +81,7 @@ const Content = styled.div`
   ${({ theme }) => theme.responsive.mdPlus} {
     padding: 0 100px;
   }
-`
+`;
 const RichContent = styled.section`
   background: #fff;
   /* min-height: 100vh; */
@@ -92,7 +92,7 @@ const RichContent = styled.section`
   ${({ theme }) => theme.responsive.sm} {
     padding: 100px 50px;
   }
-`
+`;
 
 const Section = styled.section`
   display: grid;
@@ -108,14 +108,14 @@ const Section = styled.section`
 
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-`
+`;
 const Bulk = styled.div`
   h5 {
     margin: 0;
     padding: 0;
     font-size: 20px;
   }
-`
+`;
 
 const BulkOuter = styled.div`
   display: grid;
@@ -129,7 +129,7 @@ const BulkOuter = styled.div`
     grid-column-start: 2;
     grid-gap: 50px;
   }
-`
+`;
 
 const Collection = styled.div`
   margin: 0 auto;
@@ -137,10 +137,10 @@ const Collection = styled.div`
   ${({ theme }) => theme.responsive.smPlus} {
     grid-template-columns: 1fr 1fr;
   }
-`
+`;
 const CollectionOuter = styled.div`
   grid-column-end: span 3;
-`
+`;
 const Paragraph = styled.div`
   padding: 50px 0;
   font-size: 18px;
@@ -160,7 +160,7 @@ const Paragraph = styled.div`
     padding: 75px 0;
     grid-column-end: span 2;
   }
-`
+`;
 
 const MediaWrapper = styled.div`
   grid-column-end: span 2;
@@ -178,8 +178,14 @@ const MediaWrapper = styled.div`
   ${({ theme }) => theme.responsive.smPlus} {
     grid-template-columns: ${(p) => `repeat(${p.count}, 1fr)`};
   }
-`
-
+`;
+const Offer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  h2 {
+    grid-column-end: span 2;
+  }
+`;
 // Fine tune the query in the playground: https://api.crystallize.com/<your-tenant-identifier>/catalogue
 const query = `
 query GET_PRODUCT($path: String!) {
@@ -194,6 +200,8 @@ query GET_PRODUCT($path: String!) {
       path
       defaultVariant{
         price
+        stock
+        sku
         images{
           url
           variants{
@@ -266,12 +274,12 @@ query GET_PRODUCT($path: String!) {
     }  
   }
 }
-`
+`;
 
 export async function getStaticProps({ params }) {
-  const path = `/shop/${params.product}`
-  const data = await fetcher([query, { path }])
-  return { props: { data, path }, revalidate: 1 }
+  const path = `/shop/${params.product}`;
+  const data = await fetcher([query, { path }]);
+  return { props: { data, path }, revalidate: 1 };
 }
 
 export async function getStaticPaths() {
@@ -283,58 +291,80 @@ export async function getStaticPaths() {
         }
       }
     }
-  `)
+  `);
 
   return {
     paths: data?.data?.catalogue?.children?.map((c) => c.path) || [],
     fallback: true,
-  }
+  };
 }
 
 export default function Story({ data: initialData, path }) {
-  const router = useRouter()
+  const router = useRouter();
   const { data } = useSWR([query, { path }], {
     initialData,
-  })
+  });
 
   if (router.isFallback) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
-  const product = data?.data?.product
-  const defaultImage = data?.data?.product?.defaultVariant?.images
-  const name = product?.name
-  const price = product?.defaultVariant?.price
-  const summary = product?.summary?.content?.json
-  const features = product?.features?.content?.sections
-  const description = product?.description
+  const product = data?.data?.product;
+  const defaultImage = data?.data?.product?.defaultVariant?.images;
+  const name = product?.name;
+  const price = product?.defaultVariant?.price;
+  const sku = product?.defaultVariant?.sku;
+  // const stock = product?.defaultVariant?.stock;
+  const summary = product?.summary?.content?.json;
+  const features = product?.features?.content?.sections;
+  const description = product?.description;
 
+  const meta = {
+    title: name,
+    description: product?.summary?.content?.plainText?.[0],
+    mediaUrl: defaultImage?.[0]?.url,
+    type: "product",
+  };
   return (
     <>
-      <Head>
-        <meta property="og:image" content={defaultImage?.[0]?.url} />
-      </Head>
-      <Layout
-        tint="black"
-        title={name}
-        description={product?.summary?.content?.plainText?.[0]}
-      >
+      <Meta {...meta} />
+      <Layout tint="black">
         <Outer>
-          <ProductWrapper>
-            <ImgWrapper>
+          <ProductWrapper itemScope itemType="http://schema.org/Product">
+            <ImgWrapper itemProp="image">
               <Image
                 {...defaultImage?.[0]}
+                itemProp="image"
                 sizes="@media(min-width:1024px) 50vw, 100vw"
               />
             </ImgWrapper>
+
             <Content>
-              <h1>{name}</h1>
-              <h2>${price}</h2>
-              <CrystallizeContent {...summary} />
+              <h1 itemProp="name">{name}</h1>
+              <span itemProp="sku" style={{ display: "none" }}>
+                {sku}
+              </span>
+              <span itemProp="description" style={{ display: "none" }}>
+                {meta.description}
+              </span>
+
+              <Offer
+                itemScope
+                itemProp="offers"
+                itemType="https://schema.org/Offer"
+              >
+                <h2>
+                  <span itemProp="priceCurrency" content="USD">
+                    $
+                  </span>
+                  <span itemProp="price">{price}</span>
+                </h2>
+              </Offer>
+              <CrystallizeContent itemProp="description" {...summary} />
               <Btn
                 onClick={() =>
                   alert(
-                    'Functionality not implemented in this boiler, see our next.js boilerplate '
+                    "Functionality not implemented yet in this boiler, see our next.js boilerplate "
                   )
                 }
               >
@@ -388,5 +418,5 @@ export default function Story({ data: initialData, path }) {
         </Outer>
       </Layout>
     </>
-  )
+  );
 }

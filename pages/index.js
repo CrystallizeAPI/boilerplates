@@ -1,14 +1,15 @@
-import useSWR from 'swr'
-import styled from 'styled-components'
-import Layout from 'components/layout'
-import { fetcher } from 'lib/graphql'
-import Microformats from 'components/microformats'
+import useSWR from "swr";
+import styled from "styled-components";
+import Layout from "components/layout";
+import { fetcher } from "lib/graphql";
+import Microformats from "components/microformats";
+import Meta from "components/meta";
 
 const Outer = styled.div`
   background: #fff;
   min-height: 100vh;
   padding: 150px 0;
-`
+`;
 
 const GridRow = styled.section`
   display: grid;
@@ -18,14 +19,14 @@ const GridRow = styled.section`
   padding: 0 25px;
   ${({ theme }) => theme.responsive.sm} {
     padding: 0 50px;
-    grid-template-columns: ${(p) => (p.columns > 1 ? '1fr 1fr' : '1fr')};
+    grid-template-columns: ${(p) => (p.columns > 1 ? "1fr 1fr" : "1fr")};
   }
   ${({ theme }) => theme.responsive.mdPlus} {
-    padding: 0 0 0 100px;
+    padding: 0 100px 0 100px;
 
     grid-template-columns: ${(p) => `repeat(${p.columns}, 1fr)`};
   }
-`
+`;
 
 // Fine tune the query in the playground: https://api.crystallize.com/<your-tenant-identifier>/catalogue
 // Fetching a grid from our Voyage example directly by ID, change the ID your grid or fetch it from a folder with gridrelation, its up to you.
@@ -105,29 +106,36 @@ const query = `
       }
     }    
   }
-`
+`;
 
 export async function getStaticProps() {
-  const data = await fetcher(query)
+  const data = await fetcher(query);
 
-  return { props: { data } }
+  return { props: { data }, revalidate: 1 };
 }
 
 export default function Home(props) {
-  const { data } = useSWR(query, { initialData: props.data })
+  const { data } = useSWR(query, { initialData: props.data });
 
-  const grid = data?.data?.grid
+  const grid = data?.data?.grid;
+  const meta = {
+    description: "Great stories happen to those who can tell them",
+    type: "website",
+  };
   return (
-    <Layout tint="black">
-      <Outer>
-        {grid?.rows?.map((row) => (
-          <GridRow columns={row?.columns?.length}>
-            {row?.columns?.map((column) => (
-              <Microformats {...column?.item} />
-            ))}
-          </GridRow>
-        ))}
-      </Outer>
-    </Layout>
-  )
+    <>
+      <Meta {...meta} />
+      <Layout tint="black">
+        <Outer>
+          {grid?.rows?.map((row) => (
+            <GridRow columns={row?.columns?.length}>
+              {row?.columns?.map((column) => (
+                <Microformats {...column?.item} />
+              ))}
+            </GridRow>
+          ))}
+        </Outer>
+      </Layout>
+    </>
+  );
 }

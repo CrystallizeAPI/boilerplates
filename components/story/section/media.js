@@ -51,6 +51,7 @@ export default function Media({ images, videos, show, nolazy }) {
         autoplay
         playsInline
         loop
+        itemProp="video"
         play={show}
         nolazy={nolazy}
         {...videos?.[0]}
@@ -62,6 +63,7 @@ export default function Media({ images, videos, show, nolazy }) {
     <Outer>
       <Image
         {...images?.[0]}
+        itemProp="image"
         sizes="100vw"
         loading={nolazy ? "eager" : "lazy"}
       />

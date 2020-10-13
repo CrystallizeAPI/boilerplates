@@ -2,11 +2,11 @@ import useSWR from "swr";
 import Image from "@crystallize/react-image";
 import CrystallizeContent from "@crystallize/content-transformer/react";
 import { useRouter } from "next/router";
-
 import { fetcher } from "lib/graphql";
 import Section from "components/story/section";
 import FeaturedProducts from "components/story/featured-products";
 import Layout from "components/layout";
+import Meta from "components/meta";
 import {
   Outer,
   ScrollWrapper,
@@ -198,7 +198,7 @@ query GET_STORY($path: String!) {
 
 `;
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, req }) {
   const path = `/stories/${params.story}`;
   const data = await fetcher([query, { path }]);
 
@@ -238,64 +238,79 @@ export default function Story({ data: initialData, path }) {
   const heroVideos = story?.hero_videos?.content?.videos;
   const storyParagraphs = story?.story?.content?.paragraphs;
   const featuredProducts = story?.featuredProducts?.content?.items;
+  const meta = {
+    title: story?.name,
+    description: story?.intro?.content?.plainText?.[0],
+    mediaUrl: heroImages?.[0]?.url,
+    type: "article",
+  };
 
   return (
-    <Layout
-      tint="white"
-      title={story?.name}
-      description={story?.intro?.content?.plainText?.[0]}
-    >
-      <ScrollWrapper>
-        <Outer>
-          <Section images={heroImages} videos={heroVideos} nolazy>
-            <Content fold={true}>
-              <Title h1>{story?.name}</Title>
-              <Lead>
-                <CrystallizeContent {...story?.intro?.content?.json} />
-              </Lead>
-              {!!byline && (
-                <Byline>
-                  {byline.map((author, i) => (
-                    <Author key={i}>
-                      <AuthorPhoto>
-                        <Image
-                          {...author?.picture?.content?.images?.[0]}
-                          sizes="50px"
-                        />
-                      </AuthorPhoto>
-                      <AuthorName>{author?.name?.content?.text}</AuthorName>
-                      <AuthorRole>{author?.role?.content?.text}</AuthorRole>
-                    </Author>
-                  ))}
-                </Byline>
-              )}
-            </Content>
-          </Section>
-          {storyParagraphs.map(({ title, body, images, videos }, i) => {
-            return (
-              <div key={i}>
-                {i === Math.round(storyParagraphs.length / 2) &&
-                  !!featuredProducts && (
-                    <FeaturedProducts products={featuredProducts} />
-                  )}
-                <Section images={images} videos={videos}>
-                  <Content mirror={i % 2}>
-                    <ContentInner>
-                      <SectionHeading>{title?.text}</SectionHeading>
-                      <Lead>
-                        <CrystallizeContent {...body?.json} />
-                      </Lead>
-                    </ContentInner>
-                  </Content>
-                </Section>
-              </div>
-            );
-          })}
-          {!!featuredProducts && (
-            <FeaturedProducts products={featuredProducts} />
-          )}
-        </Outer>
-      </ScrollWrapper>
-    </Layout>
+    <>
+      <Meta {...meta} />
+      <Layout tint="white" hideFooter>
+        <ScrollWrapper>
+          <Outer itemScope itemType="http://schema.org/Article">
+            <Section images={heroImages} videos={heroVideos} nolazy>
+              <Content fold={true}>
+                <Title h1 itemProp="name">
+                  {story?.name}
+                </Title>
+                <Lead>
+                  <CrystallizeContent
+                    itemProp="description"
+                    {...story?.intro?.content?.json}
+                  />
+                </Lead>
+                {!!byline && (
+                  <Byline>
+                    {byline.map((author, i) => (
+                      <Author key={i}>
+                        <AuthorPhoto>
+                          <Image
+                            {...author?.picture?.content?.images?.[0]}
+                            sizes="50px"
+                          />
+                        </AuthorPhoto>
+                        <AuthorName itemProps="author">
+                          {author?.name?.content?.text}
+                        </AuthorName>
+                        <AuthorRole>{author?.role?.content?.text}</AuthorRole>
+                      </Author>
+                    ))}
+                  </Byline>
+                )}
+              </Content>
+            </Section>
+            <div itemProps="articleBody">
+              {storyParagraphs.map(({ title, body, images, videos }, i) => {
+                return (
+                  <>
+                    {i === Math.round(storyParagraphs.length / 2) &&
+                      !!featuredProducts && (
+                        <FeaturedProducts products={featuredProducts} />
+                      )}
+                    <Section images={images} videos={videos} key={i}>
+                      <Content mirror={i % 2}>
+                        <ContentInner>
+                          <SectionHeading>{title?.text}</SectionHeading>
+                          <Lead>
+                            <CrystallizeContent {...body?.json} />
+                          </Lead>
+                        </ContentInner>
+                      </Content>
+                    </Section>
+                  </>
+                );
+              })}
+            </div>
+
+            {!!featuredProducts && (
+              <FeaturedProducts products={featuredProducts} />
+            )}
+          </Outer>
+        </ScrollWrapper>
+      </Layout>
+    </>
   );
 }

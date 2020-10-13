@@ -1,15 +1,15 @@
-import useSWR from 'swr'
-import styled from 'styled-components'
+import useSWR from "swr";
+import styled from "styled-components";
 
-import Hero from 'components/hero'
-import Layout from 'components/layout'
-// import List from 'components/item-list'
-import Product from 'components/microformats/product'
+import Hero from "components/hero";
+import Layout from "components/layout";
+import Product from "components/microformats/product";
+import Meta from "components/meta";
 
 const Outer = styled.section`
   background: #fff;
   min-height: 100vh;
-`
+`;
 const Inner = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -27,9 +27,9 @@ const Inner = styled.div`
   ${({ theme }) => theme.responsive.xs} {
     padding: 50px 25px;
   }
-`
+`;
 
-import { fetcher } from 'lib/graphql'
+import { fetcher } from "lib/graphql";
 
 // Fine tune the query in the playground: https://api.crystallize.com/<your-tenant-identifier>/catalogue
 const query = `
@@ -106,40 +106,45 @@ const query = `
       }
     }
   }
-`
+`;
 export async function getStaticProps() {
-  const data = await fetcher(query)
-
-  return { props: { data } }
+  const data = await fetcher(query);
+  return { props: { data }, revalidate: 1 };
 }
 
 export default function Story({ data: initialData, path }) {
   const { data } = useSWR([query, { path }], {
     initialData,
-  })
-  const shop = data?.data?.catalogue
+  });
+  const shop = data?.data?.catalogue;
   const hero = {
     images: shop?.hero_images?.content?.images,
     videos: shop?.hero_videos?.content?.videos,
     lead: shop?.intro?.content,
     title: shop?.title?.content?.text,
-  }
+  };
 
-  const hasMedia = !!hero.images || !!hero.videos
+  const meta = {
+    title: shop?.name,
+    description: shop?.title?.content?.text,
+    mediaUrl: shop?.hero_images?.content?.images,
+    type: "website",
+  };
+
+  const hasMedia = !!hero.images || !!hero.videos;
   return (
-    <Layout
-      tint={hasMedia ? 'white' : 'black'}
-      title={shop?.name}
-      description={shop?.title?.content?.text}
-    >
-      <Outer>
-        <Hero {...hero} />
-        <Inner>
-          {shop?.children?.map((child) => (
-            <Product {...child} key={child?.id} />
-          ))}
-        </Inner>
-      </Outer>
-    </Layout>
-  )
+    <>
+      <Meta {...meta} />
+      <Layout tint={hasMedia ? "white" : "black"}>
+        <Outer>
+          <Hero {...hero} />
+          <Inner>
+            {shop?.children?.map((child) => (
+              <Product {...child} key={child?.id} />
+            ))}
+          </Inner>
+        </Outer>
+      </Layout>
+    </>
+  );
 }

@@ -1,24 +1,23 @@
-import React from 'react'
-import CrystallizeContent from '@crystallize/content-transformer/react'
-import styled from 'styled-components'
+import React from "react";
+import CrystallizeContent from "@crystallize/content-transformer/react";
+import styled from "styled-components";
 
-import Media from 'components/media'
+import Media from "components/media";
 const H1 = styled.h1`
   margin: 0%;
   padding: 0;
   line-height: 110%;
   font-size: calc(24px + 1.8vw);
   max-width: 1000px;
-`
+`;
 const Lead = styled.div`
   font-size: calc(12px + 0.5vw);
   max-width: 600px;
   text-align: center;
-`
+`;
 
 const Block = styled.div`
   position: absolute;
-
   height: 100%;
   width: 100%;
   display: flex;
@@ -27,7 +26,12 @@ const Block = styled.div`
   align-items: center;
   z-index: 10;
   text-align: center;
-`
+  padding: 0 2rem;
+
+  ${({ theme }) => theme.responsive.mdPlus} {
+    padding: 0;
+  }
+`;
 
 const Arrow = styled.div`
   width: 40px;
@@ -39,7 +43,7 @@ const Arrow = styled.div`
     width: 57%;
     height: 4px;
     border-radius: 3px;
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     z-index: 20;
@@ -53,7 +57,7 @@ const Arrow = styled.div`
     left: 0;
     transform: rotate(35deg);
   }
-`
+`;
 const Hero = styled.section`
   height: 80vh;
   position: relative;
@@ -63,24 +67,24 @@ const Hero = styled.section`
   align-items: center;
 
   ${H1} {
-    color: ${(p) => (p.hasMedia ? '#fff' : '000')};
+    color: ${(p) => (p.hasMedia ? "#fff" : "000")};
   }
   ${Lead} {
-    color: ${(p) => (p.hasMedia ? '#fff' : '000')};
+    color: ${(p) => (p.hasMedia ? "#fff" : "000")};
   }
   ${Block} {
-    background: ${(p) => (p.hasMedia ? 'rgba(0, 0, 0, 0.2)' : '#fff')};
+    background: ${(p) => (p.hasMedia ? "rgba(0, 0, 0, 0.2)" : "#fff")};
   }
   ${Arrow} {
     &:before,
     &:after {
-      background: ${(p) => (p.hasMedia ? 'white' : 'black')};
+      background: ${(p) => (p.hasMedia ? "white" : "black")};
     }
   }
-`
+`;
 
 const HeroBlock = ({ images, videos, title, lead }) => {
-  const hasMedia = !!images || !!videos
+  const hasMedia = !!images || !!videos;
   return (
     <Hero hasMedia={hasMedia}>
       <Block>
@@ -94,7 +98,7 @@ const HeroBlock = ({ images, videos, title, lead }) => {
       {!!hasMedia && <Media images={images} videos={videos} nolazy />}
       <Arrow />
     </Hero>
-  )
-}
+  );
+};
 
-export default HeroBlock
+export default HeroBlock;

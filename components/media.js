@@ -1,6 +1,6 @@
-import Image from '@crystallize/react-image'
-import Video from 'components/video'
-import styled from 'styled-components'
+import Image from "@crystallize/react-image";
+import Video from "components/video";
+import styled from "styled-components";
 
 const StyledVideo = styled(Video)`
   height: 100%;
@@ -11,7 +11,7 @@ const StyledVideo = styled(Video)`
   video {
     object-fit: cover !important;
   }
-`
+`;
 
 const Outer = styled.div`
   top: 0;
@@ -28,7 +28,7 @@ const Outer = styled.div`
     position: relative;
     z-index: 1;
   }
-`
+`;
 
 export default function Media({ images, videos, show, nolazy }) {
   if (!!videos) {
@@ -41,7 +41,7 @@ export default function Media({ images, videos, show, nolazy }) {
         nolazy={nolazy}
         {...videos?.[0]}
       />
-    )
+    );
   }
 
   return (
@@ -49,8 +49,8 @@ export default function Media({ images, videos, show, nolazy }) {
       <Image
         {...images?.[0]}
         sizes="100vw"
-        loading={nolazy ? 'eager' : 'lazy'}
+        loading={nolazy ? "eager" : "lazy"}
       />
     </Outer>
-  )
+  );
 }
