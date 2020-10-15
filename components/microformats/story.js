@@ -4,7 +4,8 @@ import Media from "components/media";
 import CrystallizeContent from "@crystallize/content-transformer/react";
 import Link from "next/link";
 
-const Outer = styled.div`
+const Outer = styled.a`
+  display: block;
   background: #efefef;
   position: relative;
   border-radius: ${({ theme }) => theme.styles.borderRadius};
@@ -123,7 +124,7 @@ const Inner = styled.div`
 const StoryMicroformat = ({ name, path, intro, videos, images }) => {
   const hasMedia = videos?.content?.videos || images?.content?.images;
   return (
-    <Link as={path} href={path}>
+    <Link as={path} href={path} passHref>
       <Outer>
         <Inner hasMedia={hasMedia}>
           <Content>

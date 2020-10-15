@@ -59,6 +59,7 @@ const Outer = styled.a`
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+
   &:hover {
     ${ImgWrapper} {
       img {

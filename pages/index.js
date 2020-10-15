@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import styled from "styled-components";
+
 import Layout from "components/layout";
 import { fetcher } from "lib/graphql";
 import Microformats from "components/microformats";

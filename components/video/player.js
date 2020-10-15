@@ -99,6 +99,7 @@ function VideoPlayer({
     };
   });
 
+  // Toggle play/pause
   useEffect(() => {
     if (playerRef.current) {
       try {

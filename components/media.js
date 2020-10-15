@@ -1,6 +1,7 @@
-import Image from "@crystallize/react-image";
-import Video from "components/video";
 import styled from "styled-components";
+import Image from "@crystallize/react-image";
+
+import Video from "components/video";
 
 const StyledVideo = styled(Video)`
   height: 100%;
