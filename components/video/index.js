@@ -56,7 +56,7 @@ export default function Video({
       setLoad(true);
     }
   }, [entry, load]);
-
+  console.log("load", load);
   return (
     <Outer ref={ref} {...rest}>
       <Loader>
