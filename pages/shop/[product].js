@@ -325,6 +325,7 @@ export default function Story({ data: initialData, path }) {
     mediaUrl: defaultImage?.[0]?.url,
     type: "product",
   };
+
   return (
     <>
       <Meta {...meta} />
