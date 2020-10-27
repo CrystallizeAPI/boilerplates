@@ -39,7 +39,7 @@ export default function SearchSpec({ spec, dispatch, aggregations }) {
     <Outer>
       <Inner>
         <SearchTerm
-          searchTerm={spec.filter.searchTerm}
+          searchTerm={spec?.filter?.searchTerm}
           onChange={(searchTerm) =>
             dispatch({ action: "setSearchTerm", searchTerm })
           }
@@ -47,7 +47,7 @@ export default function SearchSpec({ spec, dispatch, aggregations }) {
         <InputFooter>
           <TotalResults>Results</TotalResults>
           <OrderBy
-            orderBy={spec.orderBy}
+            orderBy={spec?.orderBy}
             onChange={(orderBy) => dispatch({ action: "setOrderBy", orderBy })}
           />
         </InputFooter>

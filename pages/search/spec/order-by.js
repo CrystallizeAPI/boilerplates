@@ -12,7 +12,7 @@ const Outer = styled.select`
 `;
 
 export default function OrderBy({ orderBy, onChange }) {
-  const t = useT();
+  // const t = useT();
 
   return (
     <Outer

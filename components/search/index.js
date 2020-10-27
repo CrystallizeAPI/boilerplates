@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import produce from "immer";
-
+import SearchItems from "./items";
 import { simplyFetchFromSearchGraph } from "lib/graphql";
 import { SEARCH_QUERY } from "lib/search";
 import { useOnOutsideClick } from "components/outside-click";
@@ -105,7 +105,6 @@ export default function Search({ children }) {
       query: {
         filter: JSON.stringify({
           searchTerm,
-          productVariants: { isDefault: true },
         }),
       },
     });
@@ -130,23 +129,14 @@ export default function Search({ children }) {
               }
               placeholder="search"
             />
-            {status === "searching" && "..."}
-            <InputButton>➔</InputButton>
+            <InputButton>{status === "searching" ? "..." : "➔"}</InputButton>
           </InputGroup>
           {status !== "idle" && isOpen && searchTerm !== "" && (
             <Result>
               <h3>{searchResult.totalCount} suggestions</h3>
-              <ul style={{ height: 40 * (searchResult.edges.length + 1) }}>
+              <ul style={{ height: 55 * (searchResult.edges.length + 1) }}>
                 {searchResult.edges.map(({ cursor, node }) => (
-                  <li key={cursor}>
-                    <Link
-                      as={node.path}
-                      onClick={() => dispatch({ action: "blue" })}
-                      href="/[...catalogue]"
-                    >
-                      <a>{node.name}</a>
-                    </Link>
-                  </li>
+                  <SearchItems key={cursor} node={node} />
                 ))}
               </ul>
             </Result>

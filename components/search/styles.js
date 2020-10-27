@@ -3,7 +3,7 @@ import styled from "styled-components";
 // import { Spinner } from "ui/spinner";
 
 export const InputGroup = styled.div`
-  border: 1px solid var(--color-text-sub);
+  border: 1px solid #dfdfdf;
   border-radius: 35px;
   margin: 0 auto;
   display: grid;
@@ -43,7 +43,7 @@ export const SearchWrapper = styled.div`
   max-height: 100vh;
   ${({ theme }) => theme.responsive.smAndLess} {
     padding: 0 25px;
-  }1
+  } ;
 `;
 export const SearchLabel = styled.label`
   font-size: 1rem;
@@ -93,9 +93,16 @@ export const Result = styled.div`
     display: block;
     list-style: none;
     margin: 10px 0 0;
-    padding: 0;
+    padding: 0 0px 0 30px;
     overflow: hidden;
-
+    .search-product {
+      &:last-of-type {
+        /* background: blue; */
+      }
+    }
+    /* .search-product:last-child {
+      background: red;
+    } */
     li {
       margin: 0;
       padding: 0;
@@ -104,9 +111,10 @@ export const Result = styled.div`
     a {
       font-size: 0.9rem;
       display: block;
-      padding: 10px 35px;
+      /* padding: 10px 35px; */
       background: transparent;
       border-radius: 0;
+      text-decoration: none;
       &:active,
       &:focus {
         outline: none;
@@ -128,11 +136,14 @@ export const BodyOverlay = styled.div`
 `;
 
 export const CloseBtn = styled.button`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  border: none;
+  background: #fff;
+  height: 40px;
   border-radius: 50%;
   position: absolute;
   right: 30px;
+  cursor: pointer;
   top: 30px;
   ${({ theme }) => theme.responsive.smAndLess} {
     display: none;
@@ -146,8 +157,8 @@ export const CloseBtn = styled.button`
     border-radius: 4px;
     position: absolute;
     right: 10px;
-    width: 30px;
-    height: 3px;
+    width: 20px;
+    height: 2px;
     background: black;
     content: "";
     transition: all 0.1s ease-in-out;

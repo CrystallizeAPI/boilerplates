@@ -38,20 +38,16 @@ export async function getData({ language, searchSpec }) {
 
   return {
     searchData: search,
-    catalogueData: searchPage || null,
     language,
     searchSpec,
   };
 }
 
-export default function SearchPage({ searchData, searchSpec, catalogueData }) {
+export default function SearchPage({ searchData, searchSpec }) {
   const { isFallback, query, asPath } = useRouter();
-  console.log("isFallback", isFallback);
-
   const firstLoad = useRef();
   const [data, setData] = useState(searchData);
   const [spec, dispatch] = useReducer(reducer, searchSpec);
-
   // Initial data changed
   useEffect(() => {
     setData(searchData);
@@ -98,16 +94,14 @@ export default function SearchPage({ searchData, searchSpec, catalogueData }) {
     );
   }
   console.log("data", data);
-  const productEdges = data.edges.filter((e) => e.node.type === "product");
-  const documentEdges = data.edges.filter((e) => e.node.type === "document");
   return (
     <Layout>
       <Outer>
-        {!!productEdges && (
+        {!!data && (
           <>
             {/* <Spec {...data} spec={spec} dispatch={dispatch} /> */}
             <Pagination {...data} navigate={navigate} />
-            <Results {...data} spec={spec} edges={productEdges} />
+            <Results {...data} spec={spec} edges={data.edges} />
             <Pagination {...data} navigate={navigate} />
           </>
         )}
