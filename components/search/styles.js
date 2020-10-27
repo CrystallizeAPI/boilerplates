@@ -51,6 +51,7 @@ export const SearchLabel = styled.label`
   font-weight: 600;
   padding: 0 0 15px;
   display: block;
+  text-align: center;
   ${({ theme }) => theme.responsive.smAndLess} {
     padding: 0 0 15px 25px;
     text-align: left;
@@ -67,9 +68,9 @@ export const Outer = styled.div`
   width: 100%;
   position: relative;
   ${({ theme }) => theme.responsive.smAndLess} {
-    border-top: 1px solid #dfdfdf;
+    /* border-top: 1px solid #dfdfdf; */
     padding-top: 40px;
-    margin-top: 120px;
+    /* margin-top: 120px; */
     max-width: 100%;
   }
 `;

@@ -115,7 +115,6 @@ function VideoPlayer({
   if (!playlists || playlists.length === 0) {
     return null;
   }
-
   return <Outer {...rest} ref={ref} />;
 }
 

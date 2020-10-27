@@ -89,8 +89,22 @@ const Document = ({ name, path }) => {
     </li>
   );
 };
-const Folder = ({}) => {
-  return <Item className="search-folder">Folder</Item>;
+const Folder = ({ name, path }) => {
+  return (
+    <li>
+      <Link href={path}>
+        <a>
+          <Item className="search-folder">
+            <div></div>
+            <Name>
+              {name}
+              <Slug>{path}</Slug>
+            </Name>
+          </Item>
+        </a>
+      </Link>
+    </li>
+  );
 };
 
 export default SearchItems;

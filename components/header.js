@@ -23,12 +23,20 @@ const Outer = styled.header`
   ${({ theme }) => theme.responsive.smPlus} {
     padding: 0px 100px;
   }
+  ${({ theme }) => theme.responsive.xs} {
+    display: grid;
+    grid-template-columns: 1r 1fr;
+    padding: 10px 20px;
+  }
 `;
 
 const Navigation = styled.nav`
   display: flex;
   align-items: center;
   color: ${(p) => p.color};
+  ${({ theme }) => theme.responsive.xs} {
+    height: 50px;
+  }
   /* justify-content: stretch; */
 `;
 const NavLink = styled.span`
@@ -44,10 +52,15 @@ const NavLink = styled.span`
     `
   font-weight: 900;
 `}
-
   ${({ theme }) => theme.responsive.mdPlus} {
     font-size: 18px;
     padding: 0 20px;
+  }
+  ${({ theme }) => theme.responsive.xs} {
+    padding: 0 10px;
+    &:first-child {
+      padding-left: 0;
+    }
   }
 `;
 
@@ -84,6 +97,11 @@ const LogoWrapper = styled.div`
       height: 200px;
     }
   }
+  ${({ theme }) => theme.responsive.xs} {
+    display: grid;
+    grid-row-start: 1;
+    grid-column-start: span 2;
+  }
 `;
 const Header = ({ tint }) => {
   const router = useRouter();
@@ -106,14 +124,14 @@ const Header = ({ tint }) => {
       <Actions>
         <Search>
           <ActionBtn>
-            <IconSearch />
+            <IconSearch fill={tints[tint]} />
           </ActionBtn>
         </Search>
         <ActionBtn>
-          <IconUser />
+          <IconUser fill={tints[tint]} />
         </ActionBtn>
         <ActionBtn>
-          <IconCart />
+          <IconCart fill={tints[tint]} />
         </ActionBtn>
       </Actions>
     </Outer>

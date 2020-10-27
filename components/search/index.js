@@ -129,7 +129,7 @@ export default function Search({ children }) {
               }
               placeholder="search"
             />
-            <InputButton>{status === "searching" ? "..." : "➔"}</InputButton>
+            {/* <InputButton>{status === "searching" ? "..." : "➔"}</InputButton> */}
           </InputGroup>
           {status !== "idle" && isOpen && searchTerm !== "" && (
             <Result>
