@@ -3,8 +3,7 @@ import styled from "styled-components";
 import videojs from "video.js";
 import "dashjs";
 import "videojs-contrib-dash";
-
-import playerCss from "./player-css";
+import "video.js/dist/video-js.css";
 
 const HLS_EXTENSION = /\.(m3u8)($|\?)/i;
 const DASH_EXTENSION = /\.(mpd)($|\?)/i;
@@ -28,9 +27,7 @@ const Outer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
-
-  ${playerCss}
+  z-index: 1;
 
   .video-js {
     height: 100% !important;
@@ -67,10 +64,12 @@ function VideoPlayer({
 
   useEffect(() => {
     const sources =
-      playlists?.map((playlist) => ({
-        type: getVideoType(playlist),
-        src: playlist,
-      })) || [];
+      playlists
+        ?.map((playlist) => ({
+          type: getVideoType(playlist),
+          src: playlist,
+        }))
+        .sort((s) => (HLS_EXTENSION.test(s.src) ? -1 : 1)) || [];
 
     const videoElement = document.createElement("video");
     videoElement.setAttribute("playsinline", true);

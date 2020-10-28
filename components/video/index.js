@@ -1,9 +1,23 @@
 import React, { useRef, useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import is from "styled-is";
 import dynamic from "next/dynamic";
 import Image from "@crystallize/react-image";
 
 import { useIntersectionObserver } from "lib/intersection-observer";
+
+const loaderHideAnim = keyframes`
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    z-index: 0;
+  }
+`;
 
 const Outer = styled.div`
   position: relative;
@@ -16,10 +30,14 @@ const Loader = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${is("$hide")`
+    animation: ${loaderHideAnim} 2000ms forwards;
+  `};
 
   img {
     position: absolute;
@@ -48,7 +66,7 @@ export default function Video({
   const entry = useIntersectionObserver(ref);
 
   function onVideoReady() {
-    setTimeout(() => setVideoIsReady(true), 1000);
+    setVideoIsReady(true);
   }
 
   useEffect(() => {
@@ -56,10 +74,10 @@ export default function Video({
       setLoad(true);
     }
   }, [entry, load]);
-  console.log("load", load);
+
   return (
     <Outer ref={ref} {...rest}>
-      <Loader>
+      <Loader $hide={videoIsReady}>
         <Image {...thumbnails?.[0]} sizes="100vw" />
       </Loader>
       {load && (

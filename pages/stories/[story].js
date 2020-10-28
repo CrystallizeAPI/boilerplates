@@ -272,7 +272,7 @@ export default function Story({ data: initialData, path }) {
                             sizes="50px"
                           />
                         </AuthorPhoto>
-                        <AuthorName itemProps="author">
+                        <AuthorName itemProp="author">
                           {author?.name?.content?.text}
                         </AuthorName>
                         <AuthorRole>{author?.role?.content?.text}</AuthorRole>
@@ -282,15 +282,15 @@ export default function Story({ data: initialData, path }) {
                 )}
               </Content>
             </Section>
-            <div itemProps="articleBody">
+            <div itemProp="articleBody">
               {storyParagraphs.map(({ title, body, images, videos }, i) => {
                 return (
-                  <>
+                  <div key={i}>
                     {i === Math.round(storyParagraphs.length / 2) &&
                       !!featuredProducts && (
                         <FeaturedProducts products={featuredProducts} />
                       )}
-                    <Section images={images} videos={videos} key={i}>
+                    <Section images={images} videos={videos}>
                       <Content mirror={i % 2}>
                         <ContentInner>
                           <SectionHeading>{title?.text}</SectionHeading>
@@ -300,7 +300,7 @@ export default function Story({ data: initialData, path }) {
                         </ContentInner>
                       </Content>
                     </Section>
-                  </>
+                  </div>
                 );
               })}
             </div>
