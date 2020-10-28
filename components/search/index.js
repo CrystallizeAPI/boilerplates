@@ -1,11 +1,9 @@
 import React, { useReducer, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
 import produce from "immer";
 import SearchItems from "./items";
 import { simplyFetchFromSearchGraph } from "lib/graphql";
 import { SEARCH_QUERY } from "lib/search";
 import { useOnOutsideClick } from "components/outside-click";
-import Link from "next/link";
 
 import {
   Outer,
@@ -16,7 +14,6 @@ import {
   Result,
   Input,
   InputGroup,
-  InputButton,
 } from "./styles";
 
 const initialState = {
@@ -61,7 +58,6 @@ const searchReducer = produce(function reducer(draft, { action, ...rest }) {
 });
 
 export default function Search({ children }) {
-  const router = useRouter();
   const outerRef = useRef();
   const searchInput = useRef();
 
@@ -74,6 +70,7 @@ export default function Search({ children }) {
     dispatch({ action: "focus" });
     searchInput.current.focus();
   };
+
   useOnOutsideClick({
     element: outerRef.current,
     onOutsideClick: () => dispatch({ action: "blur" }),
@@ -97,28 +94,17 @@ export default function Search({ children }) {
     }
   }, [searchTerm, status]);
 
-  function onSubmit(e) {
-    e.preventDefault();
-
-    router.push({
-      pathname: "/search",
-      query: {
-        filter: JSON.stringify({
-          searchTerm,
-        }),
-      },
-    });
-
+  const redirecting = () => {
+    dispatch({ action: "setSearchTerm", value: "" });
     dispatch({ action: "blur" });
-  }
-
+  };
   return (
     <>
       <div onClick={() => onClickSearchBtn()}>{children}</div>
       <SearchWrapper isOpen={isOpen}>
         <Outer ref={outerRef}>
           <SearchLabel>Search for something</SearchLabel>
-          <InputGroup as="form" method="get" onSubmit={onSubmit}>
+          <InputGroup as="form" method="get">
             <Input
               ref={searchInput}
               type="search"
@@ -136,7 +122,11 @@ export default function Search({ children }) {
               <h3>{searchResult.totalCount} suggestions</h3>
               <ul style={{ height: 55 * (searchResult.edges.length + 1) }}>
                 {searchResult.edges.map(({ cursor, node }) => (
-                  <SearchItems key={cursor} node={node} />
+                  <SearchItems
+                    key={cursor}
+                    node={node}
+                    redirecting={redirecting}
+                  />
                 ))}
               </ul>
             </Result>

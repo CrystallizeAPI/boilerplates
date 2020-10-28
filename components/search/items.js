@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "@crystallize/react-image";
 import Link from "next/link";
-const Item = styled.li`
+const Item = styled.div`
   width: 100%;
   display: grid;
   height: 55px;
@@ -41,22 +41,27 @@ const Slug = styled.span`
   opacity: 0.6;
   font-weight: 400;
 `;
-const SearchItems = ({ node }) => {
+const SearchItems = ({ node, redirecting }) => {
   // console.log("node", node);
   const renderType = {
-    product: <Product {...node} />,
-    document: <Document {...node} />,
-    folder: <Folder {...node} />,
+    product: <Product {...node} redirecting={redirecting} />,
+    document: <Document {...node} redirecting={redirecting} />,
+    folder: <Folder {...node} redirecting={redirecting} />,
   };
 
   return renderType[node.type];
 };
 
-const Product = ({ name, matchingVariant: { price, images }, path }) => {
+const Product = ({
+  name,
+  matchingVariant: { price, images },
+  path,
+  redirecting,
+}) => {
   return (
     <li>
       <Link href="/shop/[product]" as={path}>
-        <a>
+        <a onClick={() => redirecting()}>
           <Item>
             <ItemImage>
               <Image {...images?.[0]} sizes="100px" />
@@ -72,11 +77,11 @@ const Product = ({ name, matchingVariant: { price, images }, path }) => {
     </li>
   );
 };
-const Document = ({ name, path }) => {
+const Document = ({ name, path, redirecting }) => {
   return (
     <li>
       <Link href="/shop/[product]" as={path}>
-        <a>
+        <a onClick={() => redirecting()}>
           <Item className="search-document">
             <div></div>
             <Name>
@@ -89,11 +94,11 @@ const Document = ({ name, path }) => {
     </li>
   );
 };
-const Folder = ({ name, path }) => {
+const Folder = ({ name, path, redirecting }) => {
   return (
     <li>
       <Link href={path}>
-        <a>
+        <a onClick={() => redirecting()}>
           <Item className="search-folder">
             <div></div>
             <Name>
