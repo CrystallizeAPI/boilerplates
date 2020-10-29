@@ -84,6 +84,7 @@ function VideoPlayer({
         loop,
         muted,
         controls,
+        playsinline: true
       },
       onReady
     );
