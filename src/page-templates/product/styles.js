@@ -35,7 +35,7 @@ export const TopicMap = styled.div`
 `
 
 export const TopicTitle = styled.h3`
-  font-size: 16px;
+  font-size: 1rem;
   opacity: 0.6;
   top: 0;
   height: 40px;

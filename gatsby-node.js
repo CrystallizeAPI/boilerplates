@@ -2,7 +2,7 @@ const path = require(`path`)
 const fs = require("fs")
 
 /**
- * Get all the locaes from the config and
+ * Get all the locales from the config and
  * populate each with the locale resources
  */
 const getLocales = (function () {
@@ -26,7 +26,7 @@ const getLocales = (function () {
           resources,
         }
       } catch (e) {
-        throw new Error(`Cannot find locale resouce (${resourcesPath})`)
+        throw new Error(`Cannot find locale resource (${resourcesPath})`)
       }
     })
 
@@ -38,14 +38,18 @@ const getLocales = (function () {
  * give the root path the correct path e.g.: /en
  */
 exports.onCreatePage = ({ page, actions }) => {
+  const fixedPaths = ["/", "/search", "/404"]
   const { createPage, deletePage } = actions
   const oldPage = Object.assign({}, page)
 
   getLocales().map((locale) => {
-    if (page.path === "/") {
-      page.path = `/${locale.urlPrefix}`
+    if (fixedPaths.includes(page.path.replace(/\/$/, ""))) {
+      page.path = `/${locale.urlPrefix}${page.path}`
+        .replace("//", "/")
+        .replace(/\/$/, "")
+
       deletePage(oldPage)
-      createPage({ ...page, context: { locale } })
+      createPage({ ...page, context: { ...page.context, locale } })
     }
   })
 }

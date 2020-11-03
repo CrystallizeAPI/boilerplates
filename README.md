@@ -47,7 +47,7 @@ This will start up the server on http://localhost:8000 for development.
 
 ### `src/page-templates`
 
-We use the `src/page-components/` directory to hold the actual entry pages
+We use the `src/page-templates/` directory to hold the actual entry pages
 related to query result in `gatsby-node.js`.
 
 ## Deploying Your Project

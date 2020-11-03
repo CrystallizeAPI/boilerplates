@@ -12,7 +12,7 @@ const ShapeComponents = ({ components, overrides }) => {
     return null
   }
   return components
-    .filter(component => component && component.content != null)
+    .filter((component) => component && component.content != null)
     .map(({ type, ...component }, index) => {
       const key = index
       let Component

@@ -8,6 +8,7 @@ export const responsive = new Proxy(
     sm: `@media (min-width: ${screen.smMin}px) and (max-width: ${screen.smMax}px)`,
     mdAndLess: `@media (max-width: ${screen.mdMax}px)`,
     md: `@media (min-width: ${screen.mdMin}px) and (max-width: ${screen.mdMax}px)`,
+    mdAndMore: `@media (min-width: ${screen.mdMin}px)`,
     lg: `@media (min-width: ${screen.lgMin}px)`,
   },
   {

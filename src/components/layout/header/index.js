@@ -3,9 +3,10 @@ import React, { useState } from "react"
 import { IconLogo } from "ui"
 import Link from "components/link"
 
-import { Outer, Nav, Logo, NavList, NavListItem } from "./styles"
+import { Outer, Nav, Logo, NavList, NavListItem, Actions } from "./styles"
 import BurgerButton from "./burger-button"
 import LocaleSwitcher from "./locale-switcher"
+import Search from "./search"
 
 export default function Header({ headerItems }) {
   const [navOpen, setNavOpen] = useState(false)
@@ -32,7 +33,10 @@ export default function Header({ headerItems }) {
             })}
         </NavList>
       </Nav>
-      <LocaleSwitcher />
+      <Actions>
+        <LocaleSwitcher />
+        <Search />
+      </Actions>
       <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
     </Outer>
   )

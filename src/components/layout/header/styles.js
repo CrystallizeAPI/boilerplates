@@ -5,9 +5,9 @@ import { responsive } from "ui"
 
 export const Outer = styled.header`
   text-align: center;
-  padding: 10px 75px;
+  padding: 10px 100px 10px 75px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   max-width: 1500px;
   margin: 0 auto 50px;
@@ -85,3 +85,5 @@ export const NavListItem = styled.li`
     margin: 15px 0;
   }
 `
+
+export const Actions = styled.div``

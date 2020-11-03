@@ -7,6 +7,8 @@ import Layout from "components/layout"
 import Product from "components/category-item"
 import ShapeComponents from "components/shape-components"
 
+import Search from "../page-templates/search"
+
 export const List = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -26,8 +28,13 @@ export const List = styled.div`
   }
 `
 
+function mostChildrenAreProducts(children) {
+  const productsCount = children?.filter((c) => c.type === "product").length
+  return productsCount > children?.length / 2
+}
+
 export default function FolderPage(props) {
-  const { data } = props
+  const { data, location, path } = props
   const {
     crystallize: {
       folder,
@@ -37,6 +44,8 @@ export default function FolderPage(props) {
 
   const { children } = folder
 
+  const renderSearch = mostChildrenAreProducts(children)
+
   return (
     <Layout title={folder.name} headerItems={headerItems}>
       <Outer>
@@ -44,7 +53,8 @@ export default function FolderPage(props) {
           <H1>{folder.name}</H1>
           <ShapeComponents components={folder.components} />
         </Header>
-        {children && (
+        {renderSearch && <Search location={location} path={path} />}
+        {children && !renderSearch && (
           <List>
             {children.map((child) => (
               <Product data={child} key={child.id} />
