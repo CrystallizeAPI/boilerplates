@@ -20,7 +20,7 @@
     "gatsby-source-filesystem": "^2.1.40",
     "gatsby-source-graphql": "^2.6.2",
     "gatsby-transformer-sharp": "^2.3.7",
-    "i18next": "^19.6.0",
+    "i18next": "^19.8.2",
     "lodash": "^4.17.15",
     "polished": "^3.4.2",
     "prop-types": "^15.7.2",

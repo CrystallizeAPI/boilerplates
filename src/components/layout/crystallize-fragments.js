@@ -105,7 +105,11 @@ export const query = graphql`
       id
       name
       sku
-      price
+      priceVariants {
+        price
+        identifier
+        currency
+      }
       stock
       isDefault
       attributes {

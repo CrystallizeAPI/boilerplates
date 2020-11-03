@@ -24,11 +24,6 @@ export const useLocales = () => {
 export function I18nextProvider({ locale = {}, locales = [], children }) {
   const lng = locale.appLanguage || "en-US"
 
-  const currencyFormatter = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: locale.defaultCurrency || "USD",
-  })
-
   i18n.init({
     resources: {
       [lng]: locale.resources || {},
@@ -37,13 +32,16 @@ export function I18nextProvider({ locale = {}, locales = [], children }) {
 
     interpolation: {
       escapeValue: false, // react already safe from xss
-      format: function (value, format) {
+      format: function (value, format, _, { currency }) {
         if (format === "uppercase") {
           return value.toUpperCase()
         }
 
-        if (format === "currency") {
-          return currencyFormatter.format(value)
+        if (format === "currency" && currency) {
+          return new Intl.NumberFormat(locale, {
+            style: "currency",
+            currency,
+          }).format(value)
         }
 
         return value

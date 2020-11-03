@@ -6,7 +6,7 @@
       "urlPrefix": "",
       "appLanguage": "en-US",
       "crystallizeCatalogueLanguage": "en",
-      "defaultCurrency": "USD"
+      "priceVariant": "default"
     }
   ]
 }

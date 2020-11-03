@@ -8,7 +8,7 @@ import { H1, H2, screen, Outer } from "ui"
 import CategoryItem from "components/category-item"
 import VariantSelector from "components/variant-selector"
 import ShapeComponents from "components/shape-components"
-import { useT } from "lib/i18n"
+import { useT, useLocale } from "lib/i18n"
 import { attributesToObject } from "lib/variants"
 
 import Layout from "components/layout"
@@ -30,6 +30,7 @@ import {
 
 const ProductPage = ({ product, defaultVariant }) => {
   const t = useT()
+  const locale = useLocale()
   const [selectedVariant, setSelectedVariant] = useState(defaultVariant)
 
   const onAttributeChange = (attributes, newAttribute) => {
@@ -53,6 +54,13 @@ const ProductPage = ({ product, defaultVariant }) => {
   const selectedVariantImg = (selectedVariant.image || {}).url
   const placeHolderImg = "/images/placeholder-image.png"
 
+  const { price, currency } = selectedVariant.priceVariants.find(
+    (pv) => pv.identifier === locale.priceVariant
+  ) || {
+    price: "n/a",
+    currency: "eur",
+  }
+
   return (
     <Outer>
       <Sections>
@@ -60,10 +68,6 @@ const ProductPage = ({ product, defaultVariant }) => {
           <MediaInner>
             <Img
               src={selectedVariantImg || placeHolderImg}
-              onError={(e) => {
-                e.target.onerror = null
-                e.target.src = placeHolderImg
-              }}
               sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
               alt={product.name}
             />
@@ -88,9 +92,7 @@ const ProductPage = ({ product, defaultVariant }) => {
 
           <ProductFooter>
             <Price>
-              <strong>
-                {t("common.price", { value: selectedVariant.price })}
-              </strong>
+              <strong>{t("common.price", { value: price, currency })}</strong>
             </Price>
           </ProductFooter>
         </Info>
@@ -118,11 +120,11 @@ const ProductPage = ({ product, defaultVariant }) => {
             }
 
             return (
-              <TopicMap>
+              <TopicMap key={topic.id}>
                 <TopicTitle>{topic.name}</TopicTitle>
                 <List>
                   {cells.map((cell) => (
-                    <CategoryItem data={cell.item} key={cell.id} />
+                    <CategoryItem data={cell.item} key={cell.item.id} />
                   ))}
                 </List>
               </TopicMap>
@@ -146,11 +148,7 @@ const ProductPageDataLoader = ({ data: { crystallize } }) => {
 
   return (
     <Layout headerItems={headerItems} title={product.name}>
-      <ProductPage
-        key={product.id}
-        product={product}
-        defaultVariant={defaultVariant}
-      />
+      <ProductPage product={product} defaultVariant={defaultVariant} />
     </Layout>
   )
 }
