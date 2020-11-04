@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 
-import { IconLogo } from "ui"
 import Link from "components/link"
+import ShopLogo from "images/shop-logo.svg"
 
-import { Outer, Nav, Logo, NavList, NavListItem, Actions } from "./styles"
+import { Outer, Nav, Logo, NavList, NavListItem, NavAndActions } from "./styles"
 import BurgerButton from "./burger-button"
 import LocaleSwitcher from "./locale-switcher"
 import Search from "./search"
@@ -15,28 +15,28 @@ export default function Header({ headerItems }) {
     <Outer>
       <Link to="/">
         <Logo>
-          <IconLogo />
+          <img src={ShopLogo} alt="" />
         </Logo>
       </Link>
-      <Nav open={navOpen}>
-        <NavList>
-          {headerItems
-            ?.filter((i) => !i.name.startsWith("_"))
-            .map((headerItem) => {
-              const { name, path } = headerItem
+      <NavAndActions>
+        <Nav open={navOpen}>
+          <NavList>
+            {headerItems
+              ?.filter((i) => !i.name.startsWith("_"))
+              .map((headerItem) => {
+                const { name, path } = headerItem
 
-              return (
-                <NavListItem key={path}>
-                  <Link to={path}>{name}</Link>
-                </NavListItem>
-              )
-            })}
-        </NavList>
-      </Nav>
-      <Actions>
+                return (
+                  <NavListItem key={path}>
+                    <Link to={path}>{name}</Link>
+                  </NavListItem>
+                )
+              })}
+          </NavList>
+        </Nav>
         <LocaleSwitcher />
         <Search />
-      </Actions>
+      </NavAndActions>
       <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
     </Outer>
   )

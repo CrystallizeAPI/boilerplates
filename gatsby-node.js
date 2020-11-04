@@ -62,6 +62,7 @@ exports.createPages = async ({ graphql, actions }) => {
     Article: path.resolve(`src/page-templates/article.js`),
     Product: path.resolve(`src/page-templates/product/index.js`),
     Folder: path.resolve(`src/page-templates/folder.js`),
+    Search: path.resolve(`src/page-templates/search/index.js`),
   }
 
   const locales = getLocales()
@@ -103,6 +104,16 @@ exports.createPages = async ({ graphql, actions }) => {
         component: path.resolve(`src/page-templates/frontpage.js`),
         context: {
           cataloguePath: `/${locale.urlPrefix}`,
+          ...sharedPageProps,
+        },
+      })
+
+      // Create the search page
+      createPage({
+        path: locale.urlPrefix ? `/${locale.urlPrefix}/search` : "/search",
+        component: path.resolve(`src/page-templates/search/index.js`),
+        context: {
+          cataloguePath: "/",
           ...sharedPageProps,
         },
       })
@@ -166,15 +177,42 @@ exports.createPages = async ({ graphql, actions }) => {
         const items = []
         {
           ;(function add({ path, shape, children }) {
+            function mostChildrenAreProducts() {
+              const productsCount = children?.filter(
+                (c) => c.shape.name === "Product"
+              ).length
+              return productsCount > children?.length / 2
+            }
+
             if (path && shape) {
-              // Ensure that we have a template for this shape
-              if (shape.name in templates) {
-                items.push({ path, shape, component: templates[shape.name] })
+              // Folders with mostly products in it will be treated like a search page
+              if (shape.name === "Folder" && mostChildrenAreProducts()) {
+                items.push({
+                  path,
+                  shape,
+                  component: templates.Search,
+                  componentName: "Search",
+                })
               } else {
-                items.push({ path, shape, component: templates.Folder })
-                console.log(
-                  `No template was found for shape "${shape.name}". "${path}" is rendered using the Folder template`
-                )
+                // Ensure that we have a template for this shape
+                if (shape.name in templates) {
+                  items.push({
+                    path,
+                    shape,
+                    component: templates[shape.name],
+                    componentName: shape.name,
+                  })
+                } else {
+                  items.push({
+                    path,
+                    shape,
+                    component: templates.Folder,
+                    componentName: "Folder",
+                  })
+                  console.log(
+                    `No template was found for shape "${shape.name}". "${path}" is rendered using the Folder template`
+                  )
+                }
               }
             }
             if (children) {
@@ -183,7 +221,33 @@ exports.createPages = async ({ graphql, actions }) => {
           })(data.crystallize.catalogue)
         }
 
-        items.forEach(({ path, component }) => {
+        items.forEach(({ path, component, componentName }) => {
+          let searchProps = {}
+          if (componentName === "Search") {
+            /**
+             * IMPORTANT: this default search specification
+             * needs to be the same as the `defaultSpec`
+             * in src/lib/search.js
+             */
+            searchProps = {
+              first: 24,
+              orderBy: {
+                field: "ITEM_NAME",
+                direction: "ASC",
+              },
+              filter: {
+                type: "PRODUCT",
+                priceVariant: locale.priceVariant || "default",
+                productVariants: { isDefault: true },
+                include: {
+                  paths: [path],
+                },
+              },
+              include: {},
+            }
+            searchProps.aggregationsFilter = searchProps.filter
+          }
+
           // Create pages for each node
           createPage({
             path: locale.urlPrefix ? `/${locale.urlPrefix}${path}` : path,
@@ -191,6 +255,7 @@ exports.createPages = async ({ graphql, actions }) => {
             context: {
               cataloguePath: path,
               ...sharedPageProps,
+              ...searchProps,
               // Add optional context data to be inserted
               // as props into the page component..
               //

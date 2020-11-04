@@ -5,10 +5,10 @@ import { Input, InputGroup, InputButton, responsive } from "ui"
 import { useT } from "lib/i18n"
 
 const Outer = styled.div`
-  padding: 0 15px;
+  margin-bottom: 30px;
 
   ${responsive.mdAndMore} {
-    padding: 0;
+    margin-bottom: 0;
   }
 `
 

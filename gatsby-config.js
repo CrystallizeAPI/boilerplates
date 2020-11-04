@@ -27,6 +27,7 @@ module.exports = {
           components: "./components", // <- will become ./src/components
           ui: "./ui", // <- will become ./src/components
           lib: "./lib", // <- will become ./src/components
+          images: "./images", // <- will become ./src/components
         },
       },
     },
@@ -36,7 +37,7 @@ module.exports = {
         name: `Crystallize`,
         short_name: `Crystallize`,
         start_url: `/`,
-        icon: `src/images/crystallize-icon.png`,
+        icon: `src/images/shop-logo.svg`,
         background_color: `#f3f4f6`,
         theme_color: `#B7E2E4`,
         display: `minimal-ui`,
@@ -51,6 +52,17 @@ module.exports = {
         fieldName: "crystallize",
         // URL to query from
         url: `https://api.crystallize.com/${process.env.CRYSTALLIZE_TENANT_ID}/catalogue`,
+      },
+    },
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        // This type will contain remote schema Query type
+        typeName: "CRYSTALLIZE_SEARCH",
+        // This is the field under which it's accessible
+        fieldName: "crystallize_search",
+        // URL to query from
+        url: `https://api.crystallize.com/${process.env.CRYSTALLIZE_TENANT_ID}/search`,
       },
     },
     "gatsby-plugin-styled-components",

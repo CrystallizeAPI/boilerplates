@@ -11,9 +11,11 @@ export const Outer = styled.header`
   align-items: center;
   max-width: 1500px;
   margin: 0 auto 50px;
+  position: relative;
+  z-index: 11;
 
   ${responsive.xs} {
-    flex-direction: column;
+    padding: 15px 75px 15px 15px;
   }
 `
 
@@ -24,6 +26,14 @@ export const Logo = styled.div`
   img,
   svg {
     height: 100%;
+  }
+`
+
+export const NavAndActions = styled.div`
+  ${responsive.mdAndMore} {
+    margin-left: 30px;
+    flex-grow: 1;
+    display: flex;
   }
 `
 
@@ -85,5 +95,3 @@ export const NavListItem = styled.li`
     margin: 15px 0;
   }
 `
-
-export const Actions = styled.div``

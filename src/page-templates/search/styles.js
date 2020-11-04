@@ -46,8 +46,9 @@ export const Select = styled.select`
   padding: 10px 0;
   outline: none;
   border: none;
-  width: 160px;
+  width: auto;
   background: transparent;
+  font-size: 1rem;
 `
 
 export const PaginationWrapper = styled.div`

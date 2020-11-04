@@ -15,6 +15,7 @@ import {
 
 import Price from "./price"
 import SingleFacetValue from "./single-facet-value"
+import SearchBox from "./search-box"
 
 function groupAttributes({ variantAttributes = [] }) {
   const groups = []
@@ -43,6 +44,16 @@ function Facets({ changeQuery, spec, aggregations, totalResults }) {
   const { priceRange } = spec.filter.productVariants
   const { price } = aggregations
   const [show, setShow] = useState(false)
+
+  const handleSearchTermChange = (value) => {
+    changeQuery((query) => {
+      if (value) {
+        query.searchTerm = value
+      } else {
+        delete query.searchTerm
+      }
+    })
+  }
 
   const onPriceChange = (priceRange) => {
     changeQuery((query) => {
@@ -102,6 +113,10 @@ function Facets({ changeQuery, spec, aggregations, totalResults }) {
         </FacetsMobileButton>
       </FacetsMobileButtonWrap>
       <FacetsWrapper $show={show}>
+        <SearchBox
+          searchTerm={spec.filter.searchTerm}
+          onChange={handleSearchTermChange}
+        />
         <Facet>
           <FacetTitle>{t("search.facets.price.title")}</FacetTitle>
           <Price

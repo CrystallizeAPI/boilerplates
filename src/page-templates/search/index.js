@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react"
 import PropTypes from "prop-types"
-import { navigate } from "gatsby"
+import { navigate, graphql } from "gatsby"
 import produce from "immer"
 
 import { useT, useLocale } from "lib/i18n"
 import { doSearch } from "lib/api"
 import { SEARCH_QUERY, urlToSpec, queryStringToObject } from "lib/search"
+import Layout from "components/layout"
 
 import { Wrapper, SearchFooter, Header } from "./styles"
 import OrderBy from "./order-by"
 import Results from "./results"
 import Facets from "./facets"
-import SearchBox from "./search-box"
 
 function cleanFilterForTotalAggregations(filter) {
   return produce(filter, (draft) => {
@@ -41,11 +41,19 @@ async function loadPage(spec) {
 }
 
 function Search(props) {
-  const { location, path } = props
+  const {
+    data: { crystallize, crystallize_search } = {},
+    location,
+    path,
+  } = props
+
   const t = useT()
   const [firstLoad, setFirstLoad] = useState(false)
   const locale = useLocale()
-  const [data, setData] = useState(undefined)
+  const [data, setData] = useState({
+    search: crystallize_search?.search,
+    aggregations: crystallize_search?.aggregations?.aggregations,
+  })
   const query = location.search
 
   /**
@@ -68,6 +76,7 @@ function Search(props) {
   useEffect(() => {
     if (!firstLoad) {
       setFirstLoad(true)
+      return
     }
 
     loadPageCb(location.search)
@@ -87,7 +96,9 @@ function Search(props) {
     const pathname = location.pathname.replace(/\/$/, "")
     const newSearchString = new URLSearchParams(newQuery).toString()
 
-    navigate(`${pathname}/?${newSearchString}`, { replace: true })
+    navigate(`${pathname}${newSearchString ? `?${newSearchString}` : ""}`, {
+      replace: true,
+    })
   }
 
   function changePage(direction) {
@@ -102,17 +113,7 @@ function Search(props) {
     }
   }
 
-  const handleSearchTerm = (value) => {
-    changeQuery((query) => {
-      if (value) {
-        query.searchTerm = value
-      } else {
-        delete query.searchTerm
-      }
-    })
-  }
-
-  function handleOrderBy(orderBy, index) {
+  function handleOrderByChange(orderBy, index) {
     changeQuery((query) => {
       if (index > 0) {
         query.orderby = orderBy.value
@@ -122,38 +123,51 @@ function Search(props) {
     })
   }
 
+  if (!data.search) {
+    return (
+      <Layout
+        title={crystallize?.folder?.name || "Search"}
+        headerItems={crystallize?.headerItems.children}
+        loading
+      />
+    )
+  }
+
+  console.log(crystallize)
+
   return (
-    <Wrapper>
-      <Header>
-        <SearchBox
-          searchTerm={spec.filter.searchTerm}
-          onChange={handleSearchTerm}
+    <Layout
+      title={crystallize?.folder?.name || "Search"}
+      headerItems={crystallize?.headerItems.children}
+    >
+      <Wrapper>
+        <Header>
+          <SearchFooter>
+            {data && (
+              <h3>
+                {t("search.foundResults", {
+                  count:
+                    spec.filter.searchTerm !== "searching" &&
+                    data.search.aggregations.totalResults,
+                })}
+              </h3>
+            )}
+            <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
+          </SearchFooter>
+        </Header>
+        <Facets
+          aggregations={data?.aggregations ?? {}}
+          changeQuery={changeQuery}
+          totalResults={data?.search?.aggregations?.totalResults}
+          spec={spec}
         />
-        <SearchFooter>
-          {data && (
-            <h3>
-              {t("search.foundResults", {
-                count:
-                  spec.filter.searchTerm !== "searching" &&
-                  data.search.aggregations.totalResults,
-              })}
-            </h3>
-          )}
-          <OrderBy orderBy={spec.orderBy} onChange={handleOrderBy} />
-        </SearchFooter>
-      </Header>
-      <Facets
-        aggregations={data?.aggregations ?? {}}
-        changeQuery={changeQuery}
-        totalResults={data?.search?.aggregations?.totalResults}
-        spec={spec}
-      />
-      <Results
-        edges={data?.search?.edges ?? []}
-        navigate={changePage}
-        pageInfo={data?.search?.pageInfo ?? {}}
-      />
-    </Wrapper>
+        <Results
+          edges={data?.search?.edges ?? []}
+          navigate={changePage}
+          pageInfo={data?.search?.pageInfo ?? {}}
+        />
+      </Wrapper>
+    </Layout>
   )
 }
 
@@ -165,3 +179,109 @@ Search.propTypes = {
 }
 
 export default Search
+
+export const query = graphql`
+  query getSearchPage(
+    $cataloguePath: String!
+    $crystallizeCatalogueLanguage: String!
+    $first: Int
+    $after: String
+    $orderBy: CRYSTALLIZE_SEARCH_OrderBy
+    $filter: CRYSTALLIZE_SEARCH_CatalogueSearchFilter
+    $aggregationsFilter: CRYSTALLIZE_SEARCH_CatalogueSearchFilter
+  ) {
+    crystallize {
+      headerItems: catalogue(
+        language: $crystallizeCatalogueLanguage
+        path: "/"
+      ) {
+        children {
+          name
+          path
+          language
+        }
+      }
+
+      folder: catalogue(
+        language: $crystallizeCatalogueLanguage
+        path: $cataloguePath
+      ) {
+        ...crystallize_item
+
+        children {
+          ...crystallize_item
+          ...crystallize_product
+        }
+      }
+    }
+
+    crystallize_search {
+      aggregations: search(filter: $aggregationsFilter) {
+        aggregations {
+          price {
+            min
+            max
+          }
+          variantAttributes {
+            attribute
+            value
+            count
+          }
+        }
+      }
+
+      search(
+        language: $crystallizeCatalogueLanguage
+        first: $first
+        after: $after
+        orderBy: $orderBy
+        filter: $filter
+      ) {
+        aggregations {
+          totalResults
+          price {
+            min
+            max
+          }
+          variantAttributes {
+            attribute
+            value
+            count
+          }
+        }
+        pageInfo {
+          totalNodes
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+            path
+            type
+            ... on CRYSTALLIZE_SEARCH_Product {
+              matchingVariant {
+                price
+                attributes {
+                  attribute
+                  value
+                }
+                images {
+                  url
+                  variants {
+                    width
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`

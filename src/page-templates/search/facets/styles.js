@@ -41,7 +41,7 @@ export const FacetsWrapper = styled.div`
       z-index: 99;
       overflow-x: auto;
       background: #fff;
-      padding: 100px 15px;
+      padding: 50px 15px 100px;
     `};
   }
 
@@ -58,6 +58,13 @@ export const Facet = styled.div`
 
   &:not(:last-child) {
     margin-bottom: 35px;
+  }
+
+  ${responsive.smAndLess} {
+    &:first-child {
+      border: none;
+      padding-top: 0;
+    }
   }
 `
 

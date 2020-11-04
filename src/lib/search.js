@@ -1,5 +1,13 @@
 import produce from "immer"
 
+/**
+ * IMPORTANT: This query must match the `query` in
+ * page-templates/search/index.js.
+ * Note that custom Crystallize Graphql Scalars need
+ * to be prefixed with CRYSTALLIZE_SEARCH.
+ * E.g.: Product here becomes CRYSTALLIZE_SEARCH_Product
+ * in page-templates/search/index.js.
+ */
 export const SEARCH_QUERY = `
   query CATALOGUE_SEARCH(
     $first: Int
@@ -21,7 +29,7 @@ export const SEARCH_QUERY = `
         }
       }
     }
-
+  
     search(first: $first, after: $after, orderBy: $orderBy, filter: $filter) {
       aggregations {
         totalResults
@@ -97,7 +105,10 @@ export const orderByOptions = [
   },
 ].map((o) => ({ value: `${o.field}_${o.direction}`, ...o }))
 
-// Default reducer state
+/**
+ * IMPORTANT: this needs to be the same as the
+ * `defaultSearchSpec` in gatsby-node.js
+ */
 export const defaultSpec = {
   first: 24,
   orderBy: {

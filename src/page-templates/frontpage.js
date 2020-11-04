@@ -13,6 +13,10 @@ const StyledGrid = styled(Grid)`
 
   @media (max-width: 767px) {
     grid-template-columns: 1fr !important;
+
+    > div {
+      grid-area: unset !important;
+    }
   }
 `
 
