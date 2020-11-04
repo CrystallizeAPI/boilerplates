@@ -178,10 +178,10 @@ exports.createPages = async ({ graphql, actions }) => {
         {
           ;(function add({ path, shape, children }) {
             function mostChildrenAreProducts() {
-              const productsCount = children?.filter(
-                (c) => c.shape.name === "Product"
-              ).length
-              return productsCount > children?.length / 2
+              const c = children || []
+              const productsCount = c.filter((c) => c.shape.name === "Product")
+                .length
+              return productsCount > c.length / 2
             }
 
             if (path && shape) {
