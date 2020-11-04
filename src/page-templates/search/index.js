@@ -133,8 +133,6 @@ function Search(props) {
     )
   }
 
-  console.log(crystallize)
-
   return (
     <Layout
       title={crystallize?.folder?.name || "Search"}

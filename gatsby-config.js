@@ -51,7 +51,7 @@ module.exports = {
         // This is the field under which it's accessible
         fieldName: "crystallize",
         // URL to query from
-        url: `https://api.crystallize.com/${process.env.CRYSTALLIZE_TENANT_ID}/catalogue`,
+        url: `https://api.crystallize.com/${process.env.GATSBY_CRYSTALLIZE_TENANT_ID}/catalogue`,
       },
     },
     {
@@ -62,7 +62,7 @@ module.exports = {
         // This is the field under which it's accessible
         fieldName: "crystallize_search",
         // URL to query from
-        url: `https://api.crystallize.com/${process.env.CRYSTALLIZE_TENANT_ID}/search`,
+        url: `https://api.crystallize.com/${process.env.GATSBY_CRYSTALLIZE_TENANT_ID}/search`,
       },
     },
     "gatsby-plugin-styled-components",
