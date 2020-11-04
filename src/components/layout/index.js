@@ -18,7 +18,7 @@ const Layout = ({ headerItems, children, title }) => {
       <SEO title={title} />
       <Header headerItems={headerItems} />
       <main>{children}</main>
-      <footer style={{ margin: "2rem 0" }}>
+      <footer style={{ margin: "4rem 0 2rem", textAlign: "center" }}>
         <Outer>
           <span
             dangerouslySetInnerHTML={{

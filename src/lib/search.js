@@ -10,13 +10,17 @@ import produce from "immer"
  */
 export const SEARCH_QUERY = `
   query CATALOGUE_SEARCH(
+    $language: String
     $first: Int
     $after: String
     $orderBy: OrderBy
     $filter: CatalogueSearchFilter
     $aggregationsFilter: CatalogueSearchFilter
   ) {
-    aggregations: search(filter: $aggregationsFilter) {
+    aggregations: search(
+      language: $language
+      filter: $aggregationsFilter
+    ) {
       aggregations {
         price {
           min
@@ -30,7 +34,13 @@ export const SEARCH_QUERY = `
       }
     }
   
-    search(first: $first, after: $after, orderBy: $orderBy, filter: $filter) {
+    search(
+      language: $language
+      first: $first
+      after: $after
+      orderBy: $orderBy
+      filter: $filter
+    ) {
       aggregations {
         totalResults
         price {
@@ -118,7 +128,6 @@ export const defaultSpec = {
   filter: {
     priceVariant: "default",
   },
-  include: {},
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -142,7 +151,12 @@ export function urlToSpec({ query: q, asPath }, locale) {
     draft.filter.productVariants = {}
 
     if (asPath) {
-      const path = asPath.split("?")[0]
+      let path = asPath.split("?")[0]
+
+      if (locale.urlPrefix) {
+        path = path.replace(`/${locale.urlPrefix}/`, "/")
+      }
+
       if (path !== "/search") {
         if (!draft.filter.include) {
           draft.filter.include = {}

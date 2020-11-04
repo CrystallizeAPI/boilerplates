@@ -34,12 +34,13 @@ export const NavAndActions = styled.div`
     margin-left: 30px;
     flex-grow: 1;
     display: flex;
+    align-items: center;
   }
 `
 
 export const Nav = styled.nav`
   display: flex;
-  margin: 10px 0 0 15px;
+  margin: 0;
   width: 100%;
   border-left: 1px solid #dfdfdf;
   padding-left: 15px;

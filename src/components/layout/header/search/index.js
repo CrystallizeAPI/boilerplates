@@ -1,11 +1,12 @@
 import React, { useReducer, useEffect, useRef } from "react"
 import produce from "immer"
-import { navigate, Link } from "gatsby"
+import { navigate } from "gatsby"
 
-import { useT } from "lib/i18n"
+import { useT, useLocale } from "lib/i18n"
 import { doSearch } from "lib/api"
 import { useOnOutsideClick } from "components/outside-click"
 import { defaultSpec, SEARCH_QUERY } from "lib/search"
+import Link from "components/link"
 
 import { Input, InputGroup, InputButton, InputSpinner } from "ui"
 import {
@@ -33,6 +34,8 @@ const initialState = {
   },
 }
 
+initialState.filter.searchTerm = ""
+
 const searchReducer = produce(function reducer(draft, { action, ...rest }) {
   switch (action) {
     case SET_SEARCH_TERM: {
@@ -47,8 +50,7 @@ const searchReducer = produce(function reducer(draft, { action, ...rest }) {
     }
 
     case SET_RESULT: {
-      draft.searchResult.items =
-        rest.edges?.map(({ node }) => ({ ...node })) ?? []
+      draft.searchResult.items = rest.edges || []
       draft.searchResult.totalCount = rest.aggregations.totalResults
       draft.status = "got-results"
       break
@@ -60,8 +62,10 @@ const searchReducer = produce(function reducer(draft, { action, ...rest }) {
     }
 
     case BLUR: {
-      draft.isOpen = false
-      document.activeElement.blur()
+      if (draft.isOpen) {
+        draft.isOpen = false
+        document.activeElement.blur()
+      }
       break
     }
 
@@ -75,6 +79,7 @@ export default function Search() {
   const t = useT()
   const outerRef = useRef()
   const searchInput = useRef()
+  const locale = useLocale()
 
   const [{ status, searchResult, isOpen, ...spec }, dispatch] = useReducer(
     searchReducer,
@@ -99,6 +104,7 @@ export default function Search() {
           variables: {
             ...spec,
             aggregationsFilter: spec.filter,
+            language: locale.crystallizeCatalogueLanguage,
           },
         })
 
@@ -113,7 +119,7 @@ export default function Search() {
     if (status === "searching") {
       search()
     }
-  }, [spec, status])
+  }, [spec, status, locale])
 
   function onSubmit(e) {
     e.preventDefault()
@@ -175,13 +181,13 @@ export default function Search() {
             <Result>
               <h3>{searchResult.totalCount} suggestions</h3>
               <ul style={{ height: 40 * (searchResult.items.length + 1) }}>
-                {searchResult.items.map((item) => (
-                  <li key={item.path}>
+                {searchResult.items.map(({ cursor, node }) => (
+                  <li key={cursor}>
                     <Link
-                      to={item.path}
+                      to={node.path}
                       onClick={() => dispatch({ action: BLUR })}
                     >
-                      {item.name}
+                      {node.name}
                     </Link>
                   </li>
                 ))}

@@ -19,6 +19,7 @@ module.exports = {
     layout: {
       builtWith: "Built with {{- link}}",
       poweredBy: "Powered by {{- link}}",
+      searchPlaceholder: "Search",
     },
     search: {
       foundResults: "Found {{count}} matching result",

@@ -31,16 +31,16 @@ function Price({ min, max, value, onChange }) {
     onChange(priceValue)
   }
 
-  const onMinChange = (min) => {
+  function onMinChange(min) {
     onChange({
       min,
-      max: value.max,
+      max: priceValue.max > min ? priceValue.max : max,
     })
   }
 
-  const onMaxChange = (max) => {
+  function onMaxChange(max) {
     onChange({
-      min: value.min,
+      min: priceValue.min < max ? priceValue.min : min,
       max,
     })
   }

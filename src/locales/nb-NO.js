@@ -19,13 +19,14 @@ module.exports = {
     layout: {
       builtWith: "Bygget med {{- link}}",
       poweredBy: "Kjører på {{- link}}",
+      searchPlaceholder: "Søk",
     },
     search: {
       foundResults: "Fant {{count}} resultater",
       orderTitle: "Sorter etter",
       order: {
-        ITEM_NAME_ASC: "Nanv stigende",
-        ITEM_NAME_DESC: "Nanv synkende",
+        ITEM_NAME_ASC: "Navn stigende",
+        ITEM_NAME_DESC: "Navn synkende",
         PRICE_ASC: "Pris stigende",
         PRICE_DESC: "Pris synkende",
         STOCK_ASC: "Lagerbeholding stigende",
