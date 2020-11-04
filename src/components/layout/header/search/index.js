@@ -61,6 +61,7 @@ const searchReducer = produce(function reducer(draft, { action, ...rest }) {
 
     case BLUR: {
       draft.isOpen = false
+      document.activeElement.blur()
       break
     }
 
@@ -117,7 +118,11 @@ export default function Search() {
   function onSubmit(e) {
     e.preventDefault()
 
-    navigate(`/search?searchTerm=${spec.filter.searchTerm || ""}`)
+    if (spec.filter.searchTerm) {
+      navigate(`/search?searchTerm=${spec.filter.searchTerm || ""}`)
+    } else {
+      navigate(`/search`)
+    }
 
     dispatch({ action: BLUR })
   }

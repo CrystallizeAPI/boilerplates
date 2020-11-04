@@ -15,30 +15,24 @@ export const Wrapper = styled.div`
     grid-gap: 40px;
     grid-template-columns: 300px 1fr 1fr 1fr;
     grid-template-areas:
-      "spec spec spec spec "
+      "facets spec spec spec "
       "facets products products products ";
   }
 `
 export const Header = styled.header`
-  ${responsive.mdAndMore} {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    grid-gap: 25px;
-    align-items: center;
-    grid-area: spec;
-  }
-`
-
-export const SearchFooter = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 0 15px;
-  margin: 15px 0;
 
   h3 {
     font-weight: 600;
     color: #000;
+  }
+
+  ${responsive.mdAndMore} {
+    padding: 0;
+    grid-area: spec;
   }
 `
 

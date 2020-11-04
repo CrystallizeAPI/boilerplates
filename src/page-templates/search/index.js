@@ -8,7 +8,7 @@ import { doSearch } from "lib/api"
 import { SEARCH_QUERY, urlToSpec, queryStringToObject } from "lib/search"
 import Layout from "components/layout"
 
-import { Wrapper, SearchFooter, Header } from "./styles"
+import { Wrapper, Header } from "./styles"
 import OrderBy from "./order-by"
 import Results from "./results"
 import Facets from "./facets"
@@ -140,18 +140,16 @@ function Search(props) {
     >
       <Wrapper>
         <Header>
-          <SearchFooter>
-            {data && (
-              <h3>
-                {t("search.foundResults", {
-                  count:
-                    spec.filter.searchTerm !== "searching" &&
-                    data.search.aggregations.totalResults,
-                })}
-              </h3>
-            )}
-            <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
-          </SearchFooter>
+          {data && (
+            <h3>
+              {t("search.foundResults", {
+                count:
+                  spec.filter.searchTerm !== "searching" &&
+                  data.search.aggregations.totalResults,
+              })}
+            </h3>
+          )}
+          <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
         </Header>
         <Facets
           aggregations={data?.aggregations ?? {}}
