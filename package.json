@@ -7,7 +7,7 @@
   "dependencies": {
     "@crystallize/content-transformer": "^5.0.0",
     "@crystallize/grid-renderer": "^2.1.1",
-    "@crystallize/react-image": "^3.0.5",
+    "@crystallize/react-image": "^4.0.0",
     "@videojs/vhs-utils": "^2.2.1",
     "babel-plugin-styled-components": "^1.10.6",
     "dashjs": "^3.1.3",

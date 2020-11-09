@@ -51,7 +51,7 @@ const ProductPage = ({ product, defaultVariant }) => {
   const description = product.components.find((c) => c.name === "Description")
   const { topics } = product
 
-  const selectedVariantImg = (selectedVariant.image || {}).url
+  const selectedVariantImg = (selectedVariant.images || [])[0]
   const placeHolderImg = "/images/placeholder-image.png"
 
   const { price, currency } = selectedVariant.priceVariants.find(
@@ -66,11 +66,19 @@ const ProductPage = ({ product, defaultVariant }) => {
       <Sections>
         <Media>
           <MediaInner>
-            <Img
-              src={selectedVariantImg || placeHolderImg}
-              sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
-              alt={product.name}
-            />
+            {selectedVariantImg ? (
+              <Img
+                {...selectedVariantImg}
+                sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
+                alt={product.name}
+              />
+            ) : (
+              <Img
+                src={placeHolderImg}
+                sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
+                alt={product.name}
+              />
+            )}
           </MediaInner>
         </Media>
         <Info>

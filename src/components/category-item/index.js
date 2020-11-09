@@ -50,7 +50,7 @@ export default function CategoryItem({ data, gridCell, gridTotalColSpan }) {
     )
   }
 
-  const { priceVariants, image } = variants
+  const { priceVariants, images } = variants
     ? variants.find((variant) => variant.isDefault)
     : {}
 
@@ -68,7 +68,7 @@ export default function CategoryItem({ data, gridCell, gridTotalColSpan }) {
           <span>{name}</span>
         </ContentLine>
         <ImageWrapper>
-          <Img {...image} alt={name} sizes={imageSizes} />
+          <Img {...images[0]} alt={name} sizes={imageSizes} />
         </ImageWrapper>
         <ContentLine right>
           <Price>{t("common.price", { value: price, currency })}</Price>

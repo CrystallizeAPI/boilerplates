@@ -1,8 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import produce from "immer"
 
 import { useT } from "lib/i18n"
-import { Button } from "ui"
+import { screen, Button } from "ui"
 
 import {
   FacetsMobileButtonWrap,

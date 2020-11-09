@@ -116,13 +116,8 @@ export const query = graphql`
         attribute
         value
       }
-      image {
-        url
-        altText
-        variants {
-          url
-          width
-        }
+      images {
+        ...crystallize_image
       }
       subscriptionPlans {
         id
