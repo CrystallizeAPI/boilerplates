@@ -9,20 +9,17 @@ export const query = graphql`
     url
     altText
     variants {
+      key
       url
       width
+      height
     }
   }
   fragment crystallize_video on CRYSTALLIZE_Video {
     title
     playlists
     thumbnails {
-      key
-      url
-      variants {
-        url
-        width
-      }
+      ...crystallize_image
     }
   }
   fragment crystallize_imageContent on CRYSTALLIZE_ImageContent {
