@@ -1,5 +1,5 @@
 require("dotenv").config({
-  path: `crystallize-config`,
+  path: `.env`,
 })
 
 module.exports = {
