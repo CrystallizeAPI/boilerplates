@@ -45,6 +45,32 @@ function Facets({ changeQuery, spec, aggregations, totalResults }) {
   const { price } = aggregations
   const [show, setShow] = useState(false)
 
+  // Auto hide mobile facets filter if view is changed to desktop
+  useEffect(() => {
+    function onMediaMatch(evt) {
+      if (evt.matches && show) {
+        setShow(false)
+      }
+    }
+
+    const matcher = matchMedia(`(min-width: ${screen.md}px)`)
+
+    const isModern = "addEventListener" in matcher
+    if (isModern) {
+      matcher.addEventListener("change", onMediaMatch)
+    } else {
+      matcher.addListener(onMediaMatch)
+    }
+
+    return () => {
+      if (isModern) {
+        matcher.removeEventListener("change", onMediaMatch)
+      } else {
+        matcher.removeListener(onMediaMatch)
+      }
+    }
+  }, [show, setShow])
+
   const handleSearchTermChange = (value) => {
     changeQuery((query) => {
       if (value) {
