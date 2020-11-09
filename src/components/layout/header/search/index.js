@@ -34,6 +34,9 @@ const initialState = {
   },
 }
 
+// Only present the default product variants
+initialState.filter.productVariants = { isDefault: true }
+
 initialState.filter.searchTerm = ""
 
 const searchReducer = produce(function reducer(draft, { action, ...rest }) {
