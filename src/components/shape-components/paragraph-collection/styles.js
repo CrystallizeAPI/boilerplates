@@ -17,6 +17,7 @@ export const Body = styled.div`
 export const Images = styled.div`
   img {
     max-height: 300px;
+    width: auto;
     margin: 15px 0;
   }
 `
