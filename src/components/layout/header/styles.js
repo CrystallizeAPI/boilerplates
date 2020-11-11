@@ -15,6 +15,7 @@ export const Outer = styled.header`
   ${responsive.smAndLess} {
     padding: 10px 90px 10px 20px;
     justify-content: space-between;
+    position: relative;
   }
 `
 

@@ -12,7 +12,7 @@ export const Outer = styled(O)`
   padding: 0px 75px;
   max-width: 1600px;
   ${responsive.smAndLess} {
-    padding: 10px 90px 10px 20px;
+    padding: 10px 10px 10px 20px;
     justify-content: space-between;
   }
 `
