@@ -1,14 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types"
-
+import styled from "styled-components"
 import Header from "./header"
-import { Outer } from "ui"
+import { Outer as O } from "ui"
 import GlobalStyle from "ui/global"
 import SEO from "components/seo"
 import { useT } from "lib/i18n"
 
 export * from "./crystallize-fragments"
 
+const Outer = styled(O)`
+  min-height: auto;
+`
 const Layout = ({ headerItems, children, title }) => {
   const t = useT()
 

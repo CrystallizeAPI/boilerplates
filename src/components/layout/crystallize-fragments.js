@@ -22,6 +22,7 @@ export const query = graphql`
       ...crystallize_image
     }
   }
+
   fragment crystallize_imageContent on CRYSTALLIZE_ImageContent {
     images {
       ...crystallize_image
@@ -39,6 +40,15 @@ export const query = graphql`
   fragment crystallize_richTextContent on CRYSTALLIZE_RichTextContent {
     json
   }
+  fragment crystallize_propertiesTableContent on CRYSTALLIZE_PropertiesTableContent {
+    sections {
+      title
+      properties {
+        key
+        value
+      }
+    }
+  }
 
   fragment crystallize_paragraphCollectionContent on CRYSTALLIZE_ParagraphCollectionContent {
     paragraphs {
@@ -53,6 +63,38 @@ export const query = graphql`
       }
       videos {
         ...crystallize_video
+      }
+    }
+  }
+
+  fragment crystallize_gridRelations on CRYSTALLIZE_GridRelationsContent {
+    grids {
+      name
+      rows {
+        columns {
+          layout {
+            rowspan
+            colspan
+          }
+          itemType
+          itemId
+          item {
+            id
+            name
+            path
+            type
+            language
+            ...crystallize_product
+            components {
+              name
+              type
+              content {
+                ...crystallize_imageContent
+                ...crystallize_videoContent
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -85,6 +127,8 @@ export const query = graphql`
         ...crystallize_imageContent
         ...crystallize_videoContent
         ...crystallize_paragraphCollectionContent
+        ...crystallize_propertiesTableContent
+        ...crystallize_gridRelations
       }
     }
   }

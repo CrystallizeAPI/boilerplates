@@ -59,7 +59,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // Map Crystallize shape names to the page templates
   const templates = {
-    Article: path.resolve(`src/page-templates/article.js`),
+    Article: path.resolve(`src/page-templates/article/index.js`),
     Product: path.resolve(`src/page-templates/product/index.js`),
     Folder: path.resolve(`src/page-templates/folder.js`),
     Search: path.resolve(`src/page-templates/search/index.js`),

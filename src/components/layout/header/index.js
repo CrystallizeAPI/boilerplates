@@ -18,22 +18,22 @@ export default function Header({ headerItems }) {
           <img src={ShopLogo} alt="" />
         </Logo>
       </Link>
-      <NavAndActions>
-        <Nav open={navOpen}>
-          <NavList>
-            {headerItems
-              ?.filter((i) => !i.name.startsWith("_"))
-              .map((headerItem) => {
-                const { name, path } = headerItem
+      <Nav open={navOpen}>
+        <NavList>
+          {headerItems
+            ?.filter((i) => !i.name.startsWith("_"))
+            .map((headerItem) => {
+              const { name, path } = headerItem
 
-                return (
-                  <NavListItem key={path}>
-                    <Link to={path}>{name}</Link>
-                  </NavListItem>
-                )
-              })}
-          </NavList>
-        </Nav>
+              return (
+                <NavListItem key={path}>
+                  <Link to={path}>{name}</Link>
+                </NavListItem>
+              )
+            })}
+        </NavList>
+      </Nav>
+      <NavAndActions>
         <LocaleSwitcher />
         <Search />
       </NavAndActions>

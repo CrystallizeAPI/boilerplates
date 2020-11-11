@@ -9,6 +9,8 @@ module.exports = {
     },
     product: {
       noVariants: "This product has no variants",
+      buy: "Buy",
+      addToBasket: "Add to basket",
       attributes: {
         color: "Color",
         green: "Green",

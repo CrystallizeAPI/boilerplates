@@ -5,24 +5,27 @@ import { responsive } from "ui"
 
 export const Outer = styled.header`
   text-align: center;
-  padding: 10px 100px 10px 75px;
+  padding: 20px 75px;
+  max-width: 1600px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  max-width: 1500px;
-  margin: 0 auto 50px;
-  position: relative;
-  z-index: 11;
+  margin: 0 auto 0;
 
-  ${responsive.xs} {
-    padding: 15px 75px 15px 15px;
+  ${responsive.smAndLess} {
+    padding: 10px 90px 10px 20px;
+    justify-content: space-between;
+    position: relative;
   }
 `
 
-export const Logo = styled.div`
+export const Logo = styled.a`
   height: 84px;
   display: block;
   object-fit: contain;
+
+  position: relative;
+  z-index: 99;
   img,
   svg {
     height: 100%;
@@ -40,18 +43,18 @@ export const NavAndActions = styled.div`
 
 export const Nav = styled.nav`
   display: flex;
-  margin: 0;
-  width: 100%;
-  border-left: 1px solid #dfdfdf;
+  margin: 10px 0 0 15px;
   padding-left: 15px;
-
+  width: 100%;
+  ${responsive.mdPlus} {
+    justify-content: center;
+  }
   ${responsive.smAndLess} {
     display: none;
     position: absolute;
     z-index: 99;
     top: 0;
     left: 0;
-    width: 100%;
     min-height: 100vh;
     height: 100%;
     overflow-x: auto;
@@ -73,6 +76,11 @@ export const NavList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+
+  /* Make space for logout button */
+  ${responsive.smAndLess} {
+    margin-top: 30px;
+  }
 `
 
 export const NavListItem = styled.li`
@@ -85,7 +93,9 @@ export const NavListItem = styled.li`
     display: inline-block;
     padding: 10px 10px;
     transition: all 100ms;
-
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     &:hover {
       text-decoration: underline;
     }
@@ -93,6 +103,5 @@ export const NavListItem = styled.li`
 
   ${responsive.smAndLess} {
     display: block;
-    margin: 15px 0;
   }
 `

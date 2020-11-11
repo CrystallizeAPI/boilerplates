@@ -1,6 +1,16 @@
 import styled from "styled-components"
 
-import { colors, responsive } from "ui"
+import { responsive, H1 } from "ui"
+
+export const Outer = styled.div`
+  max-width: 1600px;
+  margin: 0 auto;
+`
+
+export const ShapeContent = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+`
 
 export const Loader = styled.div`
   text-align: center;
@@ -11,111 +21,43 @@ export const Loader = styled.div`
 export const Sections = styled.div`
   display: flex;
   align-items: center;
+  background: var(--color-box-background);
+  padding: 50px;
+  flex-direction: row-reverse;
   justify-content: center;
 
   ${responsive.smAndLess} {
+    padding: 20px 0px;
+    margin: 0 10px;
     display: block;
   }
 `
 
-export const RelatedTopics = styled.div`
+export const Content = styled.div`
   display: flex;
-  flex-direction: column;
-  margin-top: 150px;
-  h2 {
-    font-family: "Roboto Slab", sans-serif;
-    padding-left: 50px;
+  margin-top: 15px;
+  ${responsive.xs} {
+    margin: 10px 10px 0;
+    display: block;
   }
 `
-
-export const TopicMap = styled.div`
-  padding-left: 50px;
-  position: relative;
-  margin-top: 30px;
-`
-
-export const TopicTitle = styled.h3`
-  font-size: 1rem;
-  opacity: 0.6;
-  top: 0;
-  height: 40px;
-  left: 40px;
-  position: absolute;
-  transform-origin: top left;
-  transform: rotate(90deg);
-`
-export const Media = styled.div`
-  flex: 0 0 50%;
-  position: relative;
-  padding-top: 60%;
-
-  ${responsive.mdAndLess} {
-    flex-basis: 50%;
+export const Specs = styled.div`
+  flex: 0 0 500px;
+  border-left: 15px solid var(--color-main-background);
+  background: var(--color-box-background);
+  ${responsive.xs} {
+    border-left: 0;
+    display: block;
+    margin-top: 15px;
+    padding: 20px 0;
   }
-
-  &:before {
-    content: "";
-    width: 80%;
-    height: 20px;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-`
-
-export const MediaInner = styled.div`
-  width: 100%;
-  max-width: 550px;
-  height: 100%;
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  padding: 2rem;
-
-  img {
-    position: relative;
-    object-fit: contain;
-    z-index: 10;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-`
-
-export const Info = styled.div`
-  flex: 1 1 auto;
-  margin: 0 50px 0 50px;
-
-  ${responsive.smAndLess} {
-    margin-left: 0;
-    margin-top: 50px;
-  }
-`
-
-export const Summary = styled.div`
-  color: ${colors.darkText};
-  font-size: 18px;
-  line-height: 1.4;
-  margin-bottom: 15px;
 `
 
 export const Description = styled.div`
-  color: ${colors.darkText};
-  font-size: 18px;
-  max-width: 700px;
-  margin: 0 auto 15px;
-  line-height: 1.4;
-
-  img {
-    max-height: 300px;
-    margin: 1rem 0;
-  }
-
+  color: var(--color-text-sub);
+  flex: 0 1 100%;
+  background: var(--color-box-background);
+  padding: 5rem 0;
   h2:empty {
     display: none;
   }
@@ -130,12 +72,61 @@ export const Description = styled.div`
   }
 `
 
+export const Media = styled.div`
+  flex: 0 0 65%;
+  position: relative;
+  padding: 3rem;
+  ${responsive.mdAndLess} {
+    display: block;
+    padding: 0;
+    margin-bottom: 2em;
+  }
+`
+
+export const MediaInner = styled.div`
+  ${responsive.mdAndLess} {
+    margin: 2em;
+  }
+
+  img {
+    object-fit: contain;
+    max-height: 80vh;
+    width: 100%;
+    height: 100%;
+
+    ${responsive.mdAndLess} {
+      max-height: 40vh;
+    }
+  }
+`
+
+export const Info = styled.div`
+  flex: 1 1 auto;
+  margin: 0 50px 0 50px;
+
+  ${responsive.smAndLess} {
+    margin: 2em;
+  }
+`
+export const Name = styled(H1)`
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+`
+
+export const Summary = styled.div`
+  color: var(--color-text-sub);
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+`
+
 export const ProductFooter = styled.div`
   display: flex;
   flex-wrap: wrap;
-  border-top: 1px solid #dfdfdf;
-  padding: 15px 0;
+  padding: 45px 0 0;
   justify-content: space-between;
+  border-top: 1px solid #cecece;
   align-items: center;
 
   ${responsive.xs} {
@@ -148,9 +139,10 @@ export const ProductFooter = styled.div`
 
 export const Price = styled.div`
   text-align: center;
-  color: ${colors.darkText};
+  color: var(--color-text-sub);
   font-size: 30px;
-  margin-right: 20px;
+  margin: 20px;
+  margin-left: 0;
 
   strong {
     display: inline-block;
@@ -159,23 +151,5 @@ export const Price = styled.div`
 
   ${responsive.xs} {
     flex-grow: 1;
-  }
-`
-
-export const List = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1rem;
-
-  ${responsive.sm} {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  ${responsive.md} {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  ${responsive.lg} {
-    grid-template-columns: repeat(4, 1fr);
   }
 `

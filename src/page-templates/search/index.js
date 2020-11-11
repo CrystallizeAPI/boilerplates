@@ -2,13 +2,16 @@ import React, { useCallback, useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { navigate, graphql } from "gatsby"
 import produce from "immer"
+import { Header, H1 } from "ui"
+
+import ShapeComponents from "components/shape-components"
 
 import { useT, useLocale } from "lib/i18n"
 import { doSearch } from "lib/api"
 import { SEARCH_QUERY, urlToSpec, queryStringToObject } from "lib/search"
 import Layout from "components/layout"
 
-import { Wrapper, Header } from "./styles"
+import { Wrapper, Header as SearchHeader, Outer } from "./styles"
 import OrderBy from "./order-by"
 import Results from "./results"
 import Facets from "./facets"
@@ -133,36 +136,50 @@ function Search(props) {
     )
   }
 
+  const summary = crystallize?.folder?.components?.find(
+    (c) => c.name === "Brief"
+  )
+  const icon = crystallize?.folder?.components?.find((c) => c.name === "Icon")
+  const hasSensibleHeaderData = !!icon || !!summary
   return (
     <Layout
       title={crystallize?.folder?.name || "Search"}
       headerItems={crystallize?.headerItems.children}
     >
-      <Wrapper>
-        <Header>
-          {data && (
-            <h3>
-              {t("search.foundResults", {
-                count:
-                  spec.filter.searchTerm !== "searching" &&
-                  data.search.aggregations.totalResults,
-              })}
-            </h3>
-          )}
-          <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
-        </Header>
-        <Facets
-          aggregations={data?.aggregations ?? {}}
-          changeQuery={changeQuery}
-          totalResults={data?.search?.aggregations?.totalResults}
-          spec={spec}
-        />
-        <Results
-          edges={data?.search?.edges ?? []}
-          navigate={changePage}
-          pageInfo={data?.search?.pageInfo ?? {}}
-        />
-      </Wrapper>
+      <Outer>
+        {hasSensibleHeaderData && (
+          <Header centerContent>
+            <ShapeComponents components={[icon]} />
+            <H1>{crystallize?.folder?.name}</H1>
+            <ShapeComponents components={[summary]} />
+          </Header>
+        )}
+        <Wrapper paddTop={!hasSensibleHeaderData}>
+          <SearchHeader>
+            {data && (
+              <h3>
+                {t("search.foundResults", {
+                  count:
+                    spec.filter.searchTerm !== "searching" &&
+                    data.search.aggregations.totalResults,
+                })}
+              </h3>
+            )}
+            <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
+          </SearchHeader>
+          <Facets
+            aggregations={data?.aggregations ?? {}}
+            changeQuery={changeQuery}
+            totalResults={data?.search?.aggregations?.totalResults}
+            spec={spec}
+          />
+          <Results
+            edges={data?.search?.edges ?? []}
+            navigate={changePage}
+            pageInfo={data?.search?.pageInfo ?? {}}
+          />
+        </Wrapper>
+      </Outer>
     </Layout>
   )
 }

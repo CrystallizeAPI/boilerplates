@@ -1,15 +1,15 @@
 /* eslint react/no-multi-comp: 0 */
 import React, { useState } from "react"
-import Img from "@crystallize/react-image"
-import isEqual from "lodash/isEqual"
-import { graphql } from "gatsby"
+import { Image } from "@crystallize/react-image"
+import ContentTransformer from "ui/content-transformer"
 
-import { H1, H2, screen, Outer } from "ui"
-import CategoryItem from "components/category-item"
+import { graphql } from "gatsby"
+import Buy from "./buy"
+
+import { screen } from "ui"
 import VariantSelector from "components/variant-selector"
 import ShapeComponents from "components/shape-components"
-import { useT, useLocale } from "lib/i18n"
-import { attributesToObject } from "lib/variants"
+import { useT } from "lib/i18n"
 
 import Layout from "components/layout"
 
@@ -18,99 +18,73 @@ import {
   Media,
   MediaInner,
   Info,
-  Price,
-  ProductFooter,
   Summary,
   Description,
-  RelatedTopics,
-  TopicMap,
-  TopicTitle,
-  List,
+  Name,
+  Outer,
+  Content,
+  Specs,
 } from "./styles"
 
 const ProductPage = ({ product, defaultVariant }) => {
-  const t = useT()
-  const locale = useLocale()
   const [selectedVariant, setSelectedVariant] = useState(defaultVariant)
-
-  const onAttributeChange = (attributes, newAttribute) => {
-    const newAttributes = attributesToObject(attributes)
-    newAttributes[newAttribute.attribute] = newAttribute.value
-
-    const newSelectedVariant = product.variants.find((variant) => {
-      const variantAttributes = attributesToObject(variant.attributes)
-      return isEqual(variantAttributes, newAttributes)
-    })
-
-    setSelectedVariant(newSelectedVariant)
-  }
 
   const onVariantChange = (variant) => setSelectedVariant(variant)
 
   const summaryComponent = product.components.find((c) => c.name === "Summary")
-  const description = product.components.find((c) => c.name === "Description")
-  const { topics } = product
-
-  const selectedVariantImg = (selectedVariant.images || [])[0]
-  const placeHolderImg = "/images/placeholder-image.png"
-
-  const { price, currency } = selectedVariant.priceVariants.find(
-    (pv) => pv.identifier === locale.priceVariant
-  ) || {
-    price: "n/a",
-    currency: "eur",
-  }
+  const descriptionComponent = product.components?.find(
+    (c) => c.name === "Description"
+  )
+  const specs = product.components?.find((c) => c.name === "Specs")
 
   return (
     <Outer>
       <Sections>
         <Media>
           <MediaInner>
-            {selectedVariantImg ? (
-              <Img
-                {...selectedVariantImg}
-                sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
-                alt={product.name}
-              />
-            ) : (
-              <Img
-                src={placeHolderImg}
-                sizes={`(max-width: ${screen.sm}px) 400px, 600px`}
-                alt={product.name}
-              />
-            )}
+            <Image
+              {...selectedVariant.images?.[0]}
+              sizes={`(max-width: ${screen.sm}px) 400px, 60vw`}
+              alt={product.name}
+            />
           </MediaInner>
         </Media>
         <Info>
-          <H1>{product.name}</H1>
-          <Summary>
-            {summaryComponent && (
-              <ShapeComponents components={[summaryComponent]} />
-            )}
-          </Summary>
+          <Name>{product.name}</Name>
+          {summaryComponent && (
+            <Summary>
+              <ContentTransformer {...summaryComponent?.content?.json} />
+            </Summary>
+          )}
 
-          {product.variants.length > 1 && (
+          {product.variants?.length > 1 && (
             <VariantSelector
               variants={product.variants}
               selectedVariant={selectedVariant}
               onVariantChange={onVariantChange}
-              onAttributeChange={onAttributeChange}
             />
           )}
 
-          <ProductFooter>
-            <Price>
-              <strong>{t("common.price", { value: price, currency })}</strong>
-            </Price>
-          </ProductFooter>
+          <Buy product={product} selectedVariant={selectedVariant} />
         </Info>
       </Sections>
+      <Content>
+        {descriptionComponent && (
+          <Description>
+            <ShapeComponents
+              className="description"
+              components={[descriptionComponent]}
+            />
+          </Description>
+        )}
+        {specs && (
+          <Specs>
+            <ShapeComponents components={[specs]} />
+          </Specs>
+        )}
+      </Content>
 
-      <Description>
-        <ShapeComponents className="description" components={[description]} />
-      </Description>
-
-      {topics && topics.length && (
+      {/* {topics && topics.length && (
         <RelatedTopics>
           <H2>{t("common.related")}</H2>
 
@@ -139,7 +113,7 @@ const ProductPage = ({ product, defaultVariant }) => {
             )
           })}
         </RelatedTopics>
-      )}
+      )} */}
     </Outer>
   )
 }
@@ -149,7 +123,6 @@ const ProductPageDataLoader = ({ data: { crystallize } }) => {
   const { product } = crystallize
   const headerItems = crystallize.headerItems?.children
   const defaultVariant = product.variants?.find((v) => v.isDefault)
-
   if (!defaultVariant) {
     return <Layout headerItems={headerItems}>{t("product.noVariants")}</Layout>
   }
