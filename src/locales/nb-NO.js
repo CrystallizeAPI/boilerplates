@@ -9,6 +9,8 @@ module.exports = {
     },
     product: {
       noVariants: "Dette produkter har ingen produktvarianter",
+      buy: "Kjøp",
+      addToBasket: "Legg i handlevogn",
       attributes: {
         color: "Farge",
         green: "Grønn",

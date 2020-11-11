@@ -33,7 +33,7 @@ export default createGlobalStyle`
     font: 16px/1 roboto, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    background: #fafafa;
+    background: #fff;
     color: var(--color-text-sub);
   }
 

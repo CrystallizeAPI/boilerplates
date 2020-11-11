@@ -1,10 +1,9 @@
 import React from "react"
-
-import { useT } from "lib/i18n"
+import isEqual from "lodash/isEqual"
 
 import {
   Outer,
-  AttributeName,
+  // AttributeName,
   AttributeSelector,
   AttributeButton,
   Variant,
@@ -12,8 +11,8 @@ import {
   Button,
 } from "./styles"
 
-const reduceAttributes = (variants) =>
-  variants.reduce((acc, variant) => {
+function reduceAttributes(variants) {
+  return variants.reduce((acc, variant) => {
     const attrs = acc
 
     variant.attributes.forEach(({ attribute, value }) => {
@@ -31,14 +30,20 @@ const reduceAttributes = (variants) =>
 
     return attrs
   }, {})
+}
 
-export default ({
+function attributesToObject({ attributes }) {
+  return Object.assign(
+    {},
+    ...attributes.map(({ attribute, value }) => ({ [attribute]: value }))
+  )
+}
+
+export default function VariantSelector({
   variants,
   selectedVariant,
   onVariantChange,
-  onAttributeChange,
-}) => {
-  const t = useT()
+}) {
   const attributes = reduceAttributes(variants)
 
   if (!Object.keys(attributes).length) {
@@ -61,12 +66,41 @@ export default ({
     )
   }
 
+  function onAttributeSelect({ attribute, value }) {
+    const selectedAttributes = attributesToObject(selectedVariant)
+    selectedAttributes[attribute] = value
+
+    // Get the most suitable variant
+    let variant = variants.find((variant) => {
+      if (isEqual(selectedAttributes, attributesToObject(variant))) {
+        return true
+      }
+      return false
+    })
+
+    /**
+     * No variant matches all attributes. Let's select the first one
+     * that matches just the new set
+     */
+    if (!variant) {
+      variant = variants.find((variant) =>
+        variant.attributes.some(
+          (a) => a.attribute === attribute && a.value === value
+        )
+      )
+    }
+
+    if (variant) {
+      onVariantChange(variant)
+    }
+  }
+
   return (
     <Outer>
-      {Object.keys(attributes).map((name) => {
-        const attr = attributes[name]
+      {Object.keys(attributes).map((attribute) => {
+        const attr = attributes[attribute]
         const selectedAttr = selectedVariant.attributes.find(
-          (a) => a.attribute === name
+          (a) => a.attribute === attribute
         )
 
         if (!selectedAttr) {
@@ -74,22 +108,21 @@ export default ({
         }
 
         return (
-          <div key={name}>
-            <AttributeName>{t(`product.attributes.${name}`)}</AttributeName>
+          <div key={attribute}>
             <AttributeSelector>
               {attr.map((value) => (
                 <AttributeButton
-                  key={`${value}-${name}`}
+                  key={value}
                   onClick={() =>
-                    onAttributeChange(selectedVariant.attributes, {
-                      attribute: name,
+                    onAttributeSelect({
+                      attribute,
                       value,
                     })
                   }
                   type="button"
                   selected={value === selectedAttr.value}
                 >
-                  {t(`product.attributes.${value}`)}
+                  {value}
                 </AttributeButton>
               ))}
             </AttributeSelector>

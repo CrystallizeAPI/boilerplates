@@ -1,17 +1,24 @@
 import styled from "styled-components"
-import Image from "@crystallize/react-image"
+import { Image } from "@crystallize/react-image"
 
-import { responsive } from "ui"
-
+import { Outer as O, responsive } from "ui"
+export const Outer = styled(O)`
+  padding: 0px 75px;
+  max-width: 1600px;
+  ${responsive.smAndLess} {
+    padding: 10px 90px 10px 20px;
+    justify-content: space-between;
+  }
+`
 export const Result = styled.div``
 
 export const Wrapper = styled.div`
   max-width: 1600px;
   margin: 0 auto;
-
+  padding-top: ${(p) => (p.paddTop ? "100px" : "0px")};
   ${responsive.mdAndMore} {
     display: grid;
-    padding: 0 70px;
+    padding: inherit 70px;
     grid-gap: 40px;
     grid-template-columns: 300px 1fr 1fr 1fr;
     grid-template-areas:

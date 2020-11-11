@@ -1,25 +1,15 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Grid from "@crystallize/grid-renderer/react"
+// import Grid from "@crystallize/grid-renderer/react"
 import styled from "styled-components"
-
+import { Outer as O } from "ui"
 import Layout from "components/layout"
-import CategoryItem from "components/category-item"
 import { useT } from "lib/i18n"
-import { Outer } from "ui"
-
-const StyledGrid = styled(Grid)`
-  grid-gap: 1rem !important;
-
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr !important;
-
-    > div {
-      grid-area: unset !important;
-    }
-  }
+import Grid, { GridItem } from "components/grid"
+const Outer = styled(O)`
+  max-width: 1600px;
+  padding: 0;
 `
-
 export default function IndexPage({ data }) {
   const t = useT()
   const {
@@ -38,14 +28,10 @@ export default function IndexPage({ data }) {
     <Layout title={t("frontpage.title")} headerItems={headerItems}>
       <Outer>
         {grid && (
-          <StyledGrid
+          <Grid
             model={grid}
-            cellComponent={({ cell, totalColSpan }) => (
-              <CategoryItem
-                gridCell={cell}
-                gridTotalColSpan={totalColSpan}
-                data={cell.item}
-              />
+            cellComponent={({ cell }) => (
+              <GridItem data={cell.item} gridCell={cell} />
             )}
           />
         )}
