@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
   max-width: 1600px;
   margin: 0 auto;
   padding-top: ${(p) => (p.paddTop ? "100px" : "0px")};
-  ${responsive.mdAndMore} {
+  ${responsive.mdPlus} {
     display: grid;
     padding: inherit 70px;
     grid-gap: 40px;
@@ -37,7 +37,7 @@ export const Header = styled.header`
     color: #000;
   }
 
-  ${responsive.mdAndMore} {
+  ${responsive.mdPlus} {
     padding: 0;
     grid-area: spec;
   }
@@ -59,7 +59,7 @@ export const PaginationWrapper = styled.div`
   margin: 1rem 0;
   padding: 0 15px;
 
-  ${responsive.mdAndMore} {
+  ${responsive.mdPlus} {
     padding: 0;
   }
 `

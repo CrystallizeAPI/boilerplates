@@ -7,7 +7,7 @@ import { useT } from "lib/i18n"
 const Outer = styled.div`
   margin-bottom: 30px;
 
-  ${responsive.mdAndMore} {
+  ${responsive.mdPlus} {
     margin-bottom: 0;
   }
 `

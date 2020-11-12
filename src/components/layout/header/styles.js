@@ -33,7 +33,7 @@ export const Logo = styled.a`
 `
 
 export const NavAndActions = styled.div`
-  ${responsive.mdAndMore} {
+  ${responsive.mdPlus} {
     margin-left: 30px;
     flex-grow: 1;
     display: flex;

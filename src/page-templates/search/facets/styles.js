@@ -11,7 +11,7 @@ export const FacetsMobileButtonWrap = styled.div`
 `
 
 export const FacetsMobileButton = styled(Button)`
-  ${responsive.mdAndMore} {
+  ${responsive.mdPlus} {
     display: none;
   }
 `
@@ -22,7 +22,7 @@ export const FacetsMobileShowResults = styled.div`
   bottom: 0;
   right: 0;
 
-  ${responsive.mdAndMore} {
+  ${responsive.mdPlus} {
     display: none;
   }
 `
@@ -45,7 +45,7 @@ export const FacetsWrapper = styled.div`
     `};
   }
 
-  ${responsive.mdAndMore} {
+  ${responsive.mdPlus} {
     grid-area: facets;
     max-width: 300px;
     display: block;
