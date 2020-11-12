@@ -21,7 +21,7 @@ export default function IndexPage({ data }) {
 
   const [grid] =
     frontpage?.components?.find(
-      (c) => c.content.__typename === "CRYSTALLIZE_GridRelationsContent"
+      (c) => c?.content.__typename === "CRYSTALLIZE_GridRelationsContent"
     )?.content?.grids || []
 
   return (

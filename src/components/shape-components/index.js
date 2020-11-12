@@ -28,7 +28,7 @@ const ShapeComponents = ({ components, overrides }) => {
   return (
     <div>
       {components
-        ?.filter((component) => component.content != null)
+        ?.filter((component) => component?.content != null)
         .map(({ type, ...component }, index) => {
           const key = index
           let Component
@@ -39,7 +39,7 @@ const ShapeComponents = ({ components, overrides }) => {
           }
 
           if (type === "paragraphCollection") {
-            if (!component.content.paragraphs) {
+            if (!component.content?.paragraphs) {
               return null
             }
 
@@ -51,14 +51,14 @@ const ShapeComponents = ({ components, overrides }) => {
           }
 
           if (type === "images") {
-            if (!component.content || !component.content.images) {
+            if (!component.content?.images) {
               return null
             }
             return <Images key={key} images={component.content.images} />
           }
 
           if (type === "videos") {
-            if (!component.content || !component.content.videos) {
+            if (!component.content?.videos) {
               return null
             }
             return <Videos key={key} videos={component.content.videos} />
@@ -98,13 +98,13 @@ const ShapeComponents = ({ components, overrides }) => {
 
           if (type === "itemRelations") {
             Component = Component || ItemRelations
-            return <Component key={key} items={component.content.items} />
+            return <Component key={key} items={component.content?.items} />
           }
 
           if (type === "gridRelations") {
             Component = Component || GridRelations
 
-            return <Component key={key} grids={component.content.grids} />
+            return <Component key={key} grids={component.content?.grids} />
           }
 
           if (process.env.NODE_ENV !== "production") {
