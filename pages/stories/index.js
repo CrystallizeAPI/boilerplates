@@ -174,8 +174,8 @@ const Stories = ({ data, errors }) => {
         <Outer>
           <H2>Some inspirational stories</H2>
           <Inner>
-            {folder?.children.map((child, i) => (
-              <MicroFormats {...child} />
+            {folder?.children.map((child) => (
+              <MicroFormats key={child?.id} {...child} />
             ))}
           </Inner>
         </Outer>

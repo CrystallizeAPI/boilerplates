@@ -374,12 +374,12 @@ export default function Story({ data: initialData, path }) {
             </Content>
           </ProductWrapper>
           <RichContent>
-            {features?.map((feature) => (
-              <Section>
+            {features?.map((feature, ti) => (
+              <Section key={`properties-table-${ti}`}>
                 <h3>{feature?.title}</h3>
                 <BulkOuter>
-                  {feature?.properties?.map((property) => (
-                    <Bulk>
+                  {feature?.properties?.map((property, i) => (
+                    <Bulk key={`properties-table-${ti}-${i}`}>
                       <h5>{property?.key}</h5>
                       <p>{property?.value}</p>
                     </Bulk>
@@ -392,12 +392,15 @@ export default function Story({ data: initialData, path }) {
               <Section>
                 <h3>{description?.name}</h3>
                 <CollectionOuter>
-                  {description.content.paragraphs.map((paragraph) => (
-                    <Collection>
+                  {description.content.paragraphs.map((paragraph, i) => (
+                    <Collection
+                      key={`paragraph-${i}-${paragraph?.title?.text}`}
+                    >
                       {!!paragraph?.images?.length && (
                         <MediaWrapper count={paragraph.images.length}>
                           {paragraph?.images?.map((img) => (
                             <Image
+                              key={img?.url}
                               {...img}
                               sizes={`@media(min-width:1024px) ${
                                 100 / paragraph.images.length

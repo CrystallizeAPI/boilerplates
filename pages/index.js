@@ -128,10 +128,16 @@ export default function Home(props) {
       <Meta {...meta} />
       <Layout tint="black">
         <Outer>
-          {grid?.rows?.map((row) => (
-            <GridRow columns={row?.columns?.length}>
-              {row?.columns?.map((column) => (
-                <Microformats {...column?.item} />
+          {grid?.rows?.map((row, i) => (
+            <GridRow
+              key={`frontpage-grid-row-${i}`}
+              columns={row?.columns?.length}
+            >
+              {row?.columns?.map((column, i) => (
+                <Microformats
+                  key={`${column?.item?.path}-${i}`}
+                  {...column?.item}
+                />
               ))}
             </GridRow>
           ))}

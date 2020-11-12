@@ -89,10 +89,11 @@ const query = `
       children {
         name
         path
+        id
         ...on Product {
           name
           path
-
+          
           defaultVariant{
             price
             images{
