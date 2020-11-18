@@ -198,6 +198,31 @@ query GET_PRODUCT($path: String!) {
     ...on Product {
       name
       path
+      variants {
+        id
+        name
+        sku
+        priceVariants {
+          identifier
+          price
+          currency
+        }
+        stock
+        isDefault
+        attributes {
+          attribute
+          value
+        }
+        images {
+          url
+          altText
+          variants {
+            url
+            width
+            height
+          }
+        }
+      }
       defaultVariant{
         price
         stock
@@ -326,9 +351,44 @@ export default function Story({ data: initialData, path }) {
     type: "product",
   };
 
+  let schema = [];
+  product.variants.map((variant) => {
+    const { price, currency } =
+      variant.priceVariants.find((pv) => pv.identifier === "default") || {};
+    schema = [
+      ...schema,
+      {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        sku: variant?.sku,
+        name: variant?.name,
+        description: product?.summary?.content?.plainText?.[0],
+        image: variant?.images?.[0]?.url,
+        offers: {
+          "@type": "Offer",
+          // priceValidUntil: 'YYYY-MM-DD',
+          priceCurrency: currency,
+          url: router?.asPath,
+          availability:
+            variant?.stock > 0
+              ? `https://schema.org/InStock`
+              : `https://schema.org/OutOfStock`,
+          price,
+          currency,
+        },
+      },
+    ];
+  });
+
   return (
     <>
       <Meta {...meta} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(schema),
+        }}
+      />
       <Layout tint="black">
         <Outer>
           <ProductWrapper itemScope itemType="http://schema.org/Product">
