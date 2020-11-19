@@ -2,11 +2,13 @@ import useSWR from "swr";
 import styled from "styled-components";
 import Image from "@crystallize/react-image";
 import CrystallizeContent from "@crystallize/content-transformer/react";
+import toText from "@crystallize/content-transformer/toText";
 import { useRouter } from "next/router";
 
 import { fetcher } from "lib/graphql";
 import Layout from "components/layout";
 import Meta from "components/meta";
+import SchemaOrg from "./schema";
 
 const Outer = styled.div``;
 const ProductWrapper = styled.section`
@@ -198,6 +200,31 @@ query GET_PRODUCT($path: String!) {
     ...on Product {
       name
       path
+      variants {
+        id
+        name
+        sku
+        priceVariants {
+          identifier
+          price
+          currency
+        }
+        stock
+        isDefault
+        attributes {
+          attribute
+          value
+        }
+        images {
+          url
+          altText
+          variants {
+            url
+            width
+            height
+          }
+        }
+      }
       defaultVariant{
         price
         stock
@@ -217,7 +244,6 @@ query GET_PRODUCT($path: String!) {
       content {
         ... on RichTextContent {
           json
-          plainText
         }
       }
     }
@@ -301,6 +327,7 @@ export async function getStaticPaths() {
 
 export default function Story({ data: initialData, path }) {
   const router = useRouter();
+
   const { data } = useSWR([query, { path }], {
     initialData,
   });
@@ -321,7 +348,7 @@ export default function Story({ data: initialData, path }) {
 
   const meta = {
     title: name,
-    description: product?.summary?.content?.plainText?.[0],
+    description: toText(product?.summary?.content?.json),
     mediaUrl: defaultImage?.[0]?.url,
     type: "product",
   };
@@ -329,6 +356,7 @@ export default function Story({ data: initialData, path }) {
   return (
     <>
       <Meta {...meta} />
+      <SchemaOrg {...product} />
       <Layout tint="black">
         <Outer>
           <ProductWrapper itemScope itemType="http://schema.org/Product">
