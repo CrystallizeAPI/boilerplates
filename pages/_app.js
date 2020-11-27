@@ -1,6 +1,8 @@
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { SWRConfig } from "swr";
 import Head from "next/head";
+import { SWRConfig } from "swr";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { DefaultSeo } from "next-seo";
+
 import { fetcher } from "lib/graphql";
 import { screen } from "ui/screen";
 import { responsive } from "ui/responsive";
@@ -30,6 +32,24 @@ const theme = {
 };
 
 export default function App({ Component, pageProps }) {
+  /**
+   * Customise these values to match your site
+   * Read more here: https://github.com/garmeeh/next-seo#default-seo-configuration
+   */
+  const SEOSettings = {
+    // openGraph: {
+    //   type: 'website',
+    //   locale: locale.appLanguage,
+    //   url: 'https://www.url.ie/',
+    //   site_name: 'SiteName'
+    // },
+    // twitter: {
+    //   handle: '@handle',
+    //   site: '@site',
+    //   cardType: 'summary_large_image'
+    // }
+  };
+
   return (
     <SWRConfig
       value={{
@@ -42,6 +62,7 @@ export default function App({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
+      <DefaultSeo {...SEOSettings} />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Component {...pageProps} />
