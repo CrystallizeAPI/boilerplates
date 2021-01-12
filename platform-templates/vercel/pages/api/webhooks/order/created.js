@@ -1,0 +1,13 @@
+import orderCreated from "../../../../src/webhooks/order/created";
+
+export default async function webhookOrderCreated(req, res) {
+  try {
+    await orderCreated(req.body);
+    res.status(200).send("ok");
+  } catch (e) {
+    console.log("Error at orderCreated webhook");
+    console.log(e);
+
+    res.status(500).send("error");
+  }
+}

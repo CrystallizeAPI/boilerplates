@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "dev:boilerplate": "rm -rf src && cp -r ../../src src && next dev -p 3001",
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.4.1",
+    "apollo-server-micro": "2.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "dotenv-expand": "^5.1.0",
+    "graphql": "14.6.0",
+    "graphql-tag": "^2.11.0",
+    "invariant": "^2.2.4",
+    "jsonwebtoken": "^8.5.1",
+    "mjml": "^4.8.1",
+    "next": "^10.0.5",
+    "node-fetch": "^2.6.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "prettier": "2.2.1"
+  }
+}
