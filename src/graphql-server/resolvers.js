@@ -1,3 +1,4 @@
+const cartService = require("../services/cart-service");
 const voucherService = require("../services/voucher-service");
 
 const stripeService = require("../services/payment-providers/stripe");
@@ -15,6 +16,7 @@ function paymentProviderResolver(service) {
 
 module.exports = {
   Query: {
+    cart: (parent, args, context) => cartService.get(args, context.user),
     user: (parent, args, context) => context.user || {},
     vouchers: (parent, args, context) => ({}),
     paymentProviders: (parent, args, context) => ({}),

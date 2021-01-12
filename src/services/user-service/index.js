@@ -25,6 +25,9 @@ module.exports = {
      * so we will assume that the token is valid.
      */
     const decoded = jwt.verify(token, JWT_SECRET);
+    if (!decoded) {
+      return null;
+    }
 
     return {
       email: decoded.email,

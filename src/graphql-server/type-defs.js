@@ -4,6 +4,7 @@ module.exports = gql`
   scalar JSON
 
   type Query {
+    cart(simpleCart: CartQueryInput!): Cart!
     user: UserQueries!
     paymentProviders: PaymentProvidersQueries!
     vouchers: VoucherQueries!
@@ -16,6 +17,73 @@ module.exports = gql`
   type MutationResponse {
     success: Boolean!
     error: String
+  }
+
+  input CartQueryInput {
+    language: String!
+    items: [SimpleCartItem!]!
+    voucherCodes: [String!]
+  }
+
+  input SimpleCartItem {
+    sku: String!
+    path: String!
+    quantity: Int!
+    priceVariantIdentifier: String!
+  }
+
+  type Cart {
+    items: [CartItem!]!
+    vouchers: [Voucher!]!
+    total: Price!
+  }
+
+  type CartItem {
+    id: String!
+    name: String
+    path: String!
+    quantity: Int!
+    sku: String!
+    vatType: VatType
+    stock: Int
+    price: Price
+    priceVariants: [PriceVariant!]!
+    attributes: [Attribute!]
+    images: [Image!]!
+  }
+
+  type PriceVariant {
+    price: Float
+    identifier: String!
+    currency: String!
+  }
+
+  type Attribute {
+    attribute: String!
+    value: String
+  }
+
+  type Image {
+    url: String!
+    variants: [ImageVariant!]
+  }
+
+  type ImageVariant {
+    url: String!
+    width: Int
+    height: Int
+  }
+
+  type Price {
+    gross: Float!
+    net: Float!
+    vat: Int!
+    currency: String!
+  }
+
+  type VatType {
+    name: String!
+    percent: Int!
   }
 
   type UserQueries {

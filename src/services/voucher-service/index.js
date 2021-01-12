@@ -22,7 +22,7 @@ module.exports = {
     const voucher = vouchers.find((v) => v.code === code);
 
     // You can validate the code against the logged in user
-    if (user.email === "no-voucher@for.me") {
+    if (user && user.email === "no-voucher@for.me") {
       return null;
     }
 

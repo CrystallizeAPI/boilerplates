@@ -35,6 +35,9 @@ function createApiCaller(uri) {
 }
 
 module.exports = {
+  callCatalogueApi: createApiCaller(
+    `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/catalogue`
+  ),
   callOrdersApi: createApiCaller(
     `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/orders`
   ),
