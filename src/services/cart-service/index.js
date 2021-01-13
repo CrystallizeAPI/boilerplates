@@ -26,17 +26,17 @@ module.exports = {
      * Compose the complete cart items enriched with
      * data from Crystallize
      */
-    const items = productDataFromCrystallize
-      .map((product) => {
-        const itemFromClient = cartFromClient.items.find(
-          (p) => p.path === product.path
+    const items = cartFromClient.items
+      .map((itemFromClient) => {
+        const product = productDataFromCrystallize.find((p) =>
+          p.variants.some((v) => v.sku === itemFromClient.sku)
         );
 
         /**
          * Could not find this product for some reason. Happens if an
          * old product path is given and it no longer exists
          */
-        if (!itemFromClient) {
+        if (!product) {
           return null;
         }
 
