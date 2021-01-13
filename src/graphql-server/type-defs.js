@@ -4,7 +4,7 @@ module.exports = gql`
   scalar JSON
 
   type Query {
-    cart(simpleCart: CartQueryInput!): Cart!
+    cart(simpleCart: SimpleCartInput!): Cart!
     user: UserQueries!
     paymentProviders: PaymentProvidersQueries!
     vouchers: VoucherQueries!
@@ -19,7 +19,7 @@ module.exports = gql`
     error: String
   }
 
-  input CartQueryInput {
+  input SimpleCartInput {
     language: String!
     items: [SimpleCartItem!]!
     voucherCodes: [String!]
@@ -28,7 +28,7 @@ module.exports = gql`
   input SimpleCartItem {
     sku: String!
     path: String!
-    quantity: Int!
+    quantity: Int
     priceVariantIdentifier: String!
   }
 
@@ -77,7 +77,7 @@ module.exports = gql`
   type Price {
     gross: Float!
     net: Float!
-    vat: Int!
+    vat: Float!
     currency: String!
   }
 

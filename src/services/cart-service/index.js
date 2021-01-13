@@ -55,7 +55,7 @@ module.exports = {
 
         return {
           path: product.path,
-          quantity: itemFromClient.quantity,
+          quantity: itemFromClient.quantity || 1,
           vatType,
           price: {
             gross,
@@ -81,7 +81,7 @@ module.exports = {
 
         return acc;
       },
-      { gross: 0, net: 0, quantity: 0 }
+      { gross: 0, net: 0, quantity: 0, currency: "N/A" }
     );
     total.vat = parseInt((total.gross - total.net) * 100, 10) / 100;
 
