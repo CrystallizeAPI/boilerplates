@@ -4,7 +4,7 @@ const getHost = require("../lib/get-host");
 
 module.exports = ({ req }) => {
   const user = userService.authenticate(
-    req.cookies[userService.USER_SESSION_COOKIE_NAME]
+    req.cookies[userService.USER_TOKEN_NAME]
   );
 
   return {

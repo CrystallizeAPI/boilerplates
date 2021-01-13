@@ -4,14 +4,14 @@
  * https://crystallize.com/learn/developer-guides/webhooks
  */
 
-import orderDeleted from "../../../../src/webhooks/order/deleted";
+import itemPublished from "../../../../src/webhooks/item/published";
 
-export default async function webhookOrderDeleted(req, res) {
+export default async function webhookItemPublished(req, res) {
   try {
-    await orderDeleted(req.body);
+    await itemPublished(req.body);
     res.status(200).send("ok");
   } catch (e) {
-    console.log("Error at orderDeleted webhook");
+    console.log("Error at itemPublished webhook");
     console.log(e);
 
     res.status(500).send("error");

@@ -115,6 +115,9 @@ module.exports = gql`
   }
 
   type UserMutations {
-    sendMagicLink(email: String!, loggedInRedirect: String!): MutationResponse!
+    sendMagicLink(
+      email: String!
+      redirectURLAfterLogin: String!
+    ): MutationResponse!
   }
 `;

@@ -68,6 +68,7 @@ module.exports = {
       })
       .filter(Boolean);
 
+    // Calculate the totals
     const total = items.reduce(
       (acc, curr) => {
         const { quantity, price } = curr;
@@ -82,7 +83,6 @@ module.exports = {
       },
       { gross: 0, net: 0, quantity: 0 }
     );
-
     total.vat = parseInt((total.gross - total.net) * 100, 10) / 100;
 
     return {
@@ -95,8 +95,8 @@ module.exports = {
 
 /**
  * Gets information for products with a given path.
- * Executed single request by composing a single query
- * against the Catalogue API
+ * Gets all of the products with a single request
+ * by composing the query dynamically
  */
 async function getProducts({ paths, language }) {
   if (paths.length === 0) {

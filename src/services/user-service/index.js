@@ -3,12 +3,16 @@ const invariant = require("invariant");
 
 const emailService = require("../email-service");
 
+/**
+ * Todo: link to good JWT intro
+ */
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const USER_SESSION_COOKIE_NAME = "user-session";
+// The cookie name to use for JTW token
+const USER_TOKEN_NAME = "user-token";
 
 module.exports = {
-  USER_SESSION_COOKIE_NAME,
+  USER_TOKEN_NAME,
   getLogoutLink({ host }) {
     return `${host}/api/user/logout`;
   },
@@ -33,9 +37,14 @@ module.exports = {
       email: decoded.email,
     };
   },
-  async sendMagicLink({ email, loggedInRedirect, host }) {
+  async sendMagicLink({ email, redirectURLAfterLogin, host }) {
     invariant(JWT_SECRET, "JWT_SECRET missing");
 
+    /**
+     * This is the page responsible of receiving the magic
+     * link token, and then calling the validateMagicLinkToken
+     * function from userService.
+     */
     const loginLink = new URL(`${host}/api/user/login-magic-link`);
 
     /**
@@ -45,7 +54,7 @@ module.exports = {
      */
     loginLink.searchParams.append(
       "token",
-      jwt.sign({ email, loggedInRedirect }, JWT_SECRET, {
+      jwt.sign({ email, redirectURLAfterLogin }, JWT_SECRET, {
         expiresIn: "36000s",
       })
     );
@@ -69,7 +78,7 @@ module.exports = {
 
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
-      const { email, loggedInRedirect } = decoded;
+      const { email, redirectURLAfterLogin } = decoded;
 
       const signedLoginToken = jwt.sign({ email }, JWT_SECRET, {
         expiresIn: "24h",
@@ -78,7 +87,7 @@ module.exports = {
       return {
         success: true,
         signedLoginToken,
-        loggedInRedirect,
+        redirectURLAfterLogin,
       };
     } catch (error) {
       console.log(error);

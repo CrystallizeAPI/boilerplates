@@ -11,7 +11,7 @@ import userService from "../../../src/services/user-service";
 export default function logout(req, res) {
   res.setHeader(
     "Set-Cookie",
-    `${userService.USER_SESSION_COOKIE_NAME}=deleted; HttpOnly; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`
+    `${userService.USER_TOKEN_NAME}=deleted; HttpOnly; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`
   );
 
   const { redirect } = req.query;

@@ -1,11 +1,11 @@
 const cartService = require("../services/cart-service");
 const voucherService = require("../services/voucher-service");
+const userService = require("../services/user-service");
 
 const stripeService = require("../services/payment-providers/stripe");
 const klarnaService = require("../services/payment-providers/klarna");
 const vippsService = require("../services/payment-providers/vipps");
 const mollieService = require("../services/payment-providers/mollie");
-const userService = require("../services/user-service");
 
 function paymentProviderResolver(service) {
   return () => ({

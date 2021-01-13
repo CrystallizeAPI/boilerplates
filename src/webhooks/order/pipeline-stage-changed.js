@@ -1,5 +1,5 @@
 module.exports = function orderPipelineStageChanged(payload) {
-  console.log("Webhook: orderPipelineStageChanged");
+  console.log("Webhook payload: orderPipelineStageChanged");
   console.log(JSON.stringify(payload, null, 2));
 
   const {
