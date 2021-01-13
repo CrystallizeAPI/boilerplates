@@ -10,5 +10,5 @@ module.exports = {
       VIPPS_MERCHANT_SERIAL &&
       VIPPS_SUB_KEY
   ),
-  config: {},
+  frontendConfig: {},
 };

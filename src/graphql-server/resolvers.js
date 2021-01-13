@@ -16,17 +16,18 @@ function paymentProviderResolver(service) {
 
 module.exports = {
   Query: {
-    cart: (parent, args, context) => cartService.get(args, context.user),
-    user: (parent, args, context) => context.user || {},
+    cart: (parent, args, { user }) => cartService.get({ ...args, user }),
+    user: (parent, args, { user }) => user || {},
     vouchers: (parent, args, context) => ({}),
     paymentProviders: (parent, args, context) => ({}),
   },
   Mutation: {
     user: () => ({}),
+    paymentProviders: () => ({}),
   },
   UserQueries: {
-    isLoggedIn(parent, args, context) {
-      return Boolean(context.user && "email" in context.user);
+    isLoggedIn(parent, args, { user }) {
+      return Boolean(user && "email" in user);
     },
     logoutLink: (parent, args, { host }) => userService.getLogoutLink({ host }),
   },
@@ -37,12 +38,21 @@ module.exports = {
     mollie: paymentProviderResolver(mollieService),
   },
   VoucherQueries: {
-    get: (parent, args, context) =>
-      voucherService.get({ code: args.code, user: context.user }),
+    get: (parent, args, { user }) =>
+      voucherService.get({ code: args.code, user }),
   },
   UserMutations: {
-    sendMagicLink: async (parent, args, { userService, host }) => {
+    sendMagicLink: (parent, args, { userService, host }) => {
       return userService.sendMagicLink({ ...args, host });
     },
+  },
+  PaymentProvidersMutations: {
+    stripe: () => ({}),
+  },
+  StripeMutations: {
+    createPaymentIntent: (parent, args, { user }) =>
+      stripeService.createPaymentIntent({ ...args, user }),
+    confirmOrder: (parent, args, { user }) =>
+      stripeService.confirmOrder({ ...args, user }),
   },
 };

@@ -4,7 +4,7 @@ module.exports = gql`
   scalar JSON
 
   type Query {
-    cart(simpleCart: SimpleCartInput!): Cart!
+    cart(cartModel: CartModelInput!): Cart!
     user: UserQueries!
     paymentProviders: PaymentProvidersQueries!
     vouchers: VoucherQueries!
@@ -12,6 +12,7 @@ module.exports = gql`
 
   type Mutation {
     user: UserMutations
+    paymentProviders: PaymentProvidersMutations!
   }
 
   type MutationResponse {
@@ -19,7 +20,7 @@ module.exports = gql`
     error: String
   }
 
-  input SimpleCartInput {
+  input CartModelInput {
     language: String!
     items: [SimpleCartItem!]!
     voucherCodes: [String!]
@@ -118,6 +119,18 @@ module.exports = gql`
     sendMagicLink(
       email: String!
       redirectURLAfterLogin: String!
+    ): MutationResponse!
+  }
+
+  type PaymentProvidersMutations {
+    stripe: StripeMutations!
+  }
+
+  type StripeMutations {
+    createPaymentIntent(cartModel: CartModelInput!): JSON
+    confirmOrder(
+      cartModel: CartModelInput!
+      paymentIntentId: String!
     ): MutationResponse!
   }
 `;
