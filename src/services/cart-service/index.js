@@ -3,16 +3,15 @@ const voucherService = require("../voucher-service");
 
 module.exports = {
   async get({ cartModel, user }) {
-    const { language, ...cartFromClient } = cartModel;
+    const { language, voucherCode, ...cartFromClient } = cartModel;
 
     /**
      * Resolve all the voucher codes to valid vouchers for the user
      */
-    const vouchers = await Promise.all(
-      (cartFromClient.voucherCodes || []).map((code) => {
-        return voucherService.get({ code, user });
-      })
-    );
+    let voucher;
+    if (voucherCode) {
+      voucher = await voucherService.get({ code: voucherCode, user });
+    }
 
     /**
      * Get all products from Crystallize from their paths
@@ -87,7 +86,7 @@ module.exports = {
     total.tax = vatType;
 
     return {
-      vouchers: vouchers.filter(Boolean),
+      voucher,
       items,
       total,
     };

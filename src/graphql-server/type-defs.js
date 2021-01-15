@@ -7,14 +7,13 @@ module.exports = gql`
     cart(cartModel: CartModelInput!): Cart!
     user: UserQueries!
     paymentProviders: PaymentProvidersQueries!
-    vouchers: VoucherQueries!
     orders: OrderQueries!
   }
 
   type Cart {
     items: [CartItem!]!
-    vouchers: [Voucher!]!
     total: Price!
+    voucher: Voucher
   }
 
   type CartItem {
@@ -93,10 +92,6 @@ module.exports = gql`
     get(id: String!): JSON
   }
 
-  type VoucherQueries {
-    get(code: String!): Voucher
-  }
-
   type Voucher {
     code: String!
     discountAmount: Int
@@ -116,7 +111,7 @@ module.exports = gql`
   input CartModelInput {
     language: String!
     items: [SimpleCartItem!]!
-    voucherCodes: [String!]
+    voucherCode: String
   }
 
   input SimpleCartItem {

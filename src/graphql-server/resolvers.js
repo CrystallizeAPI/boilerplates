@@ -20,7 +20,6 @@ module.exports = {
   Query: {
     cart: (parent, args, { user }) => cartService.get({ ...args, user }),
     user: (parent, args, { user }) => user || {},
-    vouchers: (parent, args, context) => ({}),
     orders: (parent, args, context) => ({}),
     paymentProviders: (parent, args, context) => ({}),
   },
@@ -42,9 +41,6 @@ module.exports = {
   },
   OrderQueries: {
     get: (parent, args, { user }) => crystallize.orders.getOrder(args.id),
-  },
-  VoucherQueries: {
-    get: (parent, args, { user }) => voucherService.get({ ...args, user }),
   },
   UserMutations: {
     sendMagicLink: (parent, args, { userService, host }) => {

@@ -21,10 +21,13 @@ module.exports = {
   get({ code, user }) {
     const voucher = vouchers.find((v) => v.code === code);
 
-    // You can validate the code against the logged in user
-    if (user && user.email === "no-voucher@for.me") {
+    // Only vouchers for logged in users
+    if (!user.email) {
       return null;
     }
+
+    // Lookup voucher in third party system
+    // Todo: example
 
     return voucher;
   },
