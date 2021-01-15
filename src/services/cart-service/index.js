@@ -22,6 +22,8 @@ module.exports = {
       language,
     });
 
+    let vatType;
+
     /**
      * Compose the complete cart items enriched with
      * data from Crystallize
@@ -40,7 +42,8 @@ module.exports = {
           return null;
         }
 
-        const { vatType } = product;
+        vatType = product.vatType;
+
         const variant = product.variants.find(
           (v) => v.sku === itemFromClient.sku
         );
@@ -51,7 +54,6 @@ module.exports = {
 
         const gross = price;
         const net = (price * 100) / (100 + vatType.percent);
-        const vat = gross - net;
 
         return {
           path: product.path,
@@ -60,7 +62,7 @@ module.exports = {
           price: {
             gross,
             net,
-            vat,
+            tax: vatType,
             currency,
           },
           ...variant,
@@ -77,13 +79,12 @@ module.exports = {
           acc.net += price.net * quantity;
           acc.currency = price.currency;
         }
-        acc.quantity += quantity;
 
         return acc;
       },
-      { gross: 0, net: 0, quantity: 0, currency: "N/A" }
+      { gross: 0, net: 0, tax: 0, currency: "N/A" }
     );
-    total.vat = parseInt((total.gross - total.net) * 100, 10) / 100;
+    total.tax = vatType;
 
     return {
       vouchers: vouchers.filter(Boolean),

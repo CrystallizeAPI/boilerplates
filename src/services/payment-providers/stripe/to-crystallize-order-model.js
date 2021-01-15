@@ -2,6 +2,7 @@ const { getClient } = require("./utils");
 
 module.exports = async function stripeToCrystallizeOrderModel({
   cart,
+  checkoutModel,
   paymentIntentId,
 }) {
   const paymentIntent = await getClient().paymentIntents.retrieve(
@@ -16,7 +17,10 @@ module.exports = async function stripeToCrystallizeOrderModel({
   return {
     cart: cart.items,
     total: cart.total,
-    additionalInformation: paymentIntent.merchant_data,
+    additionalInformation: JSON.stringify({
+      stripe_merchant_data: paymentIntent.merchant_data,
+      order_metadata: checkoutModel.metadata,
+    }),
     customer: {
       identifier: "",
       firstName: customerName[0],
@@ -38,7 +42,8 @@ module.exports = async function stripeToCrystallizeOrderModel({
           phone: charge.billing_details.phone,
           email:
             charge.receipt_email ||
-            paymentModel.customer?.addresses?.[0]?.email,
+            checkoutModel.customer?.addresses?.[0]?.email ||
+            undefined,
         },
         {
           type: "delivery",
@@ -54,7 +59,8 @@ module.exports = async function stripeToCrystallizeOrderModel({
           phone: charge.billing_details.phone,
           email:
             charge.receipt_email ||
-            paymentModel.customer?.addresses?.[0]?.email,
+            checkoutModel.customer?.addresses?.[0]?.email ||
+            undefined,
         },
       ],
     },

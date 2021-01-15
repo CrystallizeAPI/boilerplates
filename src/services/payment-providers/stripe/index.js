@@ -1,6 +1,6 @@
-const invariant = require("invariant");
-
 const cartService = require("../../cart-service");
+const crystallize = require("../../crystallize");
+
 const { getClient } = require("./utils");
 const toCrystallizeOrderModel = require("./to-crystallize-order-model");
 
@@ -22,14 +22,21 @@ module.exports = {
 
     return paymentIntent;
   },
-  async confirmOrder({ paymentIntentId, cartModel, user }) {
+  async confirmOrder({ paymentIntentId, checkoutModel, user }) {
+    const { cartModel } = checkoutModel;
     const cart = await cartService.get({ cartModel, user });
 
-    const crystallizeOrderModel = toCrystallizeOrderModel({
+    const crystallizeOrderModel = await toCrystallizeOrderModel({
       cart,
+      checkoutModel,
       paymentIntentId,
     });
 
-    console.log(crystallizeOrderModel);
+    const order = await crystallize.orders.createOrder(crystallizeOrderModel);
+
+    return {
+      success: true,
+      orderId: order.id,
+    };
   },
 };

@@ -1,7 +1,7 @@
 const { callOrdersApi } = require("../utils");
 
-module.exports = function getOrder(id) {
-  return callOrdersApi({
+module.exports = async function getOrder(id) {
+  const response = await callOrdersApi({
     variables: {
       id,
     },
@@ -55,4 +55,6 @@ module.exports = function getOrder(id) {
       }
     `,
   });
+
+  return response.data.orders.get;
 };

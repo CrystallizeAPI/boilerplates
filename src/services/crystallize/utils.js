@@ -30,16 +30,34 @@ function createApiCaller(uri) {
       body: JSON.stringify({ operationName, query, variables }),
     });
 
-    return response.json();
+    const json = await response.json();
+
+    if (json.errors) {
+      console.log(JSON.stringify(json.errors, null, 1));
+    }
+
+    return json;
   };
 }
 
 module.exports = {
+  /**
+   * Catalogue API is the fast read-only API to query frontend
+   * related data
+   */
   callCatalogueApi: createApiCaller(
     `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/catalogue`
   ),
+  /**
+   * Orders API is the highly scalable API to send/read massive
+   * amounts of orders
+   */
   callOrdersApi: createApiCaller(
     `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/orders`
   ),
+  /**
+   * The PIM API is used for doing the ALL possible actions on
+   * a tenant or your user profile
+   */
   callPimApi: createApiCaller("https://pim.crystallize.com/graphql"),
 };

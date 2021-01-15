@@ -1,3 +1,5 @@
+const crystallize = require("../services/crystallize");
+
 const cartService = require("../services/cart-service");
 const voucherService = require("../services/voucher-service");
 const userService = require("../services/user-service");
@@ -19,6 +21,7 @@ module.exports = {
     cart: (parent, args, { user }) => cartService.get({ ...args, user }),
     user: (parent, args, { user }) => user || {},
     vouchers: (parent, args, context) => ({}),
+    orders: (parent, args, context) => ({}),
     paymentProviders: (parent, args, context) => ({}),
   },
   Mutation: {
@@ -37,9 +40,11 @@ module.exports = {
     vipps: paymentProviderResolver(vippsService),
     mollie: paymentProviderResolver(mollieService),
   },
+  OrderQueries: {
+    get: (parent, args, { user }) => crystallize.orders.getOrder(args.id),
+  },
   VoucherQueries: {
-    get: (parent, args, { user }) =>
-      voucherService.get({ code: args.code, user }),
+    get: (parent, args, { user }) => voucherService.get({ ...args, user }),
   },
   UserMutations: {
     sendMagicLink: (parent, args, { userService, host }) => {
