@@ -17,7 +17,7 @@ module.exports = {
     return `${host}/api/user/logout`;
   },
   authenticate(token) {
-    invariant(JWT_SECRET, "JWT_SECRET missing");
+    invariant(JWT_SECRET, "process.env.JWT_SECRET missing");
 
     if (!token) {
       return null;
