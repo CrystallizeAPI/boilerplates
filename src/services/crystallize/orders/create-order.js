@@ -33,8 +33,8 @@ module.exports = async function createOrder(variables) {
       mutation createOrder(
         $customer: CustomerInput!
         $cart: [OrderItemInput!]!
-        $payment: [PaymentInput!]
         $total: PriceInput
+        $payment: [PaymentInput!]
         $additionalInformation: String
       ) {
         orders {
@@ -42,8 +42,8 @@ module.exports = async function createOrder(variables) {
             input: {
               customer: $customer
               cart: $cart
-              payment: $payment
               total: $total
+              payment: $payment
               additionalInformation: $additionalInformation
             }
           ) {
@@ -53,10 +53,6 @@ module.exports = async function createOrder(variables) {
       }
     `,
   });
-
-  if (response.errors) {
-    console.log(JSON.stringify(response.errors, null, 1));
-  }
 
   return response.data.orders.create;
 };

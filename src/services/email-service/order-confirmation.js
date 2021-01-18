@@ -6,8 +6,7 @@ const { sendEmail } = require("./utils");
 
 module.exports = async function sendOrderConfirmation(orderId) {
   try {
-    const response = await orders.getOrder(orderId);
-    const order = response.data.orders.get;
+    const order = await orders.getOrder(orderId);
     const { email } = order.customer.addresses[0];
 
     if (!email) {

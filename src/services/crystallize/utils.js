@@ -33,7 +33,7 @@ function createApiCaller(uri) {
     const json = await response.json();
 
     if (json.errors) {
-      console.log(JSON.stringify(json.errors, null, 1));
+      console.log(JSON.stringify(json.errors, null, 2));
     }
 
     return json;

@@ -44,7 +44,11 @@ module.exports = {
      */
     const order = await crystallize.orders.createOrder(crystallizeOrderModel);
 
-    // Send out email (can also be done in the orderCreated webhook)
+    /**
+     * Send out the order confirmation email to the customer
+     * It can also be done in a webhook, example here:
+     * - webhooks/order/created
+     */
     await emailService.sendOrderConfirmation(order.id);
 
     return {
