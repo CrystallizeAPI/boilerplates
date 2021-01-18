@@ -1,7 +1,7 @@
 const { getClient } = require("./utils");
 
 module.exports = async function stripeToCrystallizeOrderModel({
-  cart,
+  basket,
   checkoutModel,
   paymentIntentId,
 }) {
@@ -15,8 +15,8 @@ module.exports = async function stripeToCrystallizeOrderModel({
   const customerName = charge.billing_details.name.split(" ");
 
   return {
-    cart: cart.items,
-    total: cart.total,
+    cart: basket.cart,
+    total: basket.total,
     additionalInformation: JSON.stringify({
       stripe_merchant_data: paymentIntent.merchant_data,
       order_metadata: checkoutModel.metadata,

@@ -1,7 +1,6 @@
 const crystallize = require("../services/crystallize");
 
-const cartService = require("../services/cart-service");
-const voucherService = require("../services/voucher-service");
+const basketService = require("../services/basket-service");
 const userService = require("../services/user-service");
 
 const stripeService = require("../services/payment-providers/stripe");
@@ -18,7 +17,7 @@ function paymentProviderResolver(service) {
 
 module.exports = {
   Query: {
-    cart: (parent, args, { user }) => cartService.get({ ...args, user }),
+    basket: (parent, args, { user }) => basketService.get({ ...args, user }),
     user: (parent, args, { user }) => user || {},
     orders: (parent, args, context) => ({}),
     paymentProviders: (parent, args, context) => ({}),

@@ -2,8 +2,8 @@ const { callCatalogueApi } = require("../crystallize/utils");
 const voucherService = require("../voucher-service");
 
 module.exports = {
-  async get({ cartModel, user }) {
-    const { language, voucherCode, ...cartFromClient } = cartModel;
+  async get({ basketModel, user }) {
+    const { language, voucherCode, ...basketFromClient } = basketModel;
 
     /**
      * Resolve all the voucher codes to valid vouchers for the user
@@ -17,7 +17,7 @@ module.exports = {
      * Get all products from Crystallize from their paths
      */
     const productDataFromCrystallize = await getProducts({
-      paths: cartFromClient.items.map((p) => p.path),
+      paths: basketFromClient.cart.map((p) => p.path),
       language,
     });
 
@@ -27,7 +27,7 @@ module.exports = {
      * Compose the complete cart items enriched with
      * data from Crystallize
      */
-    const items = cartFromClient.items
+    const cart = basketFromClient.cart
       .map((itemFromClient) => {
         const product = productDataFromCrystallize.find((p) =>
           p.variants.some((v) => v.sku === itemFromClient.sku)
@@ -70,7 +70,7 @@ module.exports = {
       .filter(Boolean);
 
     // Calculate the totals
-    const total = items.reduce(
+    const total = cart.reduce(
       (acc, curr) => {
         const { quantity, price } = curr;
         if (price) {
@@ -87,7 +87,7 @@ module.exports = {
 
     return {
       voucher,
-      items,
+      cart,
       total,
     };
   },

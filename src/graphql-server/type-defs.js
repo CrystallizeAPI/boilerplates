@@ -4,14 +4,14 @@ module.exports = gql`
   scalar JSON
 
   type Query {
-    cart(cartModel: CartModelInput!): Cart!
+    basket(basketModel: BasketModelInput!): Basket!
     user: UserQueries!
     paymentProviders: PaymentProvidersQueries!
     orders: OrderQueries!
   }
 
-  type Cart {
-    items: [CartItem!]!
+  type Basket {
+    cart: [CartItem!]!
     total: Price!
     voucher: Voucher
   }
@@ -108,9 +108,9 @@ module.exports = gql`
     error: String
   }
 
-  input CartModelInput {
+  input BasketModelInput {
     language: String!
-    items: [SimpleCartItem!]!
+    cart: [SimpleCartItem!]!
     voucherCode: String
   }
 
@@ -129,7 +129,7 @@ module.exports = gql`
   }
 
   input CheckoutModelInput {
-    cartModel: CartModelInput!
+    basketModel: BasketModelInput!
     metadata: JSON
     customer: CustomerInput
   }
@@ -150,7 +150,7 @@ module.exports = gql`
   }
 
   type StripeMutations {
-    createPaymentIntent(cartModel: CartModelInput!): JSON
+    createPaymentIntent(basketModel: BasketModelInput!): JSON
     confirmOrder(
       checkoutModel: CheckoutModelInput!
       paymentIntentId: String!
