@@ -112,6 +112,8 @@ module.exports = gql`
     language: String!
     cart: [SimpleCartItem!]!
     voucherCode: String
+    crystallizeOrderId: String
+    klarnaOrderId: String
   }
 
   input SimpleCartItem {
@@ -147,6 +149,7 @@ module.exports = gql`
 
   type PaymentProvidersMutations {
     stripe: StripeMutations!
+    klarna: KlarnaMutations!
   }
 
   type StripeMutations {
@@ -160,5 +163,20 @@ module.exports = gql`
   type StripeConfirmOrderResponse {
     success: Boolean!
     orderId: String
+  }
+
+  type KlarnaMutations {
+    renderCheckout(
+      checkoutModel: CheckoutModelInput!
+      termsURL: String!
+      checkoutURL: String!
+      confirmationURL: String!
+    ): KlarnaRenderCheckoutReponse!
+  }
+
+  type KlarnaRenderCheckoutReponse {
+    html: String!
+    klarnaOrderId: String!
+    crystallizeOrderId: String!
   }
 `;

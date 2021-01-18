@@ -48,11 +48,16 @@ module.exports = {
   },
   PaymentProvidersMutations: {
     stripe: () => ({}),
+    klarna: () => ({}),
   },
   StripeMutations: {
     createPaymentIntent: (parent, args, { user }) =>
       stripeService.createPaymentIntent({ ...args, user }),
     confirmOrder: (parent, args, { user }) =>
       stripeService.confirmOrder({ ...args, user }),
+  },
+  KlarnaMutations: {
+    renderCheckout: (parent, args, { user, host }) =>
+      klarnaService.renderCheckout({ ...args, user, host }),
   },
 };

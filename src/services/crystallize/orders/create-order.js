@@ -1,34 +1,8 @@
-const { callOrdersApi } = require("../utils");
-
-function validateVariables({ cart, ...rest }) {
-  return {
-    ...rest,
-    cart: cart.map(function validItem(item) {
-      const {
-        images = [],
-        name,
-        sku,
-        productid,
-        productVariantId,
-        quantity,
-        price,
-      } = item;
-      return {
-        name,
-        sku,
-        productid,
-        productVariantId,
-        quantity,
-        price,
-        imageUrl: images[0].url,
-      };
-    }),
-  };
-}
+const { callOrdersApi, normalizeOrderModel } = require("../utils");
 
 module.exports = async function createOrder(variables) {
   const response = await callOrdersApi({
-    variables: validateVariables(variables),
+    variables: normalizeOrderModel(variables),
     query: `
       mutation createOrder(
         $customer: CustomerInput!

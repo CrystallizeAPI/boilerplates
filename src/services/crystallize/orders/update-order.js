@@ -1,8 +1,8 @@
-const { callOrdersApi } = require("../utils");
+const { callPimApi, normalizeOrderModel } = require("../utils");
 
-module.exports = function updateOrder(variables) {
-  return callOrdersApi({
-    variables,
+module.exports = async function updateOrder(variables) {
+  const response = await callPimApi({
+    variables: normalizeOrderModel(variables),
     query: `
       mutation updateOrder(
         $id: ID!
@@ -25,4 +25,6 @@ module.exports = function updateOrder(variables) {
       }
   `,
   });
+
+  return response.data.order.update;
 };
