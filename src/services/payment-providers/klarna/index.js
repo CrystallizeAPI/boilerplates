@@ -8,6 +8,7 @@ const { getClient } = require("./utils");
 const toKlarnaOrderModel = require("./to-klarna-order-model");
 
 module.exports = {
+  getClient,
   enabled: Boolean(KLARNA_USERNAME && KLARNA_PASSWORD),
   frontendConfig: {},
 
@@ -58,7 +59,7 @@ module.exports = {
         terms: termsURL,
         checkout: checkoutURL,
         confirmation: confirmation.toString(),
-        push: `${host}/api/webhooks/klarna/push?crystallizeOrderId=${crystallizeOrderId}&klarnaOrderId={checkout.order.id}`,
+        push: `${host}/api/webhooks/payment-providers/klarna/push?crystallizeOrderId=${crystallizeOrderId}&klarnaOrderId={checkout.order.id}`,
       },
     };
 
@@ -79,6 +80,8 @@ module.exports = {
       if (!error) {
         html = response.html_snippet;
         klarnaOrderId = response.order_id;
+
+        console.log(JSON.stringify(response, null, 2));
       } else {
         throw new Error(error);
       }

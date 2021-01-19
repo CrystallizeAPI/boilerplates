@@ -19,6 +19,7 @@ module.exports = async function getOrder(id) {
                 percent
               }
             }
+            additionalInformation
             payment {
               ... on StripePayment {
                 paymentMethod

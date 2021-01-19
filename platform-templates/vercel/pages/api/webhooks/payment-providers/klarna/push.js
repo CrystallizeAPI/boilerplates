@@ -8,7 +8,10 @@ import klarnaPush from "../../../../../src/webhooks/payment-providers/klarna/pus
 
 export default async function webhookKlarnaPush(req, res) {
   try {
-    await klarnaPush(req.query);
+    await klarnaPush({
+      crystallizeOrderId: req.query.crystallizeOrderId,
+      klarnaOrderId: req.query.klarnaOrderId,
+    });
     res.status(200).send("ok");
   } catch (e) {
     console.log("Error at klarnaPush webhook");

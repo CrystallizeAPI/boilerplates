@@ -1,21 +1,21 @@
 module.exports = function getHost(req = {}) {
-  if (process.env.HOST_URL) {
-    return process.env.HOST_URL;
-  }
-
   const { headers } = req;
 
-  const { host } = headers;
-  if (host) {
-    if (host.startsWith("localhost")) {
-      return `http://${host}`;
-    }
+  if (process.env.HOST_URL) {
+    return process.env.HOST_URL;
   }
 
   // If behind a reverse proxy like AWS Elastic Beanstalk for instance
   const { "x-forwarded-proto": xprotocol, "x-forwarded-host": xhost } = headers;
   if (xprotocol && xhost) {
     return `${xprotocol}://${xhost}`;
+  }
+
+  const { host } = headers;
+  if (host) {
+    if (host.startsWith("localhost")) {
+      return `http://${host}`;
+    }
   }
 
   // Local proxy url using Ngrok
