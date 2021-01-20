@@ -109,11 +109,19 @@ module.exports = gql`
   }
 
   input BasketModelInput {
-    language: String!
+    locale: LocaleInput!
     cart: [SimpleCartItem!]!
     voucherCode: String
     crystallizeOrderId: String
     klarnaOrderId: String
+  }
+
+  input LocaleInput {
+    locale: String!
+    displayName: String
+    appLanguage: String!
+    crystallizeCatalogueLanguage: String
+    crystallizePriceVariant: String
   }
 
   input SimpleCartItem {

@@ -3,7 +3,7 @@ const voucherService = require("../voucher-service");
 
 module.exports = {
   async get({ basketModel, user }) {
-    const { language, voucherCode, ...basketFromClient } = basketModel;
+    const { locale, voucherCode, ...basketFromClient } = basketModel;
 
     /**
      * Resolve all the voucher codes to valid vouchers for the user
@@ -18,7 +18,7 @@ module.exports = {
      */
     const productDataFromCrystallize = await getProducts({
       paths: basketFromClient.cart.map((p) => p.path),
-      language,
+      language: locale.crystallizeCatalogueLanguage,
     });
 
     let vatType;
