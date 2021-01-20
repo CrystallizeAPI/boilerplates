@@ -13,8 +13,8 @@ const USER_TOKEN_NAME = "user-token";
 
 module.exports = {
   USER_TOKEN_NAME,
-  getLogoutLink({ host }) {
-    return `${host}/api/user/logout`;
+  getLogoutLink({ publicHost }) {
+    return `${publicHost}/api/user/logout`;
   },
   authenticate(token) {
     invariant(JWT_SECRET, "process.env.JWT_SECRET missing");
@@ -37,7 +37,7 @@ module.exports = {
       email: decoded.email,
     };
   },
-  async sendMagicLink({ email, redirectURLAfterLogin, host }) {
+  async sendMagicLink({ email, redirectURLAfterLogin, publicHost }) {
     invariant(JWT_SECRET, "JWT_SECRET missing");
 
     /**
@@ -45,7 +45,7 @@ module.exports = {
      * link token, and then calling the validateMagicLinkToken
      * function from userService.
      */
-    const loginLink = new URL(`${host}/api/user/login-magic-link`);
+    const loginLink = new URL(`${publicHost}/api/user/login-magic-link`);
 
     /**
      * Add the JWT to the callback url

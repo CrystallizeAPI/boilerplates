@@ -30,7 +30,8 @@ module.exports = {
     isLoggedIn(parent, args, { user }) {
       return Boolean(user && "email" in user);
     },
-    logoutLink: (parent, args, { host }) => userService.getLogoutLink({ host }),
+    logoutLink: (parent, args, { publicHost }) =>
+      userService.getLogoutLink({ publicHost }),
   },
   PaymentProvidersQueries: {
     stripe: paymentProviderResolver(stripeService),
@@ -42,8 +43,8 @@ module.exports = {
     get: (parent, args, { user }) => crystallize.orders.getOrder(args.id),
   },
   UserMutations: {
-    sendMagicLink: (parent, args, { userService, host }) => {
-      return userService.sendMagicLink({ ...args, host });
+    sendMagicLink: (parent, args, { userService, publicHost }) => {
+      return userService.sendMagicLink({ ...args, publicHost });
     },
   },
   PaymentProvidersMutations: {
@@ -57,7 +58,11 @@ module.exports = {
       stripeService.confirmOrder({ ...args, user }),
   },
   KlarnaMutations: {
-    renderCheckout: (parent, args, { user, host }) =>
-      klarnaService.renderCheckout({ ...args, user, host }),
+    renderCheckout: (parent, args, { user, serviceCallbackHost }) =>
+      klarnaService.renderCheckout({
+        ...args,
+        user,
+        serviceCallbackHost,
+      }),
   },
 };

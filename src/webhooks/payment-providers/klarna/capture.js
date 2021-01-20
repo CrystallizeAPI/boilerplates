@@ -1,5 +1,5 @@
 /**
- * An example of how to capture amount reserved on an
+ * An example of how to capture an amount for on an
  * order. You would typically do this as a response to
  * an update of a Fulfilment Pipelane Stage change in
  * Crystallize (https://crystallize.com/learn/developer-guides/order-api/fulfilment-pipelines)

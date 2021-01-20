@@ -18,7 +18,7 @@ module.exports = {
     termsURL,
     checkoutURL,
     user,
-    host,
+    serviceCallbackHost,
   }) => {
     const { basketModel, customer } = checkoutModel;
 
@@ -31,8 +31,7 @@ module.exports = {
      * manage the lifecycle of the order
      */
     if (crystallizeOrderId) {
-      await crystallize.orders.updateOrder({
-        id: crystallizeOrderId,
+      await crystallize.orders.updateOrder(crystallizeOrderId, {
         ...basket,
         customer,
       });
@@ -59,12 +58,16 @@ module.exports = {
         terms: termsURL,
         checkout: checkoutURL,
         confirmation: confirmation.toString(),
-        push: `${host}/api/webhooks/payment-providers/klarna/push?crystallizeOrderId=${crystallizeOrderId}&klarnaOrderId={checkout.order.id}`,
+        push: `${serviceCallbackHost}/api/webhooks/payment-providers/klarna/push?crystallizeOrderId=${crystallizeOrderId}&klarnaOrderId={checkout.order.id}`,
       },
     };
 
     const klarnaClient = await getClient();
 
+    /**
+     * Hold the HTML snippet that will be used on the
+     * frontend to display the Klarna checkout
+     */
     let html = "";
 
     /**
@@ -80,8 +83,6 @@ module.exports = {
       if (!error) {
         html = response.html_snippet;
         klarnaOrderId = response.order_id;
-
-        console.log(JSON.stringify(response, null, 2));
       } else {
         throw new Error(error);
       }
@@ -98,9 +99,16 @@ module.exports = {
       }
     }
 
-    // Tag the Crystallize order with the Klarna order id
-    await crystallize.orders.updateOrder({
+    /**
+     * The Crystallize order creating is asynchronous, so we have
+     * to wait for the order to be fully persisted
+     */
+    await crystallize.orders.waitForOrderToBePersistated({
       id: crystallizeOrderId,
+    });
+
+    // Tag the Crystallize order with the Klarna order id
+    await crystallize.orders.updateOrder(crystallizeOrderId, {
       ...basket,
       additionalInformation: JSON.stringify({
         klarnaOrderId,

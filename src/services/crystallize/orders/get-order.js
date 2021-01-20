@@ -36,12 +36,12 @@ module.exports = async function getOrder(id) {
               sku
               name
               quantity
+              imageUrl
               price {
                 net
                 gross
                 currency
               }
-              imageUrl
             }
             customer {
               firstName
