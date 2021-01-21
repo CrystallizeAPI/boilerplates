@@ -16,6 +16,8 @@ module.exports = async function createPayment({
 
   let { crystallizeOrderId } = basketModel;
 
+  const isSubscription = false;
+
   /* Use a Crystallize order and the fulfilment pipelines to
    * manage the lifecycle of the order
    */
@@ -23,11 +25,17 @@ module.exports = async function createPayment({
     await crystallize.orders.updateOrder(crystallizeOrderId, {
       ...basket,
       customer,
+      additionalInformation: JSON.stringify({
+        isSubscription,
+      }),
     });
   } else {
     const crystallizeOrder = await crystallize.orders.createOrder({
       ...basket,
       customer,
+      additionalInformation: JSON.stringify({
+        isSubscription,
+      }),
     });
     crystallizeOrderId = crystallizeOrder.id;
   }
@@ -43,11 +51,11 @@ module.exports = async function createPayment({
     confirmationURL.replace("{crystallizeOrderId}", crystallizeOrderId)
   );
 
-  const mollieResponse = await mollieClient.payments.create({
+  const validMollieOrder = {
     amount: {
       currency:
         process.env.MOLLIE_DEFAULT_CURRENCY || total.currency.toUpperCase(),
-      value: `${total.gross.toFixed(2)}`,
+      value: total.gross.toFixed(2),
     },
     customerId: mollieCustomer.id,
     sequenceType: "first",
@@ -55,11 +63,37 @@ module.exports = async function createPayment({
     redirectUrl: confirmation.toString(),
     webhookUrl: `${serviceCallbackHost}/api/webhooks/payment-providers/mollie/order-update`,
     metadata: { crystallizeOrderId },
-  });
+  };
+
+  const mollieOrderResponse = await mollieClient.payments.create(
+    validMollieOrder
+  );
+
+  if (isSubscription) {
+    await mollieClient.customers_mandates.get(mollieOrderResponse.mandateId, {
+      customerId: mollieCustomer.id,
+    });
+
+    // Define the start date for the subscription
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() + 15);
+    startDate.toISOString().split("T")[0];
+
+    await mollieClient.customers_subscriptions.create({
+      customerId: mollieCustomer.id,
+      amount: validMollieOrder.amount,
+      times: 1,
+      interval: "1 month",
+      startDate,
+      description: "Mollie Test subscription",
+      webhookUrl: `${serviceCallbackHost}/api/webhooks/payment-providers/mollie/subscription-renewal`,
+      metadata: {},
+    });
+  }
 
   return {
     success: true,
-    checkoutLink: mollieResponse._links.checkout.href,
+    checkoutLink: mollieOrderResponse._links.checkout.href,
     crystallizeOrderId,
   };
 };

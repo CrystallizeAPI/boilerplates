@@ -3,10 +3,11 @@
  * https://developers.klarna.com/api/#order-management-api-create-capture
  */
 
-import klarnaCapture from "../../../../../src/webhooks/payment-providers/klarna/capture";
+import klarnaCapture from "../../../../../src/services/payment-providers/klarna/capture";
 
 export default async function webhookKlarnaCapture(req, res) {
   try {
+    console.log("webhookKlarnaCapture", req.query);
     await klarnaCapture({ crystallizeOrderId: req.query.crystallizeOrderId });
     res.status(200).send("ok");
   } catch (e) {

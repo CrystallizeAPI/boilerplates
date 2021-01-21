@@ -1,13 +1,8 @@
-const crystallize = require("../../../services/crystallize");
-const {
-  getClient,
-  toCrystallizeOrderModel,
-} = require("../../../services/payment-providers/mollie");
+const crystallize = require("../../crystallize");
+const { getClient } = require("./utils");
+const toCrystallizeOrderModel = require("./to-crystallize-order-model");
 
 module.exports = async function mollieOrderUpdate({ mollieOrderId }) {
-  console.log("Mollie order update webhook");
-  console.log({ mollieOrderId });
-
   const mollieClient = await getClient();
 
   const mollieOrder = await mollieClient.payments.get(mollieOrderId);
@@ -21,8 +16,14 @@ module.exports = async function mollieOrderUpdate({ mollieOrderId }) {
     mollieCustomer,
   });
 
+  const { crystallizeOrderId } = mollieOrder.metadata;
+
+  await crystallize.orders.waitForOrderToBePersistated({
+    id: crystallizeOrderId,
+  });
+
   await crystallize.orders.updateOrder(
-    mollieOrder.metadata.crystallizeOrderId,
+    crystallizeOrderId,
     validCrystallizeOrder
   );
 };
