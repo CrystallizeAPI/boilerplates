@@ -4,7 +4,7 @@
  * https://developers.klarna.com/documentation/klarna-checkout/in-depth/confirm-purchase/
  */
 
-import klarnaPush from "../../../../../src/payment-providers/klarna/push";
+import klarnaPush from "../../../../../src/services/payment-providers/klarna/push";
 
 export default async function webhookKlarnaPush(req, res) {
   try {
