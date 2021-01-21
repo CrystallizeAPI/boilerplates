@@ -10,8 +10,8 @@ const EMAIL_FROM = process.env.EMAIL_FROM;
 
 module.exports = {
   sendEmail(args) {
-    invariant(SENDGRID_API_KEY, "SENDGRID_API_KEY not defined");
-    invariant(EMAIL_FROM, "EMAIL_FROM is not defined");
+    invariant(SENDGRID_API_KEY, "process.env.SENDGRID_API_KEY not defined");
+    invariant(EMAIL_FROM, "process.env.EMAIL_FROM is not defined");
 
     return sgMail.send({
       from: EMAIL_FROM,

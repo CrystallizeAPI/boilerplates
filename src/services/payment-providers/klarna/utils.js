@@ -13,8 +13,8 @@ let client;
 
 module.exports = {
   getClient: () => {
-    invariant(KLARNA_USERNAME, "KLARNA_USERNAME is not set");
-    invariant(KLARNA_PASSWORD, "KLARNA_PASSWORD is not set");
+    invariant(KLARNA_USERNAME, "process.env.KLARNA_USERNAME is not defined");
+    invariant(KLARNA_PASSWORD, "process.env.KLARNA_PASSWORD is not defined");
 
     if (!client && KLARNA_USERNAME && KLARNA_PASSWORD) {
       client = new Klarna({

@@ -17,7 +17,7 @@ module.exports = {
     return `${publicHost}/api/user/logout`;
   },
   authenticate(token) {
-    invariant(JWT_SECRET, "process.env.JWT_SECRET missing");
+    invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
 
     if (!token) {
       return null;
@@ -38,7 +38,7 @@ module.exports = {
     };
   },
   async sendMagicLink({ email, redirectURLAfterLogin, publicHost }) {
-    invariant(JWT_SECRET, "JWT_SECRET missing");
+    invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
 
     /**
      * This is the page responsible of receiving the magic
@@ -67,7 +67,7 @@ module.exports = {
     return { success };
   },
   validateMagicLinkToken(token) {
-    invariant(JWT_SECRET, "JWT_SECRET missing");
+    invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
 
     /**
      * Here we would want to fetch an entry matching the provided token from our

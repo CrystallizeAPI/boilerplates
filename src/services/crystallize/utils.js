@@ -7,15 +7,15 @@ const CRYSTALLIZE_SECRET_TOKEN_ID = process.env.CRYSTALLIZE_SECRET_TOKEN_ID;
 
 invariant(
   CRYSTALLIZE_TENANT_IDENTIFIER,
-  "Missing required ENV variable CRYSTALLIZE_TENANT_IDENTIFIER"
+  "Missing process.env.CRYSTALLIZE_TENANT_IDENTIFIER"
 );
 invariant(
   CRYSTALLIZE_SECRET_TOKEN,
-  "Missing required ENV variable CRYSTALLIZE_SECRET_TOKEN"
+  "Missing process.env.CRYSTALLIZE_SECRET_TOKEN"
 );
 invariant(
   CRYSTALLIZE_SECRET_TOKEN_ID,
-  "Missing required ENV variable CRYSTALLIZE_SECRET_TOKEN_ID"
+  "Missing process.env.CRYSTALLIZE_SECRET_TOKEN_ID"
 );
 
 function createApiCaller(uri) {
@@ -43,26 +43,28 @@ function createApiCaller(uri) {
 function normalizeOrderModel({ customer, cart, ...rest }) {
   return {
     ...rest,
-    cart: cart.map(function handleOrderCartItem(item) {
-      const {
-        images = [],
-        name,
-        sku,
-        productid,
-        productVariantId,
-        quantity,
-        price,
-      } = item;
+    ...(cart && {
+      cart: cart.map(function handleOrderCartItem(item) {
+        const {
+          images = [],
+          name,
+          sku,
+          productid,
+          productVariantId,
+          quantity,
+          price,
+        } = item;
 
-      return {
-        name,
-        sku,
-        productid,
-        productVariantId,
-        quantity,
-        price,
-        imageUrl: images[0].url,
-      };
+        return {
+          name,
+          sku,
+          productid,
+          productVariantId,
+          quantity,
+          price,
+          imageUrl: images[0].url,
+        };
+      }),
     }),
     ...(customer && {
       customer: {

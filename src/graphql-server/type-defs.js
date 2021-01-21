@@ -158,6 +158,7 @@ module.exports = gql`
   type PaymentProvidersMutations {
     stripe: StripeMutations!
     klarna: KlarnaMutations!
+    mollie: MollieMutations!
   }
 
   type StripeMutations {
@@ -185,6 +186,19 @@ module.exports = gql`
   type KlarnaRenderCheckoutReponse {
     html: String!
     klarnaOrderId: String!
+    crystallizeOrderId: String!
+  }
+
+  type MollieMutations {
+    createPayment(
+      checkoutModel: CheckoutModelInput!
+      confirmationURL: String!
+    ): MollieCreatePaymentResponse!
+  }
+
+  type MollieCreatePaymentResponse {
+    success: Boolean!
+    checkoutLink: String
     crystallizeOrderId: String!
   }
 `;

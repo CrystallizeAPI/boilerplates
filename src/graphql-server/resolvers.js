@@ -19,11 +19,7 @@ module.exports = {
   Query: {
     basket: (parent, args, { user }) => basketService.get({ ...args, user }),
     user: (parent, args, { user }) => user || {},
-    orders: (parent, args, context) => ({}),
-    paymentProviders: (parent, args, context) => ({}),
-  },
-  Mutation: {
-    user: () => ({}),
+    orders: () => ({}),
     paymentProviders: () => ({}),
   },
   UserQueries: {
@@ -40,7 +36,11 @@ module.exports = {
     mollie: paymentProviderResolver(mollieService),
   },
   OrderQueries: {
-    get: (parent, args, { user }) => crystallize.orders.getOrder(args.id),
+    get: (parent, args) => crystallize.orders.getOrder(args.id),
+  },
+  Mutation: {
+    user: () => ({}),
+    paymentProviders: () => ({}),
   },
   UserMutations: {
     sendMagicLink: (parent, args, { userService, publicHost }) => {
@@ -50,6 +50,7 @@ module.exports = {
   PaymentProvidersMutations: {
     stripe: () => ({}),
     klarna: () => ({}),
+    mollie: () => ({}),
   },
   StripeMutations: {
     createPaymentIntent: (parent, args, { user }) =>
@@ -60,6 +61,14 @@ module.exports = {
   KlarnaMutations: {
     renderCheckout: (parent, args, { user, serviceCallbackHost }) =>
       klarnaService.renderCheckout({
+        ...args,
+        user,
+        serviceCallbackHost,
+      }),
+  },
+  MollieMutations: {
+    createPayment: (parent, args, { user, serviceCallbackHost }) =>
+      mollieService.createPayment({
         ...args,
         user,
         serviceCallbackHost,

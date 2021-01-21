@@ -30,6 +30,8 @@ module.exports = async function klarnaCapture({ crystallizeOrderId }) {
     additionalInformation.klarnaOrderId
   );
 
+  console.log(error, response);
+
   /**
    * You would typically also move the order in the
    * fulfilment pipeline from a stage called e.g.

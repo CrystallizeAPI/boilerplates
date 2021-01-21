@@ -19,7 +19,7 @@ module.exports = function waitForOrderToBePersistated({ id }) {
         `,
       });
 
-      if (response.data && response.data.orders.get.id) {
+      if (response.data && response.data.orders.get) {
         resolve();
       } else {
         retries += 1;
