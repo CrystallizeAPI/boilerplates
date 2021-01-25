@@ -7,5 +7,9 @@ module.exports = {
   resolvers,
   typeDefs,
   introspection: true,
-  playground: true,
+  playground: {
+    settings: {
+      "request.credentials": "include",
+    },
+  },
 };
