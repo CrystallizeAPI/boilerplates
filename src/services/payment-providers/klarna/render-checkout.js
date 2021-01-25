@@ -6,13 +6,16 @@ const toKlarnaOrderModel = require("./to-klarna-order-model");
 
 module.exports = async function renderCheckout({
   checkoutModel,
-  confirmationURL,
-  termsURL,
-  checkoutURL,
   user,
   serviceCallbackHost,
 }) {
-  const { basketModel, customer } = checkoutModel;
+  const {
+    basketModel,
+    customer,
+    confirmationURL,
+    termsURL,
+    checkoutURL,
+  } = checkoutModel;
 
   let { crystallizeOrderId, klarnaOrderId } = basketModel;
 

@@ -51,6 +51,7 @@ module.exports = {
     stripe: () => ({}),
     klarna: () => ({}),
     mollie: () => ({}),
+    vipps: () => ({}),
   },
   StripeMutations: {
     createPaymentIntent: (parent, args, { user }) =>
@@ -69,6 +70,14 @@ module.exports = {
   MollieMutations: {
     createPayment: (parent, args, { user, serviceCallbackHost }) =>
       mollieService.createPayment({
+        ...args,
+        user,
+        serviceCallbackHost,
+      }),
+  },
+  VippsMutations: {
+    initiatePayment: (parent, args, { user, serviceCallbackHost }) =>
+      vippsService.initiatePayment({
         ...args,
         user,
         serviceCallbackHost,

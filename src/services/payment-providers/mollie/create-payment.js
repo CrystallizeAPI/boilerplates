@@ -3,13 +3,12 @@ const crystallize = require("../../crystallize");
 
 const { getClient } = require("./utils");
 
-module.exports = async function createPayment({
+module.exports = async function createMolliePayment({
   checkoutModel,
-  confirmationURL,
   user,
   serviceCallbackHost,
 }) {
-  const { basketModel, customer } = checkoutModel;
+  const { basketModel, customer, confirmationURL } = checkoutModel;
 
   const basket = await basketService.get({ basketModel, user });
   const { total } = basket;

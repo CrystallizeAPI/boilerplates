@@ -142,6 +142,9 @@ module.exports = gql`
     basketModel: BasketModelInput!
     metadata: JSON
     customer: CustomerInput
+    confirmationURL: String!
+    checkoutURL: String!
+    termsURL: String!
   }
 
   input CustomerInput {
@@ -159,10 +162,11 @@ module.exports = gql`
     stripe: StripeMutations!
     klarna: KlarnaMutations!
     mollie: MollieMutations!
+    vipps: VippsMutations!
   }
 
   type StripeMutations {
-    createPaymentIntent(basketModel: BasketModelInput!): JSON
+    createPaymentIntent(checkoutModel: CheckoutModelInput!): JSON
     confirmOrder(
       checkoutModel: CheckoutModelInput!
       paymentIntentId: String!
@@ -177,9 +181,6 @@ module.exports = gql`
   type KlarnaMutations {
     renderCheckout(
       checkoutModel: CheckoutModelInput!
-      termsURL: String!
-      checkoutURL: String!
-      confirmationURL: String!
     ): KlarnaRenderCheckoutReponse!
   }
 
@@ -192,11 +193,22 @@ module.exports = gql`
   type MollieMutations {
     createPayment(
       checkoutModel: CheckoutModelInput!
-      confirmationURL: String!
     ): MollieCreatePaymentResponse!
   }
 
   type MollieCreatePaymentResponse {
+    success: Boolean!
+    checkoutLink: String
+    crystallizeOrderId: String!
+  }
+
+  type VippsMutations {
+    initiatePayment(
+      checkoutModel: CheckoutModelInput!
+    ): VippsInitiatePaymentResponse!
+  }
+
+  type VippsInitiatePaymentResponse {
     success: Boolean!
     checkoutLink: String
     crystallizeOrderId: String!

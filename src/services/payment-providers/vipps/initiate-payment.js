@@ -1,0 +1,86 @@
+const invariant = require("invariant");
+
+const basketService = require("../../basket-service");
+const crystallize = require("../../crystallize");
+
+const { getClient } = require("./utils");
+
+const VIPPS_MERCHANT_SERIAL = process.env.VIPPS_MERCHANT_SERIAL;
+
+module.exports = async function initiateVippsPayment({
+  checkoutModel,
+  user,
+  serviceCallbackHost,
+}) {
+  invariant(
+    VIPPS_MERCHANT_SERIAL,
+    "process.env.VIPPS_MERCHANT_SERIAL is undefined"
+  );
+
+  const { basketModel, customer, confirmationURL, checkoutURL } = checkoutModel;
+
+  const basket = await basketService.get({ basketModel, user });
+  const { total } = basket;
+
+  /* Use a Crystallize order and the fulfilment pipelines to
+   * manage the lifecycle of the order
+   */
+  const crystallizeOrder = await crystallize.orders.createOrder({
+    ...basket,
+    customer,
+  });
+  const crystallizeOrderId = crystallizeOrder.id;
+
+  /**
+   * The Vipps "fallback" url, is where the user will be redirected
+   * to after completing the Vipps checkout.
+   */
+  const fallBackURL = new URL(
+    `${serviceCallbackHost}/api/webhooks/payment-providers/vipps/fallback/${crystallizeOrderId}`
+  );
+  fallBackURL.searchParams.append(
+    "confirmation",
+    encodeURIComponent(
+      confirmationURL.replace("{crystallizeOrderId}", crystallizeOrderId)
+    )
+  );
+  fallBackURL.searchParams.append("checkout", encodeURIComponent(checkoutURL));
+
+  const vippsClient = await getClient();
+
+  const vippsResponse = await vippsClient.initiatePayment({
+    order: {
+      merchantInfo: {
+        merchantSerialNumber: VIPPS_MERCHANT_SERIAL,
+        fallBack: fallBackURL.toString(),
+        callbackPrefix: `${serviceCallbackHost}/api/webhooks/payment-providers/vipps/order-update`,
+        shippingDetailsPrefix: `${serviceCallbackHost}/api/webhooks/payment-providers/vipps/shipping`,
+        consentRemovalPrefix: `${serviceCallbackHost}/api/webhooks/payment-providers/vipps/constent-removal`,
+        paymentType: "eComm Express Payment",
+        isApp: false,
+        staticShippingDetails: [
+          // Provide a default shipping method
+          {
+            isDefault: "Y",
+            priority: 0,
+            shippingCost: 0,
+            shippingMethod: "Posten Servicepakke",
+            shippingMethodId: "posten-servicepakke",
+          },
+        ],
+      },
+      customerInfo: {},
+      transaction: {
+        orderId: crystallizeOrderId,
+        amount: parseInt(total.gross * 100, 10),
+        transactionText: "Crystallize test transaction",
+      },
+    },
+  });
+
+  return {
+    success: true,
+    checkoutLink: vippsResponse.url,
+    crystallizeOrderId,
+  };
+};
