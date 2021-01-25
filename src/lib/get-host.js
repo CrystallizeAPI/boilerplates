@@ -1,10 +1,6 @@
 module.exports = function getHost(req = {}) {
   const { headers } = req;
 
-  if (process.env.HOST_URL) {
-    return process.env.HOST_URL;
-  }
-
   // If behind a reverse proxy like AWS Elastic Beanstalk for instance
   const { "x-forwarded-proto": xprotocol, "x-forwarded-host": xhost } = headers;
   if (xprotocol && xhost) {
@@ -12,15 +8,12 @@ module.exports = function getHost(req = {}) {
   }
 
   const { host } = headers;
-  if (host) {
-    if (host.startsWith("localhost")) {
-      return `http://${host}`;
-    }
+  if (host && host.startsWith("localhost")) {
+    return `http://${host}`;
   }
 
-  // Local proxy url using Ngrok
-  if (process.env.NGROK_URL) {
-    return process.env.NGROK_URL;
+  if (process.env.HOST_URL) {
+    return process.env.HOST_URL;
   }
 
   // If hosted on Vercel
@@ -28,5 +21,9 @@ module.exports = function getHost(req = {}) {
     return `https://${process.env.VERCEL_URL}`;
   }
 
-  throw new Error("Cannot determine host from req");
+  if (!host) {
+    throw new Error("Cannot determine host from req");
+  }
+
+  return `https://${host}`;
 };
