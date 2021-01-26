@@ -7,9 +7,8 @@ import voucherService from "../../../src/services/voucher-service";
 import userService from "../../../src/services/user-service";
 
 
-export default async function GetVoucher(req,   res) {
+export default async function GetVoucher(req, res) {
   try {
-    console.log(req.cookies)
     const currentUser = userService.authenticate(
       req.cookies[userService.USER_TOKEN_NAME]
     );
@@ -30,7 +29,8 @@ export default async function GetVoucher(req,   res) {
     })
   
     if (!voucher) {
-      res.status(400).send("Voucher not found")
+      res.status(200).send()
+      // res.status(404).send("Voucher not found")
     }
     
     res.status(200).send(voucher)
