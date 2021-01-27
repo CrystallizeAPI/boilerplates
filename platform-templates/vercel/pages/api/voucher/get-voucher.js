@@ -13,19 +13,19 @@ export default async function GetVoucher(req, res) {
       req.cookies[userService.USER_TOKEN_NAME]
     );
 
-    const {code: voucherCode} = req.body.voucherCode
+    const {code: voucherCode} = req.body
     if (!voucherCode) {
       res.status(401).send("A voucher code must be provided")
     }
 
     // Vouchers is a feature only available for logged in users as default.
-    if (!currentUser) {
+    if (!currentUser || !currentUser.email) {
       res.status(403).send("You must be logged in to use vouchers")
     }
 
     const {voucher} = await voucherService.get({
       code: voucherCode,
-      user: currentUser.token
+      user: currentUser
     })
   
     if (!voucher) {
@@ -37,6 +37,6 @@ export default async function GetVoucher(req, res) {
   } catch (e) {
     res
       .status(500)
-      .send("Something went wrong when trying to authenticated the user");
+      .send("Something went wrong when trying to provide the voucher details");
   }
 }

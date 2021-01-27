@@ -17,15 +17,29 @@ const vouchers = [
   },
 ];
 
+const vouchersWithAuthenticationRequired = [
+  {
+    code: "awesome-deal-logged-in",
+    discountAmount: null,
+    discountPercent: 99,
+  },
+  {
+    code: "fair-deal-logged-in",
+    discountAmount: 500,
+    discountPercent: null,
+  },
+];
+
 module.exports = {
   get({ code, context }) {
     const { user } = context;
-    const voucher = vouchers.find((v) => v.code === code);
-
-    // Only vouchers for logged in users
     if (!user.email) {
-      return null;
+      return vouchers.find((v) => v.code === code);
     }
+    
+    // We assume that non of the vouchers have repeated codes
+    const allVouchers = [...vouchers, ...vouchersWithAuthenticationRequired]
+    const voucher = allVouchers.find((v) => v.code === code);
 
     // Lookup voucher in third party system
     // Todo: example
