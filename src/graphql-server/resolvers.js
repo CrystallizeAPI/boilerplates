@@ -17,15 +17,27 @@ function paymentProviderResolver(service) {
 
 module.exports = {
   Query: {
+    myCustomBusinessThing: () => ({
+      whatIsThis:
+        "This is an example of a custom query for GraphQL demonstration purpuses. Check out the MyCustomBusinnessQueries resolvers for how to resolve additional fields apart from the 'whatIsThis' field",
+    }),
     basket: (parent, args, { user }) => basketService.get({ ...args, user }),
-    user: (parent, args, { user }) => user || {},
+    user: () => ({}),
     orders: () => ({}),
     paymentProviders: () => ({}),
+  },
+  MyCustomBusinnessQueries: {
+    dynamicRandomInt() {
+      console.log("dynamicRandomInt called");
+      return parseInt(Math.random() * 100);
+    },
+    youCanEvenGetTheUserDataHere: () => ({}),
   },
   UserQueries: {
     isLoggedIn(parent, args, { user }) {
       return Boolean(user && "email" in user);
     },
+    email: (parent, args, { user }) => (user ? user.email : null),
     logoutLink: (parent, args, { publicHost }) =>
       userService.getLogoutLink({ publicHost }),
   },

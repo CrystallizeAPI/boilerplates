@@ -4,10 +4,17 @@ module.exports = gql`
   scalar JSON
 
   type Query {
+    myCustomBusinessThing: MyCustomBusinnessQueries!
     basket(basketModel: BasketModelInput!): Basket!
     user: UserQueries!
     paymentProviders: PaymentProvidersQueries!
     orders: OrderQueries!
+  }
+
+  type MyCustomBusinnessQueries {
+    whatIsThis: String!
+    dynamicRandomInt: Int!
+    youCanEvenGetTheUserDataHere: UserQueries!
   }
 
   type Basket {
