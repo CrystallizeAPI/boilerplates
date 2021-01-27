@@ -1,9 +1,5 @@
-const crystallize = require("../../crystallize");
-const basketService = require("../../basket-service");
-const emailService = require("../../email-service");
-
-const { getClient } = require("./utils");
-const toCrystallizeOrderModel = require("./to-crystallize-order-model");
+const createPaymentIntent = require("./create-payment-intent");
+const confirmOrder = require("./confirm-order");
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY;
@@ -15,45 +11,6 @@ module.exports = {
   frontendConfig: {
     publishableKey: STRIPE_PUBLISHABLE_KEY,
   },
-  async createPaymentIntent({ basketModel, user }) {
-    const basket = await basketService.get({ basketModel, user });
-
-    const paymentIntent = await getClient().paymentIntents.create({
-      amount: basket.total.gross * 100,
-      currency: basket.total.currency,
-    });
-
-    return paymentIntent;
-  },
-  async confirmOrder({ paymentIntentId, checkoutModel, user }) {
-    const { basketModel } = checkoutModel;
-
-    const basket = await basketService.get({ basketModel, user });
-
-    // Prepares a model valid for Crystallize order intake
-    const crystallizeOrderModel = await toCrystallizeOrderModel({
-      basket,
-      checkoutModel,
-      paymentIntentId,
-    });
-
-    /**
-     * Record the order in Crystallize
-     * Manage the order lifecycle by using the fulfilment pipelines:
-     * https://crystallize.com/learn/user-guides/orders-and-fulfilment
-     */
-    const order = await crystallize.orders.createOrder(crystallizeOrderModel);
-
-    /**
-     * Send out the order confirmation email to the customer
-     * It can also be done in a webhook, example here:
-     * - webhooks/order/created
-     */
-    await emailService.sendOrderConfirmation(order.id);
-
-    return {
-      success: true,
-      orderId: order.id,
-    };
-  },
+  createPaymentIntent,
+  confirmOrder,
 };
