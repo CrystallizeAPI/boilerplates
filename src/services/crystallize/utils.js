@@ -9,17 +9,18 @@ invariant(
   CRYSTALLIZE_TENANT_IDENTIFIER,
   "Missing process.env.CRYSTALLIZE_TENANT_IDENTIFIER"
 );
-invariant(
-  CRYSTALLIZE_SECRET_TOKEN,
-  "Missing process.env.CRYSTALLIZE_SECRET_TOKEN"
-);
-invariant(
-  CRYSTALLIZE_SECRET_TOKEN_ID,
-  "Missing process.env.CRYSTALLIZE_SECRET_TOKEN_ID"
-);
 
 function createApiCaller(uri) {
   return async function callApi({ query, variables, operationName }) {
+    invariant(
+      CRYSTALLIZE_SECRET_TOKEN,
+      "Missing process.env.CRYSTALLIZE_SECRET_TOKEN"
+    );
+    invariant(
+      CRYSTALLIZE_SECRET_TOKEN_ID,
+      "Missing process.env.CRYSTALLIZE_SECRET_TOKEN_ID"
+    );
+
     const response = await fetch(uri, {
       method: "POST",
       headers: {
