@@ -1,14 +1,34 @@
+const cookie = require("cookie");
+
 const userService = require("../services/user-service");
 const emailService = require("../services/email-service");
 const getHost = require("../lib/get-host");
 
-module.exports = ({ req }) => {
-  const user = userService.authenticate(
-    req.cookies[userService.USER_TOKEN_NAME]
-  );
+function normaliseRequest(args) {
+  if (args.event) {
+    if (args.event.headers && !args.event.cookies) {
+      return {
+        headers: args.event.headers,
+        cookies: cookie.parse(args.event.headers.cookie),
+      };
+    }
+    return args.event;
+  }
+
+  if (args.req) {
+    return args.req;
+  }
+
+  return args;
+}
+
+module.exports = (args) => {
+  const { cookies, headers } = normaliseRequest(args);
+
+  const user = userService.authenticate(cookies[userService.USER_TOKEN_NAME]);
 
   // Determine the public host for the API (ex: https://service-api.example.com)
-  const publicHost = getHost(req);
+  const publicHost = getHost({ headers });
 
   /**
    * The host used for third party services callbacks

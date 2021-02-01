@@ -1,6 +1,4 @@
-module.exports = function getHost(req = {}) {
-  const { headers } = req;
-
+module.exports = function getHost({ headers }) {
   // If behind a reverse proxy like AWS Elastic Beanstalk for instance
   const { "x-forwarded-proto": xprotocol, "x-forwarded-host": xhost } = headers;
   if (xprotocol && xhost) {
@@ -22,7 +20,7 @@ module.exports = function getHost(req = {}) {
   }
 
   if (!host) {
-    throw new Error("Cannot determine host from req");
+    throw new Error("Cannot determine host for the current request context");
   }
 
   return `https://${host}`;
