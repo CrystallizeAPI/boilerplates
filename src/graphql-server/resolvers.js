@@ -21,7 +21,7 @@ module.exports = {
       whatIsThis:
         "This is an example of a custom query for GraphQL demonstration purpuses. Check out the MyCustomBusinnessQueries resolvers for how to resolve additional fields apart from the 'whatIsThis' field",
     }),
-    basket: (parent, args, { user }) => basketService.get({ ...args, user }),
+    basket: (parent, args, context) => basketService.get({ ...args, context }),
     user: () => ({}),
     orders: () => ({}),
     paymentProviders: () => ({}),
@@ -38,8 +38,8 @@ module.exports = {
       return Boolean(user && "email" in user);
     },
     email: (parent, args, { user }) => (user ? user.email : null),
-    logoutLink: (parent, args, { publicHost }) =>
-      userService.getLogoutLink({ publicHost }),
+    logoutLink: (parent, args, context) =>
+      userService.getLogoutLink({ context }),
   },
   PaymentProvidersQueries: {
     stripe: paymentProviderResolver(stripeService),
@@ -55,8 +55,8 @@ module.exports = {
     paymentProviders: () => ({}),
   },
   UserMutations: {
-    sendMagicLink: (parent, args, { userService, publicHost }) => {
-      return userService.sendMagicLink({ ...args, publicHost });
+    sendMagicLink: (parent, args, context) => {
+      return userService.sendMagicLink({ ...args, context });
     },
   },
   PaymentProvidersMutations: {
@@ -66,33 +66,30 @@ module.exports = {
     vipps: () => ({}),
   },
   StripeMutations: {
-    createPaymentIntent: (parent, args, { user }) =>
-      stripeService.createPaymentIntent({ ...args, user }),
-    confirmOrder: (parent, args, { user }) =>
-      stripeService.confirmOrder({ ...args, user }),
+    createPaymentIntent: (parent, args, context) =>
+      stripeService.createPaymentIntent({ ...args, context }),
+    confirmOrder: (parent, args, context) =>
+      stripeService.confirmOrder({ ...args, context }),
   },
   KlarnaMutations: {
-    renderCheckout: (parent, args, { user, serviceCallbackHost }) =>
+    renderCheckout: (parent, args, context) =>
       klarnaService.renderCheckout({
         ...args,
-        user,
-        serviceCallbackHost,
+        context,
       }),
   },
   MollieMutations: {
-    createPayment: (parent, args, { user, serviceCallbackHost }) =>
+    createPayment: (parent, args, context) =>
       mollieService.createPayment({
         ...args,
-        user,
-        serviceCallbackHost,
+        context,
       }),
   },
   VippsMutations: {
-    initiatePayment: (parent, args, { user, serviceCallbackHost }) =>
+    initiatePayment: (parent, args, context) =>
       vippsService.initiatePayment({
         ...args,
-        user,
-        serviceCallbackHost,
+        context,
       }),
   },
 };

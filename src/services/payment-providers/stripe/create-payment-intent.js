@@ -2,8 +2,12 @@ const basketService = require("../../basket-service");
 
 const { getClient } = require("./utils");
 
-module.exports = async function createPaymentIntent({ checkoutModel, user }) {
+module.exports = async function createPaymentIntent({
+  checkoutModel,
+  context,
+}) {
   const { basketModel } = checkoutModel;
+  const { user } = context;
   const basket = await basketService.get({ basketModel, user });
 
   const paymentIntent = await getClient().paymentIntents.create({

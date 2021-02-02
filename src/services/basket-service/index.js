@@ -2,8 +2,9 @@ const { callCatalogueApi } = require("../crystallize/utils");
 const voucherService = require("../voucher-service");
 
 module.exports = {
-  async get({ basketModel, user }) {
+  async get({ basketModel, context }) {
     const { locale, voucherCode, ...basketFromClient } = basketModel;
+    const { user } = context;
 
     /**
      * Resolve all the voucher codes to valid vouchers for the user

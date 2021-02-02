@@ -9,8 +9,7 @@ const VIPPS_MERCHANT_SERIAL = process.env.VIPPS_MERCHANT_SERIAL;
 
 module.exports = async function initiateVippsPayment({
   checkoutModel,
-  user,
-  serviceCallbackHost,
+  context,
 }) {
   invariant(
     VIPPS_MERCHANT_SERIAL,
@@ -18,6 +17,7 @@ module.exports = async function initiateVippsPayment({
   );
 
   const { basketModel, customer, confirmationURL, checkoutURL } = checkoutModel;
+  const { user, serviceCallbackHost } = context;
 
   const basket = await basketService.get({ basketModel, user });
   const { total } = basket;
@@ -36,7 +36,7 @@ module.exports = async function initiateVippsPayment({
    * to after completing the Vipps checkout.
    */
   const fallBackURL = new URL(
-    `${serviceCallbackHost}/api/webhooks/payment-providers/vipps/fallback/${crystallizeOrderId}`
+    `${serviceCallbackHost}/webhooks/payment-providers/vipps/fallback/${crystallizeOrderId}`
   );
   fallBackURL.searchParams.append(
     "confirmation",
@@ -53,9 +53,9 @@ module.exports = async function initiateVippsPayment({
       merchantInfo: {
         merchantSerialNumber: VIPPS_MERCHANT_SERIAL,
         fallBack: fallBackURL.toString(),
-        callbackPrefix: `${serviceCallbackHost}/api/webhooks/payment-providers/vipps/order-update`,
-        shippingDetailsPrefix: `${serviceCallbackHost}/api/webhooks/payment-providers/vipps/shipping`,
-        consentRemovalPrefix: `${serviceCallbackHost}/api/webhooks/payment-providers/vipps/constent-removal`,
+        callbackPrefix: `${serviceCallbackHost}/webhooks/payment-providers/vipps/order-update`,
+        shippingDetailsPrefix: `${serviceCallbackHost}/webhooks/payment-providers/vipps/shipping`,
+        consentRemovalPrefix: `${serviceCallbackHost}/webhooks/payment-providers/vipps/constent-removal`,
         paymentType: "eComm Express Payment",
         isApp: false,
         staticShippingDetails: [

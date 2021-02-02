@@ -4,11 +4,7 @@ const basketService = require("../../basket-service");
 const { getClient } = require("./utils");
 const toKlarnaOrderModel = require("./to-klarna-order-model");
 
-module.exports = async function renderCheckout({
-  checkoutModel,
-  user,
-  serviceCallbackHost,
-}) {
+module.exports = async function renderCheckout({ checkoutModel, context }) {
   const {
     basketModel,
     customer,
@@ -16,6 +12,7 @@ module.exports = async function renderCheckout({
     termsURL,
     checkoutURL,
   } = checkoutModel;
+  const { user, serviceCallbackHost } = context;
 
   let { crystallizeOrderId, klarnaOrderId } = basketModel;
 
@@ -53,7 +50,7 @@ module.exports = async function renderCheckout({
       terms: termsURL,
       checkout: checkoutURL,
       confirmation: confirmation.toString(),
-      push: `${serviceCallbackHost}/api/webhooks/payment-providers/klarna/push?crystallizeOrderId=${crystallizeOrderId}&klarnaOrderId={checkout.order.id}`,
+      push: `${serviceCallbackHost}/webhooks/payment-providers/klarna/push?crystallizeOrderId=${crystallizeOrderId}&klarnaOrderId={checkout.order.id}`,
     },
   };
 

@@ -13,7 +13,9 @@ const USER_TOKEN_NAME = "user-token";
 
 module.exports = {
   USER_TOKEN_NAME,
-  getLogoutLink({ publicHost }) {
+  getLogoutLink({ context }) {
+    const { publicHost } = context;
+
     return `${publicHost}/api/user/logout`;
   },
   authenticate(token) {
@@ -37,8 +39,10 @@ module.exports = {
       email: decoded.email,
     };
   },
-  async sendMagicLink({ email, redirectURLAfterLogin, publicHost }) {
+  async sendMagicLink({ email, redirectURLAfterLogin, context }) {
     invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
+
+    const { publicHost } = context;
 
     /**
      * This is the page responsible of receiving the magic

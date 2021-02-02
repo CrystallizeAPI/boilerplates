@@ -5,10 +5,10 @@ const { getClient } = require("./utils");
 
 module.exports = async function createMolliePayment({
   checkoutModel,
-  user,
-  serviceCallbackHost,
+  context,
 }) {
   const { basketModel, customer, confirmationURL } = checkoutModel;
+  const { user, serviceCallbackHost } = context;
 
   const basket = await basketService.get({ basketModel, user });
   const { total } = basket;
@@ -60,7 +60,7 @@ module.exports = async function createMolliePayment({
     sequenceType: "first",
     description: "Mollie test transaction",
     redirectUrl: confirmation.toString(),
-    webhookUrl: `${serviceCallbackHost}/api/webhooks/payment-providers/mollie/order-update`,
+    webhookUrl: `${serviceCallbackHost}/webhooks/payment-providers/mollie/order-update`,
     metadata: { crystallizeOrderId },
   };
 
@@ -85,7 +85,7 @@ module.exports = async function createMolliePayment({
       interval: "1 month",
       startDate,
       description: "Mollie Test subscription",
-      webhookUrl: `${serviceCallbackHost}/api/webhooks/payment-providers/mollie/subscription-renewal`,
+      webhookUrl: `${serviceCallbackHost}/webhooks/payment-providers/mollie/subscription-renewal`,
       metadata: {},
     });
   }

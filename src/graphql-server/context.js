@@ -27,13 +27,13 @@ module.exports = (args) => {
 
   const user = userService.authenticate(cookies[userService.USER_TOKEN_NAME]);
 
-  // Determine the public host for the API (ex: https://service-api.example.com)
+  // Determine the URL for webhook callbacks (ex: https://service-api.example.com/api)
   const publicHost = getHost({ headers });
 
   /**
-   * The host used for third party services callbacks
-   * It will be used in e.g. payment provider services
-   * callbacks when async operations are finished
+   * serviceCallbackHost is used for third party services callbacks
+   * It will be used in e.g. payment provider services callbacks
+   * when async operations are finished
    *
    * Example for local development:
    *  - publicHost: http://localhost:3001

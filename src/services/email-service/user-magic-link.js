@@ -1,6 +1,4 @@
-const mjml2html = require("mjml");
-
-const { sendEmail } = require("./utils");
+const { sendEmail, mjml2html } = require("./utils");
 
 module.exports = async function sendMagicLinkLogin({ loginLink, email }) {
   try {
@@ -9,18 +7,19 @@ module.exports = async function sendMagicLinkLogin({ loginLink, email }) {
         <mj-body>
           <mj-section>
             <mj-column>
-              <mj-text>Welcome! Simply follow the link below to login.</mj-text>
+              <mj-text>Hi there! Simply follow the link below to login.</mj-text>
               <mj-button href="${loginLink}" align="left">Click here to login</mj-button>
             </mj-column>
           </mj-section>
         </mj-body>
       </mjml>
-  `);
+    `);
 
     await sendEmail({
       to: email,
       subject: "Magic link login",
-      html,
+      // html,
+      text: loginLink,
     });
 
     return {

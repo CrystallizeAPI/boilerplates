@@ -18,7 +18,8 @@ const vouchers = [
 ];
 
 module.exports = {
-  get({ code, user }) {
+  get({ code, context }) {
+    const { user } = context;
     const voucher = vouchers.find((v) => v.code === code);
 
     // Only vouchers for logged in users

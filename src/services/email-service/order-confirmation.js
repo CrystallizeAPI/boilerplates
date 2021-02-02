@@ -1,8 +1,6 @@
-const mjml2html = require("mjml");
-
 const { formatCurrency } = require("../../lib/currency");
 const { orders } = require("../crystallize");
-const { sendEmail } = require("./utils");
+const { sendEmail, mjml2html } = require("./utils");
 
 module.exports = async function sendOrderConfirmation(orderId) {
   try {

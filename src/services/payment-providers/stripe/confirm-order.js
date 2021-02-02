@@ -7,9 +7,10 @@ const toCrystallizeOrderModel = require("./to-crystallize-order-model");
 module.exports = async function confirmOrder({
   paymentIntentId,
   checkoutModel,
-  user,
+  context,
 }) {
   const { basketModel } = checkoutModel;
+  const { user } = context;
 
   const basket = await basketService.get({ basketModel, user });
 

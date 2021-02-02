@@ -23,7 +23,7 @@ module.exports = function orderPipelineStageChanged(payload) {
   });
 
   // Example of a "In store" order pipeline
-  const inStorePipeline = inStages.find((p) => p.name === "In store pickup");
+  const inStorePipeline = inPipelines.find((p) => p.name === "In store pickup");
   if (inStorePipeline) {
     switch (inStorePipeline.stageName) {
       case "New":
