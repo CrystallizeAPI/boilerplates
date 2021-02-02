@@ -28,12 +28,7 @@ module.exports = {
     user: () => ({}),
     orders: () => ({}),
     paymentProviders: () => ({}),
-    voucher: () => ({})
-  },
-  VoucherQueries: {
-    get(parent, {code}, {user}) {
-      return voucherService.get({code, user})
-    }
+    voucher: (parent, {code}, user) => voucherService.get({code, user})
   },
   MyCustomBusinnessQueries: {
     dynamicRandomInt() {

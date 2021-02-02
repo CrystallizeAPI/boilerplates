@@ -9,11 +9,7 @@ module.exports = gql`
     user: UserQueries!
     paymentProviders: PaymentProvidersQueries!
     orders: OrderQueries!
-    voucher: VoucherQueries!
-  }
-
-  type VoucherQueries {
-    get(code: String!): VoucherResponse!
+    voucher(code: String!): VoucherResponse!
   }
 
   type VoucherResponse {
