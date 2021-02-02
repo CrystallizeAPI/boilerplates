@@ -5,18 +5,6 @@ module.exports = {
     const { user } = context;
 
     /**
-     * Resolve all the voucher codes to valid vouchers for the user
-     */
-    let voucher;
-    if (voucherCode) {
-      const voucherService = require("../voucher-service");
-      const {isValid, ...rest} = await voucherService.get({ code: voucherCode, context });
-      if (isvalid) {
-        voucher = rest;
-      }
-    }
-
-    /**
      * Get all products from Crystallize from their paths
      */
     const productDataFromCrystallize = await getProducts({
@@ -76,14 +64,30 @@ module.exports = {
 
         return acc;
       },
-      { gross: 0, net: 0, tax: 0, currency: "N/A" }
+      { gross: 0, net: 0, tax: 0, discount: 0, currency: "N/A" }
     );
     total.tax = vatType;
-    
-    total.discount = 0;
-    if (voucher) {
-      const {calculateVoucherDiscountAmount} = require('./calculate-voucher-discount-amount')
-      total.discount = calculateVoucherDiscountAmount({voucher, total});
+
+
+    /**
+     * Resolve all the voucher codes to valid vouchers for the user
+     */
+    let voucher;
+    if (voucherCode) {
+      const voucherService = require("../voucher-service");
+      const {
+        isValid,
+        ...response
+      } = await voucherService.get({ code: voucherCode, user });
+
+      
+      if (isValid) {
+        voucher = response.voucher
+        total.discount = calculateVoucherDiscountAmount({
+          voucher,
+          amount: total.gross
+        });
+      }
     }
 
     return {
