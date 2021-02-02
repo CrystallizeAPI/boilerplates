@@ -1,3 +1,4 @@
+
 module.exports = {
   async get({ basketModel, context }) {
     const { locale, voucherCode, ...basketFromClient } = basketModel;
@@ -9,7 +10,10 @@ module.exports = {
     let voucher;
     if (voucherCode) {
       const voucherService = require("../voucher-service");
-      voucher = await voucherService.get({ code: voucherCode, user });
+      const {isValid, ...rest} = await voucherService.get({ code: voucherCode, context });
+      if (isvalid) {
+        voucher = rest;
+      }
     }
 
     /**
@@ -75,6 +79,12 @@ module.exports = {
       { gross: 0, net: 0, tax: 0, currency: "N/A" }
     );
     total.tax = vatType;
+    
+    total.discount = 0;
+    if (voucher) {
+      const {calculateVoucherDiscountAmount} = require('./calculate-voucher-discount-amount')
+      total.discount = calculateVoucherDiscountAmount({voucher, total});
+    }
 
     return {
       voucher,
