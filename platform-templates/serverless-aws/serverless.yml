@@ -9,6 +9,8 @@ provider:
   name: aws
   runtime: nodejs12.x
   timeout: 15
+  apiGateway:
+    shouldStartNameWithService: true
 
 functions:
   graphql:
@@ -28,4 +30,11 @@ functions:
     events:
       - http:
           path: /user/logout
+          method: get
+  userMagicLink:
+    handler: handlers/user/login.loginMagicLink
+    description: Landing page for the magic link token
+    events:
+      - http:
+          path: /user/login-magic-link
           method: get

@@ -16,7 +16,7 @@ module.exports = {
   getLogoutLink({ context }) {
     const { publicHost } = context;
 
-    return `${publicHost}/api/user/logout`;
+    return `${publicHost}/user/logout`;
   },
   authenticate(token) {
     invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
@@ -49,7 +49,7 @@ module.exports = {
      * link token, and then calling the validateMagicLinkToken
      * function from userService.
      */
-    const loginLink = new URL(`${publicHost}/api/user/login-magic-link`);
+    const loginLink = new URL(`${publicHost}/user/login-magic-link`);
 
     /**
      * Add the JWT to the callback url

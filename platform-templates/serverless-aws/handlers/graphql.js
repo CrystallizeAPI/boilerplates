@@ -1,25 +1,14 @@
 "use strict";
 
 const { ApolloServer } = require("apollo-server-lambda");
-const gql = require("graphql-tag");
 
-const typeDefs = gql`
-  scalar JSON
+const createGraphqlServerConfig = require("../src/graphql-server");
 
-  type Query {
-    hi: String!
-  }
-`;
-
-const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers: {
-    Query: {
-      hi: () => "There",
-    },
-  },
-  introspection: true,
-});
+const apolloServer = new ApolloServer(
+  createGraphqlServerConfig({
+    apiPathPrefix: "/dev",
+  })
+);
 
 module.exports = {
   graphql: apolloServer.createHandler({

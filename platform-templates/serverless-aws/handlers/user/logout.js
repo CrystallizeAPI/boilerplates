@@ -1,8 +1,6 @@
 "use strict";
 
-const userService = {
-  USER_TOKEN_NAME: "todo",
-};
+const userService = require("../../src/services/user-service");
 
 function logout(event, context, callback) {
   return callback(null, {

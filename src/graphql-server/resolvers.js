@@ -1,18 +1,29 @@
-const crystallize = require("../services/crystallize");
+function getService(name) {
+  const services = {
+    crystallize: "../services/crystallize",
+    basket: "../services/basket-service",
+    user: "../services/user-service",
+    stripe: "../services/payment-providers/stripe",
+    klarna: "../services/payment-providers/klarna",
+    vipps: "../services/payment-providers/vipps",
+    mollie: "../services/payment-providers/mollie",
+  };
+  const service = services[name];
+  if (!service) {
+    throw new Error(`Service "${name}" is not defined`);
+  }
 
-const basketService = require("../services/basket-service");
-const userService = require("../services/user-service");
+  return require(service);
+}
 
-const stripeService = require("../services/payment-providers/stripe");
-const klarnaService = require("../services/payment-providers/klarna");
-const vippsService = require("../services/payment-providers/vipps");
-const mollieService = require("../services/payment-providers/mollie");
-
-function paymentProviderResolver(service) {
-  return () => ({
-    enabled: service.enabled,
-    config: service.frontendConfig,
-  });
+function paymentProviderResolver(serviceName) {
+  return () => {
+    const service = getService(serviceName);
+    return {
+      enabled: service.enabled,
+      config: service.frontendConfig,
+    };
+  };
 }
 
 module.exports = {
@@ -21,7 +32,8 @@ module.exports = {
       whatIsThis:
         "This is an example of a custom query for GraphQL demonstration purpuses. Check out the MyCustomBusinnessQueries resolvers for how to resolve additional fields apart from the 'whatIsThis' field",
     }),
-    basket: (parent, args, context) => basketService.get({ ...args, context }),
+    basket: (parent, args, context) =>
+      getService("basket").get({ ...args, context }),
     user: () => ({}),
     orders: () => ({}),
     paymentProviders: () => ({}),
@@ -39,16 +51,16 @@ module.exports = {
     },
     email: (parent, args, { user }) => (user ? user.email : null),
     logoutLink: (parent, args, context) =>
-      userService.getLogoutLink({ context }),
+      getService("user").getLogoutLink({ context }),
   },
   PaymentProvidersQueries: {
-    stripe: paymentProviderResolver(stripeService),
-    klarna: paymentProviderResolver(klarnaService),
-    vipps: paymentProviderResolver(vippsService),
-    mollie: paymentProviderResolver(mollieService),
+    stripe: paymentProviderResolver("stripe"),
+    klarna: paymentProviderResolver("klarna"),
+    vipps: paymentProviderResolver("vipps"),
+    mollie: paymentProviderResolver("mollie"),
   },
   OrderQueries: {
-    get: (parent, args) => crystallize.orders.getOrder(args.id),
+    get: (parent, args) => getService("crystallize").orders.getOrder(args.id),
   },
   Mutation: {
     user: () => ({}),
@@ -56,7 +68,7 @@ module.exports = {
   },
   UserMutations: {
     sendMagicLink: (parent, args, context) => {
-      return userService.sendMagicLink({ ...args, context });
+      return getService("user").sendMagicLink({ ...args, context });
     },
   },
   PaymentProvidersMutations: {
@@ -67,27 +79,27 @@ module.exports = {
   },
   StripeMutations: {
     createPaymentIntent: (parent, args, context) =>
-      stripeService.createPaymentIntent({ ...args, context }),
+      getService("stripe").createPaymentIntent({ ...args, context }),
     confirmOrder: (parent, args, context) =>
-      stripeService.confirmOrder({ ...args, context }),
+      getService("stripe").confirmOrder({ ...args, context }),
   },
   KlarnaMutations: {
     renderCheckout: (parent, args, context) =>
-      klarnaService.renderCheckout({
+      getService("klarna").renderCheckout({
         ...args,
         context,
       }),
   },
   MollieMutations: {
     createPayment: (parent, args, context) =>
-      mollieService.createPayment({
+      getService("mollie").createPayment({
         ...args,
         context,
       }),
   },
   VippsMutations: {
     initiatePayment: (parent, args, context) =>
-      vippsService.initiatePayment({
+      getService("vipps").initiatePayment({
         ...args,
         context,
       }),

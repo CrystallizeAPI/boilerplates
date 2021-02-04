@@ -5,13 +5,13 @@ module.exports = function getHost({ headers }) {
     return `${xprotocol}://${xhost}`;
   }
 
-  const { host } = headers;
-  if (host && host.startsWith("localhost")) {
-    return `http://${host}`;
-  }
-
   if (process.env.HOST_URL) {
     return process.env.HOST_URL;
+  }
+
+  const { Host, host = Host } = headers;
+  if (host && host.startsWith("localhost")) {
+    return `http://${host}`;
   }
 
   // If hosted on Vercel
