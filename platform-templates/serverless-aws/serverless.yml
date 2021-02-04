@@ -1,0 +1,31 @@
+service:
+  name: aws-service-api
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  timeout: 15
+
+functions:
+  graphql:
+    handler: handlers/graphql.graphql
+    description: The main Service API GraphQL server
+    events:
+      - http:
+          cors: true
+          path: /graphql
+          method: post
+      - http:
+          path: /graphql
+          method: get
+  userLogout:
+    handler: handlers/user/logout.logout
+    description: Logging out the user
+    events:
+      - http:
+          path: /user/logout
+          method: get

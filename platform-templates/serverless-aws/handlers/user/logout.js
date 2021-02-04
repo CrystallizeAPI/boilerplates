@@ -1,0 +1,20 @@
+"use strict";
+
+const userService = {
+  USER_TOKEN_NAME: "todo",
+};
+
+function logout(event, context, callback) {
+  return callback(null, {
+    statusCode: 200,
+    headers: {
+      "content-type": "text/plain",
+      "set-cookie": `${userService.USER_TOKEN_NAME}=deleted; HttpOnly; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+    },
+    body: "Logged out",
+  });
+}
+
+module.exports = {
+  logout,
+};
