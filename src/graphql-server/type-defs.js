@@ -71,6 +71,7 @@ module.exports = gql`
     currency: String
     tax: Tax
     taxAmount: Float
+    discount: Float!
   }
 
   type Tax {

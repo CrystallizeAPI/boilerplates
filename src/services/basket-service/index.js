@@ -2,7 +2,19 @@
 module.exports = {
   async get({ basketModel, context }) {
     const { locale, voucherCode, ...basketFromClient } = basketModel;
-    const { user } = context;
+
+    /**
+     * Resolve all the voucher codes to valid vouchers for the user
+     */
+    let voucher;
+    if (voucherCode) {
+      const voucherService = require("../voucher-service");
+      const response = await voucherService.get({ code: voucherCode, context });
+
+      if (response.isValid) {
+        voucher = response.voucher
+      }
+    }
 
     /**
      * Get all products from Crystallize from their paths
@@ -66,34 +78,16 @@ module.exports = {
       },
       { gross: 0, net: 0, tax: 0, discount: 0, currency: "N/A" }
     );
+
     total.tax = vatType;
-
-
-    /**
-     * Resolve all the voucher codes to valid vouchers for the user
-     */
-    let voucher;
-    if (voucherCode) {
-      const voucherService = require("../voucher-service");
-      const {
-        isValid,
-        ...response
-      } = await voucherService.get({ code: voucherCode, user });
-
-      
-      if (isValid) {
-        voucher = response.voucher
-        total.discount = calculateVoucherDiscountAmount({
-          voucher,
-          amount: total.gross
-        });
-      }
-    }
+    total.discount = Boolean(voucher)
+      ? calculateVoucherDiscountAmount({ voucher, amount: total.gross })
+      : 0
 
     return {
       voucher,
       cart,
-      total,
+      total
     };
   },
 };
