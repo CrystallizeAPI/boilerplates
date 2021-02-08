@@ -47,7 +47,6 @@ module.exports = function createContext({ apiPathPrefix }) {
       serviceCallbackHost = publicHost;
     }
 
-    console.log({ publicHost, serviceCallbackHost, apiPathPrefix });
     return {
       user,
       publicHost: `${publicHost}${apiPathPrefix}`,

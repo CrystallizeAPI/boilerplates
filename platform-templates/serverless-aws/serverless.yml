@@ -7,6 +7,7 @@ plugins:
 
 provider:
   name: aws
+  region: eu-central-1
   runtime: nodejs12.x
   timeout: 15
   apiGateway:
@@ -38,3 +39,115 @@ functions:
       - http:
           path: /user/login-magic-link
           method: get
+
+  # Crystallize item webhooks
+  webhookItemCreated:
+    handler: handlers/webhooks/item.created
+    events:
+      - http:
+          path: /webhooks/item/created
+          method: "*"
+  webhookItemUpdated:
+    handler: handlers/webhooks/item.updated
+    events:
+      - http:
+          path: /webhooks/item/updated
+          method: "*"
+  webhookItemDeleted:
+    handler: handlers/webhooks/item.deleted
+    events:
+      - http:
+          path: /webhooks/item/deleted
+          method: "*"
+  webhookItemPublished:
+    handler: handlers/webhooks/item.published
+    events:
+      - http:
+          path: /webhooks/item/published
+          method: "*"
+  webhookItemUnpublished:
+    handler: handlers/webhooks/item.unpublished
+    events:
+      - http:
+          path: /webhooks/item/unpublished
+          method: "*"
+
+  # Crystallize order webhooks
+  webhookOrderCreated:
+    handler: handlers/webhooks/order.created
+    events:
+      - http:
+          path: /webhooks/order/created
+          method: "*"
+  webhookOrderUpdated:
+    handler: handlers/webhooks/order.updated
+    events:
+      - http:
+          path: /webhooks/order/updated
+          method: "*"
+  webhookOrderDeleted:
+    handler: handlers/webhooks/order.deleted
+    events:
+      - http:
+          path: /webhooks/order/deleted
+          method: "*"
+  webhookOrderPipelineRemoved:
+    handler: handlers/webhooks/order.pipelineRemoved
+    events:
+      - http:
+          path: /webhooks/order/pipeline-removed
+          method: "*"
+  webhookOrderPipelineStageChanged:
+    handler: handlers/webhooks/order.pipelineStageChanged
+    events:
+      - http:
+          path: /webhooks/order/pipeline-stage-changed
+          method: "*"
+
+  # Mollie payment webhooks
+  webhookMollieOrderUpdate:
+    handler: handlers/webhooks/payment-providers/mollie.orderUpdate
+    events:
+      - http:
+          path: /webhooks/payment-providers/mollie/order-update
+          method: "*"
+
+  # Klarna payment webhooks
+  webhookKlarnaPush:
+    handler: handlers/webhooks/payment-providers/klarna.push
+    events:
+      - http:
+          path: /webhooks/payment-providers/klarna/push
+          method: "*"
+  webhookKlarnaCapture:
+    handler: handlers/webhooks/payment-providers/klarna.capture
+    events:
+      - http:
+          path: /webhooks/payment-providers/klarna/capture
+          method: "*"
+
+  # Vipps payment webhooks
+  webhookVippsFallback:
+    handler: handlers/webhooks/payment-providers/vipps.fallback
+    events:
+      - http:
+          path: /webhooks/payment-providers/vipps/fallback/{orderId}
+          method: "*"
+  webhookVippsOrderUpdate:
+    handler: handlers/webhooks/payment-providers/vipps.orderUpdate
+    events:
+      - http:
+          path: /webhooks/payment-providers/vipps/order-update/v2/payments/{orderId}
+          method: "*"
+  webhookVippsShipping:
+    handler: handlers/webhooks/payment-providers/vipps.shipping
+    events:
+      - http:
+          path: /webhooks/payment-providers/vipps/shipping/v2/payments/{orderId}/shippingDetails
+          method: "*"
+  webhookVippsConsentRemoval:
+    handler: handlers/webhooks/payment-providers/vipps.consentRemoval
+    events:
+      - http:
+          path: /webhooks/payment-providers/vipps/consent-removal/v2/consents/{userId}
+          method: "*"
