@@ -5,7 +5,7 @@ import cors from "../../lib/cors";
 import createGraphQLServerConfig from "../../src/graphql-server";
 
 const apolloServer = new ApolloServer(
-  createGraphqlServerConfig({
+  createGraphQLServerConfig({
     apiPathPrefix: "/api",
   })
 );

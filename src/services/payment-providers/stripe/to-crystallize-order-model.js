@@ -1,10 +1,10 @@
-const { getClient } = require("./utils");
-
 module.exports = async function stripeToCrystallizeOrderModel({
   basket,
   checkoutModel,
   paymentIntentId,
 }) {
+  const { getClient } = require("./utils");
+
   const paymentIntent = await getClient().paymentIntents.retrieve(
     paymentIntentId
   );
@@ -13,6 +13,15 @@ module.exports = async function stripeToCrystallizeOrderModel({
   const charge = data[0];
 
   const customerName = charge.billing_details.name.split(" ");
+  let email = charge.receipt_email;
+  if (!email && checkoutModel.customer && checkoutModel.customer.addresses) {
+    const addressWithEmail = checkoutModel.customer.addresses.find(
+      (a) => !!a.email
+    );
+    if (addressWithEmail) {
+      email = addressWithEmail.email;
+    }
+  }
 
   return {
     cart: basket.cart,
@@ -40,10 +49,7 @@ module.exports = async function stripeToCrystallizeOrderModel({
           state: charge.billing_details.address.state,
           country: charge.billing_details.address.country,
           phone: charge.billing_details.phone,
-          email:
-            charge.receipt_email ||
-            checkoutModel.customer?.addresses?.[0]?.email ||
-            undefined,
+          email,
         },
         {
           type: "delivery",
@@ -57,10 +63,7 @@ module.exports = async function stripeToCrystallizeOrderModel({
           state: charge.billing_details.address.state,
           country: charge.billing_details.address.country,
           phone: charge.billing_details.phone,
-          email:
-            charge.receipt_email ||
-            checkoutModel.customer?.addresses?.[0]?.email ||
-            undefined,
+          email,
         },
       ],
     },

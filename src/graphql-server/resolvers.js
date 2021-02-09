@@ -1,24 +1,15 @@
-function getService(name) {
-  const services = {
-    crystallize: "../services/crystallize",
-    basket: "../services/basket-service",
-    user: "../services/user-service",
-    stripe: "../services/payment-providers/stripe",
-    klarna: "../services/payment-providers/klarna",
-    vipps: "../services/payment-providers/vipps",
-    mollie: "../services/payment-providers/mollie",
-  };
-  const service = services[name];
-  if (!service) {
-    throw new Error(`Service "${name}" is not defined`);
-  }
+const crystallize = require("../services/crystallize");
 
-  return require(service);
-}
+const basketService = require("../services/basket-service");
+const userService = require("../services/user-service");
 
-function paymentProviderResolver(serviceName) {
+const stripeService = require("../services/payment-providers/stripe");
+const mollieService = require("../services/payment-providers/mollie");
+const vippsService = require("../services/payment-providers/vipps");
+const klarnaService = require("../services/payment-providers/klarna");
+
+function paymentProviderResolver(service) {
   return () => {
-    const service = getService(serviceName);
     return {
       enabled: service.enabled,
       config: service.frontendConfig,
@@ -32,8 +23,7 @@ module.exports = {
       whatIsThis:
         "This is an example of a custom query for GraphQL demonstration purpuses. Check out the MyCustomBusinnessQueries resolvers for how to resolve additional fields apart from the 'whatIsThis' field",
     }),
-    basket: (parent, args, context) =>
-      getService("basket").get({ ...args, context }),
+    basket: (parent, args, context) => basketService.get({ ...args, context }),
     user: () => ({}),
     orders: () => ({}),
     paymentProviders: () => ({}),
@@ -51,16 +41,16 @@ module.exports = {
     },
     email: (parent, args, { user }) => (user ? user.email : null),
     logoutLink: (parent, args, context) =>
-      getService("user").getLogoutLink({ context }),
+      userService.getLogoutLink({ context }),
   },
   PaymentProvidersQueries: {
-    stripe: paymentProviderResolver("stripe"),
-    klarna: paymentProviderResolver("klarna"),
-    vipps: paymentProviderResolver("vipps"),
-    mollie: paymentProviderResolver("mollie"),
+    stripe: paymentProviderResolver(stripeService),
+    klarna: paymentProviderResolver(klarnaService),
+    vipps: paymentProviderResolver(vippsService),
+    mollie: paymentProviderResolver(mollieService),
   },
   OrderQueries: {
-    get: (parent, args) => getService("crystallize").orders.getOrder(args.id),
+    get: (parent, args) => crystallize.orders.getOrder(args.id),
   },
   Mutation: {
     user: () => ({}),
@@ -68,7 +58,7 @@ module.exports = {
   },
   UserMutations: {
     sendMagicLink: (parent, args, context) => {
-      return getService("user").sendMagicLink({ ...args, context });
+      return userService.sendMagicLink({ ...args, context });
     },
   },
   PaymentProvidersMutations: {
@@ -79,27 +69,27 @@ module.exports = {
   },
   StripeMutations: {
     createPaymentIntent: (parent, args, context) =>
-      getService("stripe").createPaymentIntent({ ...args, context }),
+      stripeService.createPaymentIntent({ ...args, context }),
     confirmOrder: (parent, args, context) =>
-      getService("stripe").confirmOrder({ ...args, context }),
+      stripeService.confirmOrder({ ...args, context }),
   },
   KlarnaMutations: {
     renderCheckout: (parent, args, context) =>
-      getService("klarna").renderCheckout({
+      klarnaService.renderCheckout({
         ...args,
         context,
       }),
   },
   MollieMutations: {
     createPayment: (parent, args, context) =>
-      getService("mollie").createPayment({
+      mollieService.createPayment({
         ...args,
         context,
       }),
   },
   VippsMutations: {
     initiatePayment: (parent, args, context) =>
-      getService("vipps").initiatePayment({
+      vippsService.initiatePayment({
         ...args,
         context,
       }),

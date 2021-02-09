@@ -1,10 +1,10 @@
-const crystallize = require("../../crystallize");
-const basketService = require("../../basket-service");
-
-const { getClient } = require("./utils");
-const toKlarnaOrderModel = require("./to-klarna-order-model");
-
 module.exports = async function renderCheckout({ checkoutModel, context }) {
+  const crystallize = require("../../crystallize");
+  const basketService = require("../../basket-service");
+
+  const { getClient } = require("./utils");
+  const toKlarnaOrderModel = require("./to-klarna-order-model");
+
   const {
     basketModel,
     customer,
@@ -12,11 +12,11 @@ module.exports = async function renderCheckout({ checkoutModel, context }) {
     termsURL,
     checkoutURL,
   } = checkoutModel;
-  const { user, serviceCallbackHost } = context;
+  const { serviceCallbackHost } = context;
 
   let { crystallizeOrderId, klarnaOrderId } = basketModel;
 
-  const basket = await basketService.get({ basketModel, user });
+  const basket = await basketService.get({ basketModel, context });
 
   /**
    * Use a Crystallize order and the fulfilment pipelines to

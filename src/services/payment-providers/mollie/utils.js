@@ -1,4 +1,3 @@
-const { createMollieClient } = require("@mollie/api-client");
 const invariant = require("invariant");
 
 const MOLLIE_API_KEY = process.env.MOLLIE_API_KEY;
@@ -9,6 +8,7 @@ module.exports = {
     invariant(MOLLIE_API_KEY, "process.env.MOLLIE_API_KEY is not defined");
 
     if (!client) {
+      const { createMollieClient } = require("@mollie/api-client");
       client = createMollieClient({ apiKey: process.env.MOLLIE_API_KEY });
     }
 

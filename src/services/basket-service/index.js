@@ -1,6 +1,3 @@
-const { callCatalogueApi } = require("../crystallize/utils");
-const voucherService = require("../voucher-service");
-
 module.exports = {
   async get({ basketModel, context }) {
     const { locale, voucherCode, ...basketFromClient } = basketModel;
@@ -11,6 +8,7 @@ module.exports = {
      */
     let voucher;
     if (voucherCode) {
+      const voucherService = require("../voucher-service");
       voucher = await voucherService.get({ code: voucherCode, user });
     }
 
@@ -33,14 +31,6 @@ module.exports = {
         const product = productDataFromCrystallize.find((p) =>
           p.variants.some((v) => v.sku === itemFromClient.sku)
         );
-
-        /**
-         * Could not find this product for some reason. Happens if an
-         * old product path is given and it no longer exists
-         */
-        if (!product) {
-          return null;
-        }
 
         vatType = product.vatType;
 
@@ -103,6 +93,8 @@ async function getProducts({ paths, language }) {
   if (paths.length === 0) {
     return [];
   }
+
+  const { callCatalogueApi } = require("../crystallize/utils");
 
   const response = await callCatalogueApi({
     query: `{

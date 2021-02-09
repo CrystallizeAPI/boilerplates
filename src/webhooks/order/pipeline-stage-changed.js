@@ -10,17 +10,21 @@ module.exports = function orderPipelineStageChanged(payload) {
   console.log("The order is in", order.pipelines.length, "pipeline(s)");
 
   // Print out the different pipelines and their stage names
-  const inPipelines = order.pipelines.map(({ pipeline, stageId }) => {
-    const { name } = pipeline;
-    const stageName = pipeline.stages?.find((s) => s.id === stageId)?.name;
+  const inPipelines = order.pipelines
+    .filter((p) => !!p.stages)
+    .map(({ pipeline, stageId }) => {
+      const { name } = pipeline;
 
-    console.log(`Pipeline "${name}" is in stage "${stageName}"`);
+      const stage = pipeline.stages.find((s) => s.id === stageId);
+      const stageName = stage ? stage.name : "n/a";
 
-    return {
-      name,
-      stageName,
-    };
-  });
+      console.log(`Pipeline "${name}" is in stage "${stageName}"`);
+
+      return {
+        name,
+        stageName,
+      };
+    });
 
   // Example of a "In store" order pipeline
   const inStorePipeline = inPipelines.find((p) => p.name === "In store pickup");

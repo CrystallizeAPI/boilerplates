@@ -4,7 +4,6 @@
  */
 
 const invariant = require("invariant");
-const { Klarna } = require("@crystallize/node-klarna");
 
 const KLARNA_USERNAME = process.env.KLARNA_USERNAME;
 const KLARNA_PASSWORD = process.env.KLARNA_PASSWORD;
@@ -13,6 +12,8 @@ let client;
 
 module.exports = {
   getClient: () => {
+    const { Klarna } = require("@crystallize/node-klarna");
+
     invariant(KLARNA_USERNAME, "process.env.KLARNA_USERNAME is not defined");
     invariant(KLARNA_PASSWORD, "process.env.KLARNA_PASSWORD is not defined");
 

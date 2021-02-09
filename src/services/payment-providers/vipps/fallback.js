@@ -1,13 +1,13 @@
-const crystallize = require("../../crystallize");
-const emailService = require("../../email-service");
-
-const { getClient } = require("./utils");
-
 module.exports = async function vippsFallback({
   crystallizeOrderId,
   onSuccessURL,
   onErrorURL,
 }) {
+  const crystallize = require("../../crystallize");
+  const emailService = require("../../email-service");
+
+  const { getClient } = require("./utils");
+
   let redirectTo = "";
 
   const vippsClient = await getClient();

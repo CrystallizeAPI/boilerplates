@@ -5,10 +5,10 @@
  * Crystallize (https://crystallize.com/learn/developer-guides/order-api/fulfilment-pipelines)
  */
 
-const crystallize = require("../../crystallize");
-const { getClient } = require("./utils");
-
 module.exports = async function klarnaCapture({ crystallizeOrderId }) {
+  const crystallize = require("../../crystallize");
+  const { getClient } = require("./utils");
+
   // Retrieve the Crystallize order
   const crystallizeOrder = await crystallize.orders.getOrder(
     crystallizeOrderId

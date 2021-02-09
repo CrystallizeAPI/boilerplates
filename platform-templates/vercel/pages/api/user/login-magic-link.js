@@ -21,7 +21,7 @@ export default async function loginMagicLink(req, res) {
     if (success) {
       res.setHeader(
         "Set-Cookie",
-        `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=3600; Path=/`
+        `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/`
       );
       res.setHeader("Location", redirectURLAfterLogin);
 

@@ -1,9 +1,11 @@
-const { formatCurrency } = require("../../lib/currency");
-const { orders } = require("../crystallize");
-const { sendEmail, mjml2html } = require("./utils");
-
 module.exports = async function sendOrderConfirmation(orderId) {
   try {
+    const mjml2html = require("mjml");
+
+    const { formatCurrency } = require("../../lib/currency");
+    const { orders } = require("../crystallize");
+    const { sendEmail } = require("./utils");
+
     const order = await orders.getOrder(orderId);
 
     const { email } = order.customer.addresses[0];

@@ -6,10 +6,10 @@
 
 async function push(event, context, callback) {
   try {
-    const klarnaPush = require("../../../src/services/payment-providers/klarna/push");
+    const klarnaService = require("../../../src/services/payment-providers/klarna");
 
     console.log("webhookKlarnaPush", event.queryStringParameters);
-    await klarnaPush({
+    await klarnaService.push({
       crystallizeOrderId: event.queryStringParameters.crystallizeOrderId,
       klarnaOrderId: event.queryStringParameters.klarnaOrderId,
     });
@@ -35,13 +35,13 @@ async function push(event, context, callback) {
  */
 async function capture(event, context, callback) {
   try {
-    const klarnaCapture = require("../../../src/services/payment-providers/klarna/capture");
+    const klarnaService = require("../../../src/services/payment-providers/klarna");
 
     console.log(
       "webhookKlarnaCapture",
       event.queryStringParameters.crystallizeOrderId
     );
-    await klarnaCapture({
+    await klarnaService.capture({
       crystallizeOrderId: event.queryStringParameters.crystallizeOrderId,
     });
 

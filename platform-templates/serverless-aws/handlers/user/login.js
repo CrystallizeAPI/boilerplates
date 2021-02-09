@@ -21,7 +21,7 @@ async function loginMagicLink(event, context, callback) {
       return callback(null, {
         statusCode: 302,
         headers: {
-          "set-cookie": `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=3600; Path=/`,
+          "set-cookie": `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/`,
           location: redirectURLAfterLogin,
         },
       });

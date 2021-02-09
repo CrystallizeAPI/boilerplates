@@ -19,9 +19,13 @@ functions:
     description: The main Service API GraphQL server
     events:
       - http:
-          cors: true
           path: /graphql
           method: post
+          cors:
+            origins:
+              - http://*
+              - https://*
+            allowCredentials: true
       - http:
           path: /graphql
           method: get
@@ -46,31 +50,31 @@ functions:
     events:
       - http:
           path: /webhooks/item/created
-          method: "*"
+          method: post
   webhookItemUpdated:
     handler: handlers/webhooks/item.updated
     events:
       - http:
           path: /webhooks/item/updated
-          method: "*"
+          method: post
   webhookItemDeleted:
     handler: handlers/webhooks/item.deleted
     events:
       - http:
           path: /webhooks/item/deleted
-          method: "*"
+          method: post
   webhookItemPublished:
     handler: handlers/webhooks/item.published
     events:
       - http:
           path: /webhooks/item/published
-          method: "*"
+          method: post
   webhookItemUnpublished:
     handler: handlers/webhooks/item.unpublished
     events:
       - http:
           path: /webhooks/item/unpublished
-          method: "*"
+          method: post
 
   # Crystallize order webhooks
   webhookOrderCreated:
@@ -78,31 +82,31 @@ functions:
     events:
       - http:
           path: /webhooks/order/created
-          method: "*"
+          method: post
   webhookOrderUpdated:
     handler: handlers/webhooks/order.updated
     events:
       - http:
           path: /webhooks/order/updated
-          method: "*"
+          method: post
   webhookOrderDeleted:
     handler: handlers/webhooks/order.deleted
     events:
       - http:
           path: /webhooks/order/deleted
-          method: "*"
+          method: post
   webhookOrderPipelineRemoved:
     handler: handlers/webhooks/order.pipelineRemoved
     events:
       - http:
           path: /webhooks/order/pipeline-removed
-          method: "*"
+          method: post
   webhookOrderPipelineStageChanged:
     handler: handlers/webhooks/order.pipelineStageChanged
     events:
       - http:
           path: /webhooks/order/pipeline-stage-changed
-          method: "*"
+          method: post
 
   # Mollie payment webhooks
   webhookMollieOrderUpdate:
@@ -110,7 +114,7 @@ functions:
     events:
       - http:
           path: /webhooks/payment-providers/mollie/order-update
-          method: "*"
+          method: post
 
   # Klarna payment webhooks
   webhookKlarnaPush:
@@ -118,13 +122,13 @@ functions:
     events:
       - http:
           path: /webhooks/payment-providers/klarna/push
-          method: "*"
+          method: get
   webhookKlarnaCapture:
     handler: handlers/webhooks/payment-providers/klarna.capture
     events:
       - http:
           path: /webhooks/payment-providers/klarna/capture
-          method: "*"
+          method: get
 
   # Vipps payment webhooks
   webhookVippsFallback:
@@ -132,22 +136,22 @@ functions:
     events:
       - http:
           path: /webhooks/payment-providers/vipps/fallback/{orderId}
-          method: "*"
+          method: get
   webhookVippsOrderUpdate:
     handler: handlers/webhooks/payment-providers/vipps.orderUpdate
     events:
       - http:
           path: /webhooks/payment-providers/vipps/order-update/v2/payments/{orderId}
-          method: "*"
+          method: post
   webhookVippsShipping:
     handler: handlers/webhooks/payment-providers/vipps.shipping
     events:
       - http:
           path: /webhooks/payment-providers/vipps/shipping/v2/payments/{orderId}/shippingDetails
-          method: "*"
+          method: post
   webhookVippsConsentRemoval:
     handler: handlers/webhooks/payment-providers/vipps.consentRemoval
     events:
       - http:
           path: /webhooks/payment-providers/vipps/consent-removal/v2/consents/{userId}
-          method: "*"
+          method: delete
