@@ -1,4 +1,4 @@
-const emailService = require("../../services/email-service");
+// const emailService = require("../../services/email-service");
 
 module.exports = async function orderCreated(payload) {
   console.log("Webhook payload: orderCreated");

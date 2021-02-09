@@ -4,15 +4,17 @@ const basketService = require("../services/basket-service");
 const userService = require("../services/user-service");
 
 const stripeService = require("../services/payment-providers/stripe");
-const klarnaService = require("../services/payment-providers/klarna");
-const vippsService = require("../services/payment-providers/vipps");
 const mollieService = require("../services/payment-providers/mollie");
+const vippsService = require("../services/payment-providers/vipps");
+const klarnaService = require("../services/payment-providers/klarna");
 
 function paymentProviderResolver(service) {
-  return () => ({
-    enabled: service.enabled,
-    config: service.frontendConfig,
-  });
+  return () => {
+    return {
+      enabled: service.enabled,
+      config: service.frontendConfig,
+    };
+  };
 }
 
 module.exports = {

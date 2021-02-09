@@ -1,7 +1,4 @@
-const jwt = require("jsonwebtoken");
 const invariant = require("invariant");
-
-const emailService = require("../email-service");
 
 /**
  * Todo: link to good JWT intro
@@ -16,7 +13,7 @@ module.exports = {
   getLogoutLink({ context }) {
     const { publicHost } = context;
 
-    return `${publicHost}/api/user/logout`;
+    return `${publicHost}/user/logout`;
   },
   authenticate(token) {
     invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
@@ -30,6 +27,7 @@ module.exports = {
      * for a user. The boilerplate has no datastore or service to persist users,
      * so we will assume that the token is valid.
      */
+    const jwt = require("jsonwebtoken");
     const decoded = jwt.verify(token, JWT_SECRET);
     if (!decoded) {
       return null;
@@ -49,19 +47,22 @@ module.exports = {
      * link token, and then calling the validateMagicLinkToken
      * function from userService.
      */
-    const loginLink = new URL(`${publicHost}/api/user/login-magic-link`);
+    const loginLink = new URL(`${publicHost}/user/login-magic-link`);
 
     /**
      * Add the JWT to the callback url
      * When the link is visited, we can validate the token
      * again in the validateMagicLinkToken method
      */
+    const jwt = require("jsonwebtoken");
     loginLink.searchParams.append(
       "token",
       jwt.sign({ email, redirectURLAfterLogin }, JWT_SECRET, {
         expiresIn: "36000s",
       })
     );
+
+    const emailService = require("../email-service");
 
     const { success } = await emailService.sendUserMagicLink({
       loginLink: loginLink.toString(),
@@ -81,6 +82,7 @@ module.exports = {
      */
 
     try {
+      const jwt = require("jsonwebtoken");
       const decoded = jwt.verify(token, JWT_SECRET);
       const { email, redirectURLAfterLogin } = decoded;
 

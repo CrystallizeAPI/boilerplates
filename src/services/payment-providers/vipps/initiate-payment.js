@@ -1,25 +1,25 @@
 const invariant = require("invariant");
 
-const basketService = require("../../basket-service");
-const crystallize = require("../../crystallize");
-
-const { getClient } = require("./utils");
-
 const VIPPS_MERCHANT_SERIAL = process.env.VIPPS_MERCHANT_SERIAL;
 
 module.exports = async function initiateVippsPayment({
   checkoutModel,
   context,
 }) {
+  const basketService = require("../../basket-service");
+  const crystallize = require("../../crystallize");
+
+  const { getClient } = require("./utils");
+
   invariant(
     VIPPS_MERCHANT_SERIAL,
     "process.env.VIPPS_MERCHANT_SERIAL is undefined"
   );
 
   const { basketModel, customer, confirmationURL, checkoutURL } = checkoutModel;
-  const { user, serviceCallbackHost } = context;
+  const { serviceCallbackHost } = context;
 
-  const basket = await basketService.get({ basketModel, user });
+  const basket = await basketService.get({ basketModel, context });
   const { total } = basket;
 
   /* Use a Crystallize order and the fulfilment pipelines to

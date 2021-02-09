@@ -1,16 +1,16 @@
-const basketService = require("../../basket-service");
-const crystallize = require("../../crystallize");
-
-const { getClient } = require("./utils");
-
 module.exports = async function createMolliePayment({
   checkoutModel,
   context,
 }) {
-  const { basketModel, customer, confirmationURL } = checkoutModel;
-  const { user, serviceCallbackHost } = context;
+  const basketService = require("../../basket-service");
+  const crystallize = require("../../crystallize");
 
-  const basket = await basketService.get({ basketModel, user });
+  const { getClient } = require("./utils");
+
+  const { basketModel, customer, confirmationURL } = checkoutModel;
+  const { serviceCallbackHost } = context;
+
+  const basket = await basketService.get({ basketModel, context });
   const { total } = basket;
 
   let { crystallizeOrderId } = basketModel;

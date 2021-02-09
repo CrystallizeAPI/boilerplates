@@ -1,5 +1,3 @@
-const { getClient } = require("./utils");
-
 module.exports = function crystallizeToKlarnaOrderModel(basket) {
   const { total, cart } = basket;
 

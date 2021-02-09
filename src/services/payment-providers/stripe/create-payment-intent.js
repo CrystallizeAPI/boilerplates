@@ -1,14 +1,14 @@
-const basketService = require("../../basket-service");
-
-const { getClient } = require("./utils");
-
 module.exports = async function createPaymentIntent({
   checkoutModel,
   context,
 }) {
+  const basketService = require("../../basket-service");
+
+  const { getClient } = require("./utils");
+
   const { basketModel } = checkoutModel;
-  const { user } = context;
-  const basket = await basketService.get({ basketModel, user });
+
+  const basket = await basketService.get({ basketModel, context });
 
   const paymentIntent = await getClient().paymentIntents.create({
     amount: basket.total.gross * 100,

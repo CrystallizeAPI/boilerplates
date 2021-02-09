@@ -1,7 +1,7 @@
 /**
  * Might be called by Vipps during checkout to retrieve the
- * shipping details
- *
+ * shipping details if staticShippingDetails is not set.
+ * https://www.vipps.no/developers-documentation/ecom/documentation/#initiate
  */
 
 // import vippsService from "../../../../../../src/services/payment-providers/vipps";

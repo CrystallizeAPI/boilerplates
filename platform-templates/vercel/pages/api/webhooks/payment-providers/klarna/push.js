@@ -4,12 +4,12 @@
  * https://developers.klarna.com/documentation/klarna-checkout/in-depth/confirm-purchase/
  */
 
-import klarnaPush from "../../../../../src/services/payment-providers/klarna/push";
+import klarnaService from "../../../../../src/services/payment-providers/klarna";
 
 export default async function webhookKlarnaPush(req, res) {
   try {
     console.log("webhookKlarnaPush", req.query);
-    await klarnaPush({
+    await klarnaService.push({
       crystallizeOrderId: req.query.crystallizeOrderId,
       klarnaOrderId: req.query.klarnaOrderId,
     });

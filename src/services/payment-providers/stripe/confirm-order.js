@@ -1,18 +1,17 @@
-const crystallize = require("../../crystallize");
-const emailService = require("../../email-service");
-const basketService = require("../../basket-service");
-
-const toCrystallizeOrderModel = require("./to-crystallize-order-model");
-
 module.exports = async function confirmOrder({
   paymentIntentId,
   checkoutModel,
   context,
 }) {
-  const { basketModel } = checkoutModel;
-  const { user } = context;
+  const crystallize = require("../../crystallize");
+  const emailService = require("../../email-service");
+  const basketService = require("../../basket-service");
 
-  const basket = await basketService.get({ basketModel, user });
+  const toCrystallizeOrderModel = require("./to-crystallize-order-model");
+
+  const { basketModel } = checkoutModel;
+
+  const basket = await basketService.get({ basketModel, context });
 
   // Prepares a model valid for Crystallize order intake
   const crystallizeOrderModel = await toCrystallizeOrderModel({

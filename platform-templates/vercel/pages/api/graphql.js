@@ -2,9 +2,13 @@ import { ApolloServer } from "apollo-server-micro";
 
 import cors from "../../lib/cors";
 
-import graphQLServerConfig from "../../src/graphql-server";
+import createGraphQLServerConfig from "../../src/graphql-server";
 
-const apolloServer = new ApolloServer(graphQLServerConfig);
+const apolloServer = new ApolloServer(
+  createGraphQLServerConfig({
+    apiPathPrefix: "/api",
+  })
+);
 
 export const config = {
   api: {

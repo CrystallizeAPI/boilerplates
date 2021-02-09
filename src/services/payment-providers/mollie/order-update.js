@@ -1,8 +1,8 @@
-const crystallize = require("../../crystallize");
-const { getClient } = require("./utils");
-const toCrystallizeOrderModel = require("./to-crystallize-order-model");
-
 module.exports = async function mollieOrderUpdate({ mollieOrderId }) {
+  const crystallize = require("../../crystallize");
+  const { getClient } = require("./utils");
+  const toCrystallizeOrderModel = require("./to-crystallize-order-model");
+
   const mollieClient = await getClient();
 
   const mollieOrder = await mollieClient.payments.get(mollieOrderId);
