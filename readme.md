@@ -2,10 +2,10 @@
 
 Your Service backend for _any_ frontend
 
-## Development for Vercel
+## Module development for platform
 
 ```bash
-cd platform-templates/vercel
+cd platform-templates/<platform>
 yarn
 yarn dev:boilerplate
 ```
