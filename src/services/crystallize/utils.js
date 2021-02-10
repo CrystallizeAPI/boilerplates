@@ -2,8 +2,9 @@ const invariant = require("invariant");
 const fetch = require("node-fetch");
 
 const CRYSTALLIZE_TENANT_IDENTIFIER = process.env.CRYSTALLIZE_TENANT_IDENTIFIER;
-const CRYSTALLIZE_SECRET_TOKEN = process.env.CRYSTALLIZE_SECRET_TOKEN;
-const CRYSTALLIZE_SECRET_TOKEN_ID = process.env.CRYSTALLIZE_SECRET_TOKEN_ID;
+const CRYSTALLIZE_ACCESS_TOKEN_ID = process.env.CRYSTALLIZE_ACCESS_TOKEN_ID;
+const CRYSTALLIZE_ACCESS_TOKEN_SECRET =
+  process.env.CRYSTALLIZE_ACCESS_TOKEN_SECRET;
 
 invariant(
   CRYSTALLIZE_TENANT_IDENTIFIER,
@@ -13,20 +14,20 @@ invariant(
 function createApiCaller(uri) {
   return async function callApi({ query, variables, operationName }) {
     invariant(
-      CRYSTALLIZE_SECRET_TOKEN,
-      "Missing process.env.CRYSTALLIZE_SECRET_TOKEN"
+      CRYSTALLIZE_ACCESS_TOKEN_ID,
+      "Missing process.env.CRYSTALLIZE_ACCESS_TOKEN_ID"
     );
     invariant(
-      CRYSTALLIZE_SECRET_TOKEN_ID,
-      "Missing process.env.CRYSTALLIZE_SECRET_TOKEN_ID"
+      CRYSTALLIZE_ACCESS_TOKEN_SECRET,
+      "Missing process.env.CRYSTALLIZE_ACCESS_TOKEN_SECRET"
     );
 
     const response = await fetch(uri, {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "X-Crystallize-Access-Token-Secret": CRYSTALLIZE_SECRET_TOKEN,
-        "X-Crystallize-Access-Token-Id": CRYSTALLIZE_SECRET_TOKEN_ID,
+        "X-Crystallize-Access-Token-Id": CRYSTALLIZE_ACCESS_TOKEN_ID,
+        "X-Crystallize-Access-Token-Secret": CRYSTALLIZE_ACCESS_TOKEN_SECRET,
       },
       body: JSON.stringify({ operationName, query, variables }),
     });
