@@ -1,4 +1,3 @@
-
 module.exports = {
   async get({ basketModel, context }) {
     const { locale, voucherCode, ...basketFromClient } = basketModel;
@@ -12,14 +11,17 @@ module.exports = {
       const response = await voucherService.get({ code: voucherCode, context });
 
       if (response.isValid) {
-        voucher = response.voucher
+        voucher = response.voucher;
       }
     }
 
     /**
      * Get all products from Crystallize from their paths
      */
-    const productDataFromCrystallize = await getProducts({
+    const {
+      getProductsFromCrystallize,
+    } = require("./get-products-from-crystallize");
+    const productDataFromCrystallize = await getProductsFromCrystallize({
       paths: basketFromClient.cart.map((p) => p.path),
       language: locale.crystallizeCatalogueLanguage,
     });
@@ -76,74 +78,50 @@ module.exports = {
 
         return acc;
       },
-      { gross: 0, net: 0, tax: 0, discount: 0, currency: "N/A" }
+      { gross: 0, net: 0, tax: vatType, discount: 0, currency: "N/A" }
     );
 
-    total.tax = vatType;
-    total.discount = Boolean(voucher)
-      ? calculateVoucherDiscountAmount({ voucher, amount: total.gross })
-      : 0
+    // Add a voucher
+    if (voucher) {
+      const {
+        calculateVoucherDiscountAmount,
+      } = require("./calculate-voucher-discount-amount");
+      const discountAmount = calculateVoucherDiscountAmount({
+        voucher,
+        amount: total.gross,
+      });
+
+      const voucherCartItem = {
+        name: voucher.code,
+        quantity: 1,
+        price: {
+          gross: discountAmount * -1,
+          net: discountAmount * -1,
+          currency: total.currency,
+        },
+      };
+
+      /**
+       * Identify the voucher item by using the syntax
+       * --voucher--{name}
+       */
+      const voucherIdentifier = `--voucher--${voucher.code
+        .toLowerCase()
+        .replace(/\s/g, "-")}`;
+      voucherCartItem.sku = voucherIdentifier;
+
+      cart.push(voucherCartItem);
+
+      // Adjust totals
+      total.discount = discountAmount;
+      total.gross -= discountAmount;
+      total.net -= discountAmount;
+    }
 
     return {
       voucher,
       cart,
-      total
+      total,
     };
   },
 };
-
-/**
- * Gets information for products with a given path.
- * Gets all of the products with a single request
- * by composing the query dynamically
- */
-async function getProducts({ paths, language }) {
-  if (paths.length === 0) {
-    return [];
-  }
-
-  const { callCatalogueApi } = require("../crystallize/utils");
-
-  const response = await callCatalogueApi({
-    query: `{
-      ${paths.map(
-        (path, index) => `
-        product${index}: catalogue(path: "${path}", language: "${language}") {
-          path
-          ... on Product {
-            vatType {
-              name
-              percent
-            }
-            variants {
-              id
-              sku
-              name
-              stock
-              priceVariants {
-                price
-                identifier
-                currency
-              }
-              attributes {
-                attribute
-                value
-              }
-              images {
-                url
-                variants {
-                  url
-                  width
-                  height
-                }
-              }
-            }
-          }
-        }
-      `
-      )}
-    }`,
-  });
-
-  return paths.map((_, i) => response.data[`product${i}`]).filter((p) => !!p);
-}
