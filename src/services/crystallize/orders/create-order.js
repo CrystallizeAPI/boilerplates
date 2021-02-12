@@ -1,8 +1,8 @@
-const { callOrdersApi, normalizeOrderModel } = require("../utils");
+const { callOrdersApi, normaliseOrderModel } = require("../utils");
 
 module.exports = async function createOrder(variables) {
   const response = await callOrdersApi({
-    variables: normalizeOrderModel(variables),
+    variables: normaliseOrderModel(variables),
     query: `
       mutation createOrder(
         $customer: CustomerInput!

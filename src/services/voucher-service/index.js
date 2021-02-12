@@ -5,6 +5,12 @@
  */
 const voucherRegister = [
   {
+    code: "ok-deal",
+    discountAmount: 2,
+    discountPercent: null,
+    onlyForAuthorisedUser: false,
+  },
+  {
     code: "fair-deal",
     discountAmount: null,
     discountPercent: 5,
@@ -13,12 +19,12 @@ const voucherRegister = [
   {
     code: "awesome-deal-logged-in",
     discountAmount: null,
-    discountPercent: 50,
+    discountPercent: 10,
     onlyForAuthorisedUser: true,
   },
   {
     code: "good-deal-logged-in",
-    discountAmount: 500,
+    discountAmount: 100,
     discountPercent: null,
     onlyForAuthorisedUser: true,
   },
