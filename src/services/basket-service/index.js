@@ -92,6 +92,7 @@ module.exports = {
     let total = getTotals({ cart, vatType });
 
     // Add a voucher
+    let cartWithDiscountedPrice = cart;
     if (voucher) {
       const {
         calculateVoucherDiscountAmount,
@@ -102,7 +103,7 @@ module.exports = {
       });
 
       // Add a discounted price for each item
-      const cartWithDiscountedPrice = cart.map((cartItem) => {
+      cartWithDiscountedPrice = cart.map((cartItem) => {
         const portionOfTotal =
           total.gross / (cartItem.price.gross * cartItem.quantity);
 
@@ -155,6 +156,7 @@ module.exports = {
     return {
       voucher,
       cart,
+      cartWithDiscountedPrice,
       total,
     };
   },

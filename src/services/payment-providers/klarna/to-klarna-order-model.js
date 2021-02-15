@@ -1,5 +1,5 @@
 module.exports = function crystallizeToKlarnaOrderModel(basket) {
-  const { total, cart } = basket;
+  const { total, cartWithDiscountedPrice: cart } = basket;
 
   const order_amount = total.gross * 100;
 
