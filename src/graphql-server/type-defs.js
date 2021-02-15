@@ -9,6 +9,12 @@ module.exports = gql`
     user: UserQueries!
     paymentProviders: PaymentProvidersQueries!
     orders: OrderQueries!
+    voucher(code: String!): VoucherResponse!
+  }
+
+  type VoucherResponse {
+    voucher: Voucher
+    isValid: Boolean!
   }
 
   type MyCustomBusinnessQueries {
@@ -24,17 +30,16 @@ module.exports = gql`
   }
 
   type CartItem {
-    id: String!
-    name: String
-    path: String!
-    quantity: Int!
     sku: String!
+    name: String
+    path: String
+    quantity: Int!
     vatType: VatType
     stock: Int
     price: Price
-    priceVariants: [PriceVariant!]!
+    priceVariants: [PriceVariant!]
     attributes: [Attribute!]
-    images: [Image!]!
+    images: [Image!]
   }
 
   type PriceVariant {
@@ -65,6 +70,7 @@ module.exports = gql`
     currency: String
     tax: Tax
     taxAmount: Float
+    discount: Float!
   }
 
   type Tax {

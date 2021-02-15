@@ -1,10 +1,10 @@
-const { callPimApi, normalizeOrderModel } = require("../utils");
+const { callPimApi, normaliseOrderModel } = require("../utils");
 
 module.exports = async function updateOrder(id, variables) {
   const response = await callPimApi({
     variables: {
       id,
-      ...normalizeOrderModel(variables),
+      ...normaliseOrderModel(variables),
     },
     query: `
       mutation updateOrder(

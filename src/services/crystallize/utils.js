@@ -42,9 +42,17 @@ function createApiCaller(uri) {
   };
 }
 
-function normalizeOrderModel({ customer, cart, ...rest }) {
+function normaliseOrderModel({ customer, cart, total, ...rest }) {
   return {
     ...rest,
+    ...(total && {
+      total: {
+        gross: total.gross,
+        net: total.net,
+        currency: total.currency,
+        tax: total.tax,
+      },
+    }),
     ...(cart && {
       cart: cart.map(function handleOrderCartItem(item) {
         const {
@@ -64,7 +72,7 @@ function normalizeOrderModel({ customer, cart, ...rest }) {
           productVariantId,
           quantity,
           price,
-          imageUrl: images[0].url,
+          imageUrl: images && images[0] && images[0].url,
         };
       }),
     }),
@@ -84,7 +92,7 @@ function normalizeOrderModel({ customer, cart, ...rest }) {
 }
 
 module.exports = {
-  normalizeOrderModel,
+  normaliseOrderModel,
 
   /**
    * Catalogue API is the fast read-only API to query frontend

@@ -3,7 +3,6 @@ module.exports = async function createPaymentIntent({
   context,
 }) {
   const basketService = require("../../basket-service");
-
   const { getClient } = require("./utils");
 
   const { basketModel } = checkoutModel;

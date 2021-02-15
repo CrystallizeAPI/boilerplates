@@ -2,6 +2,7 @@ const crystallize = require("../services/crystallize");
 
 const basketService = require("../services/basket-service");
 const userService = require("../services/user-service");
+const voucherService = require("../services/voucher-service");
 
 const stripeService = require("../services/payment-providers/stripe");
 const mollieService = require("../services/payment-providers/mollie");
@@ -27,6 +28,8 @@ module.exports = {
     user: () => ({}),
     orders: () => ({}),
     paymentProviders: () => ({}),
+    voucher: (parent, args, context) =>
+      voucherService.get({ ...args, context }),
   },
   MyCustomBusinnessQueries: {
     dynamicRandomInt() {
