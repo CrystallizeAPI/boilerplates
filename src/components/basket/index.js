@@ -81,7 +81,13 @@ export function BasketProvider({ children }) {
    */
   const basketModel = useMemo(
     () => ({
-      locale,
+      locale: {
+        locale: locale.locale,
+        displayName: locale.displayName,
+        appLanguage: locale.appLanguage,
+        crystallizeCatalogueLanguage: locale.crystallizeCatalogueLanguage,
+        crystallizePriceVariant: locale.crystallizeCatalogueLanguage,
+      },
       cart: clientBasket.cart.map(clientCartItemForAPI),
       voucherCode: clientBasket.voucherCode,
       crystallizeOrderId: clientBasket.crystallizeOrderId,
