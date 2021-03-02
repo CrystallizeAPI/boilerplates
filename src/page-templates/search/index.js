@@ -1,20 +1,24 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState, useRef } from "react"
 import PropTypes from "prop-types"
 import { navigate, graphql } from "gatsby"
 import produce from "immer"
-import { Header, H1 } from "ui"
+import { Inner } from "ui"
+import styled from "styled-components"
 
-import ShapeComponents from "components/shape-components"
-
-import { useT, useLocale } from "lib/i18n"
+import { useLocale } from "lib/i18n"
 import { doSearch } from "lib/api"
 import { SEARCH_QUERY, urlToSpec, queryStringToObject } from "lib/search"
 import Layout from "components/layout"
+import PageHeader from "components/page-header"
+import Stackable from "components/stackable"
 
-import { Wrapper, Header as SearchHeader, Outer } from "./styles"
+import { ListOuter, SearchActions, LocateRight } from "./styles"
 import OrderBy from "./order-by"
 import Results from "./results"
 import Facets from "./facets"
+import SearchCount from "./count"
+
+const Outer = styled(Inner)``
 
 function cleanFilterForTotalAggregations(filter) {
   return produce(filter, (draft) => {
@@ -49,9 +53,7 @@ function Search(props) {
     location,
     path,
   } = props
-
-  const t = useT()
-  const [firstLoad, setFirstLoad] = useState(false)
+  const firstLoad = useRef()
   const locale = useLocale()
   const [data, setData] = useState({
     search: crystallize_search?.search,
@@ -77,9 +79,8 @@ function Search(props) {
 
   // Query changed
   useEffect(() => {
-    if (!firstLoad) {
-      setFirstLoad(true)
-      return
+    if (!firstLoad.current) {
+      firstLoad.current = true
     }
 
     loadPageCb(location.search)
@@ -129,56 +130,46 @@ function Search(props) {
   if (!data.search) {
     return (
       <Layout
-        title={crystallize?.folder?.name || "Search"}
+        title={"Search"}
         headerItems={crystallize?.headerItems.children}
         loading
       />
     )
   }
+  const title =
+    crystallize?.folder?.name === "Tenant furniture Catalogue Root"
+      ? "Search"
+      : crystallize?.folder?.name
 
-  const summary = crystallize?.folder?.components?.find(
+  const description = crystallize?.folder?.components?.find(
     (c) => c.name === "Brief"
-  )
-  const icon = crystallize?.folder?.components?.find((c) => c.name === "Icon")
-  const hasSensibleHeaderData = !!icon || !!summary
+  )?.content?.json
+
+  const stacks = crystallize?.folder?.components?.find(
+    (c) => c.name === "Stackable content"
+  )?.content?.items
+
+  const totalResults = data.search.aggregations.totalResults
   return (
-    <Layout
-      title={crystallize?.folder?.name || "Search"}
-      headerItems={crystallize?.headerItems.children}
-    >
+    <Layout title={title} headerItems={crystallize?.headerItems.children}>
       <Outer>
-        {hasSensibleHeaderData && (
-          <Header centerContent>
-            <ShapeComponents components={[icon]} />
-            <H1>{crystallize?.folder?.name}</H1>
-            <ShapeComponents components={[summary]} />
-          </Header>
-        )}
-        <Wrapper paddTop={!hasSensibleHeaderData}>
-          <SearchHeader>
-            {data && (
-              <h3>
-                {t("search.foundResults", {
-                  count:
-                    spec.filter.searchTerm !== "searching" &&
-                    data.search.aggregations.totalResults,
-                })}
-              </h3>
-            )}
-            <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
-          </SearchHeader>
-          <Facets
-            aggregations={data?.aggregations ?? {}}
-            changeQuery={changeQuery}
-            totalResults={data?.search?.aggregations?.totalResults}
-            spec={spec}
-          />
-          <Results
-            edges={data?.search?.edges ?? []}
-            navigate={changePage}
-            pageInfo={data?.search?.pageInfo ?? {}}
-          />
-        </Wrapper>
+        <PageHeader {...{ title, description }} />
+        <Stackable stacks={stacks} />
+        <ListOuter>
+          <SearchActions>
+            <Facets
+              aggregations={data.aggregations}
+              spec={spec}
+              changeQuery={changeQuery}
+              totalResults={totalResults}
+            />
+            <LocateRight>
+              <OrderBy orderBy={spec.orderBy} onChange={handleOrderByChange} />
+            </LocateRight>
+          </SearchActions>
+          <SearchCount count={totalResults} />
+          <Results {...data.search} spec={spec} navigate={changePage} />
+        </ListOuter>
       </Outer>
     </Layout>
   )
@@ -229,7 +220,10 @@ export const query = graphql`
     }
 
     crystallize_search {
-      aggregations: search(filter: $aggregationsFilter) {
+      aggregations: search(
+        filter: $aggregationsFilter
+        language: $crystallizeCatalogueLanguage
+      ) {
         aggregations {
           price {
             min
@@ -252,15 +246,6 @@ export const query = graphql`
       ) {
         aggregations {
           totalResults
-          price {
-            min
-            max
-          }
-          variantAttributes {
-            attribute
-            value
-            count
-          }
         }
         pageInfo {
           totalNodes
@@ -277,11 +262,16 @@ export const query = graphql`
             path
             type
             ... on CRYSTALLIZE_SEARCH_Product {
+              topics {
+                id
+                name
+              }
               matchingVariant {
-                price
-                attributes {
-                  attribute
-                  value
+                priceVariants {
+                  identifier
+                  name
+                  currency
+                  price
                 }
                 images {
                   url

@@ -60,9 +60,7 @@ export default function DocumentItem({ data, colSpan = "4" }) {
 
   return (
     <Outer href={path} span={colSpan}>
-      <MediaWrapper>
-        <MediaInner>{media && media}</MediaInner>
-      </MediaWrapper>
+      <MediaWrapper>{media && media}</MediaWrapper>
       <Text>
         <H3>{name}</H3>
         <Description>

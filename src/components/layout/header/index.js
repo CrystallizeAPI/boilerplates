@@ -2,9 +2,11 @@ import React, { useState } from "react"
 
 import Link from "components/link"
 import ShopLogo from "images/shop-logo.svg"
+import IconUser from "ui/icons/user"
 
-import { Outer, Nav, Logo, NavList, NavListItem, NavAndActions } from "./styles"
+import { Outer, Nav, Logo, NavList, NavListItem, Btn, IconBar } from "./styles"
 import BurgerButton from "./burger-button"
+import BasketButton from "./basket-button"
 import LocaleSwitcher from "./locale-switcher"
 import Search from "./search"
 
@@ -15,7 +17,7 @@ export default function Header({ headerItems }) {
     <Outer>
       <Link to="/">
         <Logo>
-          <img src={ShopLogo} alt="" />
+          <img src={ShopLogo} alt="" width="207" height="35" />
         </Logo>
       </Link>
       <Nav open={navOpen}>
@@ -33,10 +35,16 @@ export default function Header({ headerItems }) {
             })}
         </NavList>
       </Nav>
-      <NavAndActions>
+      <IconBar>
         <LocaleSwitcher />
+        <Link to="/account">
+          <Btn as="a" aria-label="User area">
+            <IconUser />
+          </Btn>
+        </Link>
         <Search />
-      </NavAndActions>
+        <BasketButton />
+      </IconBar>
       <BurgerButton active={navOpen} onClick={() => setNavOpen(!navOpen)} />
     </Outer>
   )

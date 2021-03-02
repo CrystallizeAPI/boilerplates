@@ -1,37 +1,37 @@
-import React from "react"
-import styled from "styled-components"
-import { isNot } from "styled-is"
+import React from 'react';
+import styled from 'styled-components';
+import { isNot } from 'styled-is';
 
-import { Spinner } from "./spinner"
+import { Spinner } from './spinner';
 
 const STATES = {
-  LOADING: "loading",
-}
+  LOADING: 'loading'
+};
 
 const Inner = styled.span`
   flex: 1 1 auto;
-  background: var(--color-box-background);
-  color: var(--color-text-main);
+  font-size: 16px;
+  background: var(--color-primary-action);
+  color: var(--color-primary-action-content);
   font-weight: 600;
   text-decoration: none;
   text-align: center;
   padding: 16px 25px;
   position: relative;
-`
+  border-radius: 4px;
+`;
 
 const Outer = styled.button.attrs((p) => ({
-  type: p.type || "button",
+  type: p.type || 'button'
 }))`
-  min-width: ${(p) => (p.width ? p.width : "120px")};
+  min-width: ${(p) => (p.width ? p.width : '120px')};
   display: inline-flex;
   border-radius: 0;
   border: none;
-  border: 2px solid var(--color-text-main);
   padding: 0;
   appearance: none;
   cursor: pointer;
   text-decoration: none;
-
   &:hover ${Inner} {
     background: var(--color-text-main);
     color: var(--color-main-background);
@@ -46,7 +46,7 @@ const Outer = styled.button.attrs((p) => ({
       color: #333;
     }
   }
-`
+`;
 
 const Text = styled.span`
   position: relative;
@@ -54,11 +54,11 @@ const Text = styled.span`
   transition: opacity 100ms, transform 100ms;
   white-space: nowrap;
 
-  ${isNot("shown")`
+  ${isNot('shown')`
     opacity: 0;
     transform: scale(0.7);
   `};
-`
+`;
 
 const Loading = styled.span`
   position: absolute;
@@ -75,7 +75,7 @@ const Loading = styled.span`
     height: 50%;
     width: auto;
   }
-`
+`;
 
 export const Button = React.forwardRef(
   ({ children, state, width, ...rest }, ref) => (
@@ -90,6 +90,6 @@ export const Button = React.forwardRef(
       </Inner>
     </Outer>
   )
-)
+);
 
-Button.displayName = "Button"
+Button.displayName = 'Button';

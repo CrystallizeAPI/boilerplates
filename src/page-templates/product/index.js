@@ -1,120 +1,122 @@
-/* eslint react/no-multi-comp: 0 */
 import React, { useState } from "react"
-import { Image } from "@crystallize/react-image"
+import { Image as Img } from "@crystallize/react-image"
 import ContentTransformer from "ui/content-transformer"
-
 import { graphql } from "gatsby"
-import Buy from "./buy"
-
-import { screen } from "ui"
-import VariantSelector from "components/variant-selector"
+import Buy from "./components/buy"
+import getRelativePriceVariants from "lib/pricing"
 import ShapeComponents from "components/shape-components"
-import { useT } from "lib/i18n"
+import { useT, useLocale } from "lib/i18n"
+import Collection from "components/item-collection"
 
+import TopicTag from "components/topic-tag"
+import VariantSelector from "./components/variant-selector"
 import Layout from "components/layout"
+import Stock from "./components/stock"
 
 import {
-  Sections,
+  Inner,
   Media,
-  MediaInner,
-  Info,
+  ImgContainer,
+  Actions,
+  ActionsSticky,
+  Title,
   Summary,
-  Description,
-  Name,
-  Outer,
   Content,
   Specs,
+  Description,
+  DescriptionWrapper,
+  RelatedContainer,
 } from "./styles"
 
 const ProductPage = ({ product, defaultVariant }) => {
+  const t = useT()
+  const locale = useLocale()
+
+  const { name, components = [], variants = [], topics = [] } = product
+
   const [selectedVariant, setSelectedVariant] = useState(defaultVariant)
 
   const onVariantChange = (variant) => setSelectedVariant(variant)
+  const pricing = getRelativePriceVariants({
+    variant: selectedVariant,
+    locale,
+  })
 
-  const summaryComponent = product.components.find((c) => c.name === "Summary")
-  const descriptionComponent = product.components?.find(
-    (c) => c.name === "Description"
-  )
-  const specs = product.components?.find((c) => c.name === "Specs")
+  // Find content from the GraphQl response:
+  const summaryComponent = components.find(isSumaryComponent)
+  const descriptionComponent = components.find(isDescriptionComponent)
+  const specs = components.find(isSpecsComponent)
+  const relatedProducts = components.find(isRelatedProductsComponent)?.content
+    ?.items
+
+  const hasMoreThanOneVariant = variants.length > 1
 
   return (
-    <Outer>
-      <Sections>
-        <Media>
-          <MediaInner>
-            <Image
-              {...selectedVariant.images?.[0]}
-              sizes={`(max-width: ${screen.sm}px) 400px, 60vw`}
-              alt={product.name}
-            />
-          </MediaInner>
-        </Media>
-        <Info>
-          <Name>{product.name}</Name>
-          {summaryComponent && (
-            <Summary>
-              <ContentTransformer {...summaryComponent?.content?.json} />
-            </Summary>
-          )}
-
-          {product.variants?.length > 1 && (
-            <VariantSelector
-              variants={product.variants}
-              selectedVariant={selectedVariant}
-              onVariantChange={onVariantChange}
-            />
-          )}
-
-          <Buy product={product} selectedVariant={selectedVariant} />
-        </Info>
-      </Sections>
-      <Content>
-        {descriptionComponent && (
-          <Description>
-            <ShapeComponents
-              className="description"
-              components={[descriptionComponent]}
-            />
-          </Description>
-        )}
-        {specs && (
+    <>
+      <Inner>
+        <Content>
+          <Media>
+            {selectedVariant?.images?.map((img) => {
+              const isPrortraitImage =
+                img?.variants?.[0].height >= img?.variants?.[0]?.width
+              return (
+                <ImgContainer key={img?.url} portrait={isPrortraitImage}>
+                  <Img {...img} alt={name} />
+                </ImgContainer>
+              )
+            })}
+          </Media>
           <Specs>
             <ShapeComponents components={[specs]} />
           </Specs>
+          {descriptionComponent && (
+            <Description>
+              <DescriptionWrapper>
+                <ShapeComponents
+                  className="description"
+                  components={[descriptionComponent]}
+                />
+              </DescriptionWrapper>
+            </Description>
+          )}
+        </Content>
+        <Actions>
+          <ActionsSticky>
+            <Title>{name}</Title>
+            {summaryComponent && (
+              <Summary>
+                <ContentTransformer {...summaryComponent?.content?.json} />
+              </Summary>
+            )}
+            {topics?.map((topic) => (
+              <TopicTag {...topic} key={topic.id} />
+            ))}
+            {hasMoreThanOneVariant && (
+              <VariantSelector
+                variants={variants}
+                selectedVariant={selectedVariant}
+                onVariantChange={onVariantChange}
+              />
+            )}
+            <Buy
+              product={product}
+              selectedVariant={selectedVariant}
+              pricing={pricing}
+            />
+            {/* <Stock selectedVariant={selectedVariant} /> */}
+          </ActionsSticky>
+        </Actions>
+      </Inner>
+
+      <RelatedContainer>
+        {Boolean(relatedProducts) && (
+          <Collection
+            items={relatedProducts}
+            title={t("You might also be interested in")}
+          />
         )}
-      </Content>
-
-      {/* {topics && topics.length && (
-        <RelatedTopics>
-          <H2>{t("common.related")}</H2>
-
-          {topics.map((topic) => {
-            // We only want to show the first 4 products for a topic
-            const cells = topic.items.edges
-              .filter(({ node }) => node.id !== product.id)
-              .slice(0, 4)
-              .map(({ node }) => ({
-                item: { ...node },
-              }))
-
-            if (!cells.length) {
-              return null
-            }
-
-            return (
-              <TopicMap key={topic.id}>
-                <TopicTitle>{topic.name}</TopicTitle>
-                <List>
-                  {cells.map((cell) => (
-                    <CategoryItem data={cell.item} key={cell.item.id} />
-                  ))}
-                </List>
-              </TopicMap>
-            )
-          })}
-        </RelatedTopics>
-      )} */}
-    </Outer>
+      </RelatedContainer>
+    </>
   )
 }
 
@@ -132,6 +134,22 @@ const ProductPageDataLoader = ({ data: { crystallize } }) => {
       <ProductPage product={product} defaultVariant={defaultVariant} />
     </Layout>
   )
+}
+
+function isSumaryComponent({ name }) {
+  return name === "Summary"
+}
+
+function isDescriptionComponent({ name }) {
+  return name === "Description"
+}
+
+function isSpecsComponent({ name }) {
+  return name === "Specs"
+}
+
+function isRelatedProductsComponent({ name }) {
+  return name === "Related products"
 }
 
 export const query = graphql`

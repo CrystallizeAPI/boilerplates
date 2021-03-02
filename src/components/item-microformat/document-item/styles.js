@@ -1,36 +1,36 @@
 import styled from "styled-components"
 import { Image } from "@crystallize/react-image"
-import Link from "components/link"
 
-import { responsive } from "ui"
-import WidescreenRatio from "ui/widescreen-ratio"
+import { responsive, H3 } from "ui"
 
-export const Outer = styled(Link)`
+export const Outer = styled.a`
   display: flex;
   flex-direction: column;
   height: 100%;
-
-  ${(p) => (p.span ? `grid-column-end: span ${p.span}` : null)};
-
+  width: 100%;
+  position: relative;
+  border: 4px solid #fff;
+  background: var(--listformat-document-background);
   ${responsive.xs} {
     margin-bottom: 15px;
   }
 `
 
-export const MediaWrapper = styled(WidescreenRatio)`
+export const MediaWrapper = styled.div`
   flex: 0 0 auto;
-`
-
-export const MediaInner = styled.div`
-  flex: 1 1 100%;
-`
-
-export const Img = styled(Image)`
+  border: 1px solid #dfdfdf;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-
-  > img {
+  figure {
+    height: 100%;
+  }
+  .video-js {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 100%;
+  }
+  img,
+  video {
     display: block;
     object-fit: cover;
     object-position: center;
@@ -40,26 +40,58 @@ export const Img = styled(Image)`
   }
 `
 
+export const Img = styled(Image)`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+`
+
 export const Text = styled.div`
   flex: 1 1 auto;
-  color: var(--color-text-main);
-  background: var(--color-box-background);
   width: 100%;
+  height: 50%;
+  left: 0px;
   display: flex;
   flex-direction: column;
-  text-align: center;
+  justify-content: flex-end;
   padding: 3em var(--content-padding);
+  position: absolute;
+  color: #fff;
+  bottom: 0;
 
+  padding-right: 20%;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 7, 8, 0) 0%,
+    rgba(8, 7, 8, 0.8) 100%
+  );
   h3 {
-    font-size: 1.6em;
+    font-size: var(--font-size-md);
     color: inherit;
     margin: 0;
+    line-height: 1.4em;
   }
 `
 
+const textShadowStyles = `
+  text-shadow: 2px 2px 6px black;
+`
+export const Title = styled(H3)`
+  ${textShadowStyles}
+`
+
 export const Description = styled.div`
-  font-size: 1rem;
   margin-top: 10px;
-  line-height: 1.2rem;
-  color: inherit;
+  color: #fff;
+  ${textShadowStyles}
+
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #fff;
+    line-height: 1.8em;
+    font-size: var(--font-size-secondary);
+  }
 `

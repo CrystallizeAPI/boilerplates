@@ -1,15 +1,13 @@
 import React from "react"
 import { graphql } from "gatsby"
-// import Grid from "@crystallize/grid-renderer/react"
-import styled from "styled-components"
-import { Outer as O } from "ui"
+import { Outer, Item, List } from "./folder/styles"
 import Layout from "components/layout"
 import { useT } from "lib/i18n"
+import Stackable from "components/stackable"
 import Grid, { GridItem } from "components/grid"
-const Outer = styled(O)`
-  max-width: 1600px;
-  padding: 0;
-`
+import ShapeComponents from "components/shape-components"
+import Listformat from "components/listformat"
+
 export default function IndexPage({ data }) {
   const t = useT()
   const {
@@ -18,26 +16,51 @@ export default function IndexPage({ data }) {
       headerItems: { children: headerItems },
     },
   } = data
+  const { children, components } = frontpage
 
-  const [grid] =
-    frontpage?.components?.find(
-      (c) => c?.content.__typename === "CRYSTALLIZE_GridRelationsContent"
-    )?.content?.grids || []
+  const title = frontpage?.components?.find((c) => c.name === "Title")?.content
+    ?.text
+  const stacks = components?.find((c) => c.name === "Stackable content")
+    ?.content?.items
+  const body = frontpage.components?.filter((c) => c.name === "Body")
+  const gridRelations = components
+    ?.filter((c) => c.type === "gridRelations")
+    ?.reduce((acc, g) => [...acc, ...(g?.content?.grids || [])], [])
+  const hasGridRelation = gridRelations?.length > 0
 
   return (
-    <Layout title={t("frontpage.title")} headerItems={headerItems}>
+    <Layout title={t(title)} headerItems={headerItems}>
       <Outer>
-        {grid && (
-          <Grid
-            model={grid}
-            cellComponent={({ cell }) => (
-              <GridItem data={cell.item} gridCell={cell} />
-            )}
-          />
-        )}
+        {body?.length > 0 && <ShapeComponents components={body} />}
+
+        {hasGridRelation &&
+          gridRelations.map((grid, index) => (
+            <Grid
+              key={index}
+              model={grid}
+              cellComponent={({ cell }) => (
+                <GridItem data={cell.item} gridCell={cell} />
+              )}
+            />
+          ))}
+
+        <Stackable stacks={stacks} />
+        <List>
+          {children
+            ?.filter((c) => !isFolderType(c))
+            ?.map((item, i) => (
+              <Item className={`item-${item?.type}`} key={i}>
+                <Listformat item={item} key={i} />
+              </Item>
+            ))}
+        </List>
       </Outer>
     </Layout>
   )
+}
+
+function isFolderType({ type }) {
+  return type === "folder"
 }
 
 export const query = graphql`
@@ -53,34 +76,15 @@ export const query = graphql`
           language
         }
       }
-
       frontpage: catalogue(
         language: $crystallizeCatalogueLanguage
-        path: "/web-frontpage"
+        path: "/frontpage-2021"
       ) {
-        components {
-          content {
-            ... on CRYSTALLIZE_GridRelationsContent {
-              grids {
-                id
-                name
-                rows {
-                  columns {
-                    layout {
-                      rowspan
-                      colspan
-                    }
-                    itemType
-                    itemId
-                    item {
-                      ...crystallize_item
-                      ...crystallize_product
-                    }
-                  }
-                }
-              }
-            }
-          }
+        ...crystallize_item
+
+        children {
+          ...crystallize_item
+          ...crystallize_product
         }
       }
     }

@@ -1,29 +1,20 @@
 import styled from "styled-components"
+import is from "styled-is"
 import { Image } from "@crystallize/react-image"
-import Link from "components/link"
 
-import { responsive } from "ui"
-
-export const Outer = styled(Link)`
-  display: flex;
+export const Outer = styled.a`
   height: 100%;
   color: var(--color-main-background);
-  position: relative;
-  padding: 20px;
-  justify-content: center;
-  background: var(--color-box-background);
+  border: 4px solid #fff;
+  display: block;
   transition: all 0.1s ease-in-out;
-  grid-column-end: span 3;
-  ${responsive.xs} {
-    margin-bottom: 15px;
-  }
 `
 
 export const Inner = styled.div`
-  padding: 20px;
   height: 100%;
+  width: 100%;
+  position: relative;
   display: flex;
-  justify-content: center;
   flex-direction: column;
 `
 
@@ -32,7 +23,25 @@ export const ImageWrapper = styled.div`
   z-index: 1;
   overflow: hidden;
   width: 100%;
-  height: 250px;
+  height: 100%;
+  border: 1px solid #dfdfdf;
+  background: var(--listformat-product-background);
+  figure {
+    height: 100%;
+  }
+`
+export const Footer = styled.div`
+  padding: 5px 0;
+  color: var(--color-text-main);
+
+  h3 {
+    display: block;
+    padding: 0 0 10px;
+    font-size: 20px;
+    font-family: var(--font-family-main);
+    color: inherit;
+    margin: 0;
+  }
 `
 
 export const Img = styled(Image)`
@@ -42,37 +51,46 @@ export const Img = styled(Image)`
 
   > img {
     display: block;
-    object-fit: cover;
-    object-position: center;
+    object-fit: var(--listformat-product-image-fit);
+    object-position: var(--listformat-product-image-position);
     width: 100%;
     height: 100%;
     overflow: hidden;
   }
 `
 
-export const Text = styled.div`
-  z-index: 2;
-  width: 100%;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  left: 0;
-  width: 100%;
-  padding: 1em;
-  color: var(--color-text-main);
-
-  h3 {
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    color: inherit;
-    margin: 0;
-  }
-`
-
 export const Price = styled.span`
   color: var(--color-price);
+  position: relative;
   font-weight: bold;
+  display: flex;
+  font-size: var(--font-listing-price-size);
   padding-bottom: 5px;
+  align-items: center;
+  ${is("discounted")`
+    color:var(--color-discount);
+  `}
+`
+
+export const BeforePrice = styled.div`
+  font-size: 0.8em;
+  opacity: 0.7;
+  padding: 0 15px 0 5px;
+  font-weight: 500;
+  text-decoration: line-through;
+  color: var(--color-price);
+`
+export const Percentage = styled.div`
+  font-size: 12px;
+  margin-top: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: var(--color-discount);
+  color: #fff;
+  display: inline-block;
+  border-radius: 2px;
+  z-index: 15;
+  padding: 5px 10px;
+  font-weight: 600;
 `

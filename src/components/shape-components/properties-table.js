@@ -9,17 +9,13 @@ const Section = styled.div`
 
   h3 {
     margin: 0 0 0.5em 0;
-    font-size: 1.2rem;
-  }
-
-  ${responsive.smAndLess} {
-    padding: 0 15px;
+    font-size: var(--font-size-md);
   }
 `
 
 const PropertiesOuter = styled.div`
   overflow: hidden;
-  border-bottom: 1px solid var(--color-main-background);
+  border-bottom: 1px solid #dfdfdf;
 `
 
 const Properties = styled.table`
@@ -29,7 +25,15 @@ const Properties = styled.table`
   td {
     width: 50%;
     padding: 1em 0;
-    border: 0px solid var(--color-main-background);
+    border: 0px solid #dfdfdf;
+    &.key {
+      width: 30%;
+      font-weight: 600;
+    }
+
+    &.value {
+      width: 70%;
+    }
   }
 
   tr:not(:first-child) td {
