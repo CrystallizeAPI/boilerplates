@@ -103,7 +103,7 @@ const ProductPage = ({ product, defaultVariant }) => {
               selectedVariant={selectedVariant}
               pricing={pricing}
             />
-            {/* <Stock selectedVariant={selectedVariant} /> */}
+            <Stock selectedVariant={selectedVariant} />
           </ActionsSticky>
         </Actions>
       </Inner>

@@ -2,7 +2,7 @@ import React from "react"
 
 import styled from "styled-components"
 
-import { H3, responsive } from "ui"
+import { H3 } from "ui"
 
 const Section = styled.div`
   margin: 3em 0;

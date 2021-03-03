@@ -1,6 +1,7 @@
 import React from "react"
 import { AuthProvider } from "./src/components/auth"
 import { I18nextProvider } from "lib/i18n"
+import { BasketProvider } from "./src/components/basket"
 
 // Wraps every page in a component
 export const wrapPageElement = ({
