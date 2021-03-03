@@ -33,6 +33,7 @@ const Img = styled.div`
   img {
     position: relative;
     height: 100%;
+    width: 100%;
   }
 
   figure {
@@ -79,21 +80,32 @@ const Content = styled.div`
   display: flex;
   height: 100%;
   width: 100%;
+  padding: 1.5em;
+  min-height: 350px;
 
   ${responsive.smPlus} {
     padding: 0;
     padding: 5em 50px;
     flex-direction: row;
     margin-right: 30px;
+    max-width: var(--font-max-width);
+    padding: 0 5em;
+    margin-right: 0;
   }
 
-  ${responsive.smPlus} {
-    max-width: var(--font-max-width);
+  ${responsive.mdPlus} {
+    min-height: 600px;
+  }
+
+  ${responsive.lg} {
+    min-height: 700px;
+  }
+  ${responsive.xl} {
+    min-height: 800px;
   }
 `
 
 const Outer = styled.div`
-  position: relative;
   border: 4px solid transparent;
   border: 1px solid #dfdfdf;
   margin-top: 15px;
@@ -102,53 +114,15 @@ const Outer = styled.div`
   margin-top: 15px; // @todo: move this responsalibity to the layout
   position: relative;
   flex-direction: column;
-  height: auto;
-  padding: 8em 2em;
+  display: block;
+  padding: 0;
+  position: relative;
 
   ${responsive.smPlus} {
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
     overflow: hidden;
-  }
-
-  // For small resolutions -> vertical (child1 / child2)
-  //   They are displayed one above the other one.
-  // For Tablet and wider resolutions -> horizontal (child1 - child2)
-  //   They are displayed one next to each other with a gap between them.
-  //
-  .banner-media {
-    padding: 2em;
-    ${responsive.smPlus} {
-      padding: 0;
-    }
-  }
-
-  &.banner--withOverlay {
-    display: block;
-    padding: 0;
-    position: relative;
-
-    .banner-content {
-      padding: 1.5em;
-      min-height: 350px;
-
-      ${responsive.smPlus} {
-        padding: 0 5em;
-        margin-right: 0;
-      }
-
-      ${responsive.mdPlus} {
-        min-height: 600px;
-      }
-
-      ${responsive.lg} {
-        min-height: 700px;
-      }
-      ${responsive.xl} {
-        min-height: 800px;
-      }
-    }
   }
 `
 

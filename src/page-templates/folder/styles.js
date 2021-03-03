@@ -4,10 +4,15 @@ import { responsive, Outer as O } from "ui"
 export const H1 = styled.h1``
 export const Outer = styled(O)`
   max-width: var(--content-max-width);
-  margin-left: 50px;
   min-height: initial;
+
   ${responsive.mdPlus} {
     max-width: var(--content-max-width);
+    margin-left: 20px;
+  }
+  ${responsive.smPlus} {
+    max-width: var(--content-max-width);
+    margin-left: 10px;
   }
 `
 
