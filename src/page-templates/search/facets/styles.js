@@ -1,134 +1,70 @@
-import styled from "styled-components"
-import is from "styled-is"
+import styled from 'styled-components';
+import is from 'styled-is';
 
-import { responsive, Button } from "ui"
+import { responsive } from 'ui';
 
-export const FacetsMobileButtonWrap = styled.div`
-  padding: 0 15px;
-  margin: 15px 0;
-  display: flex;
-  justify-content: flex-end;
-`
+export const Outer = styled.div`
+  width: 100%;
+`;
 
-export const FacetsMobileButton = styled(Button)`
-  ${responsive.mdPlus} {
-    display: none;
-  }
-`
-
-export const FacetsMobileShowResults = styled.div`
-  padding: 15px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-
-  ${responsive.mdPlus} {
-    display: none;
-  }
-`
-
-export const FacetsWrapper = styled.div`
-  display: none;
-
+export const FacetsDisplayer = styled.div`
   ${responsive.smAndLess} {
-    ${is("$show")`
+    display: none;
+    margin-top: 15px;
+
+    ${is('$show')`
+      background: #fff;
       display: block;
       position: fixed;
+      z-index: 999;
       top: 0;
       left: 0;
-      height: 100vh;
+      height: calc(var(--vh) * 100);
       width: 100%;
-      z-index: 99;
-      overflow-x: auto;
-      background: #fff;
-      padding: 50px 15px 100px;
+      overflow-y: auto;
+      padding: 50px 15px 85px;
     `};
   }
 
   ${responsive.mdPlus} {
-    grid-area: facets;
-    max-width: 300px;
-    display: block;
-  }
-`
+    display: none;
 
-export const Facet = styled.div`
-  border-top: 1px solid #dfdfdf;
-  padding-top: 35px;
-
-  &:not(:last-child) {
-    margin-bottom: 35px;
+    ${is('$show')`
+      display: block;
+      display: grid;
+      margin-bottom: 2rem;
+      margin-top: 1rem;
+      padding: 0;
+      grid-gap: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+    `};
   }
+
+  > *:not(:first-child):not(:last-child) {
+    border-top: 1px solid #dfdfdf;
+    margin-top: 35px;
+    padding-top: 30px;
+
+    ${responsive.mdPlus} {
+      margin-top: 0;
+    }
+  }
+`;
+
+export const FacetGroupOfAttributes = styled.div`
+  display: grid;
+  grid-gap: 0.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+`;
+
+export const ButtonCloseFacets = styled.div`
+  display: none;
 
   ${responsive.smAndLess} {
-    &:first-child {
-      border: none;
-      padding-top: 0;
-    }
+    display: block;
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    z-index: 1;
   }
-`
-
-export const FacetTitle = styled.h4`
-  margin: 0 0 15px;
-  font-weight: 600;
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #000;
-`
-
-export const PriceWrapper = styled.div``
-
-export const Values = styled.div`
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px;
-  grid-template-columns: 1fr 1fr;
-
-  input:first-child {
-    border-right-color: transparent;
-  }
-`
-
-export const Input = styled.input`
-  background: white;
-  border: 1px solid #000;
-  padding: 8px 15px;
-  flex: 0 1 auto;
-  width: 100%;
-`
-
-export const RangeWrap = styled.div`
-  margin: 0 10px;
-  .rc-slider-track {
-    background: #000;
-  }
-  .rc-slider-handle {
-    border-color: #000;
-    &.rc-slider-handle-dragging {
-      border-color: #000;
-      box-shadow: 0 0 0 5px #000;
-    }
-  }
-`
-
-export const SingleFacetValueWrapper = styled.div`
-  padding: 4px 0;
-  input {
-    margin-right: 5px;
-    border: 1px solid #000;
-    border-radius: 0;
-  }
-  label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 14px;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: #000;
-  }
-`
-export const Count = styled.span`
-  font-weight: 600;
-`
+`;

@@ -3,14 +3,32 @@ import styled from "styled-components"
 import { responsive } from "./responsive"
 
 export const Outer = styled.div`
-  margin-bottom: 30px;
-  max-width: 1600px;
-  padding: 0 0;
+  padding: 0 1rem;
   margin: 0 auto;
   display: block;
   min-height: 75vh;
-  ${responsive.smAndLess} {
-    padding: 0 1rem;
+
+  ${responsive.mdPlus} {
+    max-width: 1600px;
+    padding-right: 100px;
+  }
+`
+
+export const Inner = styled.div`
+  margin: 0 auto;
+  display: block;
+  min-height: 100vh;
+  padding: 0 1rem;
+
+  ${responsive.smPlus} {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  ${responsive.mdPlus} {
+    max-width: 1800px;
+    padding-left: 100px;
+    padding-right: 100px;
   }
 `
 
@@ -18,13 +36,15 @@ export const Header = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
-  padding: 20px 50px 100px;
+  padding: 100px 50px 50px;
   max-width: 800px;
   text-align: ${(p) => (p.centerContent ? "center" : "left")};
   margin: ${(p) => (p.centerContent ? "0 auto" : "0 0 50px 0")};
+
   ${responsive.xs} {
     padding: 100px 0 50px;
   }
+
   h1 {
     font-size: 2.4rem;
     margin-bottom: 10px;
@@ -36,10 +56,6 @@ export const Header = styled.div`
     font-size: 18px;
     line-height: 1.8rem;
     color: var(--color-text-sub);
-    margin: 0;
-  }
-  img {
-    max-width: 120px;
     margin: 0;
   }
 `

@@ -65,6 +65,17 @@ module.exports = {
         url: `https://api.crystallize.com/${process.env.GATSBY_CRYSTALLIZE_TENANT_ID}/search`,
       },
     },
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        // This type will contain remote schema Query type
+        typeName: "SERVICE_API",
+        // This is the field under which it's accessible
+        fieldName: "service_api",
+        // URL to query from
+        url: `${process.env.GATSBY_PUBLIC_SERVICE_API_URL}`,
+      },
+    },
     "gatsby-plugin-styled-components",
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline

@@ -55,7 +55,7 @@ export default function CategoryItem({ data, gridCell, gridTotalColSpan }) {
     : {}
 
   const { price, currency } = priceVariants?.find(
-    (pv) => pv.identifier === locale.priceVariant
+    (pv) => pv.identifier === locale.crystallizePriceVariant
   ) || {
     price: "n/a",
     currency: "eur",

@@ -25,9 +25,13 @@ export const ImageWrapper = styled.div`
 `
 
 export const Img = styled(Image)`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  figure {
+    height: 100%;
+  }
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
 
   > img {
     display: block;

@@ -4,14 +4,7 @@ import { screen, H3 } from "ui"
 import ContentTransformer from "ui/content-transformer"
 import VideoPlayer from "components/video-player"
 
-import {
-  Outer,
-  Text,
-  MediaWrapper,
-  MediaInner,
-  Img,
-  Description,
-} from "./styles"
+import { Outer, Text, MediaWrapper, Img, Description } from "./styles"
 
 export default function DocumentItem({ data, colSpan = "4" }) {
   if (!data) {
@@ -60,9 +53,7 @@ export default function DocumentItem({ data, colSpan = "4" }) {
 
   return (
     <Outer href={path} span={colSpan}>
-      <MediaWrapper>
-        <MediaInner>{media && media}</MediaInner>
-      </MediaWrapper>
+      <MediaWrapper>{media && media}</MediaWrapper>
       <Text>
         <H3>{name}</H3>
         <Description>

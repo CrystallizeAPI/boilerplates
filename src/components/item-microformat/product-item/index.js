@@ -1,9 +1,19 @@
 import React from "react"
-
+import Link from "components/link"
 import { useT, useLocale } from "lib/i18n"
 import { H3 } from "ui"
+import {
+  Outer,
+  Footer,
+  ImageWrapper,
+  Img,
+  Price,
+  Inner,
+  BeforePrice,
+  Percentage,
+} from "./styles"
 
-import { Outer, Text, ImageWrapper, Img, Price, Inner } from "./styles"
+import getRelativePriceVariants from "lib/pricing"
 
 export default function ProductItem({ data }) {
   const t = useT()
@@ -14,32 +24,58 @@ export default function ProductItem({ data }) {
   }
 
   const { name, path, type, variants, matchingVariant } = data
-  const { priceVariants, images } =
+  const variant =
     matchingVariant || variants?.find((variant) => variant.isDefault) || {}
-  const { price, currency } = priceVariants?.find(
-    (pv) => pv.identifier === locale.crystallizePriceVariant
-  ) || {
-    price: matchingVariant?.price || "n/a",
-    currency: "eur",
-  }
+
+  const pricing = getRelativePriceVariants({
+    variant: variant,
+    locale,
+  })
+
+  const image = variant?.images?.[0] || variant?.image
 
   return (
-    <Outer href={path} type={type}>
-      <Inner>
-        <ImageWrapper>
-          {images?.[0] && <Img {...images?.[0]} alt={name} sizes="250px" />}
-        </ImageWrapper>
+    <Link to={path}>
+      <Outer type={type}>
+        <Inner>
+          <ImageWrapper>
+            {image && <Img {...image} alt={name} sizes="250px" />}
+          </ImageWrapper>
 
-        <Text>
-          <Price>
-            {t("common.price", {
-              value: price,
-              currency,
-            })}
-          </Price>
-          <H3>{name}</H3>
-        </Text>
-      </Inner>
-    </Outer>
+          <Footer>
+            <H3>{name}</H3>
+            {pricing?.discountPrice ? (
+              <Price discounted>
+                <strong>
+                  {t("common.price", {
+                    value: pricing?.discountPrice?.price,
+                    currency: pricing?.discountPrice?.currency,
+                  })}
+                </strong>
+                <BeforePrice>
+                  {t("common.price", {
+                    value: pricing?.defaultPrice?.price,
+                    currency: pricing?.defaultPrice?.currency,
+                  })}
+                </BeforePrice>
+              </Price>
+            ) : (
+              <Price>
+                <strong>
+                  {t("common.price", {
+                    value: pricing?.defaultPrice?.price,
+                    currency: pricing?.defaultPrice?.currency,
+                  })}
+                </strong>
+              </Price>
+            )}
+
+            {!!pricing?.discountPercentage && (
+              <Percentage>{`-${pricing?.discountPercentage}%`}</Percentage>
+            )}
+          </Footer>
+        </Inner>
+      </Outer>
+    </Link>
   )
 }

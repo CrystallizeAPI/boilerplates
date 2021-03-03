@@ -38,7 +38,7 @@ const getLocales = (function () {
  * give the root path the correct path e.g.: /en
  */
 exports.onCreatePage = ({ page, actions }) => {
-  const fixedPaths = ["/", "/search", "/404"]
+  const fixedPaths = ["/", "/search", "/404", "/account", "/my-account"]
   const { createPage, deletePage } = actions
   const oldPage = Object.assign({}, page)
 
@@ -61,13 +61,13 @@ exports.createPages = async ({ graphql, actions }) => {
   const templates = {
     Article: path.resolve(`src/page-templates/article/index.js`),
     Product: path.resolve(`src/page-templates/product/index.js`),
-    Folder: path.resolve(`src/page-templates/folder.js`),
+    Folder: path.resolve(`src/page-templates/folder/index.js`),
     Search: path.resolve(`src/page-templates/search/index.js`),
   }
 
   const locales = getLocales()
 
-  const defaultLocale = locales.find((l) => l.isDefault)
+  const defaultLocale = locales[0]
   if (!defaultLocale) {
     throw new Error("app.config.json: missing default locale (isDefault: true)")
   }
@@ -114,6 +114,26 @@ exports.createPages = async ({ graphql, actions }) => {
         component: path.resolve(`src/page-templates/search/index.js`),
         context: {
           cataloguePath: "/",
+          ...sharedPageProps,
+        },
+      })
+
+      // Create account page
+      createPage({
+        path: `${locale.urlPrefix}/account`,
+        component: path.resolve(`src/page-templates/account/index.js`),
+        context: {
+          cataloguePath: `/`,
+          ...sharedPageProps,
+        },
+      })
+
+      // Create my-account page
+      createPage({
+        path: `${locale.urlPrefix}/my-account`,
+        component: path.resolve(`src/page-templates/my-account/index.js`),
+        context: {
+          cataloguePath: `/`,
           ...sharedPageProps,
         },
       })
@@ -237,8 +257,10 @@ exports.createPages = async ({ graphql, actions }) => {
               },
               filter: {
                 type: "PRODUCT",
-                priceVariant: locale.priceVariant || "default",
-                productVariants: { isDefault: true },
+                priceVariant: locale.crystallizePriceVariant || "default",
+                productVariants: {
+                  isDefault: true,
+                },
                 include: {
                   paths: [path],
                 },

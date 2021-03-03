@@ -1,6 +1,6 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
-import { Spinner } from "ui/spinner"
+import { Spinner } from 'ui/spinner';
 
 export const InputGroup = styled.div`
   border: 1px solid var(--color-text-sub);
@@ -11,7 +11,7 @@ export const InputGroup = styled.div`
   align-items: center;
   grid-template-columns: 1fr 40px;
   width: 100%;
-`
+`;
 
 export const InputButton = styled.button`
   width: 36px;
@@ -19,7 +19,8 @@ export const InputButton = styled.button`
   color: #fff;
   background: #000;
   border-radius: 50%;
-`
+`;
+
 export const Input = styled.input`
   font-size: 1rem;
   background: transparent;
@@ -27,11 +28,11 @@ export const Input = styled.input`
   padding: 12px 35px;
   border: none;
   font-size: 1rem;
-`
+`;
 
 export const InputSpinner = styled(Spinner)`
   position: absolute;
   top: 13px;
   left: 10px;
   z-index: 1;
-`
+`;

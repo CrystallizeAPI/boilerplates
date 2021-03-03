@@ -8,6 +8,10 @@ export const query = graphql`
   fragment crystallize_image on CRYSTALLIZE_Image {
     url
     altText
+    caption {
+      plainText
+      html
+    }
     variants {
       key
       url
@@ -40,6 +44,7 @@ export const query = graphql`
   fragment crystallize_richTextContent on CRYSTALLIZE_RichTextContent {
     json
   }
+
   fragment crystallize_propertiesTableContent on CRYSTALLIZE_PropertiesTableContent {
     sections {
       title
@@ -63,6 +68,86 @@ export const query = graphql`
       }
       videos {
         ...crystallize_video
+      }
+    }
+  }
+
+  fragment crystallize_itemRelations on CRYSTALLIZE_ItemRelationsContent {
+    items {
+      id
+      name
+      path
+      type
+      shape {
+        name
+        id
+      }
+      topics {
+        id
+        name
+      }
+      ... on CRYSTALLIZE_Product {
+        variants {
+          priceVariants {
+            identifier
+            price
+            currency
+          }
+          isDefault
+          name
+          images {
+            ...crystallize_image
+          }
+        }
+      }
+      components {
+        name
+        type
+        content {
+          ...crystallize_singleLineContent
+          ...crystallize_richTextContent
+          ...crystallize_imageContent
+          ...crystallize_videoContent
+          ...crystallize_gridRelations
+          ... on CRYSTALLIZE_ItemRelationsContent {
+            items {
+              id
+              name
+              type
+              path
+              ... on CRYSTALLIZE_Item {
+                components {
+                  name
+                  type
+                  meta {
+                    key
+                    value
+                  }
+                  content {
+                    ...crystallize_singleLineContent
+                    ...crystallize_richTextContent
+                    ...crystallize_imageContent
+                    ...crystallize_videoContent
+                  }
+                }
+              }
+              ... on CRYSTALLIZE_Product {
+                variants {
+                  priceVariants {
+                    identifier
+                    price
+                    currency
+                  }
+                  isDefault
+                  name
+                  images {
+                    ...crystallize_image
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -129,6 +214,7 @@ export const query = graphql`
         ...crystallize_paragraphCollectionContent
         ...crystallize_propertiesTableContent
         ...crystallize_gridRelations
+        ...crystallize_itemRelations
       }
     }
   }

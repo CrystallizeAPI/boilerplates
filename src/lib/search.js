@@ -9,17 +9,17 @@ import produce from "immer"
  * in page-templates/search/index.js.
  */
 export const SEARCH_QUERY = `
-  query CATALOGUE_SEARCH(
-    $language: String
+  query CATALOGUE_SEARCH (
     $first: Int
     $after: String
     $orderBy: OrderBy
+    $language: String
     $filter: CatalogueSearchFilter
     $aggregationsFilter: CatalogueSearchFilter
   ) {
     aggregations: search(
-      language: $language
       filter: $aggregationsFilter
+      language: $language
     ) {
       aggregations {
         price {
@@ -33,25 +33,16 @@ export const SEARCH_QUERY = `
         }
       }
     }
-  
-    search(
-      language: $language
+
+    search (
       first: $first
       after: $after
       orderBy: $orderBy
       filter: $filter
+      language: $language
     ) {
       aggregations {
         totalResults
-        price {
-          min
-          max
-        }
-        variantAttributes {
-          attribute
-          value
-          count
-        }
       }
       pageInfo {
         totalNodes
@@ -68,11 +59,16 @@ export const SEARCH_QUERY = `
           path
           type
           ... on Product {
+            topics {
+              id
+              name
+            }
             matchingVariant {
-              price
-              attributes {
-                attribute
-                value
+              priceVariants {
+                identifier
+                name
+                currency
+                price
               }
               images {
                 url
@@ -144,7 +140,7 @@ export function urlToSpec({ query: q, asPath }, locale) {
 
     const query = queryStringToObject(q)
 
-    draft.filter.priceVariant = locale.priceVariant
+    draft.filter.priceVariant = locale.crystallizePriceVariant
 
     draft.language = locale.crystallizeCatalogueLanguage
 
