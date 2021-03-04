@@ -10,7 +10,6 @@ import { Outer } from "./styles"
 export default function MyAccount() {
   const t = useT()
   const auth = useAuth()
-  console.log("sauth", auth)
 
   return (
     <Layout title={t("customer.account.title")}>

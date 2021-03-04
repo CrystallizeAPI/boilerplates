@@ -19,8 +19,6 @@ export default function BuyButton({ product, selectedVariant, pricing }) {
   const t = useT()
   const locale = useLocale()
 
-  console.log("basket", basket)
-
   function buy() {
     /**
      * Give user immidiate feedback that they've triggered

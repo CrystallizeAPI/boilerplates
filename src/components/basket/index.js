@@ -31,8 +31,6 @@ export function BasketProvider({ children }) {
 
   const sharedChannelRef = useRef(getChannel())
 
-  console.log(locale)
-
   useEffect(() => {
     ;(async function init() {
       const cache = await retrieveFromCache()
