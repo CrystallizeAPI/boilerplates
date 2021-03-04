@@ -7,15 +7,21 @@ module.exports = {
     frontpage: {
       title: "Κεντρική",
     },
-    product: {
-      noVariants: "This product has no variants",
-      buy: "Buy",
-      addToBasket: "Add to basket",
-      attributes: {
-        color: "Color",
-        green: "Green",
-        blue: "Blue",
-        black: "Black",
+    customer: {
+      name: "Ονοματεπώνυμο",
+      firstName: "Όνομα",
+      lastName: "Επώνυμο",
+      streetAddress: "Διεύθυνση",
+      postalCode: "Ταχυδρομικός κώδικας",
+      email: "Email",
+      emailPlaceholder: "you@your.place",
+      login: {
+        title: "Σύνδεση",
+        loggedIn: "Είστε συνδεδεμένος/η",
+        instructions:
+          "Εισάγετε τη διεύθυνση ηλεκτρονικού ταχυδρομίου σας και θα σας στείλουμε ένα σύνδεσμο σύνδεσης στο λογαριασμό σας.",
+        emailAddressInvalid: "Παρακαλώ εισάγετε έναν έγκυρο σύνδεσμο",
+        sendMagicLink: "Στείλε μου σύνδεσμο",
       },
     },
     basket: {
@@ -34,12 +40,36 @@ module.exports = {
       totalToPay: "Αξία",
       goToCheckout: "Oλοκλήρωση παραγγελίας",
     },
+    product: {
+      relatedProduct: "Σχετικό προϊόν",
+      relatedProduct_plural: "Σχετικά προϊόντα",
+      addToBasket: "Προσθήκη στο καλάθι",
+      noVariants: "This product has no variants",
+      buy: "ΑΓΟΡΑ",
+      outOfStock: "Μη διαθέσιμο",
+      stock: "{{stockCount}} σε αποθεμα",
+      attributes: {
+        color: "Χρώμα",
+        green: "Πράσινο",
+        blue: "Μπλε",
+        black: "Μαύρο",
+      },
+    },
+
     layout: {
+      menu: "Μενού",
+      ecomBy: "Ηλεκτρονικό κατάστημα από",
+      loadingVideo: "Το βίνετο φορτώνει",
+      slider: {
+        previous: "Δείτε το προηγούμενο αντικείμενο",
+        next: "Δείτε το επόμενο αντικείμενο",
+      },
       builtWith: "Built with {{- link}}",
       poweredBy: "Powered by {{- link}}",
       searchPlaceholder: "Search",
     },
     search: {
+      label: "Αναζήτηση",
       foundResults: "Found {{count}} matching result",
       foundResults_plural: "Found {{count}} matching results",
       orderTitle: "Order by",
@@ -51,6 +81,7 @@ module.exports = {
         STOCK_ASC: "Stock ascending",
         STOCK_DESC: "Stock descending",
       },
+      filter: "Filter",
       filterResults: "Filter results",
       facets: {
         viewNResults: "Show {{count}} result",
