@@ -14,6 +14,10 @@ const List = styled.div`
   grid-template-columns: 1fr 1fr;
   margin-bottom: 100px;
 
+  > figure:first-child {
+    grid-column-end: span 2;
+  }
+
   > picture {
     min-height: 300px;
     ${responsive.xs} {

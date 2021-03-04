@@ -93,11 +93,9 @@ export const DocumentContent = styled.div`
 export const Article = styled.article`
   p,
   li {
-    margin-left: 25px !important;
     margin-right: 25px;
     ${responsive.mdPlus} {
       padding-right: 100px;
-      margin-left: 50px !important;
       margin-right: 0;
     }
   }
@@ -107,12 +105,8 @@ export const Article = styled.article`
   }
 
   h3 {
-    margin-left: 25px;
     font-size: var(--font-size-md);
     line-height: 38px;
-    ${responsive.mdPlus} {
-      margin-left: 50px;
-    }
   }
 `
 

@@ -1,0 +1,62 @@
+import React, { useRef, useState, useEffect } from "react"
+import styled from "styled-components"
+
+import { Spinner } from "ui/spinner"
+import { useIntersectionObserver } from "lib/intersection-observer"
+import { useT } from "lib/i18n"
+import VideoPlayer from "./player"
+
+const Outer = styled.div`
+  background: var(--color-box-background);
+`
+
+const Loader = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export default function Video({
+  playlists,
+  thumbnails,
+  autoplay,
+  loop,
+  controls,
+  fluid,
+  ...rest
+}) {
+  const t = useT()
+  const ref = useRef()
+  const [load, setLoad] = useState(false)
+  const isIntersecting = useIntersectionObserver({ ref })
+
+  useEffect(() => {
+    if (isIntersecting && !load) {
+      setLoad(true)
+    }
+  }, [isIntersecting, load])
+
+  return (
+    <Outer ref={ref} {...rest}>
+      {load ? (
+        <VideoPlayer
+          playlists={playlists}
+          thumbnails={thumbnails}
+          autoplay={autoplay}
+          loop={loop}
+          controls={controls}
+          fluid={fluid}
+        />
+      ) : (
+        <Loader>
+          <Spinner style={{ margin: 10 }} /> {t("layout.loadingVideo")}
+        </Loader>
+      )}
+    </Outer>
+  )
+}

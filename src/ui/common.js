@@ -10,7 +10,6 @@ export const Outer = styled.div`
 
   ${responsive.mdPlus} {
     max-width: 1600px;
-    padding-right: 100px;
   }
 `
 
