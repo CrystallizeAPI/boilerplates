@@ -13,8 +13,9 @@ const Paragraph = ({
   videos,
   headingComponent: HeadingComponent = H3,
 }) => {
+  const hasMedia = !!images || !!videos
   return (
-    <Outer>
+    <Outer media={hasMedia ? hasMedia : undefined}>
       <Text>
         {!!title && title.text && (
           <Title>
@@ -27,10 +28,11 @@ const Paragraph = ({
           </Body>
         )}
       </Text>
-      <Media>
-        <Images images={images} />
-        <Videos videos={videos} />
-      </Media>
+      {hasMedia && (
+        <Media>
+          <Images images={images} />
+        </Media>
+      )}
     </Outer>
   )
 }

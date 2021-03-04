@@ -3,11 +3,14 @@ import { responsive, Outer as O } from "ui"
 
 export const H1 = styled.h1``
 export const Outer = styled(O)`
-  max-width: var(--content-max-width);
-  margin-left: 50px;
   min-height: initial;
-  ${responsive.mdPlus} {
-    max-width: var(--content-max-width);
+
+  left: 50px;
+  @media (max-width: 1750px) {
+    margin-left: 5%;
+  }
+  @media (max-width: 1024px) {
+    margin-left: 0;
   }
 `
 
