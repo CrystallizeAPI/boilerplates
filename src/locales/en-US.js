@@ -18,6 +18,22 @@ module.exports = {
         black: "Black",
       },
     },
+    basket: {
+      title: "Basket",
+      loading: "Hold on. Getting your basket...",
+      removeItem: "Remove {{name}} from basket",
+      empty: "Your basket is empty",
+      empty_inCheckout: "You have no items in your basket",
+      remainingUntilFreeShipping:
+        "Add another {{amount, currency}} to your order for free shipping.",
+      totalPrice: "Total price",
+      discount: "Discount",
+      totalPriceAfterDiscount: "Total after discount",
+      shippingPrice: "Shipping",
+      tax: "Tax",
+      totalToPay: "To pay",
+      goToCheckout: "Go to checkout",
+    },
     layout: {
       builtWith: "Built with {{- link}}",
       poweredBy: "Powered by {{- link}}",

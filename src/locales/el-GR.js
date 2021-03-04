@@ -18,6 +18,22 @@ module.exports = {
         black: "Black",
       },
     },
+    basket: {
+      title: "Καλάθι",
+      loading: "Περίμενε. Φορτώνουμε το καλάθι σου...",
+      removeItem: "Αφαίρεσε {{name}} από το καλάθι",
+      empty: "Το καλάθι σου είναι άδειο",
+      empty_inCheckout: "Δεν έχεις προϊόντα στο καλάθι",
+      remainingUntilFreeShipping:
+        "Πρόσθεσε {{amount, currency}} στην παραγγελία σου για δωρεάν μεταφορικά.",
+      totalPrice: "Συνολική τιμή",
+      discount: "Έκπτωση",
+      totalPriceAfterDiscount: "Τελική τιμή μετά την έκπτωση",
+      shippingPrice: "Μεταφορικά",
+      tax: "ΦΠΑ",
+      totalToPay: "Αξία",
+      goToCheckout: "Oλοκλήρωση παραγγελίας",
+    },
     layout: {
       builtWith: "Built with {{- link}}",
       poweredBy: "Powered by {{- link}}",

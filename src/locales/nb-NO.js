@@ -18,6 +18,22 @@ module.exports = {
         black: "Svart",
       },
     },
+    basket: {
+      title: "Handlekurv",
+      loading: "Vennligst vent. Henter din handlekurv...",
+      removeItem: "Fjern {{name}} fra handlekurven",
+      empty: "Handlekurven din er tom",
+      empty_inCheckout: "Du har ikke lagt til noe i handlekurven enda.",
+      remainingUntilFreeShipping:
+        "Kjøp for {{amount, currency}} ekstra for å oppnå gratis frakt",
+      totalPrice: "Totalt",
+      discount: "Fratrekk",
+      totalPriceAfterDiscount: "Totalt etter fratrekk",
+      shippingPrice: "Frakt",
+      tax: "Moms",
+      totalToPay: "Til betaling",
+      goToCheckout: "Gå til betaling",
+    },
     layout: {
       builtWith: "Bygget med {{- link}}",
       poweredBy: "Kjører på {{- link}}",
