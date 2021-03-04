@@ -24,7 +24,7 @@ export const MediaWrapper = styled.div`
   figure {
     height: 100%;
   }
-  .video-js {
+  .react-video {
     flex: 0 0 auto;
     width: 100%;
     height: 100%;

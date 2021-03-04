@@ -31,6 +31,7 @@ const Paragraph = ({
       {hasMedia && (
         <Media>
           <Images images={images} />
+          <Videos videos={videos} />
         </Media>
       )}
     </Outer>
