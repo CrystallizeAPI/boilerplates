@@ -169,6 +169,17 @@ module.exports = gql`
   input AddressInput {
     type: String
     email: String
+    firstName: String
+    middleName: String
+    lastName: String
+    street: String
+    street2: String
+    streetNumber: String
+    postalCode: String
+    city: String
+    state: String
+    country: String
+    phone: String
   }
 
   type PaymentProvidersMutations {
