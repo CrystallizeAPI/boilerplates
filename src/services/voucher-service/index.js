@@ -1,3 +1,5 @@
+const getCrystallizeVouchers = require("./crystallize-vouchers-example");
+
 /**
  * Example of a voucher register
  * You can customise this to call an external service
@@ -31,15 +33,19 @@ const voucherRegister = [
 ];
 
 module.exports = {
-  get({ code, context }) {
+  async get({ code, context }) {
     const { user } = context;
 
     const isAnonymousUser = !user || !user.email;
 
+    const allCrystallizeVouchers = await getCrystallizeVouchers();
+
+    const allVouchers = [...voucherRegister, ...allCrystallizeVouchers];
+
     // As default, not all the vouchers work for anonymous users.
     // As you'll see in the configuration above, some need the user to be logged in
     if (isAnonymousUser) {
-      const voucher = voucherRegister
+      const voucher = allVouchers
         .filter((v) => !v.onlyForAuthorisedUser)
         .find((v) => v.code === code);
 
@@ -49,8 +55,8 @@ module.exports = {
       };
     }
 
-    // We assume that none of the vouchers have repeated codes
-    const voucher = voucherRegister.find((v) => v.code === code);
+    // Search all vouchers for authenticated users
+    let voucher = allVouchers.find((v) => v.code === code);
 
     return {
       isValid: Boolean(voucher),
