@@ -93,7 +93,7 @@ module.exports = {
 
     // Add a voucher
     let cartWithDiscountedPrice = cart;
-    if (voucher) {
+    if (cart.length > 0 && voucher) {
       const {
         calculateVoucherDiscountAmount,
       } = require("./calculate-voucher-discount-amount");
