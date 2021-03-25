@@ -146,10 +146,10 @@
   resolved "https://registry.yarnpkg.com/@crystallize/react-image/-/react-image-6.0.3.tgz#a2a8e9ad3bcd56583f69f5c221b0bbae68b2dd67"
   integrity sha512-/UzVuEXWclyxPCzsAm35dCCoUy4Oqi2RA9r8g7Zka7gnqZaViZfz8pubR8wA4VjDJdcErEjE6AEMBHljOiSoQA==
 
-"@crystallize/react-video@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@crystallize/react-video/-/react-video-1.5.0.tgz#092ee4d55721b26aa03c61208a036e4f51ab753a"
-  integrity sha512-3VKjiZoCBwDtxr2SiiwEARcztfZGoocw186eqnSpcO2DkX6DFoB8oE6/yfnfH0yPSEpTeAqDcnXxake2xUJq/g==
+"@crystallize/react-video@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@crystallize/react-video/-/react-video-1.6.0.tgz#5111e6c76bf04cb6a4d52b44f58e84cbb017c58a"
+  integrity sha512-UQ7a8JNoq5S4tQ+yVHHxYMABpdVoQGSGR6lflSBKR0YTfRkjxD276QrCC48GV1dbP0AfyZQpTW3lA6T99OuuAg==
 
 "@emotion/is-prop-valid@^0.8.8":
   version "0.8.8"
