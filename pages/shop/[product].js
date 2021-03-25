@@ -1,9 +1,7 @@
-import useSWR from "swr";
 import styled from "styled-components";
 import { Image } from "@crystallize/react-image";
 import CrystallizeContent from "@crystallize/content-transformer/react";
 import toText from "@crystallize/content-transformer/toText";
-import { useRouter } from "next/router";
 
 import { fetcher } from "lib/graphql";
 import Layout from "components/layout";
@@ -305,7 +303,7 @@ query GET_PRODUCT($path: String!) {
 export async function getStaticProps({ params }) {
   const path = `/shop/${params.product}`;
   const data = await fetcher([query, { path }]);
-  return { props: { data, path }, revalidate: 1 };
+  return { props: { data }, revalidate: 1 };
 }
 
 export async function getStaticPaths() {
@@ -321,21 +319,11 @@ export async function getStaticPaths() {
 
   return {
     paths: data?.data?.catalogue?.children?.map((c) => c.path) || [],
-    fallback: true,
+    fallback: "blocking",
   };
 }
 
-export default function Story({ data: initialData, path }) {
-  const router = useRouter();
-
-  const { data } = useSWR([query, { path }], {
-    initialData,
-  });
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
+export default function Story({ data }) {
   const product = data?.data?.product;
   const defaultImage = data?.data?.product?.defaultVariant?.images;
   const name = product?.name;

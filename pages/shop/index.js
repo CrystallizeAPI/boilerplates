@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import styled from "styled-components";
 
 import Hero from "components/hero";
@@ -113,10 +112,7 @@ export async function getStaticProps() {
   return { props: { data }, revalidate: 1 };
 }
 
-export default function Story({ data: initialData, path }) {
-  const { data } = useSWR([query, { path }], {
-    initialData,
-  });
+export default function Story({ data, path }) {
   const shop = data?.data?.catalogue;
   const hero = {
     images: shop?.hero_images?.content?.images,

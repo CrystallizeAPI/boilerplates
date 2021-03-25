@@ -1,14 +1,21 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { Image } from "@crystallize/react-image";
-import AspectRatioBlock from "ui/aspect-ratio-block";
+
+const DimensionsKeeper = styled.div`
+  ${(p) => p.theme.responsive.mdPlus} {
+    height: 450px;
+    display: flex;
+  }
+`;
 
 const ImgWrapper = styled.div`
   display: flex;
   grid-column-start: span 2;
   overflow: hidden;
   width: 100%;
-  picture {
+
+  figure {
     width: 100%;
   }
   img {
@@ -73,7 +80,7 @@ const Outer = styled.a`
 `;
 
 const Product = ({ path, name, defaultVariant }) => (
-  <AspectRatioBlock orientation="portrait">
+  <DimensionsKeeper>
     <Link href="/shop/[product]" as={path} passHref>
       <Outer>
         <ImgWrapper>
@@ -85,7 +92,7 @@ const Product = ({ path, name, defaultVariant }) => (
         </Content>
       </Outer>
     </Link>
-  </AspectRatioBlock>
+  </DimensionsKeeper>
 );
 
 export default Product;

@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import styled from "styled-components";
 
 import Layout from "components/layout";
@@ -115,9 +114,7 @@ export async function getStaticProps() {
   return { props: { data }, revalidate: 1 };
 }
 
-export default function Home(props) {
-  const { data } = useSWR(query, { initialData: props.data });
-
+export default function Home({ data }) {
   const grid = data?.data?.grid;
   const meta = {
     description: "Great stories happen to those who can tell them",

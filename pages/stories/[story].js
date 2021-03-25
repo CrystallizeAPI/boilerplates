@@ -1,7 +1,5 @@
-import useSWR from "swr";
 import { Image } from "@crystallize/react-image";
 import CrystallizeContent from "@crystallize/content-transformer/react";
-import { useRouter } from "next/router";
 import { fetcher } from "lib/graphql";
 import Section from "components/story/section";
 import FeaturedProducts from "components/story/featured-products";
@@ -202,7 +200,7 @@ export async function getStaticProps({ params, req }) {
   const path = `/stories/${params.story}`;
   const data = await fetcher([query, { path }]);
 
-  return { props: { data, path }, revalidate: 1 };
+  return { props: { data }, revalidate: 1 };
 }
 
 export async function getStaticPaths() {
@@ -218,20 +216,11 @@ export async function getStaticPaths() {
 
   return {
     paths: data?.data?.catalogue?.children?.map((c) => c.path) || [],
-    fallback: true,
+    fallback: "blocking",
   };
 }
 
-export default function Story({ data: initialData, path }) {
-  const router = useRouter();
-  const { data } = useSWR([query, { path }], {
-    initialData,
-  });
-
-  if (router.isFallback) {
-    return <Outer center>Loading...</Outer>;
-  }
-
+export default function Story({ data }) {
   const story = data?.data?.story;
   const byline = story?.byline?.content?.items;
   const heroImages = story?.hero_images?.content?.images;

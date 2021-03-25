@@ -7,7 +7,7 @@ import Media from "./media";
 
 const Outer = styled.section`
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
   scroll-snap-align: start;
 `;

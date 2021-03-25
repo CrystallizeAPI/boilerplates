@@ -36,12 +36,10 @@ const StyledVideo = styled(Video)`
 `;
 
 const Outer = styled.div`
-  top: 0;
-  left: 0;
+  flex: 1 1 auto;
   z-index: 0;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
+  display: flex;
 
   img {
     object-fit: cover;

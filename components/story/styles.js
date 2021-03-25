@@ -1,12 +1,12 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-const contentMaxWidth = '550px'
+const contentMaxWidth = "550px";
 
 export const ScrollWrapper = styled.div`
   height: 100vh;
   overflow: hidden;
   position: relative;
-`
+`;
 
 export const Title = styled.h1`
   font-size: 2.5rem;
@@ -17,7 +17,7 @@ export const Title = styled.h1`
   ${({ theme }) => theme.responsive.smPlus} {
     font-size: 4rem;
   }
-`
+`;
 
 export const SectionHeading = styled.h2`
   margin: 0;
@@ -32,7 +32,7 @@ export const SectionHeading = styled.h2`
   ${({ theme }) => theme.responsive.smPlus} {
     font-size: 2rem;
   }
-`
+`;
 
 export const Lead = styled.div`
   font-size: 0.9rem;
@@ -43,12 +43,12 @@ export const Lead = styled.div`
   ${({ theme }) => theme.responsive.smPlus} {
     font-size: 1.3rem;
   }
-`
+`;
 
 export const Outer = styled.div(
   ({ center }) => `
   height:100vh;
-  overflow: scroll;
+  overflow: auto;
   scroll-snap-type: mandatory;
   scroll-snap-points-y: repeat(100vh);
   scroll-snap-type: y mandatory;
@@ -63,7 +63,7 @@ export const Outer = styled.div(
   `
   };
 `
-)
+);
 export const Content = styled.div(
   ({ mirror, fold }) => `
     position: absolute;
@@ -99,13 +99,13 @@ export const Content = styled.div(
   `
   }
   `
-)
+);
 export const ContentInner = styled.div`
   padding: 4em;
   ${({ theme }) => theme.responsive.mdPlus} {
     padding: 70px 150px;
   }
-`
+`;
 
 export const Byline = styled.div`
   position: absolute;
@@ -114,22 +114,22 @@ export const Byline = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-`
+`;
 
 export const Author = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
   color: #fff;
-`
+`;
 export const AuthorName = styled.div`
   margin-left: 15px;
   font-weight: 600;
-`
+`;
 export const AuthorRole = styled.div`
   margin-left: 10px;
   font-size: 13px;
-`
+`;
 export const AuthorPhoto = styled.div`
   width: 35px;
   height: 35px;
@@ -141,4 +141,4 @@ export const AuthorPhoto = styled.div`
     height: 100%;
     object-fit: cover;
   }
-`
+`;

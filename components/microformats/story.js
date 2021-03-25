@@ -10,7 +10,7 @@ const Outer = styled.a`
   position: relative;
   border-radius: ${({ theme }) => theme.styles.borderRadius};
   overflow: hidden;
-  padding-bottom: 150%; /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */
+  padding-bottom: 50%; /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
   transition: all 0.3s ease-in-out;
   &:hover {
