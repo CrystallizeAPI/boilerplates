@@ -190,7 +190,11 @@ module.exports = gql`
   }
 
   type StripeMutations {
-    createPaymentIntent(checkoutModel: CheckoutModelInput!): JSON
+    createPaymentIntent(
+      checkoutModel: CheckoutModelInput!
+      confirm: Boolean
+      paymentMethodId: String
+    ): JSON
     confirmOrder(
       checkoutModel: CheckoutModelInput!
       paymentIntentId: String!
