@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import styled from "styled-components";
-import Image from "@crystallize/react-image";
+import { Image } from "@crystallize/react-image";
 import CrystallizeContent from "@crystallize/content-transformer/react";
 import toText from "@crystallize/content-transformer/toText";
 import { useRouter } from "next/router";

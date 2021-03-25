@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Image from "@crystallize/react-image";
+import { Image } from "@crystallize/react-image";
 import Link from "next/link";
 const Item = styled.div`
   width: 100%;

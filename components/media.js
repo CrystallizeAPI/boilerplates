@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Image from "@crystallize/react-image";
+import { Image } from "@crystallize/react-image";
 
 import Video from "components/video";
 
@@ -9,6 +9,27 @@ const StyledVideo = styled(Video)`
   position: absolute;
   top: 0;
   left: 0%;
+  display: flex;
+
+  > * {
+    flex: 1 1 auto;
+    display: flex;
+  }
+
+  .react-video {
+    flex: 1 1 auto;
+    display: flex;
+
+    figure {
+      flex: 1 1 auto;
+      display: flex;
+    }
+
+    img {
+      height: 100%;
+    }
+  }
+
   video {
     object-fit: cover !important;
   }
@@ -17,7 +38,7 @@ const StyledVideo = styled(Video)`
 const Outer = styled.div`
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -34,14 +55,7 @@ const Outer = styled.div`
 export default function Media({ images, videos, show, nolazy }) {
   if (!!videos) {
     return (
-      <StyledVideo
-        autoplay
-        playsInline
-        loop
-        play={show}
-        nolazy={nolazy}
-        {...videos?.[0]}
-      />
+      <StyledVideo autoPlay playsInline loop play={show} {...videos?.[0]} />
     );
   }
 

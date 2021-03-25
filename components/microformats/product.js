@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
-import Image from "@crystallize/react-image";
+import { Image } from "@crystallize/react-image";
 import AspectRatioBlock from "ui/aspect-ratio-block";
 
 const ImgWrapper = styled.div`

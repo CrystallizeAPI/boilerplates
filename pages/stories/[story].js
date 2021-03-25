@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import Image from "@crystallize/react-image";
+import { Image } from "@crystallize/react-image";
 import CrystallizeContent from "@crystallize/content-transformer/react";
 import { useRouter } from "next/router";
 import { fetcher } from "lib/graphql";

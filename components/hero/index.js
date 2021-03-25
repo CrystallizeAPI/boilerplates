@@ -95,7 +95,7 @@ const HeroBlock = ({ images, videos, title, lead }) => {
           </Lead>
         )}
       </Block>
-      {!!hasMedia && <Media images={images} videos={videos} nolazy />}
+      {!!hasMedia && <Media images={images} videos={videos} />}
       <Arrow />
     </Hero>
   );
