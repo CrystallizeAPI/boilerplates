@@ -29,7 +29,7 @@ module.exports = function createContext({ apiPathPrefix }) {
     const user = userService.authenticate(cookies[userService.USER_TOKEN_NAME]);
 
     // Determine the URL for webhook callbacks (ex: https://service-api.example.com/api)
-    const publicHost = getHost({ headers });
+    const publicHost = getHost({ headers }) + apiPathPrefix;
 
     /**
      * serviceCallbackHost is used for third party services callbacks
@@ -37,20 +37,26 @@ module.exports = function createContext({ apiPathPrefix }) {
      * when async operations are finished
      *
      * Example for local development:
-     *  - publicHost: http://localhost:3001
-     *  - serviceCallbackHost: https://abcdefgh12345.ngrok.io
+     *  - publicHost: http://localhost:3001/api
+     *  - serviceCallbackHost: https://abcdefgh12345.ngrok.io/api
+     *
+     * Example for prod development:
+     *  - publicHost: https://my-service-api.shop.com/api
+     *  - serviceCallbackHost: https://my-service-api.shop.com/api
      */
     let serviceCallbackHost = process.env.SERVICE_CALLBACK_HOST;
     if (serviceCallbackHost) {
-      serviceCallbackHost += apiPathPrefix;
+      if (!serviceCallbackHost.endsWith(apiPathPrefix)) {
+        serviceCallbackHost += apiPathPrefix;
+      }
     } else {
       serviceCallbackHost = publicHost;
     }
 
     return {
       user,
-      publicHost: `${publicHost}${apiPathPrefix}`,
-      serviceCallbackHost: `${serviceCallbackHost}`,
+      publicHost,
+      serviceCallbackHost,
     };
   };
 };
