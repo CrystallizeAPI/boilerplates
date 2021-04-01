@@ -68,6 +68,20 @@ module.exports = {
       poweredBy: "Powered by {{- link}}",
       searchPlaceholder: "Search",
     },
+    checkout: {
+      title: "Oλοκλήρωση παραγγελίας",
+      payNow: "Εξόφληση τώρα",
+      choosePaymentMethod: "Επίλεξτε τρόπο πληρωμής",
+      noPaymentProvidersConfigured: "Κανένας τρόπος πληρωμής δεν έχει διαμορφωθεί",
+      paymentProviderNotConfigured: "Ο πάροχος πληρωμών {{name}} δεν έχει διαμορφωθεί",
+      paymentProviderLogoAlt: "Λογότυπο για {{name}}",
+      loadingPaymentGateway: "Αρχικοποίηση τρόπου πληρωμής...",
+      loadingPaymentGatewayFailed: "Ωχ, φαίνεται πως δεν μπορούσαμε να αρχικοποιήσουμε τον τρόπο πληρωμής: {{name}}",
+      confirmation: {
+        title: "Επιβεβαίωση παραγγελίας",
+        shortStatus: "Η παραγγελία σας έχει επιβεβαιωθεί."
+      }
+    },
     search: {
       label: "Αναζήτηση",
       foundResults: "Found {{count}} matching result",

@@ -70,6 +70,20 @@ module.exports = {
         next: "Se neste element",
       },
     },
+    checkout: {
+      title: "Betaling",
+      payNow: "Betal nå",
+      choosePaymentMethod: "Velg betalingsmetode",
+      noPaymentProvidersConfigured: "Ingen betalingstjenester er konfigurert",
+      paymentProviderNotConfigured: "Betalingstjenesten {{name}} er ikke konfigurert",
+      paymentProviderLogoAlt: "Logo for {{name}}",
+      loadingPaymentGateway: "Laster betalingstjenesten...",
+      loadingPaymentGatewayFailed: "Oisann. Betalingstjenesten {{name}} kan ikke lastes akkurat nå",
+      confirmation: {
+        title: "Ordrebekreftelse",
+        shortStatus: "Din ordre er bekreftet"
+      }
+    },
     search: {
       label: "Søk",
       foundResults: "Fant {{count}} resultater",

@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import React, { useReducer } from 'react';
 
 import { useT } from 'lib/i18n';
 import { Button } from 'ui';

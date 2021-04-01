@@ -1,15 +1,23 @@
 /* eslint-disable react/display-name */
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
+import React, { useState } from "react"
+import { useLocation, navigate } from "@reach/router"
 
-import styled from 'styled-components';
-import { useQuery } from 'react-query';
+import styled from "styled-components"
+import { useQuery } from "react-query"
 
-import ServiceApi from 'lib/service-api';
-import { useT } from 'lib/i18n';
-import { useBasket } from 'components/basket';
-import { Spinner } from 'ui/spinner';
+import ServiceApi from "lib/service-api"
+import { useT } from "lib/i18n"
+import { useBasket } from "components/basket"
+import { Spinner } from "ui/spinner"
+import KlarnaCheckout from "./klarna"
+import StripeCheckout from "./stripe"
+import MollieCheckout from "./mollie"
+import VippsCheckout from "./vipps"
+
+import StripeLogo from "images/stripe-logo.png"
+import KlarnaLogo from "images/klarna-logo.png"
+import MollieLogo from "images/mollie-vector-logo.png"
+import VippsLogo from "images/vipps-logo.png"
 
 import {
   Input,
@@ -20,34 +28,29 @@ import {
   PaymentButton,
   PaymentProvider,
   SectionHeader,
-  CheckoutFormGroup
-} from '../styles';
-import Voucher from '../voucher';
-
-const StripeCheckout = dynamic(() => import('./stripe'));
-const KlarnaCheckout = dynamic(() => import('./klarna'));
-const VippsCheckout = dynamic(() => import('./vipps'));
-const MollieCheckout = dynamic(() => import('./mollie'));
+  CheckoutFormGroup,
+} from "../styles"
+import Voucher from "../voucher"
 
 const Row = styled.div`
   display: flex;
   margin-bottom: 10px;
-`;
+`
 
-const Inner = styled.div``;
+const Inner = styled.div``
 
 export default function Payment() {
-  const t = useT();
-  const router = useRouter();
-  const { basketModel, actions } = useBasket();
-  const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null);
+  const t = useT()
+  const location = useLocation()
+  const { basketModel, actions } = useBasket()
+  const [selectedPaymentProvider, setSelectedPaymentProvider] = useState(null)
   const [state, setState] = useState({
-    firstName: '',
-    lastName: '',
-    email: ''
-  });
+    firstName: "",
+    lastName: "",
+    email: "",
+  })
 
-  const paymentConfig = useQuery('paymentConfig', () =>
+  const paymentConfig = useQuery("paymentConfig", () =>
     ServiceApi({
       query: `
       {
@@ -66,20 +69,20 @@ export default function Payment() {
           }
         }
       }
-    `
+    `,
     })
-  );
+  )
 
   // Handle locale with sub-path routing
-  let multilingualUrlPrefix = '';
-  if (window.location.pathname.startsWith(`/${router.locale}/`)) {
-    multilingualUrlPrefix = '/' + router.locale;
+  let multilingualUrlPrefix = ""
+  if (window.location.pathname.startsWith(`/${location.locale}/`)) {
+    multilingualUrlPrefix = "/" + location.locale
   }
 
-  const { firstName, lastName, email } = state;
+  const { firstName, lastName, email } = state
 
   function getURL(path) {
-    return `${location.protocol}//${location.host}${multilingualUrlPrefix}${path}`;
+    return `${location.protocol}//${location.host}${multilingualUrlPrefix}${path}`
   }
 
   /**
@@ -94,42 +97,39 @@ export default function Payment() {
       lastName,
       addresses: [
         {
-          type: 'billing',
-          email: email || null
-        }
-      ]
+          type: "billing",
+          email: email || null,
+        },
+      ],
     },
     confirmationURL: getURL(`/confirmation/{crystallizeOrderId}?emptyBasket`),
     checkoutURL: getURL(`/checkout`),
-    termsURL: getURL(`/terms`)
-  };
+    termsURL: getURL(`/terms`),
+  }
 
   const paymentProviders = [
     {
-      name: 'stripe',
-      color: '#6773E6',
-      logo: '/static/stripe-logo.png',
+      name: "stripe",
+      color: "#6773E6",
+      logo: StripeLogo,
       render: () => (
         <PaymentProvider>
           <StripeCheckout
             checkoutModel={checkoutModel}
             onSuccess={(crystallizeOrderId) => {
-              router.push(
-                checkoutModel.confirmationURL.replace(
-                  '{crystallizeOrderId}',
-                  crystallizeOrderId
-                )
-              );
-              scrollTo(0, 0);
+              navigate(`/confirmation/${crystallizeOrderId}?emptyBasket`, { state: { orderId: crystallizeOrderId } })
+
+              // alert("SUCCESS")
+              // scrollTo(0, 0);
             }}
           />
         </PaymentProvider>
-      )
+      ),
     },
     {
-      name: 'klarna',
-      color: '#F8AEC2',
-      logo: '/static/klarna-logo.png',
+      name: "klarna",
+      color: "#F8AEC2",
+      logo: KlarnaLogo,
       render: () => (
         <PaymentProvider>
           <KlarnaCheckout
@@ -138,67 +138,67 @@ export default function Payment() {
             getURL={getURL}
           />
         </PaymentProvider>
-      )
+      ),
     },
     {
-      name: 'vipps',
-      color: '#fff',
-      logo: '/static/vipps-logo.png',
+      name: "vipps",
+      color: "#fff",
+      logo: VippsLogo,
       render: () => (
         <PaymentProvider>
           <VippsCheckout
             checkoutModel={checkoutModel}
             basketActions={actions}
             onSuccess={(url) => {
-              if (url) window.location = url;
+              if (url) window.location = url
             }}
           />
         </PaymentProvider>
-      )
+      ),
     },
     {
-      name: 'mollie',
-      color: '#fff',
-      logo: '/static/mollie-vector-logo.png',
+      name: "mollie",
+      color: "#fff",
+      logo: MollieLogo,
       render: () => (
         <PaymentProvider>
           <MollieCheckout
             checkoutModel={checkoutModel}
             basketActions={actions}
             onSuccess={(url) => {
-              if (url) window.location = url;
+              if (url) window.location = url
             }}
           />
         </PaymentProvider>
-      )
-    }
-  ];
+      ),
+    },
+  ]
 
-  const enabledPaymentProviders = [];
+  const enabledPaymentProviders = []
   if (!paymentConfig.loading && paymentConfig.data) {
-    const { paymentProviders } = paymentConfig.data.data;
+    const { paymentProviders } = paymentConfig.data.data
     if (paymentProviders.klarna.enabled) {
-      enabledPaymentProviders.push('klarna');
+      enabledPaymentProviders.push("klarna")
     }
     if (paymentProviders.mollie.enabled) {
-      enabledPaymentProviders.push('mollie');
+      enabledPaymentProviders.push("mollie")
     }
     if (paymentProviders.vipps.enabled) {
-      enabledPaymentProviders.push('vipps');
+      enabledPaymentProviders.push("vipps")
     }
     if (paymentProviders.stripe.enabled) {
-      enabledPaymentProviders.push('stripe');
+      enabledPaymentProviders.push("stripe")
     }
   }
 
   return (
     <Inner>
       <CheckoutFormGroup>
-        <SectionHeader>{t('checkout.title')}</SectionHeader>
+        <SectionHeader>{t("checkout.title")}</SectionHeader>
         <form noValidate>
           <Row>
             <InputGroup>
-              <Label htmlFor="firstname">{t('customer.firstName')}</Label>
+              <Label htmlFor="firstname">{t("customer.firstName")}</Label>
               <Input
                 name="firstname"
                 type="text"
@@ -210,7 +210,7 @@ export default function Payment() {
               />
             </InputGroup>
             <InputGroup>
-              <Label htmlFor="lastname">{t('customer.lastName')}</Label>
+              <Label htmlFor="lastname">{t("customer.lastName")}</Label>
               <Input
                 name="lastname"
                 type="text"
@@ -224,7 +224,7 @@ export default function Payment() {
           </Row>
           <Row>
             <InputGroup>
-              <Label htmlFor="email">{t('customer.email')}</Label>
+              <Label htmlFor="email">{t("customer.email")}</Label>
               <Input
                 name="email"
                 type="email"
@@ -241,28 +241,28 @@ export default function Payment() {
 
       <CheckoutFormGroup withUpperMargin>
         <div>
-          <SectionHeader>{t('checkout.choosePaymentMethod')}</SectionHeader>
+          <SectionHeader>{t("checkout.choosePaymentMethod")}</SectionHeader>
           {paymentConfig.loading ? (
             <Spinner />
           ) : (
             <div>
               {enabledPaymentProviders.length === 0 ? (
-                <i>{t('checkout.noPaymentProvidersConfigured')}</i>
+                <i>{t("checkout.noPaymentProvidersConfigured")}</i>
               ) : (
                 <PaymentProviders>
                   <PaymentSelector>
                     {enabledPaymentProviders.map((paymentProviderName) => {
                       const paymentProvider = paymentProviders.find(
                         (p) => p.name === paymentProviderName
-                      );
+                      )
                       if (!paymentProvider) {
                         return (
                           <small>
-                            {t('checkout.paymentProviderNotConfigured', {
-                              name: paymentProviderName
+                            {t("checkout.paymentProviderNotConfigured", {
+                              name: paymentProviderName,
                             })}
                           </small>
-                        );
+                        )
                       }
 
                       return (
@@ -279,12 +279,12 @@ export default function Payment() {
                         >
                           <img
                             src={paymentProvider.logo}
-                            alt={t('checkout.paymentProviderLogoAlt', {
-                              name: paymentProvider.name
+                            alt={t("checkout.paymentProviderLogoAlt", {
+                              name: paymentProvider.name,
                             })}
                           />
                         </PaymentButton>
-                      );
+                      )
                     })}
                   </PaymentSelector>
 
@@ -298,5 +298,5 @@ export default function Payment() {
         </div>
       </CheckoutFormGroup>
     </Inner>
-  );
+  )
 }

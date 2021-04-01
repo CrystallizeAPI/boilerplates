@@ -38,7 +38,7 @@ const getLocales = (function () {
  * give the root path the correct path e.g.: /en
  */
 exports.onCreatePage = ({ page, actions }) => {
-  const fixedPaths = ["/", "/search", "/404", "/account", "/my-account"]
+  const fixedPaths = ["/", "/search", "/404", "/account", "/my-account", "/checkout", "/confirmation"]
   const { createPage, deletePage } = actions
   const oldPage = Object.assign({}, page)
 
@@ -52,10 +52,21 @@ exports.onCreatePage = ({ page, actions }) => {
       createPage({ ...page, context: { ...page.context, locale } })
     }
   })
+
+  // if(page.path.match(/^\/confirmation/)) {
+  //   page.matchPath = "/confirmation/*"
+  //   createPage({
+  //     path: "/confirmation",
+  //     matchPath: '/confirmation/:orderId',
+  //     component: path.resolve(`src/page-templates/checkout/confirmation.js`),
+  //   });
+  // }
+
 }
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
+
 
   // Map Crystallize shape names to the page templates
   const templates = {
@@ -137,6 +148,27 @@ exports.createPages = async ({ graphql, actions }) => {
           ...sharedPageProps,
         },
       })
+
+      //create checkout page
+      createPage({
+        path: `${locale.urlPrefix}/checkout`,
+        component: path.resolve(`src/page-templates/checkout/index.js`),
+        context: {
+          cataloguePath: `/`,
+          ...sharedPageProps,
+        },
+      })
+
+      createPage({
+        path: `${locale.urlPrefix}/confirmation`,
+        matchPath: `${locale.urlPrefix}/confirmation/:orderId`,
+        component: path.resolve(`src/page-templates/checkout/confirmation.js`),
+        context: {
+          cataloguePath: `/`,
+          ...sharedPageProps,
+        },
+      })
+
 
       // Create all other pages
       try {
