@@ -74,6 +74,20 @@ module.exports = {
       poweredBy: "Powered by {{- link}}",
       searchPlaceholder: "Search",
     },
+    checkout: {
+      title: "Checkout",
+      payNow: "Pay now",
+      choosePaymentMethod: "Choose payment method",
+      noPaymentProvidersConfigured: "No payment providers are configured",
+      paymentProviderNotConfigured: "Payment provider {{name}} is not configured",
+      paymentProviderLogoAlt: "Logo for {{name}}",
+      loadingPaymentGateway: "Initialising payment gateway...",
+      loadingPaymentGatewayFailed: "Oh no. Could not load the {{name}} payment gateway",
+      confirmation: {
+        title: "Order confirmation",
+        shortStatus: "Your order has been confirmed."
+      }
+    },
     search: {
       label: "Search",
       foundResults: "Found {{count}} matching result",

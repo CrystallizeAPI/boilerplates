@@ -23,6 +23,7 @@
 // }
 
 import React from "react"
+import { QueryClient, QueryClientProvider } from "react-query"
 import { AuthProvider } from "./src/components/auth"
 import { I18nextProvider } from "lib/i18n"
 import { BasketProvider } from "./src/components/basket"
@@ -34,11 +35,14 @@ export const wrapPageElement = ({
     pageContext: { locale, locales },
   },
 }) => {
+  const queryClient = new QueryClient()
   return (
-    <I18nextProvider locale={locale} locales={locales}>
-      <AuthProvider>
-        <BasketProvider>{element}</BasketProvider>
-      </AuthProvider>
-    </I18nextProvider>
+    <QueryClientProvider client={queryClient}>
+      <I18nextProvider locale={locale} locales={locales}>
+        <AuthProvider>
+          <BasketProvider>{element}</BasketProvider>
+        </AuthProvider>
+      </I18nextProvider>
+    </QueryClientProvider>
   )
 }

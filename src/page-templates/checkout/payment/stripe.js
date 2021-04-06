@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Head from 'next/head';
+import Helmet from "react-helmet"
+
 import { useQuery } from 'react-query';
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -160,9 +161,9 @@ export default function StripeWrapper({ checkoutModel, ...props }) {
 
   return (
     <>
-      <Head>
+      <Helmet>
         <script key="stripe-js" src="https://js.stripe.com/v3/" async />
-      </Head>
+      </Helmet>
       <Elements locale="en" stripe={stripeLoader}>
         <Form
           {...props}
