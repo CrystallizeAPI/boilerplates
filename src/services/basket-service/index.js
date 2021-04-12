@@ -1,19 +1,13 @@
+// Calculate the totals
 function getTotals({ cart, vatType }) {
-  // Calculate the totals
   return cart.reduce(
     (acc, curr) => {
       const { quantity, price } = curr;
       if (price) {
+        const priceToUse = price.discounted || price;
+        acc.gross += priceToUse.gross * quantity;
+        acc.net += priceToUse.net * quantity;
         acc.currency = price.currency;
-
-        const { discounted } = price;
-        if (discounted) {
-          acc.gross += price.discounted.gross * quantity;
-          acc.net += price.discounted.net * quantity;
-        } else {
-          acc.gross += price.gross * quantity;
-          acc.net += price.net * quantity;
-        }
       }
 
       return acc;
@@ -92,7 +86,7 @@ module.exports = {
     let total = getTotals({ cart, vatType });
 
     // Add a voucher
-    let cartWithDiscountedPrice = cart;
+    let cartWithVoucher = cart;
     if (cart.length > 0 && voucher) {
       const {
         calculateVoucherDiscountAmount,
@@ -102,16 +96,19 @@ module.exports = {
         amount: total.gross,
       });
 
-      // Add a discounted price for each item
-      cartWithDiscountedPrice = cart.map((cartItem) => {
+      // Reduce the price for each item
+      cartWithVoucher = cart.map((cartItem) => {
         const portionOfTotal =
-          total.gross / (cartItem.price.gross * cartItem.quantity);
+          (cartItem.price.gross * cartItem.quantity) / total.gross;
 
         /**
          * Each cart item gets a portion of the voucher that
-         * is relative to their own portion of the total amount
+         * is relative to their own portion of the total discount
          */
-        const gross = cartItem.price.gross - discountAmount * portionOfTotal;
+        const portionOfDiscount = discountAmount * portionOfTotal;
+
+        const gross =
+          cartItem.price.gross - portionOfDiscount / cartItem.quantity;
         const net = (gross * 100) / (100 + cartItem.vatType.percent);
 
         return {
@@ -125,38 +122,13 @@ module.exports = {
       });
 
       // Adjust totals
-      total = getTotals({ cart: cartWithDiscountedPrice, vatType });
+      total = getTotals({ cart: cartWithVoucher, vatType });
       total.discount = discountAmount;
-
-      // Add the voucher item to the cart
-      const voucherCartItem = {
-        name: voucher.code,
-        quantity: 1,
-        price: {
-          gross: discountAmount * -1,
-          net: discountAmount * -1,
-          currency: total.currency,
-        },
-      };
-
-      /**
-       * Identify the voucher item by using the syntax
-       * --voucher--{name}
-       * This does not have to be a valid product SKU in
-       * Crystallize
-       */
-      const voucherIdentifier = `--voucher--${voucher.code
-        .toLowerCase()
-        .replace(/\s/g, "-")}`;
-      voucherCartItem.sku = voucherIdentifier;
-
-      cart.push(voucherCartItem);
     }
 
     return {
       voucher,
-      cart,
-      cartWithDiscountedPrice,
+      cart: cartWithVoucher,
       total,
     };
   },
