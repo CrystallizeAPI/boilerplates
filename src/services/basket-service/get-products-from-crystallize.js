@@ -17,11 +17,13 @@ async function getProductsFromCrystallize({ paths, language }) {
         product${index}: catalogue(path: "${path}", language: "${language}") {
           path
           ... on Product {
+            id
             vatType {
               name
               percent
             }
             variants {
+              id
               sku
               name
               stock

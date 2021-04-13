@@ -69,6 +69,8 @@ module.exports = {
       const net = (price * 100) / (100 + vatType.percent);
 
       return {
+        productId: product.id,
+        productVariantId: variant.id,
         path: product.path,
         quantity: itemFromClient.quantity || 1,
         vatType,
