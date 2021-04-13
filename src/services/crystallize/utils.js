@@ -59,7 +59,7 @@ function normaliseOrderModel({ customer, cart, total, ...rest }) {
           images = [],
           name,
           sku,
-          productid,
+          productId,
           productVariantId,
           quantity,
           price,
@@ -68,7 +68,7 @@ function normaliseOrderModel({ customer, cart, total, ...rest }) {
         return {
           name,
           sku,
-          productid,
+          productId,
           productVariantId,
           quantity,
           price,
