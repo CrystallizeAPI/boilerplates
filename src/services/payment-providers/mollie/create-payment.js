@@ -24,17 +24,23 @@ module.exports = async function createMolliePayment({
     await crystallize.orders.updateOrder(crystallizeOrderId, {
       ...basket,
       customer,
-      additionalInformation: JSON.stringify({
-        isSubscription,
-      }),
+      meta: [
+        {
+          key: "isSubscription",
+          value: isSubscription ? "yes" : "no",
+        },
+      ],
     });
   } else {
     const crystallizeOrder = await crystallize.orders.createOrder({
       ...basket,
       customer,
-      additionalInformation: JSON.stringify({
-        isSubscription,
-      }),
+      meta: [
+        {
+          key: "isSubscription",
+          value: isSubscription ? "yes" : "no",
+        },
+      ],
     });
     crystallizeOrderId = crystallizeOrder.id;
   }

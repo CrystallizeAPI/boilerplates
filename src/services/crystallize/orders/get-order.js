@@ -19,6 +19,10 @@ module.exports = async function getOrder(id) {
                 percent
               }
             }
+            meta {
+              key
+              value
+            }
             additionalInformation
             payment {
               ... on StripePayment {
@@ -41,6 +45,10 @@ module.exports = async function getOrder(id) {
                 net
                 gross
                 currency
+              }
+              meta {
+                key
+                value
               }
             }
             customer {

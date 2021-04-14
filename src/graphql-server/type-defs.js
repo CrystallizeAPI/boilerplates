@@ -153,7 +153,6 @@ module.exports = gql`
 
   input CheckoutModelInput {
     basketModel: BasketModelInput!
-    metadata: JSON
     customer: CustomerInput
     confirmationURL: String!
     checkoutURL: String!

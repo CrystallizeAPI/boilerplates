@@ -13,9 +13,16 @@ module.exports = async function klarnaCapture({ crystallizeOrderId }) {
   const crystallizeOrder = await crystallize.orders.getOrder(
     crystallizeOrderId
   );
-  const additionalInformation = JSON.parse(
-    crystallizeOrder.additionalInformation
+  const klarnaPayment = crystallizeOrder.payment.find(
+    (p) => p.provider === "klarna"
   );
+  if (!klarnaPayment) {
+    throw new Error(`Order ${crystallizeOrderId} has no Klarna payment`);
+  }
+  const klarnaOrderId = klarnaPayment.orderId;
+  if (!klarnaOrderId) {
+    throw new Error(`Order ${crystallizeOrderId} has no klarnaOrderId`);
+  }
 
   const klarnaClient = await getClient();
 
@@ -23,9 +30,7 @@ module.exports = async function klarnaCapture({ crystallizeOrderId }) {
   const {
     error,
     response,
-  } = await klarnaClient.ordermanagementV1.captures.capture(
-    additionalInformation.klarnaOrderId
-  );
+  } = await klarnaClient.ordermanagementV1.captures.capture(klarnaOrderId);
 
   console.log(error, response);
 

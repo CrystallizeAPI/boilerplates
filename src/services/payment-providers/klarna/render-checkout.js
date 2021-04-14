@@ -102,10 +102,14 @@ module.exports = async function renderCheckout({ checkoutModel, context }) {
   // Tag the Crystallize order with the Klarna order id
   await crystallize.orders.updateOrder(crystallizeOrderId, {
     ...basket,
-    additionalInformation: JSON.stringify({
-      klarnaOrderId,
-      klarnaStatus: "not-completed",
-    }),
+    payment: [
+      {
+        provider: "klarna",
+        klarna: {
+          orderId: klarnaOrderId,
+        },
+      },
+    ],
   });
 
   return {
