@@ -1,5 +1,5 @@
 import React from "react";
-import CrystallizeContent from "@crystallize/content-transformer/react";
+import { ContentTransformer } from "@crystallize/react-content-transformer";
 import styled from "styled-components";
 
 import Media from "components/media";
@@ -91,7 +91,7 @@ const HeroBlock = ({ images, videos, title, lead }) => {
         {!!title && <H1>{title}</H1>}
         {!!lead && (
           <Lead>
-            <CrystallizeContent {...lead?.json} />
+            <ContentTransformer json={lead?.json} />
           </Lead>
         )}
       </Block>

@@ -4,6 +4,7 @@ import { DefaultSeo } from "next-seo";
 
 import { screen } from "ui/screen";
 import { responsive } from "ui/responsive";
+import { AuthProvider } from "components/auth";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -64,7 +65,9 @@ export default function App({ Component, pageProps }) {
       <DefaultSeo {...SEOSettings} />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
       </ThemeProvider>
     </>
   );

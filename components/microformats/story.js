@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Media from "components/media";
-import CrystallizeContent from "@crystallize/content-transformer/react";
+import { ContentTransformer } from "@crystallize/react-content-transformer";
 import Link from "next/link";
 
 const Outer = styled.a`
@@ -122,8 +122,27 @@ const Inner = styled.div`
   }
 `;
 
-const StoryMicroformat = ({ name, path, intro, videos, images }) => {
+const Exclusive = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 2;
+  padding: 10px;
+  background: yellow;
+  color: black;
+  border-radius: ${({ theme }) => theme.styles.borderRadius};
+`;
+
+const StoryMicroformat = ({
+  name,
+  path,
+  intro,
+  videos,
+  images,
+  isExclusive,
+}) => {
   const hasMedia = videos?.content?.videos || images?.content?.images;
+  const exclusive = isExclusive?.content?.value;
   return (
     <Link as={path} href={path} passHref>
       <Outer>
@@ -131,7 +150,7 @@ const StoryMicroformat = ({ name, path, intro, videos, images }) => {
           <Content>
             <Title>{name}</Title>
             <Intro>
-              <CrystallizeContent {...intro?.content?.json} />
+              <ContentTransformer json={intro?.content?.json} />
             </Intro>
           </Content>
           <MediaWrapper>
@@ -142,6 +161,7 @@ const StoryMicroformat = ({ name, path, intro, videos, images }) => {
               />
             )}
           </MediaWrapper>
+          {exclusive && <Exclusive>Exclusive</Exclusive>}
         </Inner>
       </Outer>
     </Link>

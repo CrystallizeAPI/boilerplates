@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Image } from "@crystallize/react-image";
-import CrystallizeContent from "@crystallize/content-transformer/react";
+import { ContentTransformer } from "@crystallize/react-content-transformer";
 import toText from "@crystallize/content-transformer/toText";
 
 import { fetcher } from "lib/graphql";
@@ -377,7 +377,7 @@ export default function Story({ data }) {
                   <span itemProp="price">{price}</span>
                 </h2>
               </Offer>
-              <CrystallizeContent itemProp="description" {...summary} />
+              <ContentTransformer itemProp="description" json={summary} />
               <Btn
                 onClick={() =>
                   alert(
@@ -427,7 +427,7 @@ export default function Story({ data }) {
                       )}
                       <Paragraph>
                         <h4>{paragraph?.title?.text}</h4>
-                        <CrystallizeContent {...paragraph?.body?.json} />
+                        <ContentTransformer json={paragraph?.body?.json} />
                       </Paragraph>
                     </Collection>
                   ))}

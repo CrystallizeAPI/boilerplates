@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@crystallize/content-transformer": "^7.0.0",
+    "@crystallize/react-content-transformer": "^1.1.1",
     "@crystallize/react-image": "^6.1.0",
     "@crystallize/react-video": "^1.6.3",
     "immer": "^9.0.1",

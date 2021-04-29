@@ -127,7 +127,7 @@ const Header = ({ tint }) => {
             <IconSearch fill={tints[tint]} />
           </ActionBtn>
         </Search>
-        <ActionBtn>
+        <ActionBtn as="a" href="/api/login-logout">
           <IconUser fill={tints[tint]} />
         </ActionBtn>
         <ActionBtn>
