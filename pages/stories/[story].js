@@ -205,7 +205,10 @@ query GET_STORY($path: String!) {
 }`;
 
 export async function getStaticProps({ params, req }) {
-  const path = `/stories/${params.story.replace(exclusivePathIdentifier, "")}`;
+  const path = `/stories/${params.story.replace(
+    new RegExp(exclusivePathIdentifier, "ig"),
+    ""
+  )}`;
   const data = await fetcher([query, { path }]);
   const isExclusiveVersion = params.story.includes(exclusivePathIdentifier);
 

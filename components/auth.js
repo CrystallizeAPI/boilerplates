@@ -10,7 +10,6 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function check() {
       const status = await fetch("/api/login-status").then((r) => r.json());
-      console.log({ status });
       setIsLoggedIn(status.isLoggedIn);
     }
     check();
