@@ -57,7 +57,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800"
           rel="stylesheet"
         />
       </Head>
