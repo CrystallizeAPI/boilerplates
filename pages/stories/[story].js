@@ -211,9 +211,9 @@ export async function getStaticProps({ params, req }) {
     ""
   )}`;
   const data = await fetcher([query, { path }]);
-  const isExclusiveVersion = params.story.includes(exclusivePathIdentifier);
+  const isExclusivePath = params.story.includes(exclusivePathIdentifier);
 
-  return { props: { data, isExclusiveVersion }, revalidate: 1 };
+  return { props: { data, isExclusivePath }, revalidate: 1 };
 }
 
 export async function getStaticPaths() {
@@ -247,7 +247,7 @@ export async function getStaticPaths() {
   };
 }
 
-export default function Story({ data, isExclusiveVersion }) {
+export default function Story({ data, isExclusivePath }) {
   const story = data?.data?.story;
   const byline = story?.byline?.content?.items;
   const heroImages = story?.hero_images?.content?.images;
@@ -260,6 +260,7 @@ export default function Story({ data, isExclusiveVersion }) {
     mediaUrl: heroImages?.[0]?.url,
     type: "article",
   };
+  const isExclusive = story?.isExclusive?.content?.value;
 
   const isLoggedIn = useIsLoggedIn();
 
@@ -300,7 +301,7 @@ export default function Story({ data, isExclusiveVersion }) {
                 )}
               </Content>
             </Section>
-            {isExclusiveVersion || isLoggedIn ? (
+            {!isExclusive || isExclusivePath || isLoggedIn ? (
               <div itemProp="articleBody">
                 {storyParagraphs?.map(({ title, body, images, videos }, i) => {
                   return (
