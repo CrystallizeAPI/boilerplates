@@ -2,6 +2,7 @@ import { Image } from "@crystallize/react-image";
 import { ContentTransformer } from "@crystallize/react-content-transformer";
 import { fetcher } from "lib/graphql";
 import Section from "components/story/section";
+import Paywall from "components/paywall";
 import FeaturedProducts from "components/story/featured-products";
 import Layout from "components/layout";
 import Meta from "components/meta";
@@ -320,14 +321,7 @@ export default function Story({ data, isExclusiveVersion }) {
                 })}
               </div>
             ) : (
-              <Section>
-                <Content>
-                  <ContentInner>
-                    <SectionHeading>No access 😢</SectionHeading>
-                    <Lead>This is a members only article</Lead>
-                  </ContentInner>
-                </Content>
-              </Section>
+              <Paywall />
             )}
 
             {!!featuredProducts && (

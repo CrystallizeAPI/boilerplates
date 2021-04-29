@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Image } from "@crystallize/react-image";
 import { ContentTransformer } from "@crystallize/react-content-transformer";
 import toText from "@crystallize/content-transformer/toText";
-
+import Link from "next/link";
 import { fetcher } from "lib/graphql";
 import Layout from "components/layout";
 import Meta from "components/meta";
@@ -18,7 +18,7 @@ const ProductWrapper = styled.section`
   }
 `;
 
-const Btn = styled.button`
+const Btn = styled.a`
   border: 3px solid black;
   background: transparent;
   font-size: 20px;

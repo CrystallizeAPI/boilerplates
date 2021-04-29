@@ -124,13 +124,17 @@ const Inner = styled.div`
 
 const Exclusive = styled.div`
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 0px;
+  right: 0px;
   z-index: 2;
-  padding: 10px;
-  background: yellow;
-  color: black;
-  border-radius: ${({ theme }) => theme.styles.borderRadius};
+  letter-spacing: 0.5px;
+  font-size: 16px;
+  padding: 20px 25px;
+  background: #000;
+  color: #fff;
+  border-radius: 0 0 0 2px;
+  font-weight: 600;
+  /* border-radius: 4px; */
 `;
 
 const StoryMicroformat = ({
@@ -161,7 +165,7 @@ const StoryMicroformat = ({
               />
             )}
           </MediaWrapper>
-          {exclusive && <Exclusive>Exclusive</Exclusive>}
+          {exclusive && <Exclusive>Premium</Exclusive>}
         </Inner>
       </Outer>
     </Link>
