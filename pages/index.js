@@ -37,9 +37,17 @@ const query = `
       rows{
         columns{
           item {
+            
             ...on Document {
               name
               path
+              isExclusive: component(id: "is-exclusive") {
+                content {
+                  ... on BooleanContent {
+                    value
+                  }
+                }
+              }
               intro: component(id: "intro") {
                 id
                 name
@@ -49,6 +57,7 @@ const query = `
                   }
                 }
               }
+
               videos: component(id: "hero-video") {
                 content {
                   ... on VideoContent {
