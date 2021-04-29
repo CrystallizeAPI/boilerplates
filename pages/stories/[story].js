@@ -1,5 +1,5 @@
 import { Image } from "@crystallize/react-image";
-import CrystallizeContent from "@crystallize/content-transformer/react";
+import { ContentTransformer } from "@crystallize/react-content-transformer";
 import { fetcher } from "lib/graphql";
 import Section from "components/story/section";
 import FeaturedProducts from "components/story/featured-products";
@@ -20,6 +20,8 @@ import {
   SectionHeading,
 } from "components/story/styles";
 
+const exclusivePathIdentifier = "-_-_-exclusive";
+
 // Fine tune the query in the playground: https://api.crystallize.com/<your-tenant-identifier>/catalogue
 const query = `
 query GET_STORY($path: String!) {
@@ -34,6 +36,13 @@ query GET_STORY($path: String!) {
       content {
         ... on SingleLineContent {
           text
+        }
+      }
+    }
+    isExclusive: component(id: "is-exclusive") {
+      content {
+        ... on BooleanContent {
+          value
         }
       }
     }
@@ -192,15 +201,14 @@ query GET_STORY($path: String!) {
       }
     }
   }
-}
-
-`;
+}`;
 
 export async function getStaticProps({ params, req }) {
-  const path = `/stories/${params.story}`;
+  const path = `/stories/${params.story.replace(exclusivePathIdentifier, "")}`;
   const data = await fetcher([query, { path }]);
+  const isExclusiveVersion = params.story.includes(exclusivePathIdentifier);
 
-  return { props: { data }, revalidate: 1 };
+  return { props: { data, isExclusiveVersion }, revalidate: 1 };
 }
 
 export async function getStaticPaths() {
@@ -209,18 +217,32 @@ export async function getStaticPaths() {
       catalogue(path: "/stories", language: "en") {
         children {
           path
+
+          isExclusive: component(id: "is-exclusive") {
+            content {
+              ... on BooleanContent {
+                value
+              }
+            }
+          }
         }
       }
     }
   `);
 
+  const children = data?.data?.catalogue?.children || [];
+  const publicPaths = children.map((c) => c.path);
+  const exclusivePaths = children
+    .filter((c) => c.isExclusive?.content?.value)
+    .map((c) => `${c.path}${exclusivePathIdentifier}`);
+
   return {
-    paths: data?.data?.catalogue?.children?.map((c) => c.path) || [],
+    paths: [...publicPaths, ...exclusivePaths],
     fallback: "blocking",
   };
 }
 
-export default function Story({ data }) {
+export default function Story({ data, isExclusiveVersion }) {
   const story = data?.data?.story;
   const byline = story?.byline?.content?.items;
   const heroImages = story?.hero_images?.content?.images;
@@ -246,9 +268,9 @@ export default function Story({ data }) {
                   {story?.name}
                 </Title>
                 <Lead>
-                  <CrystallizeContent
+                  <ContentTransformer
                     itemProp="description"
-                    {...story?.intro?.content?.json}
+                    json={story?.intro?.content?.json}
                   />
                 </Lead>
                 {!!byline && (
@@ -271,28 +293,39 @@ export default function Story({ data }) {
                 )}
               </Content>
             </Section>
-            <div itemProp="articleBody">
-              {storyParagraphs.map(({ title, body, images, videos }, i) => {
-                return (
-                  <div key={i}>
-                    {i === Math.round(storyParagraphs.length / 2) &&
-                      !!featuredProducts && (
-                        <FeaturedProducts products={featuredProducts} />
-                      )}
-                    <Section images={images} videos={videos}>
-                      <Content mirror={i % 2}>
-                        <ContentInner>
-                          <SectionHeading>{title?.text}</SectionHeading>
-                          <Lead>
-                            <CrystallizeContent {...body?.json} />
-                          </Lead>
-                        </ContentInner>
-                      </Content>
-                    </Section>
-                  </div>
-                );
-              })}
-            </div>
+            {isExclusiveVersion ? (
+              <div itemProp="articleBody">
+                {storyParagraphs?.map(({ title, body, images, videos }, i) => {
+                  return (
+                    <div key={i}>
+                      {i === Math.round(storyParagraphs.length / 2) &&
+                        !!featuredProducts && (
+                          <FeaturedProducts products={featuredProducts} />
+                        )}
+                      <Section images={images} videos={videos}>
+                        <Content mirror={i % 2}>
+                          <ContentInner>
+                            <SectionHeading>{title?.text}</SectionHeading>
+                            <Lead>
+                              <ContentTransformer json={body?.json} />
+                            </Lead>
+                          </ContentInner>
+                        </Content>
+                      </Section>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <Section>
+                <Content>
+                  <ContentInner>
+                    <SectionHeading>No access 😢</SectionHeading>
+                    <Lead>This is a members only article</Lead>
+                  </ContentInner>
+                </Content>
+              </Section>
+            )}
 
             {!!featuredProducts && (
               <FeaturedProducts products={featuredProducts} />

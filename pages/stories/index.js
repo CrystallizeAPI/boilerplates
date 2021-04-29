@@ -87,58 +87,74 @@ query GET_FOLDER($path: String!) {
       }
     }
     children {
-      id
-      path
-      name
-      type
-      shape {
-        name
+      ...storyItem
+
+      children {
+        ...storyItem
       }
-      intro: component(id: "intro") {
-        id
-        name
-        content {
-          ... on RichTextContent {
-            json
-          }
-        }
+    }
+  }
+}
+
+fragment storyItem on Item {
+  id
+  path
+  name
+  type
+  shape {
+    name
+  }
+  isExclusive: component(id: "is-exclusive") {
+    content {
+      ... on BooleanContent {
+        value
       }
-      videos: component(id: "hero-video") {
-        content {
-          ... on VideoContent {
-            videos {
-              playlists
-              thumbnails {
-                url
-                altText
-                variants {
-                  url
-                  width
-                  height
-                }
-              }
-            }
-          }
-        }
+    }
+  }
+  intro: component(id: "intro") {
+    id
+    name
+    content {
+      ... on RichTextContent {
+        json
       }
-      images: component(id: "hero") {
-        content {
-          ... on ImageContent {
-            images {
+    }
+  }
+  videos: component(id: "hero-video") {
+    content {
+      ... on VideoContent {
+        videos {
+          playlists
+          thumbnails {
+            url
+            altText
+            variants {
               url
-              altText
-              variants {
-                url
-                width
-                height
-              }
+              width
+              height
             }
           }
         }
       }
     }
   }
+  images: component(id: "hero") {
+    content {
+      ... on ImageContent {
+        images {
+          url
+          altText
+          variants {
+            url
+            width
+            height
+          }
+        }
+      }
+    }
+  }
 }
+
 `;
 
 export async function getStaticProps({ params }) {
@@ -166,6 +182,11 @@ const Stories = ({ data, errors }) => {
     type: "website",
   };
   const hasMedia = !!hero.images || !!hero.videos;
+
+  const publicStories = folder?.children?.filter(
+    (c) => c.shape.name === "Story"
+  );
+
   return (
     <>
       <Meta {...meta} />
@@ -174,7 +195,7 @@ const Stories = ({ data, errors }) => {
         <Outer>
           <H2>Some inspirational stories</H2>
           <Inner>
-            {folder?.children.map((child) => (
+            {publicStories?.map((child) => (
               <MicroFormats key={child?.id} {...child} />
             ))}
           </Inner>
