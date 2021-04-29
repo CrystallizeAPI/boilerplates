@@ -233,12 +233,12 @@ export async function getStaticPaths() {
 
   const children = data?.data?.catalogue?.children || [];
   const publicPaths = children.map((c) => c.path);
-  const exclusivePaths = children
-    .filter((c) => c.isExclusive?.content?.value)
-    .map((c) => `${c.path}${exclusivePathIdentifier}`);
 
   return {
-    paths: [...publicPaths, ...exclusivePaths],
+    paths: [
+      ...publicPaths,
+      ...publicPaths.map((p) => `${p}${exclusivePathIdentifier}`),
+    ],
     fallback: "blocking",
   };
 }
