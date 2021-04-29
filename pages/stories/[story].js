@@ -206,7 +206,10 @@ query GET_STORY($path: String!) {
 }`;
 
 export async function getStaticProps({ params, req }) {
-  const path = `/stories/${params.story.replace(exclusivePathIdentifier, "")}`;
+  const path = `/stories/${params.story.replace(
+    new RegExp(exclusivePathIdentifier, "ig"),
+    ""
+  )}`;
   const data = await fetcher([query, { path }]);
   const isExclusiveVersion = params.story.includes(exclusivePathIdentifier);
 
@@ -234,12 +237,12 @@ export async function getStaticPaths() {
 
   const children = data?.data?.catalogue?.children || [];
   const publicPaths = children.map((c) => c.path);
-  const exclusivePaths = children
-    .filter((c) => c.isExclusive?.content?.value)
-    .map((c) => `${c.path}${exclusivePathIdentifier}`);
 
   return {
-    paths: [...publicPaths, ...exclusivePaths],
+    paths: [
+      ...publicPaths,
+      ...publicPaths.map((p) => `${p}${exclusivePathIdentifier}`),
+    ],
     fallback: "blocking",
   };
 }
