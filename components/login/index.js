@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import Layout from "components/layout";
 import { useIsLoggedIn, loginWithMagicLink } from "components/auth";
-
-import { LoginStyle, Outer, Fields } from "./styles";
+import Illustration from "./illustration";
+import { LoginStyle, Outer, Fields, Btn } from "./styles";
 
 function PageLayout({ title, children }) {
   return (
@@ -56,7 +56,11 @@ export default function Login() {
       <PageLayout title="Logged in">
         <div style={{ padding: 300 }}>
           <h1>Hey {userData.email}, you're logged in!</h1>
-          <a href="/api/logout">Logout</a>
+          <p css={"margin-bottom:30px;"}>
+            Don't want to be here? Click the button below and we'll get you out
+            of here
+          </p>
+          <Btn href="/api/logout">Logout</Btn>
         </div>
       </PageLayout>
     );
@@ -66,29 +70,38 @@ export default function Login() {
     <PageLayout title="Login">
       <Outer>
         <LoginStyle>
-          <h1>Login</h1>
-          <form onSubmit={handleSubmit} action="/api/login" method="post">
-            <Fields>
-              <input
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-                required
-                onChange={(event) =>
-                  setUserData(
-                    Object.assign({}, userData, {
-                      email: event.target.value,
-                    })
-                  )
-                }
-              />
-              <button type="submit" value="Submit">
-                Send me a login link
-              </button>
-            </Fields>
-          </form>
-          {userData.message ? <p>{userData.message}</p> : null}
-          {userData.error ? <p>{t("login.emailAddressInvalid")}</p> : null}
+          {userData.message ? (
+            <>
+              <Illustration />
+              <p>{userData.message}</p>
+            </>
+          ) : (
+            <>
+              <h1>Login</h1>
+              <form onSubmit={handleSubmit} action="/api/login" method="post">
+                <Fields>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required
+                    onChange={(event) =>
+                      setUserData(
+                        Object.assign({}, userData, {
+                          email: event.target.value,
+                        })
+                      )
+                    }
+                  />
+                  <Btn as="button" type="submit" value="Submit">
+                    Send me a link
+                  </Btn>
+                </Fields>
+              </form>
+            </>
+          )}
+
+          {userData.error ? <p>Whoopsy, we made a oppsy :(</p> : null}
         </LoginStyle>
       </Outer>
     </PageLayout>

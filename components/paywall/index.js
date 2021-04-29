@@ -64,7 +64,7 @@ export default function Paywall() {
 
           <p>To read the full article, please login or buy a subscription.</p>
           <Actions>
-            <Link href="/api/login-logout">
+            <Link href="/login">
               <Btn>Login</Btn>
             </Link>
           </Actions>
