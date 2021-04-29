@@ -5,6 +5,7 @@ import Section from "components/story/section";
 import FeaturedProducts from "components/story/featured-products";
 import Layout from "components/layout";
 import Meta from "components/meta";
+import { useIsLoggedIn } from "components/auth";
 import {
   Outer,
   ScrollWrapper,
@@ -256,6 +257,8 @@ export default function Story({ data, isExclusiveVersion }) {
     type: "article",
   };
 
+  const isLoggedIn = useIsLoggedIn();
+
   return (
     <>
       <Meta {...meta} />
@@ -293,7 +296,7 @@ export default function Story({ data, isExclusiveVersion }) {
                 )}
               </Content>
             </Section>
-            {isExclusiveVersion ? (
+            {isExclusiveVersion || isLoggedIn ? (
               <div itemProp="articleBody">
                 {storyParagraphs?.map(({ title, body, images, videos }, i) => {
                   return (
