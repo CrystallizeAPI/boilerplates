@@ -246,14 +246,6 @@ export const query = graphql`
       images {
         ...crystallize_image
       }
-      subscriptionPlans {
-        id
-        name
-        initialPeriod
-        initialPrice
-        recurringPeriod
-        recurringPrice
-      }
     }
   }
 `
