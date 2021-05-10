@@ -18,6 +18,16 @@ async function loginMagicLink(event, context, callback) {
     );
 
     if (success) {
+      /**
+       * In order to get the login cookie to be sent for all
+       * browsers, they need to share the top level domain.
+       * See: https://web.dev/samesite-cookies-explained/
+       * Example:
+       * Website:         my-website.com
+       * Service API: api.my-website.com
+       */
+      // "set-cookie": `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/ SameSite=None; Secure; Domain=.my-website.com`,
+
       return callback(null, {
         statusCode: 302,
         headers: {

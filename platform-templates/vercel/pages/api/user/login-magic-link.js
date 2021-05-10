@@ -19,6 +19,19 @@ export default async function loginMagicLink(req, res) {
     } = await userService.validateMagicLinkToken(req.query.token);
 
     if (success) {
+      /**
+       * In order to get the login cookie to be sent for all
+       * browsers, they need to share the top level domain.
+       * See: https://web.dev/samesite-cookies-explained/
+       * Example:
+       * Website:         my-website.com
+       * Service API: api.my-website.com
+       */
+      // res.setHeader(
+      //   "Set-Cookie",
+      //   `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/; SameSite=None; Secure; Domain=.my-website.com`
+      // );
+
       res.setHeader(
         "Set-Cookie",
         `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/`
