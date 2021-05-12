@@ -5,7 +5,7 @@ const userService = require("../../src/services/user-service");
 async function loginMagicLink(event, context, callback) {
   try {
     /**
-     * Validatee the JWT token and extract the email
+     * Validate the JWT token and extract the email
      * address and the redirectURLAfterLogin URL to send the
      * user to afterwards
      */

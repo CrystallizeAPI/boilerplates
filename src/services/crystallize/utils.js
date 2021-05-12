@@ -95,11 +95,18 @@ module.exports = {
   normaliseOrderModel,
 
   /**
-   * Catalogue API is the fast read-only API to query frontend
-   * related data
+   * Catalogue API is the fast read-only API to lookup data
+   * for a given item path or anything else in the catalogue
    */
   callCatalogueApi: createApiCaller(
     `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/catalogue`
+  ),
+  /**
+   * Search API is the fast read-only API to search across
+   * all items and topics
+   */
+  callSearchApi: createApiCaller(
+    `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/search`
   ),
   /**
    * Orders API is the highly scalable API to send/read massive

@@ -8,7 +8,7 @@ import userService from "../../../src/services/user-service";
 export default async function loginMagicLink(req, res) {
   try {
     /**
-     * Validatee the JWT token and extract the email
+     * Validate the JWT token and extract the email
      * address and the redirectURLAfterLogin URL to send the
      * user to afterwards
      */
