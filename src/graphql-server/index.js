@@ -16,5 +16,7 @@ module.exports = function createGraphqlServerConfig({ apiPathPrefix = "" }) {
         "request.credentials": "include",
       },
     },
+    // Disable subscriptions (not currently supported with ApolloGateway)
+    subscriptions: false,
   };
 };

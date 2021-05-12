@@ -44,6 +44,20 @@ functions:
           path: /user/login-magic-link
           method: get
 
+  # Crystallize API proxy
+  crystallizeCatalogueProxy:
+    handler: handlers/crystallize.catalogue
+    events:
+      - http:
+          path: /crystallize/catalogue
+          method: post
+  crystallizeSearchProxy:
+    handler: handlers/crystallize.search
+    events:
+      - http:
+          path: /crystallize/search
+          method: post
+
   # Crystallize item webhooks
   webhookItemCreated:
     handler: handlers/webhooks/item.created

@@ -6,6 +6,7 @@
     "start": "next start -p 3001"
   },
   "dependencies": {
+    "@apollo/gateway": "^0.28.1",
     "@crystallize/node-klarna": "^4.8.0",
     "@crystallize/node-vipps": "^0.1.4",
     "@mollie/api-client": "^3.4.0",
