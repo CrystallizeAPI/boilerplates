@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/CrystallizeAPI/service-api-boilerplate/issues"
   },
-  "homepage": "https://github.com/CrystallizeAPI/service-api-boilerplate#readme"
+  "homepage": "https://github.com/CrystallizeAPI/service-api-boilerplate#readme",
+  "dependencies": {
+    "@apollo/gateway": "^0.28.1"
+  }
 }
