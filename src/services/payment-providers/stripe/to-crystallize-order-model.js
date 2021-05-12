@@ -23,13 +23,18 @@ module.exports = async function stripeToCrystallizeOrderModel({
     }
   }
 
+  const meta = [];
+  if (paymentIntent.merchant_data) {
+    meta.push({
+      key: "stripeMerchantData",
+      value: JSON.stringify(paymentIntent.merchant_data),
+    });
+  }
+
   return {
     cart: basket.cart,
     total: basket.total,
-    additionalInformation: JSON.stringify({
-      stripe_merchant_data: paymentIntent.merchant_data,
-      order_metadata: checkoutModel.metadata,
-    }),
+    meta,
     customer: {
       identifier: "",
       firstName: customerName[0],

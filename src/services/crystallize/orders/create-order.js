@@ -10,6 +10,7 @@ module.exports = async function createOrder(variables) {
         $total: PriceInput
         $payment: [PaymentInput!]
         $additionalInformation: String
+        $meta: [OrderMetadataInput!]
       ) {
         orders {
           create(
@@ -19,6 +20,7 @@ module.exports = async function createOrder(variables) {
               total: $total
               payment: $payment
               additionalInformation: $additionalInformation
+              meta: $meta
             }
           ) {
             id

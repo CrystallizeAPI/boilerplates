@@ -92,9 +92,5 @@ module.exports = function mollieToCrystallizeOrderModel({
         },
       },
     ],
-    additionalInformation: JSON.stringify({
-      mollieOrderId: mollieOrder.id,
-      status: "checked",
-    }),
   };
 };
