@@ -1,4 +1,8 @@
-const hostName = `https://api.crystallize.com/${process.env.GATSBY_CRYSTALLIZE_TENANT_ID}`
+let baseUrl = `https://api.crystallize.com/${process.env.GATSBY_CRYSTALLIZE_TENANT_ID}`
+
+export function setBaseUrl(url) {
+  baseUrl = url
+}
 
 export const doPost = async (url, options) => {
   try {
@@ -15,7 +19,7 @@ export const doPost = async (url, options) => {
       opts.body = JSON.stringify(opts.body)
     }
 
-    const response = await fetch(`${hostName}${url}`, opts)
+    const response = await fetch(`${baseUrl}${url}`, opts)
 
     if (!response.ok) {
       throw new Error(await response.text())
@@ -30,5 +34,5 @@ export const doPost = async (url, options) => {
 }
 
 export function doGet(url, options) {
-  return fetch(`${hostName}${url}`, options).then((r) => r.json())
+  return fetch(`${baseUrl}${url}`, options).then((r) => r.json())
 }

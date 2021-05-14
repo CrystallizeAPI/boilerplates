@@ -2,11 +2,24 @@ require("dotenv").config({
   path: `.env`,
 })
 
+/**
+ * If you have enabled authentication on your APIs, then you need to
+ * proxy the requests through the Service API:
+ * const crystallizeApiUrlBase = process.env.GATSBY_PUBLIC_SERVICE_API_URL.replace(
+ *  '/graphql',
+ *  '/crystallize'
+ * );
+ * Read more about authentication for the APIs here:
+ * https://crystallize.com/learn/developer-guides/api-overview/authentication
+ */
+const crystallizeApiUrlBase = `https://api.crystallize.com/${process.env.GATSBY_CRYSTALLIZE_TENANT_ID}`;
+
 module.exports = {
   siteMetadata: {
     title: `Crystallize`,
     description: `Headless ecommerce running on Crystallize and Gatsby`,
     author: `@crystallizeapi`,
+    crystallizeApiUrlBase
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -51,7 +64,7 @@ module.exports = {
         // This is the field under which it's accessible
         fieldName: "crystallize",
         // URL to query from
-        url: `https://api.crystallize.com/${process.env.GATSBY_CRYSTALLIZE_TENANT_ID}/catalogue`,
+        url: `${crystallizeApiUrlBase}/catalogue`,
       },
     },
     {
@@ -62,7 +75,7 @@ module.exports = {
         // This is the field under which it's accessible
         fieldName: "crystallize_search",
         // URL to query from
-        url: `https://api.crystallize.com/${process.env.GATSBY_CRYSTALLIZE_TENANT_ID}/search`,
+        url: `${crystallizeApiUrlBase}/search`,
       },
     },
     {
