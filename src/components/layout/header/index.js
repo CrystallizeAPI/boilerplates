@@ -15,11 +15,9 @@ export default function Header({ headerItems }) {
 
   return (
     <Outer>
-      <Link to="/">
-        <Logo>
-          <img src={ShopLogo} alt="" width="207" height="35" />
-        </Logo>
-      </Link>
+      <Logo as={Link} to="/">
+        <img src={ShopLogo} alt="" width="207" height="35" />
+      </Logo>
       <Nav open={navOpen}>
         <NavList>
           {headerItems
@@ -37,11 +35,9 @@ export default function Header({ headerItems }) {
       </Nav>
       <IconBar>
         <LocaleSwitcher />
-        <Link to="/account">
-          <Btn as="a" aria-label="User area">
-            <IconUser />
-          </Btn>
-        </Link>
+        <Btn as={Link} to="/account" aria-label="User area">
+          <IconUser />
+        </Btn>
         <Search />
         <BasketButton />
       </IconBar>

@@ -130,7 +130,7 @@ export function BasketProvider({ children }) {
       stale = true
       clearTimeout(timeout)
     }
-  }, [status, locale?.crystallizeCatalogueLanguage, basketModel])
+  }, [status, locale, basketModel])
 
   function dispatchCartItemAction(action) {
     return (data) => dispatch({ action, ...data })

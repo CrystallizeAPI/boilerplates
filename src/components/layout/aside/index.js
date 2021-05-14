@@ -65,16 +65,16 @@ export default function Aside() {
       </Content>
       <Footer>
         <Totals />
-        <Link to="/checkout">
-          <CheckoutBtn
-            as="a"
-            state={going ? "loading" : null}
-            disabled={!basket.cart.length}
-            onClick={onCheckoutClick}
-          >
-            {t("basket.goToCheckout")}
-          </CheckoutBtn>
-        </Link>
+
+        <CheckoutBtn
+          as={Link}
+          to="/checkout"
+          state={going ? "loading" : null}
+          disabled={!basket.cart.length}
+          onClick={onCheckoutClick}
+        >
+          {t("basket.goToCheckout")}
+        </CheckoutBtn>
       </Footer>
     </Outer>
   )

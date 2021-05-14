@@ -15,8 +15,6 @@ const Stock = ({ selectedVariant }) => {
   const hasStock = stockCount > 1
   const hasMoreStockThanLimit = stockCount > STOCK_LIMIT
 
-  console.log("count", stockCount)
-
   let stockColor
   if (!hasStock) {
     stockColor = STOCK_COLOR_INDICATOR.NO_STOCK

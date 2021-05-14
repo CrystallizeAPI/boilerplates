@@ -45,6 +45,7 @@ export default function Confirmation(props) {
     router.pathname.lastIndexOf("/") + 1
   )
   const [order, setOrder] = useState()
+
   // Empty the basket
   useEffect(() => {
     if (router.search) {
@@ -58,7 +59,7 @@ export default function Confirmation(props) {
         navigate(router.pathname, { replace: true })
       }
     }
-  })
+  }, [])
 
   useEffect(() => {
     async function getDetails() {
@@ -74,7 +75,7 @@ export default function Confirmation(props) {
       setOrder(response.data.orders.get)
     }
     getDetails()
-  }, [])
+  }, [orderId, setOrder])
 
   useEffect(() => {
     if (!order) {

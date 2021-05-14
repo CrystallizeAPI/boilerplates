@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 import { setBaseUrl, doPost } from "./helpers"
