@@ -23,12 +23,12 @@ module.exports = async function renderCheckout({ checkoutModel, context }) {
    * manage the lifecycle of the order
    */
   if (crystallizeOrderId) {
-    await crystallize.orders.updateOrder(crystallizeOrderId, {
+    await crystallize.orders.update(crystallizeOrderId, {
       ...basket,
       customer,
     });
   } else {
-    const crystallizeOrder = await crystallize.orders.createOrder({
+    const crystallizeOrder = await crystallize.orders.create({
       ...basket,
       customer,
     });
@@ -100,7 +100,7 @@ module.exports = async function renderCheckout({ checkoutModel, context }) {
   });
 
   // Tag the Crystallize order with the Klarna order id
-  await crystallize.orders.updateOrder(crystallizeOrderId, {
+  await crystallize.orders.update(crystallizeOrderId, {
     ...basket,
     payment: [
       {

@@ -53,7 +53,7 @@ module.exports = {
     mollie: paymentProviderResolver(mollieService),
   },
   OrderQueries: {
-    get: (parent, args) => crystallize.orders.getOrder(args.id),
+    get: (parent, args) => crystallize.orders.get(args.id),
   },
   Mutation: {
     user: () => ({}),

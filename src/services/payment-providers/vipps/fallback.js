@@ -55,7 +55,7 @@ module.exports = async function vippsFallback({
       } = {},
     } = order;
 
-    await crystallize.orders.updateOrder(crystallizeOrderId, {
+    await crystallize.orders.update(crystallizeOrderId, {
       payment: [
         {
           provider: "custom",

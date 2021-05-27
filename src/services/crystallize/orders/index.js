@@ -1,11 +1,11 @@
-const createOrder = require("./create-order");
-const updateOrder = require("./update-order");
-const getOrder = require("./get-order");
+const create = require("./create-order");
+const update = require("./update-order");
+const get = require("./get-order");
 const waitForOrderToBePersistated = require("./wait-for-order-to-be-persistated");
 
 module.exports = {
-  createOrder,
-  updateOrder,
-  getOrder,
+  create,
+  update,
+  get,
   waitForOrderToBePersistated,
 };

@@ -50,39 +50,45 @@ module.exports = {
      * Compose the complete cart items enriched with
      * data from Crystallize
      */
-    const cart = basketFromClient.cart.map((itemFromClient) => {
-      const product = productDataFromCrystallize.find((p) =>
-        p.variants.some((v) => v.sku === itemFromClient.sku)
-      );
+    const cart = basketFromClient.cart
+      .map((itemFromClient) => {
+        const product = productDataFromCrystallize.find((p) =>
+          p.variants.some((v) => v.sku === itemFromClient.sku)
+        );
 
-      vatType = product.vatType;
+        if (!product) {
+          return null;
+        }
 
-      const variant = product.variants.find(
-        (v) => v.sku === itemFromClient.sku
-      );
-      const { price, currency } =
-        variant.priceVariants.find(
-          (pv) => pv.identifier === itemFromClient.priceVariantIdentifier
-        ) || variant.priceVariants.find((p) => p.identifier === "default");
+        vatType = product.vatType;
 
-      const gross = price;
-      const net = (price * 100) / (100 + vatType.percent);
+        const variant = product.variants.find(
+          (v) => v.sku === itemFromClient.sku
+        );
+        const { price, currency } =
+          variant.priceVariants.find(
+            (pv) => pv.identifier === itemFromClient.priceVariantIdentifier
+          ) || variant.priceVariants.find((p) => p.identifier === "default");
 
-      return {
-        productId: product.id,
-        productVariantId: variant.id,
-        path: product.path,
-        quantity: itemFromClient.quantity || 1,
-        vatType,
-        price: {
-          gross,
-          net,
-          tax: vatType,
-          currency,
-        },
-        ...variant,
-      };
-    });
+        const gross = price;
+        const net = (price * 100) / (100 + vatType.percent);
+
+        return {
+          productId: product.id,
+          productVariantId: variant.id,
+          path: product.path,
+          quantity: itemFromClient.quantity || 1,
+          vatType,
+          price: {
+            gross,
+            net,
+            tax: vatType,
+            currency,
+          },
+          ...variant,
+        };
+      })
+      .filter((p) => !!p);
 
     // Calculate the totals
     let total = getTotals({ cart, vatType });

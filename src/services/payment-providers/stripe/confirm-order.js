@@ -25,7 +25,7 @@ module.exports = async function confirmOrder({
    * Manage the order lifecycle by using the fulfilment pipelines:
    * https://crystallize.com/learn/user-guides/orders-and-fulfilment
    */
-  const order = await crystallize.orders.createOrder(crystallizeOrderModel);
+  const order = await crystallize.orders.create(crystallizeOrderModel);
 
   // Wait for the order to be persisted
   await crystallize.orders.waitForOrderToBePersistated({ id: order.id });

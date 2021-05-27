@@ -6,7 +6,7 @@ module.exports = async function sendOrderConfirmation(orderId) {
     const { orders } = require("../crystallize");
     const { sendEmail } = require("./utils");
 
-    const order = await orders.getOrder(orderId);
+    const order = await orders.get(orderId);
 
     const { email } = order.customer.addresses[0];
 

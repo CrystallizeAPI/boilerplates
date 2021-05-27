@@ -22,8 +22,5 @@ module.exports = async function mollieOrderUpdate({ mollieOrderId }) {
     id: crystallizeOrderId,
   });
 
-  await crystallize.orders.updateOrder(
-    crystallizeOrderId,
-    validCrystallizeOrder
-  );
+  await crystallize.orders.update(crystallizeOrderId, validCrystallizeOrder);
 };

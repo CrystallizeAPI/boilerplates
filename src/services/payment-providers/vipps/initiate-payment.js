@@ -25,7 +25,7 @@ module.exports = async function initiateVippsPayment({
   /* Use a Crystallize order and the fulfilment pipelines to
    * manage the lifecycle of the order
    */
-  const crystallizeOrder = await crystallize.orders.createOrder({
+  const crystallizeOrder = await crystallize.orders.create({
     ...basket,
     customer,
   });

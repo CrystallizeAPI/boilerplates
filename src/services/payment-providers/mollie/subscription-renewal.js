@@ -20,5 +20,5 @@ module.exports = async function mollieSubscriptionRenewal({ mollieOrderId }) {
     mollieCustomer,
   });
 
-  await crystallize.orders.createOrder(validCrystallizeOrder);
+  await crystallize.orders.create(validCrystallizeOrder);
 };

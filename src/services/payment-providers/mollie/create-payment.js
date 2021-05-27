@@ -21,7 +21,7 @@ module.exports = async function createMolliePayment({
    * manage the lifecycle of the order
    */
   if (crystallizeOrderId) {
-    await crystallize.orders.updateOrder(crystallizeOrderId, {
+    await crystallize.orders.update(crystallizeOrderId, {
       ...basket,
       customer,
       meta: [
@@ -32,7 +32,7 @@ module.exports = async function createMolliePayment({
       ],
     });
   } else {
-    const crystallizeOrder = await crystallize.orders.createOrder({
+    const crystallizeOrder = await crystallize.orders.create({
       ...basket,
       customer,
       meta: [

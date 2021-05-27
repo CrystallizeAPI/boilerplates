@@ -10,9 +10,7 @@ module.exports = async function klarnaCapture({ crystallizeOrderId }) {
   const { getClient } = require("./utils");
 
   // Retrieve the Crystallize order
-  const crystallizeOrder = await crystallize.orders.getOrder(
-    crystallizeOrderId
-  );
+  const crystallizeOrder = await crystallize.orders.get(crystallizeOrderId);
   const klarnaPayment = crystallizeOrder.payment.find(
     (p) => p.provider === "klarna"
   );
