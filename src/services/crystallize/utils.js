@@ -91,33 +91,64 @@ function normaliseOrderModel({ customer, cart, total, ...rest }) {
   };
 }
 
+const getTenantId = (function () {
+  let tenantId;
+
+  return async () => {
+    if (tenantId) {
+      return tenantId;
+    }
+
+    const tenantIdResponse = await callCatalogueApi({
+      query: `
+          {
+            tenant {
+              id
+            }
+          }
+        `,
+    });
+    tenantId = tenantIdResponse.data.tenant.id;
+
+    return tenantId;
+  };
+})();
+
+/**
+ * Catalogue API is the fast read-only API to lookup data
+ * for a given item path or anything else in the catalogue
+ */
+const callCatalogueApi = createApiCaller(
+  `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/catalogue`
+);
+
+/**
+ * Search API is the fast read-only API to search across
+ * all items and topics
+ */
+const callSearchApi = createApiCaller(
+  `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/search`
+);
+
+/**
+ * Orders API is the highly scalable API to send/read massive
+ * amounts of orders
+ */
+const callOrdersApi = createApiCaller(
+  `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/orders`
+);
+
+/**
+ * The PIM API is used for doing the ALL possible actions on
+ * a tenant or your user profile
+ */
+const callPimApi = createApiCaller("https://pim.crystallize.com/graphql");
+
 module.exports = {
   normaliseOrderModel,
-
-  /**
-   * Catalogue API is the fast read-only API to lookup data
-   * for a given item path or anything else in the catalogue
-   */
-  callCatalogueApi: createApiCaller(
-    `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/catalogue`
-  ),
-  /**
-   * Search API is the fast read-only API to search across
-   * all items and topics
-   */
-  callSearchApi: createApiCaller(
-    `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/search`
-  ),
-  /**
-   * Orders API is the highly scalable API to send/read massive
-   * amounts of orders
-   */
-  callOrdersApi: createApiCaller(
-    `https://api.crystallize.com/${CRYSTALLIZE_TENANT_IDENTIFIER}/orders`
-  ),
-  /**
-   * The PIM API is used for doing the ALL possible actions on
-   * a tenant or your user profile
-   */
-  callPimApi: createApiCaller("https://pim.crystallize.com/graphql"),
+  callCatalogueApi,
+  callSearchApi,
+  callOrdersApi,
+  callPimApi,
+  getTenantId,
 };

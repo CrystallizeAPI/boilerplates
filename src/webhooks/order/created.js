@@ -1,4 +1,4 @@
-// const emailService = require("../../services/email-service");
+const emailService = require("../../services/email-service");
 
 module.exports = async function orderCreated(payload) {
   console.log("Webhook payload: orderCreated");
@@ -6,10 +6,7 @@ module.exports = async function orderCreated(payload) {
 
   /**
    * You can send out an order confirmation email here
-   * if you like. The email sending is also triggered at:
-   * - payment-providers/stripe
-   *
-   * You should settle on a single place to to this
+   * if you like
    */
-  // await emailService.sendOrderConfirmation(payload.order.data.id);
+  await emailService.sendOrderConfirmation(payload.order.data.id);
 };

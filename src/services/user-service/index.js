@@ -1,5 +1,7 @@
 const invariant = require("invariant");
 
+const crystallize = require("../crystallize");
+
 /**
  * Todo: link to good JWT intro
  */
@@ -15,18 +17,13 @@ module.exports = {
 
     return `${publicHost}/user/logout`;
   },
-  authenticate(token) {
+  async authenticate(token) {
     invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
 
     if (!token) {
       return null;
     }
 
-    /**
-     * Here you would confirm the token provided by the cookie is a valid token
-     * for a user. The boilerplate has no datastore or service to persist users,
-     * so we will assume that the token is valid.
-     */
     const jwt = require("jsonwebtoken");
     const decoded = jwt.verify(token, JWT_SECRET);
     if (!decoded) {
@@ -41,6 +38,29 @@ module.exports = {
     invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
 
     const { publicHost } = context;
+
+    const crystallizeCustomer = await crystallize.customers.get({
+      identifier: email,
+    });
+
+    /**
+     * If there is no customer record in Crystallize, we will
+     * create one.
+     *
+     * You can choose NOT to create a customer at this point,
+     * and prohibit logins for none customers
+     */
+    if (!crystallizeCustomer) {
+      return {
+        success: false,
+        error: "CUSTOMER_NOT_FOUND",
+      };
+      // await crystallize.customers.create({
+      //   identifier: email,
+      //   firstName: "Jane",
+      //   lastName: "Doe",
+      // });
+    }
 
     /**
      * This is the page responsible of receiving the magic

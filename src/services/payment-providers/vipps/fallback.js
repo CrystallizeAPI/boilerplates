@@ -4,7 +4,6 @@ module.exports = async function vippsFallback({
   onErrorURL,
 }) {
   const crystallize = require("../../crystallize");
-  const emailService = require("../../email-service");
 
   const { getClient } = require("./utils");
 
@@ -97,9 +96,6 @@ module.exports = async function vippsFallback({
         ],
       },
     });
-
-    // Send out the confirmation email
-    await emailService.sendOrderConfirmation(crystallizeOrderId);
   } else {
     redirectTo = onErrorURL;
     console.log(JSON.stringify(lastTransactionLogEntry, null, 2));

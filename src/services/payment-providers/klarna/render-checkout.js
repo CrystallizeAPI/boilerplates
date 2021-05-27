@@ -12,11 +12,17 @@ module.exports = async function renderCheckout({ checkoutModel, context }) {
     termsURL,
     checkoutURL,
   } = checkoutModel;
-  const { serviceCallbackHost } = context;
+  const { serviceCallbackHost, user } = context;
 
   let { crystallizeOrderId, klarnaOrderId } = basketModel;
 
   const basket = await basketService.get({ basketModel, context });
+
+  // Add the identifier from the current logged in user
+  const customerWithCurrentLoggedInUser = {
+    ...customer,
+    identifier: user.email,
+  };
 
   /**
    * Use a Crystallize order and the fulfilment pipelines to
@@ -25,12 +31,12 @@ module.exports = async function renderCheckout({ checkoutModel, context }) {
   if (crystallizeOrderId) {
     await crystallize.orders.update(crystallizeOrderId, {
       ...basket,
-      customer,
+      customer: customerWithCurrentLoggedInUser,
     });
   } else {
     const crystallizeOrder = await crystallize.orders.create({
       ...basket,
-      customer,
+      customer: customerWithCurrentLoggedInUser,
     });
     crystallizeOrderId = crystallizeOrder.id;
   }
