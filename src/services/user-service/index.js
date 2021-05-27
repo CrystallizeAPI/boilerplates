@@ -10,6 +10,27 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // The cookie name to use for JTW token
 const USER_TOKEN_NAME = "user-token";
 
+async function getUser({ context }) {
+  const userInContext = context.user;
+
+  const user = {
+    isLoggedIn: Boolean(userInContext && "email" in userInContext),
+    email: userInContext && userInContext.email,
+    logoutLink: `${context.publicHost}/user/logout`,
+  };
+
+  if (user && user.isLoggedIn) {
+    const crystallizeCustomer = await crystallize.customers.get({
+      identifier: user.email,
+    });
+    if (crystallizeCustomer) {
+      Object.assign(user, crystallizeCustomer);
+    }
+  }
+
+  return user;
+}
+
 module.exports = {
   USER_TOKEN_NAME,
   authenticate(token) {
@@ -118,24 +139,17 @@ module.exports = {
       };
     }
   },
-  async getUser({ context }) {
-    const userInContext = context.user;
-
-    const user = {
-      isLoggedIn: Boolean(userInContext && "email" in userInContext),
-      email: userInContext && userInContext.email,
-      logoutLink: `${context.publicHost}/user/logout`,
-    };
-
-    if (user && user.isLoggedIn) {
-      const crystallizeCustomer = await crystallize.customers.get({
-        identifier: user.email,
-      });
-      if (crystallizeCustomer) {
-        Object.assign(user, crystallizeCustomer);
-      }
+  getUser,
+  async update({ context, input }) {
+    const { user } = context;
+    if (!user) {
+      throw new Error("No user found in context");
     }
+    await crystallize.customers.update({
+      identifier: user.email,
+      customer: input,
+    });
 
-    return user;
+    return getUser({ context });
   },
 };

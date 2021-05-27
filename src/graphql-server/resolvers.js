@@ -36,7 +36,6 @@ module.exports = {
       console.log("dynamicRandomInt called");
       return parseInt(Math.random() * 100);
     },
-    youCanEvenGetTheUserDataHere: () => ({}),
   },
   PaymentProvidersQueries: {
     stripe: paymentProviderResolver(stripeService),
@@ -52,9 +51,9 @@ module.exports = {
     paymentProviders: () => ({}),
   },
   UserMutations: {
-    sendMagicLink: (parent, args, context) => {
-      return userService.sendMagicLink({ ...args, context });
-    },
+    sendMagicLink: (parent, args, context) =>
+      userService.sendMagicLink({ ...args, context }),
+    update: (parent, args, context) => userService.update({ ...args, context }),
   },
   PaymentProvidersMutations: {
     stripe: () => ({}),

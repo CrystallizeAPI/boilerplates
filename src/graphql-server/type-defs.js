@@ -6,7 +6,7 @@ module.exports = gql`
   type Query {
     myCustomBusinessThing: MyCustomBusinnessQueries!
     basket(basketModel: BasketModelInput!): Basket!
-    user: UserQueries!
+    user: User!
     paymentProviders: PaymentProvidersQueries!
     orders: OrderQueries!
     voucher(code: String!): VoucherResponse!
@@ -20,7 +20,6 @@ module.exports = gql`
   type MyCustomBusinnessQueries {
     whatIsThis: String!
     dynamicRandomInt: Int!
-    youCanEvenGetTheUserDataHere: UserQueries!
   }
 
   type Basket {
@@ -83,14 +82,14 @@ module.exports = gql`
     percent: Int!
   }
 
-  type UserQueries {
+  type User {
     logoutLink: String!
     isLoggedIn: Boolean!
     email: String
     firstName: String
     middleName: String
     lastName: String
-    meta: [KeyValuePairInput!]
+    meta: [KeyValuePair!]
   }
 
   type PaymentProvidersQueries {
@@ -120,11 +119,6 @@ module.exports = gql`
     paymentProviders: PaymentProvidersMutations!
   }
 
-  type MutationResponse {
-    success: Boolean!
-    error: String
-  }
-
   input BasketModelInput {
     locale: LocaleInput!
     cart: [SimpleCartItem!]!
@@ -152,18 +146,31 @@ module.exports = gql`
     sendMagicLink(
       email: String!
       redirectURLAfterLogin: String!
-    ): MutationResponse!
+    ): SendMagicLinkResponse!
+    update(input: UserUpdateInput!): User!
+  }
+
+  input UserUpdateInput {
+    firstName: String
+    middleName: String
+    lastName: String
+    meta: [KeyValuePairInput!]
+  }
+
+  type SendMagicLinkResponse {
+    success: Boolean!
+    error: String
   }
 
   input CheckoutModelInput {
     basketModel: BasketModelInput!
-    customer: CustomerInput
+    customer: OrderCustomerInput
     confirmationURL: String!
     checkoutURL: String!
     termsURL: String!
   }
 
-  input CustomerInput {
+  input OrderCustomerInput {
     firstName: String
     lastName: String
     addresses: [AddressInput!]
@@ -245,7 +252,12 @@ module.exports = gql`
     crystallizeOrderId: String!
   }
 
-  type KeyValuePairInput {
+  type KeyValuePair {
+    key: String!
+    value: String
+  }
+
+  input KeyValuePairInput {
     key: String!
     value: String
   }
