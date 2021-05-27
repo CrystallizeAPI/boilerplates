@@ -67,15 +67,16 @@ module.exports = {
      * and prohibit logins for none customers
      */
     if (!crystallizeCustomer) {
-      return {
-        success: false,
-        error: "CUSTOMER_NOT_FOUND",
-      };
-      // await crystallize.customers.create({
-      //   identifier: email,
-      //   firstName: "Jane",
-      //   lastName: "Doe",
-      // });
+      // return {
+      //   success: false,
+      //   error: "CUSTOMER_NOT_FOUND",
+      // };
+      const emailParts = email.split("@");
+      await crystallize.customers.create({
+        identifier: email,
+        firstName: emailParts[0],
+        lastName: emailParts[1],
+      });
     }
 
     /**
