@@ -87,6 +87,9 @@ module.exports = gql`
     logoutLink: String!
     isLoggedIn: Boolean!
     email: String
+    firstName: String
+    middleName: String
+    lastName: String
   }
 
   type PaymentProvidersQueries {

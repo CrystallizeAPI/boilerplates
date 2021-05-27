@@ -17,7 +17,7 @@ module.exports = {
 
     return `${publicHost}/user/logout`;
   },
-  async authenticate(token) {
+  authenticate(token) {
     invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
 
     if (!token) {
