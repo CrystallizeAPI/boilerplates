@@ -2,6 +2,7 @@ module.exports = async function stripeToCrystallizeOrderModel({
   basket,
   checkoutModel,
   paymentIntentId,
+  customerIdentifier,
 }) {
   const { getClient } = require("./utils");
 
@@ -36,7 +37,7 @@ module.exports = async function stripeToCrystallizeOrderModel({
     total: basket.total,
     meta,
     customer: {
-      identifier: "",
+      identifier: customerIdentifier,
       firstName: customerName[0],
       middleName: customerName.slice(1, customerName.length - 1).join(),
       lastName: customerName[customerName.length - 1],

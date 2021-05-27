@@ -8,7 +8,13 @@ module.exports = async function createMolliePayment({
   const { getClient } = require("./utils");
 
   const { basketModel, customer, confirmationURL } = checkoutModel;
-  const { serviceCallbackHost } = context;
+  const { serviceCallbackHost, user } = context;
+
+  // Add the identifier from the current logged in user
+  const customerWithCurrentLoggedInUser = {
+    ...customer,
+    identifier: user.email,
+  };
 
   const basket = await basketService.get({ basketModel, context });
   const { total } = basket;
@@ -23,7 +29,7 @@ module.exports = async function createMolliePayment({
   if (crystallizeOrderId) {
     await crystallize.orders.update(crystallizeOrderId, {
       ...basket,
-      customer,
+      customer: customerWithCurrentLoggedInUser,
       meta: [
         {
           key: "isSubscription",
@@ -34,7 +40,7 @@ module.exports = async function createMolliePayment({
   } else {
     const crystallizeOrder = await crystallize.orders.create({
       ...basket,
-      customer,
+      customer: customerWithCurrentLoggedInUser,
       meta: [
         {
           key: "isSubscription",
