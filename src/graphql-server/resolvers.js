@@ -25,7 +25,7 @@ module.exports = {
         "This is an example of a custom query for GraphQL demonstration purpuses. Check out the MyCustomBusinnessQueries resolvers for how to resolve additional fields apart from the 'whatIsThis' field",
     }),
     basket: (parent, args, context) => basketService.get({ ...args, context }),
-    user: () => ({}),
+    user: (parent, args, context) => userService.getUser({ context }),
     orders: () => ({}),
     paymentProviders: () => ({}),
     voucher: (parent, args, context) =>
@@ -37,14 +37,6 @@ module.exports = {
       return parseInt(Math.random() * 100);
     },
     youCanEvenGetTheUserDataHere: () => ({}),
-  },
-  UserQueries: {
-    isLoggedIn(parent, args, { user }) {
-      return Boolean(user && "email" in user);
-    },
-    email: (parent, args, { user }) => (user ? user.email : null),
-    logoutLink: (parent, args, context) =>
-      userService.getLogoutLink({ context }),
   },
   PaymentProvidersQueries: {
     stripe: paymentProviderResolver(stripeService),

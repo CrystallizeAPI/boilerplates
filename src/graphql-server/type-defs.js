@@ -90,6 +90,7 @@ module.exports = gql`
     firstName: String
     middleName: String
     lastName: String
+    meta: [KeyValuePairInput!]
   }
 
   type PaymentProvidersQueries {
@@ -242,5 +243,10 @@ module.exports = gql`
     success: Boolean!
     checkoutLink: String
     crystallizeOrderId: String!
+  }
+
+  type KeyValuePairInput {
+    key: String!
+    value: String
   }
 `;

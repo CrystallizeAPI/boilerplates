@@ -12,11 +12,6 @@ const USER_TOKEN_NAME = "user-token";
 
 module.exports = {
   USER_TOKEN_NAME,
-  getLogoutLink({ context }) {
-    const { publicHost } = context;
-
-    return `${publicHost}/user/logout`;
-  },
   authenticate(token) {
     invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
 
@@ -122,5 +117,25 @@ module.exports = {
         error,
       };
     }
+  },
+  async getUser({ context }) {
+    const userInContext = context.user;
+
+    const user = {
+      isLoggedIn: Boolean(userInContext && "email" in userInContext),
+      email: userInContext && userInContext.email,
+      logoutLink: `${context.publicHost}/user/logout`,
+    };
+
+    if (user && user.isLoggedIn) {
+      const crystallizeCustomer = await crystallize.customers.get({
+        identifier: user.email,
+      });
+      if (crystallizeCustomer) {
+        Object.assign(user, crystallizeCustomer);
+      }
+    }
+
+    return user;
   },
 };
