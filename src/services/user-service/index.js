@@ -7,8 +7,11 @@ const crystallize = require("../crystallize");
  */
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// The cookie name to use for JTW token
-const USER_TOKEN_NAME = "user-token";
+// Cookie config for user JWTs
+const COOKIE_USER_TOKEN_NAME = "user-token";
+const COOKIE_USER_TOKEN_MAX_AGE = 60 * 60 * 24;
+const COOKIE_REFRESH_TOKEN_NAME = "user-token-refresh";
+const COOKIE_REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7;
 
 async function getUser({ context }) {
   const userInContext = context.user;
@@ -32,7 +35,10 @@ async function getUser({ context }) {
 }
 
 module.exports = {
-  USER_TOKEN_NAME,
+  COOKIE_USER_TOKEN_NAME,
+  COOKIE_REFRESH_TOKEN_NAME,
+  COOKIE_USER_TOKEN_MAX_AGE,
+  COOKIE_REFRESH_TOKEN_MAX_AGE,
   authenticate(token) {
     invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
 
@@ -95,7 +101,7 @@ module.exports = {
     loginLink.searchParams.append(
       "token",
       jwt.sign({ email, redirectURLAfterLogin }, JWT_SECRET, {
-        expiresIn: "36000s",
+        expiresIn: "1h",
       })
     );
 
@@ -124,13 +130,19 @@ module.exports = {
       const { email, redirectURLAfterLogin } = decoded;
 
       const signedLoginToken = jwt.sign({ email }, JWT_SECRET, {
-        expiresIn: "24h",
+        expiresIn: COOKIE_USER_TOKEN_MAX_AGE,
+      });
+      const signedLoginRefreshToken = jwt.sign({ email }, JWT_SECRET, {
+        expiresIn: COOKIE_REFRESH_TOKEN_MAX_AGE,
       });
 
       return {
         success: true,
         signedLoginToken,
+        COOKIE_USER_TOKEN_MAX_AGE,
+        signedLoginRefreshToken,
         redirectURLAfterLogin,
+        COOKIE_REFRESH_TOKEN_MAX_AGE,
       };
     } catch (error) {
       console.log(error);
@@ -139,6 +151,25 @@ module.exports = {
         error,
       };
     }
+  },
+  validateRefreshToken({ refreshToken, email }) {
+    if (!refreshToken || !email) {
+      return false;
+    }
+
+    try {
+      const jwt = require("jsonwebtoken");
+      const decoded = jwt.verify(refreshToken, JWT_SECRET);
+      if (decoded.email === email) {
+        return jwt.sign({ email }, JWT_SECRET, {
+          expiresIn: COOKIE_USER_TOKEN_MAX_AGE,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
+    return false;
   },
   getUser,
   async update({ context, input }) {
