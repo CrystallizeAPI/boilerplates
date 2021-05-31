@@ -12,6 +12,7 @@ async function loginMagicLink(event, context, callback) {
     const {
       success,
       signedLoginToken,
+      signedLoginRefreshToken,
       redirectURLAfterLogin,
     } = await userService.validateMagicLinkToken(
       event.queryStringParameters.token
@@ -26,12 +27,15 @@ async function loginMagicLink(event, context, callback) {
        * Website:         my-website.com
        * Service API: api.my-website.com
        */
-      // "set-cookie": `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/ SameSite=None; Secure; Domain=.my-website.com`,
+      // "set-cookie": `${userService.COOKIE_USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/ SameSite=None; Secure; Domain=.my-website.com`,
 
       return callback(null, {
         statusCode: 302,
         headers: {
-          "set-cookie": `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/`,
+          "set-cookie": [
+            `${userService.COOKIE_USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=${userService.COOKIE_USER_TOKEN_MAX_AGE}; Path=/`,
+            `${userService.COOKIE_REFRESH_TOKEN_NAME}=${signedLoginRefreshToken}; HttpOnly; Max-Age=${userService.COOKIE_REFRESH_TOKEN_MAX_AGE}; Path=/`,
+          ],
           location: redirectURLAfterLogin,
         },
       });

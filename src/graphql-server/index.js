@@ -2,8 +2,16 @@ const createContext = require("./create-context");
 const resolvers = require("./resolvers");
 const typeDefs = require("./type-defs");
 
-module.exports = function createGraphqlServerConfig({ apiPathPrefix = "" }) {
-  const context = createContext({ apiPathPrefix });
+module.exports = function createGraphqlServerConfig({
+  apiPathPrefix = "",
+  refreshUserToken,
+  normaliseRequest,
+}) {
+  const context = createContext({
+    apiPathPrefix,
+    refreshUserToken,
+    normaliseRequest,
+  });
 
   return {
     context,

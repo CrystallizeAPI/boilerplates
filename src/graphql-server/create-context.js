@@ -1,32 +1,28 @@
-const cookie = require("cookie");
-
 const userService = require("../services/user-service");
 const getHost = require("../lib/get-host");
 
-function normaliseRequest(args) {
-  if (args.event) {
-    const { headers } = args.event;
-    if (headers && !args.event.cookies) {
-      return {
-        headers,
-        cookies: cookie.parse(headers.cookie || headers.Cookie || ""),
-      };
-    }
-    return args.event;
-  }
-
-  if (args.req) {
-    return args.req;
-  }
-
-  return args;
-}
-
-module.exports = function createContext({ apiPathPrefix }) {
+module.exports = function createContext({
+  apiPathPrefix,
+  normaliseRequest,
+  refreshUserToken,
+}) {
   return function context(args) {
     const { cookies, headers } = normaliseRequest(args);
 
-    const user = userService.authenticate(cookies[userService.USER_TOKEN_NAME]);
+    const user = userService.authenticate(
+      cookies[userService.COOKIE_USER_TOKEN_NAME]
+    );
+
+    // Refresh the user token (if available)
+    if (user && refreshUserToken) {
+      const newUserToken = userService.validateRefreshToken({
+        refreshToken: cookies[userService.COOKIE_REFRESH_TOKEN_NAME],
+        email: user.email,
+      });
+      if (newUserToken) {
+        refreshUserToken(args, newUserToken);
+      }
+    }
 
     // Determine the URL for webhook callbacks (ex: https://service-api.example.com/api)
     const publicHost = getHost({ headers }) + apiPathPrefix;

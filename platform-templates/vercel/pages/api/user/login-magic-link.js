@@ -15,6 +15,7 @@ export default async function loginMagicLink(req, res) {
     const {
       success,
       signedLoginToken,
+      signedLoginRefreshToken,
       redirectURLAfterLogin,
     } = await userService.validateMagicLinkToken(req.query.token);
 
@@ -29,13 +30,17 @@ export default async function loginMagicLink(req, res) {
        */
       // res.setHeader(
       //   "Set-Cookie",
-      //   `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/; SameSite=None; Secure; Domain=.my-website.com`
+      //   `${userService.COOKIE_USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/; SameSite=None; Secure; Domain=.my-website.com`
       // );
 
-      res.setHeader(
-        "Set-Cookie",
-        `${userService.USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=86400; Path=/`
-      );
+      res.setHeader("Set-Cookie", [
+        `${userService.COOKIE_USER_TOKEN_NAME}=${signedLoginToken}; HttpOnly; Max-Age=${userService.COOKIE_USER_TOKEN_MAX_AGE}; Path=/`,
+        `${userService.COOKIE_REFRESH_TOKEN_NAME}=${signedLoginRefreshToken}; HttpOnly; Max-Age=${userService.COOKIE_REFRESH_TOKEN_MAX_AGE}; Path=/`,
+      ]);
+      // res.setHeader(
+      //   "Set-Cookie",
+      //   `${userService.COOKIE_REFRESH_TOKEN_NAME}=${signedLoginRefreshToken}; HttpOnly; Max-Age=${userService.COOKIE_REFRESH_TOKEN_MAX_AGE}; Path=/`
+      // );
       res.setHeader("Location", redirectURLAfterLogin);
 
       return res.status(302).send("User is authenticated");
