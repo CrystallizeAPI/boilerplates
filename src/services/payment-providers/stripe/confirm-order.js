@@ -18,7 +18,8 @@ module.exports = async function confirmOrder({
     basket,
     checkoutModel,
     paymentIntentId,
-    customerIdentifier: user.email || "",
+    customerIdentifier:
+      user?.email || checkoutModel?.customer?.addresses?.[0]?.email || "",
   });
 
   /**
