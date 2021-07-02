@@ -264,7 +264,7 @@ module.exports = gql`
 
   type PaypalPaymentResponse {
     success: Boolean!
-    orderId: String!
+    orderId: String
   }
 
   type KeyValuePair {
