@@ -2,6 +2,7 @@
   "scripts": {
     "dev:boilerplate": "rm -rf src && cp -r ../../src src && npm run dev",
     "dev": "next dev -p 3001",
+    "dev:inspect": "NODE_OPTIONS='--inspect-brk' next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001"
   },
@@ -10,6 +11,7 @@
     "@crystallize/node-klarna": "^4.8.0",
     "@crystallize/node-vipps": "^0.1.4",
     "@mollie/api-client": "^3.4.0",
+    "@paypal/checkout-server-sdk": "^1.0.2",
     "@sendgrid/mail": "^7.4.1",
     "apollo-server-micro": "2.11.0",
     "cookie": "^0.4.1",

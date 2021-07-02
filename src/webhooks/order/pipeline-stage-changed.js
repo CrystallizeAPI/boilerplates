@@ -1,6 +1,8 @@
-module.exports = function orderPipelineStageChanged(payload) {
-  console.log("Webhook payload: orderPipelineStageChanged");
-  console.log(JSON.stringify(payload, null, 2));
+module.exports = async function orderPipelineStageChanged(payload) {
+  console.log("Webhook: orderPipelineStageChanged");
+
+  // const paypalCapture = require("../../services/payment-providers/paypal/capture-payment");
+  // const paypalRefund = require("../../services/payment-providers/paypal/refund-payment");
 
   const {
     order: { get: order },
@@ -11,14 +13,14 @@ module.exports = function orderPipelineStageChanged(payload) {
 
   // Print out the different pipelines and their stage names
   const inPipelines = order.pipelines
-    .filter((p) => !!p.stages)
+    .filter((p) => !!p.pipeline.stages)
     .map(({ pipeline, stageId }) => {
       const { name } = pipeline;
 
       const stage = pipeline.stages.find((s) => s.id === stageId);
       const stageName = stage ? stage.name : "n/a";
 
-      console.log(`Pipeline "${name}" is in stage "${stageName}"`);
+      console.log(`- ${name} = ${stageName}`);
 
       return {
         name,
@@ -41,9 +43,11 @@ module.exports = function orderPipelineStageChanged(payload) {
         break;
       case "Delivered":
         console.log("Capture order amount from payment provider");
+        // await paypalCapture(order.id);
         break;
       case "Cancelled":
         console.log("Refund order amount from payment provider");
+        // await paypalRefund(order.id);
         break;
     }
   }

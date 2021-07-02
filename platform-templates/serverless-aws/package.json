@@ -9,22 +9,23 @@
     "dev": "serverless offline --httpPort 3001"
   },
   "dependencies": {
-    "apollo-server-lambda": "^2.16.1",
-    "graphql": "^15.3.0",
-    "source-map-support": "^0.5.10",
     "@crystallize/node-klarna": "^4.8.0",
     "@crystallize/node-vipps": "^0.1.4",
     "@mollie/api-client": "^3.4.0",
+    "@paypal/checkout-server-sdk": "^1.0.2",
     "@sendgrid/mail": "^7.4.1",
+    "apollo-server-lambda": "^2.16.1",
     "apollo-server-micro": "2.11.0",
     "cookie": "^0.4.1",
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
+    "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
     "invariant": "^2.2.4",
     "jsonwebtoken": "^8.5.1",
     "mjml": "^4.8.1",
     "node-fetch": "^2.6.1",
+    "source-map-support": "^0.5.10",
     "stripe": "^8.130.0"
   },
   "devDependencies": {

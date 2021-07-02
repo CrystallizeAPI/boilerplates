@@ -8,6 +8,7 @@ const stripeService = require("../services/payment-providers/stripe");
 const mollieService = require("../services/payment-providers/mollie");
 const vippsService = require("../services/payment-providers/vipps");
 const klarnaService = require("../services/payment-providers/klarna");
+const paypalService = require("../services/payment-providers/paypal");
 
 function paymentProviderResolver(service) {
   return () => {
@@ -42,6 +43,7 @@ module.exports = {
     klarna: paymentProviderResolver(klarnaService),
     vipps: paymentProviderResolver(vippsService),
     mollie: paymentProviderResolver(mollieService),
+    paypal: paymentProviderResolver(paypalService),
   },
   OrderQueries: {
     get: (parent, args) => crystallize.orders.get(args.id),
@@ -60,6 +62,7 @@ module.exports = {
     klarna: () => ({}),
     mollie: () => ({}),
     vipps: () => ({}),
+    paypal: () => ({}),
   },
   StripeMutations: {
     createPaymentIntent: (parent, args, context) =>
@@ -86,6 +89,20 @@ module.exports = {
       vippsService.initiatePayment({
         ...args,
         context,
+      }),
+  },
+  PaypalMutation: {
+    createPayment: (parent, args, context) =>
+      paypalService.createPaypalPayment({
+        ...args,
+        context,
+        parent,
+      }),
+    confirmPayment: (parent, args, context) =>
+      paypalService.confirmPaypalPayment({
+        ...args,
+        context,
+        parent,
       }),
   },
 };

@@ -26,7 +26,12 @@ module.exports = async function getOrder(id) {
             additionalInformation
             payment {
               ... on StripePayment {
+                provider
                 paymentMethod
+              }
+              ... on PaypalPayment {
+                provider
+                orderId
               }
               ... on CustomPayment {
                 provider

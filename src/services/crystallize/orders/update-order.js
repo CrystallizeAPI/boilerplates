@@ -4,23 +4,17 @@ module.exports = async function updateOrder(id, variables) {
   const response = await callPimApi({
     variables: {
       id,
-      ...normaliseOrderModel(variables),
+      input: normaliseOrderModel(variables),
     },
     query: `
       mutation updateOrder(
         $id: ID!
-        $customer: CustomerInput
-        $payment: [PaymentInput!]
-        $additionalInformation: String
+        $input: UpdateOrderInput!
       ) {
         order {
             update(
             id: $id,
-            input: {
-              customer: $customer
-              payment: $payment
-              additionalInformation: $additionalInformation
-            }
+            input: $input
           ) {
             id
           }
