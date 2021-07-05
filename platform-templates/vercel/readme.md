@@ -22,7 +22,7 @@ Will be included in git. Typically includes the Crystallize tenant identifier an
 
 `.env.local`
 
-Sensitive information, excluded from git. Example of what goes here is Crystallize Access tokens, JTW token secret and payment provider client keys.
+Sensitive information, excluded from git. Example of what goes here is Crystallize Access tokens, JWT token secret and payment provider client keys.
 
 ## Vercel serverless functions
 
