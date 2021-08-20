@@ -22,8 +22,10 @@ module.exports = async function initiateVippsPayment({
   // Add the identifier from the current logged in user
   const customerWithCurrentLoggedInUser = {
     ...customer,
-    identifier: user.email,
   };
+  if (user) {
+    customerWithCurrentLoggedInUser.identifier = user.email;
+  }
 
   const basket = await basketService.get({ basketModel, context });
   const { total } = basket;

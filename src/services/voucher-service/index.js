@@ -36,7 +36,7 @@ module.exports = {
   async get({ code, context }) {
     const { user } = context;
 
-    const isAnonymousUser = !user || !user.email;
+    const isAnonymousUser = !user || !user.isLoggedIn;
 
     const allCrystallizeVouchers = await getCrystallizeVouchers();
 

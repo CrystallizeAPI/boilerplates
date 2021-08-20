@@ -21,8 +21,10 @@ module.exports = async function renderCheckout({ checkoutModel, context }) {
   // Add the identifier from the current logged in user
   const customerWithCurrentLoggedInUser = {
     ...customer,
-    identifier: user.email,
   };
+  if (user) {
+    customerWithCurrentLoggedInUser.identifier = user.email;
+  }
 
   /**
    * Use a Crystallize order and the fulfilment pipelines to
