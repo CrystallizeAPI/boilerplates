@@ -42,7 +42,8 @@ function createApiCaller(uri) {
   };
 }
 
-function normaliseOrderModel({ customer, cart, total, ...rest }) {
+// eslint-disable-next-line no-unused-vars
+function normaliseOrderModel({ customer, cart, total, voucher, ...rest }) {
   return {
     ...rest,
     ...(total && {
