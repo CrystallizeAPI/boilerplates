@@ -40,6 +40,10 @@ module.exports = async function getOrder(id) {
                   value
                 }
               }
+              ... on KlarnaPayment {
+                provider
+                orderId
+              }
             }
             cart {
               sku
