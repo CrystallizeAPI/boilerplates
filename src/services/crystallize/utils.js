@@ -79,6 +79,7 @@ function normaliseOrderModel({ customer, cart, total, voucher, ...rest }) {
     }),
     ...(customer && {
       customer: {
+        identifier: customer.identifier,
         firstName: customer.firstName || null,
         lastName: customer.lastName || null,
         addresses: customer.addresses || [
