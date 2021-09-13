@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Image } from "@crystallize/react-image";
 import { ContentTransformer } from "@crystallize/react-content-transformer";
 import toText from "@crystallize/content-transformer/toText";
-import Link from "next/link";
 import { fetcher } from "lib/graphql";
 import Layout from "components/layout";
 import Meta from "components/meta";
@@ -38,10 +37,21 @@ const ImgWrapper = styled.div`
   margin-top: 140px;
   height: auto;
   border-radius: ${({ theme }) => theme.styles.borderRadius};
+  figure,
+  picture {
+    width: 100%;
 
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    ${({ theme }) => theme.responsive.mdPlus} {
+      border-radius: ${({ theme }) => theme.styles.borderRadius};
+    }
+  }
   img {
     width: 100%;
-    height: auto;
+    object-fit: cover;
+    height: 100%;
   }
   ${({ theme }) => theme.responsive.lg} {
     margin-left: 100px;
@@ -51,7 +61,6 @@ const ImgWrapper = styled.div`
     img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
     }
   }
 `;

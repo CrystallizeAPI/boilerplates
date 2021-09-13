@@ -40,7 +40,10 @@ const Outer = styled.div`
   height: 100%;
   overflow: hidden;
   display: flex;
-
+  figure {
+    width: 100%;
+    height: 100%;
+  }
   img {
     object-fit: cover;
     height: 100%;
