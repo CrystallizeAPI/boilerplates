@@ -1,0 +1,13 @@
+query Category($path: String!) {
+  category: catalogue(path: $path, language: "en") {
+    ...category
+
+    articles: subtree(first: 9, sort: asc) {
+      edges {
+        node {
+          ...articlePreview
+        }
+      }
+    }
+  }
+}

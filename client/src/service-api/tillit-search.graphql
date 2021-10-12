@@ -1,0 +1,14 @@
+mutation TillitSearch($searchTerm: String!) {
+  paymentProviders {
+    tillit {
+      search(searchTerm: $searchTerm) {
+        success
+        data {
+          id
+          name
+          highlight
+        }
+      }
+    }
+  }
+}

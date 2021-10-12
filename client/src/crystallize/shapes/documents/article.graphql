@@ -1,0 +1,86 @@
+fragment articleBase on Item {
+  id
+  title: component(id: "title") {
+    ...component # SingleLine
+  }
+  lead: component(id: "lead") {
+    ...component # RichText
+  }
+  heroMedia: component(id: "hero-media") {
+    content {
+      __typename
+      ... on ComponentChoiceContent {
+        selectedComponent {
+          ...component # Images / Videos
+        }
+      }
+    }
+  }
+}
+
+fragment articlePreview on Item {
+  ...articleBase
+
+  path
+
+  byline: component(id: "byline") {
+    content {
+      __typename
+      ... on ItemRelationsContent {
+        items {
+          name: component(id: "name") {
+            ...component
+          }
+          avatar: component(id: "avatar") {
+            ...component # Images
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment article on Item {
+  ...articleBase
+
+  publishedAt
+
+  body: component(id: "body") {
+    ...component # ParagraphCollections
+  }
+
+  relatedArticles: component(id: "related-articles") {
+    content {
+      __typename
+      ... on ItemRelationsContent {
+        items {
+          ...articlePreview
+        }
+      }
+    }
+  }
+
+  meta: component(id: "meta") {
+    ...component
+  }
+
+  byline: component(id: "byline") {
+    content {
+      __typename
+      ... on ItemRelationsContent {
+        items {
+          path
+          name: component(id: "name") {
+            ...component
+          }
+          bio: component(id: "bio") {
+            ...component # RichText
+          }
+          avatar: component(id: "avatar") {
+            ...component # Images
+          }
+        }
+      }
+    }
+  }
+}

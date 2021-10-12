@@ -1,0 +1,18 @@
+mutation TillitCheckout(
+  $checkoutModel: CheckoutModelInput!
+  $tillitInput: TillitCheckoutInput!
+  $baseUrl: String!
+) {
+  paymentProviders {
+    tillit {
+      checkout(
+        checkoutModel: $checkoutModel
+        tillitInput: $tillitInput
+        baseUrl: $baseUrl
+      ) {
+        success
+        paymentUrl
+      }
+    }
+  }
+}

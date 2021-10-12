@@ -1,0 +1,18 @@
+fragment section on Item {
+  id
+  title: component(id: "title") {
+    ...component # SingleLine
+  }
+  description: component(id: "description") {
+    ...component # RichText
+  }
+  image: component(id: "image") {
+    ...component # Images
+  }
+  button: component(id: "button") {
+    ...component # Chunk
+  }
+  webDisplaySettings: component(id: "web-display-settings") {
+    ...component # Chunk
+  }
+}

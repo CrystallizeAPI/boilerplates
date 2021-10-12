@@ -1,0 +1,45 @@
+fragment home on Item {
+  id
+
+  title: component(id: "title") {
+    ...component # SingleLine
+  }
+
+  intro: component(id: "intro") {
+    ...component # RichText
+  }
+
+  hero: component(id: "hero-image") {
+    ...component # Image
+  }
+
+  heroCTA: component(id: "hero-cta") {
+    # ContentChunk
+    # label - SingleLine
+    # url - SingleLine
+    ...component
+  }
+
+  references: component(id: "references") {
+    # ContentChunk
+    # title - SingleLine
+    # images - Image
+    ...component
+  }
+
+  body: component(id: "body") {
+    # ContentChunk
+    # title - SingleLine
+    # text - RichText
+    # image - Image
+    ...component
+  }
+
+  highlightedFeatures: component(id: "highlighted-features") {
+    # ContentChunk
+    # title - SingleLine
+    # description - RichText
+    # image - Image
+    ...component
+  }
+}

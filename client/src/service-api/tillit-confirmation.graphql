@@ -1,0 +1,7 @@
+query TillitConfirmation($id: String!) {
+  paymentProviders {
+    tillit {
+      confirmation(id: $id)
+    }
+  }
+}
