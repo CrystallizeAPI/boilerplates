@@ -1,13 +1,16 @@
 import { GetStaticProps, NextPage } from "next";
-import Link from "next/link";
 // import { catalogueClient } from "@/crystallize/clients";
 import { catalogueClient } from "@/clients";
 import { normalizeDocumentNode } from "@/crystallize/utils/normalizeDocumentNode";
 import { BlogDocument, BlogQuery } from "@/crystallize/queries/blog.generated";
 import { componentContent } from "@/crystallize/utils/componentContent";
 import { ContentTransformer } from "@crystallize/react-content-transformer";
-import { ArticlePreview } from "@/components/article-preview";
+
 import { Featured } from "@/components/featured";
+import { BlogCategory } from "@/components/blog-category";
+
+import { Flex, Typography, Spacer, Box } from "@/design-system";
+import { Newsletter } from "@/components/newsletter";
 
 type BlogPageProps = BlogQuery & { path: string };
 
@@ -21,44 +24,57 @@ export const getStaticProps: GetStaticProps<BlogPageProps> = async () => {
 };
 
 export const BlogPage: NextPage<BlogPageProps> = ({ blog }) => {
+  const description =
+    "Cras id nulla fringilla, tincidunt tellus eget, euismod leo. Ut finibus.";
+
   return (
     <>
-      <h1>{componentContent(blog.title.content, "SingleLineContent")?.text}</h1>
-      <ContentTransformer
-        json={
-          componentContent(blog.brief.content, "RichTextContent")?.json as [any]
-        }
-      />
+      <Spacer space={{ "@initial": 11, "@bp1": 32 }} />
 
-      <div style={{ padding: "20px 0" }}>
+      <Flex justify="center">
+        <Typography
+          as="h3"
+          variant="heading"
+          size={{
+            "@initial": 7,
+            "@bp1": 11,
+          }}
+        >
+          {componentContent(blog.title.content, "SingleLineContent")?.text}
+        </Typography>
+      </Flex>
+
+      <Spacer space={{ "@initial": 11, "@bp1": 14 }} />
+
+      <Flex justify="center">
+        <Typography size={4} css={{ textAlign: "center" }}>
+          <ContentTransformer
+            json={
+              componentContent(blog.brief.content, "RichTextContent")?.json as [
+                any
+              ]
+            }
+          />
+        </Typography>
+      </Flex>
+
+      <Spacer space={{ "@initial": 11, "@bp1": 14 }} />
+
+      <Box css={{ padding: "20px 0", maxWidth: "$content", mx: "auto" }}>
         <Featured featured={blog.featured} />
-        <hr style={{ marginTop: "20px" }} />
-      </div>
+      </Box>
 
-      {blog.categories?.map((category) => {
-        return (
-          <div key={category.path} style={{ padding: "30px 0" }}>
-            <Link href={category.path}>
-              {
-                componentContent(category.title.content, "SingleLineContent")
-                  ?.text
-              }
-            </Link>
+      <Spacer space={{ "@initial": 11, "@bp1": 14 }} />
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                gap: "20px",
-              }}
-            >
-              {category.articles?.edges?.map(({ node: article }) => {
-                return <ArticlePreview key={article.id} article={article} />;
-              })}
-            </div>
-          </div>
-        );
-      })}
+      {blog.categories?.map((category) => (
+        <Box key={category.path} css={{ py: "$7" }}>
+          <BlogCategory category={category} />
+
+          <Spacer space={{ "@initial": 11, "@bp1": 14 }} />
+        </Box>
+      ))}
+
+      <Newsletter description={description} />
     </>
   );
 };

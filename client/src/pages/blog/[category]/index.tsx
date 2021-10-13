@@ -1,5 +1,5 @@
 import { GetStaticProps, GetStaticPaths, NextPage } from "next";
-import Link from "next/link";
+
 import { catalogueClient } from "@/crystallize/clients";
 import { normalizeDocumentNode } from "@/crystallize/utils/normalizeDocumentNode";
 import {
@@ -12,8 +12,10 @@ import {
 } from "@/crystallize/queries/category.generated";
 import { componentContent } from "@/crystallize/utils/componentContent";
 import { ContentTransformer } from "@crystallize/react-content-transformer";
-import { ArticlePreview } from "@/components/article-preview";
+import { Box, Spacer, Flex, Typography } from "@/design-system";
 import { Featured } from "@/components/featured";
+import { Newsletter } from "@/components/newsletter";
+import { ArticlePreview } from "@/components/article-preview";
 
 type CategoryPageProps = CategoryQuery & { path: string };
 
@@ -44,36 +46,72 @@ export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({
 export const CategoryPage: NextPage<CategoryPageProps> = ({ category }) => {
   if (!category) return null;
 
+  const description =
+    "Cras id nulla fringilla, tincidunt tellus eget, euismod leo. Ut finibus.";
+
   return (
-    <>
-      <h1>
-        {componentContent(category.title.content, "SingleLineContent")?.text}
-      </h1>
-      <ContentTransformer
-        json={
-          componentContent(category.brief.content, "RichTextContent")?.json as [
-            any
-          ]
-        }
-      />
+    <Box id="content" css={{ flex: "1 1 100%" }}>
+      <Spacer space={{ "@initial": 11, "@bp1": 32 }} />
 
-      <div style={{ padding: "20px 0" }}>
+      <Flex justify="center">
+        <Typography
+          as="h3"
+          variant="heading"
+          size={{
+            "@initial": 7,
+            "@bp1": 11,
+          }}
+        >
+          {componentContent(category.title.content, "SingleLineContent")?.text}
+        </Typography>
+      </Flex>
+
+      <Spacer space={{ "@initial": 11, "@bp1": 14 }} />
+
+      <Flex justify="center">
+        <Typography size={4} css={{ textAlign: "center" }}>
+          <ContentTransformer
+            json={
+              componentContent(category.brief.content, "RichTextContent")
+                ?.json as [any]
+            }
+          />
+        </Typography>
+      </Flex>
+
+      <Spacer space={{ "@initial": 11, "@bp1": 32 }} />
+
+      <Box css={{ width: "$content", mx: "auto" }}>
         <Featured featured={category.featured} />
-        <hr style={{ marginTop: "20px" }} />
-      </div>
+      </Box>
 
-      <div
-        style={{
+      <Spacer space={{ "@initial": 11, "@bp1": 32 }} />
+
+      <Box
+        css={{
+          width: "$content",
+          mx: "auto",
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr",
-          gap: "20px",
+          gap: "$16",
         }}
       >
-        {category.articles?.edges.map(({ node: article }) => {
-          return <ArticlePreview key={article.id} article={article} />;
+        {category.articles?.edges?.map(({ node: article }) => {
+          return (
+            <ArticlePreview
+              key={article.id}
+              article={article}
+              isHero
+              isHeroItem
+            />
+          );
         })}
-      </div>
-    </>
+      </Box>
+
+      <Spacer space={{ "@initial": 11, "@bp1": 32 }} />
+
+      <Newsletter description={description} />
+    </Box>
   );
 };
 

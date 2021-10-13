@@ -3,22 +3,14 @@ import { componentContent } from "@/crystallize/utils/componentContent";
 import { ArticlePreviewFragment } from "@/crystallize/shapes/documents/article.generated";
 import { ContentTransformer } from "@crystallize/react-content-transformer";
 import { Image } from "@crystallize/react-image";
-import { Box, Flex, Typography, Spacer, CSS } from "@/design-system";
 import { HeroMedia } from "@/components/hero-media";
+import { Box, Typography, Spacer } from "@/design-system";
 
-interface ArticlePreviewProps {
+interface FirstArticlePreviewProps {
   article: ArticlePreviewFragment;
-  isHero?: boolean;
-  isHeroItem?: boolean;
-  css?: CSS;
 }
 
-export const ArticlePreview = ({
-  article,
-  isHero = false,
-  isHeroItem = false,
-  css,
-}: ArticlePreviewProps) => {
+export const FirstArticlePreview = ({ article }: FirstArticlePreviewProps) => {
   const author = componentContent(
     article.byline?.content,
     "ItemRelationsContent"
@@ -28,7 +20,7 @@ export const ArticlePreview = ({
     : null;
 
   return (
-    <Flex css={css}>
+    <>
       <Link href={article.path}>
         <a
           style={{
@@ -39,12 +31,11 @@ export const ArticlePreview = ({
           }}
         >
           <Box
-            role="wrapper"
             css={{
               display: "flex",
               alignItems: "flex-start",
               position: "relative",
-              flexDirection: isHero ? "column" : "row",
+              flexDirection: "column",
               flex: "1",
 
               "& [space-mobile-only]": {
@@ -55,29 +46,31 @@ export const ArticlePreview = ({
               },
 
               "@bp1": {
-                flexDirection: isHero ? "column" : "row",
+                flexDirection: "row",
               },
             }}
           >
-            <Box
-              css={{
-                "& img": {
-                  borderRadius: "$3xl",
-                  width: isHero ? "$full" : "$36",
-                  flexGrow: 0,
-                  flexShrink: 0,
-                  aspectRatio: isHero ? "3/2" : "1/1",
-                },
-              }}
-            >
-              <HeroMedia heroMedia={article.heroMedia} />
+            <Box css={{ maxWidth: "500px" }}>
+              <Box
+                css={{
+                  "& img": {
+                    borderRadius: "$3xl",
+                    width: "$full",
+                    flexGrow: 0,
+                    flexShrink: 0,
+                    aspectRatio: "3/2",
+                  },
+                }}
+              >
+                <HeroMedia heroMedia={article.heroMedia} />
+              </Box>
             </Box>
 
             <Spacer
-              direction={isHero ? "vertical" : "horizontal"}
+              direction={{ "@initial": "horizontal", "@bp1": "vertical" }}
               space={{
-                "@initial": isHero ? 4 : 6,
-                "@bp1": isHero ? 4 : 6,
+                "@initial": 4,
+                "@bp1": 16,
               }}
             />
 
@@ -89,14 +82,12 @@ export const ArticlePreview = ({
                 flex: 1,
               }}
             >
-              <Spacer space={isHero ? 4 : 0} />
-
               <Typography
                 as="h3"
                 variant="heading"
                 size={{
-                  "@initial": isHero ? 6 : 4,
-                  "@bp1": isHero ? (isHeroItem ? 5 : 8) : 6,
+                  "@initial": 6,
+                  "@bp1": 8,
                 }}
               >
                 {
@@ -108,10 +99,10 @@ export const ArticlePreview = ({
               <Spacer space={4} />
 
               <Typography
-                as="h1"
+                as="p"
                 size={{
-                  "@initial": isHero ? 4 : 3,
-                  "@bp1": isHero ? (isHeroItem ? 2 : 5) : 3,
+                  "@initial": 4,
+                  "@bp1": 5,
                 }}
                 css={{ lineHeight: "$relaxed" }}
               >
@@ -123,11 +114,10 @@ export const ArticlePreview = ({
                 />
               </Typography>
 
-              <Spacer space={isHero ? 4 : 0} />
+              <Spacer space={4} />
 
-              {author && isHero && (
+              {author && (
                 <div
-                  role="author"
                   style={{ display: "flex", gap: "20px", alignItems: "center" }}
                 >
                   {authorImage && (
@@ -138,7 +128,7 @@ export const ArticlePreview = ({
                     />
                   )}
 
-                  <Typography as="h1" variant="heading" size="3">
+                  <Typography variant="heading" size="3">
                     {
                       componentContent(
                         author.name?.content,
@@ -152,6 +142,6 @@ export const ArticlePreview = ({
           </Box>
         </a>
       </Link>
-    </Flex>
+    </>
   );
 };
