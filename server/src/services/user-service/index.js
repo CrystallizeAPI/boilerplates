@@ -185,4 +185,23 @@ module.exports = {
 
     return getUser({ context });
   },
+  async startSignUp({ firstName, lastName, email }) {
+    try {
+      const subscription = await crystallize.subscriptions.getByCustomer(email);
+      if (subscription.edges.length > 0) throw new Error();
+      try {
+        await crystallize.customers.create({
+          identifier: email,
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+        });
+      } catch (error) {
+        return true;
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  },
 };

@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import { NextPage } from "next";
-// import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { Payments } from "@/components/payments";
-// import { serviceAPIClient } from "@/clients";
+import { serviceAPIClient } from "@/clients";
+import {
+  StartSignUpDocument,
+  StartSignUpMutation,
+  StartSignUpMutationVariables,
+} from "@/service-api/start-sign-up.generated";
 // import { AllPlansDocument, AllPlansQuery } from "@/crystallize/queries/allPlans.generated";
 import {
   Box,
@@ -18,6 +23,20 @@ import { CheckoutModelInput } from "@/service-api/types.generated";
 import { Plan } from "@/types/basket";
 import { locale } from "@/config/locale";
 // import { productToPlan } from "@/utils/productToPlan";
+import { useOnlyUnauthenticated } from "@/contexts/auth";
+
+function useStartSignUp() {
+  const startMutation = useMutation(
+    async (input: StartSignUpMutationVariables) => {
+      const response = await serviceAPIClient.request<
+        StartSignUpMutation,
+        StartSignUpMutationVariables
+      >(StartSignUpDocument, input);
+      if (!response.user.startSignUp) throw new Error("Error signing up");
+    }
+  );
+  return startMutation;
+}
 
 const subscriptions = [
   {
@@ -79,12 +98,16 @@ const subscriptions = [
 interface SignupPageProps {}
 
 export const SignupPage: NextPage<SignupPageProps> = () => {
+  useOnlyUnauthenticated();
+
   const [step, setStep] = useState<"signUp" | "checkout" | "success">("signUp");
 
   const [plan, setPlan] = useState<Plan>(subscriptions[2].plan);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+
+  const startSignUp = useStartSignUp();
 
   // const [email, setEmail] = useState("lhtanh98@gmail.com");
   // const [firstName, setFirstName] = useState("Alex");
@@ -104,8 +127,12 @@ export const SignupPage: NextPage<SignupPageProps> = () => {
   };
 
   function signUp() {
-    setStep("checkout");
+    startSignUp.mutate({ email, firstName, lastName });
   }
+
+  useEffect(() => {
+    if (startSignUp.isSuccess) setStep("checkout");
+  }, [startSignUp.isSuccess]);
 
   return (
     <Flex
@@ -180,8 +207,27 @@ export const SignupPage: NextPage<SignupPageProps> = () => {
 
           <Spacer space={5} />
 
-          <Button css={{ width: "$full" }} onClick={signUp}>
-            Sign Up
+          {startSignUp.isError ? (
+            <>
+              <Typography
+                css={{
+                  width: "$full",
+                  textAlign: "left",
+                  color: "$error",
+                }}
+              >
+                {(startSignUp.error as Error)?.message}
+              </Typography>
+              <Spacer space={5} />
+            </>
+          ) : null}
+
+          <Button
+            css={{ width: "$full" }}
+            onClick={signUp}
+            disabled={startSignUp.isLoading}
+          >
+            {startSignUp.isLoading ? "Signing Up" : "Sign Up"}
           </Button>
 
           <Spacer space={8} />

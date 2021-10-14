@@ -20,6 +20,7 @@ module.exports = async function confirmOrder({
     paymentIntentId,
     customerIdentifier:
       user?.email || checkoutModel?.customer?.addresses?.[0]?.email || "",
+    isFirstOrder: true,
   });
 
   /**

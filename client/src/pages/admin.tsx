@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from "next";
 import { useQuery } from "react-query";
-import { useAuth } from "@/contexts/auth";
-import { Box, Flex, Spacer, Button, Typography } from "@/design-system";
+import { useAuth, useOnlyAuthenticated } from "@/contexts/auth";
+import { Box, Flex, Spacer, Typography } from "@/design-system";
 import { serviceAPIClient, catalogueClient } from "@/clients";
 import {
   AccountDocument,
@@ -44,6 +44,8 @@ export const getStaticProps: GetStaticProps<AllPlansQuery> = async () => {
 };
 
 export const AdminPage: NextPage<AllPlansQuery> = ({ catalogue }) => {
+  useOnlyAuthenticated();
+
   if (!catalogue) return null;
 
   const query = useAccountQuery();

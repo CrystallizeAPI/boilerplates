@@ -11,10 +11,13 @@ import {
 } from "@/design-system";
 import { LoginDocument } from "@/service-api/login.generated";
 import { serviceAPIClient } from "@/clients";
+import { useOnlyUnauthenticated } from "@/contexts/auth";
 
 interface LoginPageProps {}
 
 export const LoginPage: NextPage<LoginPageProps> = () => {
+  useOnlyUnauthenticated();
+
   const [email, setEmail] = useState("");
   const [response, setResponse] = useState<any>(null);
 

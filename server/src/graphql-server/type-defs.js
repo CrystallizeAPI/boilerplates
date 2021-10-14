@@ -172,6 +172,7 @@ module.exports = gql`
       redirectURLAfterLogin: String!
     ): SendMagicLinkResponse!
     update(input: UserUpdateInput!): User!
+    startSignUp(email: String!, firstName: String!, lastName: String!): Boolean!
   }
 
   input UserUpdateInput {

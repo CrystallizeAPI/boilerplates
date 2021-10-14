@@ -3,6 +3,7 @@ module.exports = async function stripeToCrystallizeOrderModel({
   checkoutModel,
   paymentIntentId,
   customerIdentifier,
+  isFirstOrder,
 }) {
   const { getClient } = require("./utils");
 
@@ -25,7 +26,7 @@ module.exports = async function stripeToCrystallizeOrderModel({
   }
 
   const meta = [];
-  meta.push({ key: "stripePaymentMethodId", value: charge.payment_method });
+  meta.push({ key: "isFirstOrder", value: isFirstOrder ? "1" : "0" });
   if (paymentIntent.merchant_data) {
     meta.push({
       key: "stripeMerchantData",
@@ -78,14 +79,7 @@ module.exports = async function stripeToCrystallizeOrderModel({
       {
         provider: "stripe",
         stripe: {
-          stripe: charge.id,
-          customerId: charge.customer,
-          orderId: charge.payment_intent,
-          paymentMethod: charge.payment_method_details.type,
           paymentMethodId: charge.payment_method,
-          paymentIntentId: charge.payment_intent,
-          subscriptionId: charge.subscription,
-          metadata: "",
         },
       },
     ],

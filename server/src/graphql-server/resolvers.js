@@ -70,6 +70,7 @@ module.exports = {
     sendMagicLink: (parent, args, context) =>
       userService.sendMagicLink({ ...args, context }),
     update: (parent, args, context) => userService.update({ ...args, context }),
+    startSignUp: (parent, args) => userService.startSignUp(args),
   },
   OrderMutations: {
     delete: (parent, args) => crystallize.orders.delete(args.id),

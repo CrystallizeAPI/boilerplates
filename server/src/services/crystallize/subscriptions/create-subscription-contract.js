@@ -1,10 +1,22 @@
 const { callSubscriptionsApi } = require("../utils");
 const { getProduct } = require("../products");
 
+function paymentToPaymentInput(payment) {
+  switch (payment.provider) {
+    case "stripe":
+      return {
+        provider: "stripe",
+        stripe: { paymentMethodId: payment.paymentMethodId },
+      };
+    default:
+      return payment;
+  }
+}
+
 function createSubscriptionContractInput({
   customerIdentifier,
   product,
-  paymentMethodId,
+  payment,
 }) {
   const plan = product.subscriptionPlans[0];
 
@@ -34,26 +46,21 @@ function createSubscriptionContractInput({
       activeUntil: activeUntil.toISOString(),
       renewAt: activeUntil.toISOString(),
     },
-    payment: {
-      provider: "stripe",
-      stripe: {
-        paymentMethodId: paymentMethodId,
-      },
-    },
+    payment: paymentToPaymentInput(payment),
   };
 }
 
 module.exports = async function createSubscriptionContract(
   itemPath,
   customerIdentifier,
-  paymentMethodId
+  payment
 ) {
   const product = await getProduct(itemPath);
 
   const input = createSubscriptionContractInput({
     customerIdentifier,
     product,
-    paymentMethodId,
+    payment,
   });
 
   const response = await callSubscriptionsApi({

@@ -1,6 +1,6 @@
 import { GetStaticProps, NextPage } from "next";
 import { useQuery } from "react-query";
-import { useAuth } from "@/contexts/auth";
+import { useAuth, useOnlyAuthenticated } from "@/contexts/auth";
 import { Box, Spacer, Button, Typography } from "@/design-system";
 import { serviceAPIClient, catalogueClient } from "@/clients";
 import {
@@ -46,6 +46,8 @@ export const getStaticProps: GetStaticProps<AllPlansQuery> = async () => {
 };
 
 export const AccountPage: NextPage<AllPlansQuery> = ({ catalogue }) => {
+  useOnlyAuthenticated();
+
   if (!catalogue) return null;
 
   const user = useAuth();

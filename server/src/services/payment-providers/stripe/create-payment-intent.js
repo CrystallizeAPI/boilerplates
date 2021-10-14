@@ -16,19 +16,6 @@ module.exports = async function createPaymentIntent({
 
   const basket = await basketService.get({ basketModel, context });
 
-  const crystallizeCustomer = await crystallize.customers.get({
-    identifier: email,
-  });
-
-  if (!crystallizeCustomer) {
-    await crystallize.customers.create({
-      identifier: email,
-      email: email,
-      firstName: customer.firstName,
-      lastName: customer.lastName,
-    });
-  }
-
   let stripeCustomer;
   const customerList = await stripe.customers.list({ email });
   if (customerList?.data?.length > 0) {

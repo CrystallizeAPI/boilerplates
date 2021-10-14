@@ -1,13 +1,17 @@
 import { FC, createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { AuthDocument, AuthQuery } from "@/service-api/auth.generated";
 import { serviceAPIClient } from "@/clients";
 
-export type AuthContextValue = AuthQuery["user"] | null;
+export type AuthContextValue =
+  | (AuthQuery["user"] & { isChecked: boolean })
+  | null;
 
 const initialAuthValue: AuthContextValue = {
   isLoggedIn: false,
   logoutLink: "",
   email: null,
+  isChecked: false,
 };
 
 export const AuthContext = createContext<AuthContextValue>(initialAuthValue);
@@ -38,6 +42,7 @@ export const AuthProvider: FC = ({ children }) => {
 
         setUser({
           ...user,
+          isChecked: true,
           logoutLink: logoutLinkWithRedirect.toString(),
         });
       } catch (error) {
@@ -52,3 +57,21 @@ export const AuthProvider: FC = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+
+export const useOnlyAuthenticated = () => {
+  const router = useRouter();
+  const { isChecked, isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    if (isChecked && !isLoggedIn) router.push("/login");
+  }, [isChecked, isLoggedIn]);
+};
+
+export const useOnlyUnauthenticated = () => {
+  const router = useRouter();
+  const { isChecked, isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    if (isChecked && isLoggedIn) router.push("/account");
+  }, [isChecked, isLoggedIn]);
+};
