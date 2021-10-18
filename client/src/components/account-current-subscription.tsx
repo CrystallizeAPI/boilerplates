@@ -4,14 +4,20 @@ import { AccountSubscriptionCard } from "@/components/account-subscription-card"
 import { componentContent } from "@/crystallize/utils/componentContent";
 
 interface AccountCurrentSubscriptionProps {
-  subscription: any;
+  activeSubscription: any;
+  renewalSubscription: any;
   plans: AllPlansQuery["catalogue"];
 }
 
 export const AccountCurrentSubscription = ({
-  subscription,
+  activeSubscription,
+  renewalSubscription,
   plans,
 }: AccountCurrentSubscriptionProps) => {
+  const isDifferent =
+    Boolean(renewalSubscription) &&
+    renewalSubscription?.id !== activeSubscription?.id;
+
   return (
     <Box as="section">
       <Typography
@@ -34,16 +40,36 @@ export const AccountCurrentSubscription = ({
           )
           .map((_plan) => {
             const plan = componentContent(_plan, "Product");
-            const isActive = subscription?.item?.name === plan.name;
+            const isActive = activeSubscription?.item?.name === plan.name;
             return (
               <AccountSubscriptionCard
                 key={plan.id}
+                subscription={activeSubscription}
                 plan={plan}
                 isActive={isActive}
               />
             );
           })}
       </Flex>
+
+      <Spacer space={16} />
+
+      <Box
+        css={{
+          backgroundColor: "$white",
+          borderRadius: "$lg",
+          boxShadow: "$card",
+          p: "$6",
+        }}
+      >
+        <Typography>
+          Renew at{" "}
+          {Intl.DateTimeFormat().format(
+            new Date(renewalSubscription.status.renewAt)
+          )}{" "}
+          with {renewalSubscription.item.name} plan
+        </Typography>
+      </Box>
     </Box>
   );
 };

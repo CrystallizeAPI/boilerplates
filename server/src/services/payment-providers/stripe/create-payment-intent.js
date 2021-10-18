@@ -1,5 +1,3 @@
-const crystallize = require("../../crystallize");
-
 module.exports = async function createPaymentIntent({
   checkoutModel,
   confirm = false,

@@ -150,7 +150,20 @@ const callSubscriptionsApi = createApiCaller(
  */
 const callPimApi = createApiCaller("https://pim.crystallize.com/graphql");
 
+function paymentToPaymentInput(payment) {
+  switch (payment.provider) {
+    case "stripe":
+      return {
+        provider: "stripe",
+        stripe: { paymentMethodId: payment.paymentMethodId },
+      };
+    default:
+      return payment;
+  }
+}
+
 module.exports = {
+  paymentToPaymentInput,
   normaliseOrderModel,
   callCatalogueApi,
   callSearchApi,

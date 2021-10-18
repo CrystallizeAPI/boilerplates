@@ -79,6 +79,8 @@ module.exports = {
     delete: (parent, args) => crystallize.subscriptions.delete(args.id),
     updatePaymentMethod: (parent, args, context) =>
       crystallize.subscriptions.updatePaymentMethod({ ...args, context }),
+    change: (parent, args, context) =>
+      crystallize.subscriptions.change({ ...args, context }),
   },
   PaymentProvidersMutations: {
     stripe: () => ({}),

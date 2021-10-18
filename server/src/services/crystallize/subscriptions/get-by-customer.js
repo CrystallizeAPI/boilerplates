@@ -91,15 +91,24 @@ module.exports = async function getByCustomer(customerIdentifier) {
   const subscriptionsWithPaymentMethod = [];
 
   for (const { node: subscription } of subscriptions) {
-    const paymentMethod = await stripe.paymentMethods.retrieve(
-      subscription.payment.paymentMethodId
-    );
-    subscriptionsWithPaymentMethod.push({
-      node: {
-        ...subscription,
-        paymentMethod,
-      },
-    });
+    switch (subscription.payment?.provider) {
+      case "stripe": {
+        const paymentMethod = await stripe.paymentMethods.retrieve(
+          subscription.payment.paymentMethodId
+        );
+        subscriptionsWithPaymentMethod.push({
+          node: {
+            ...subscription,
+            paymentMethod,
+          },
+        });
+        break;
+      }
+      default:
+        subscriptionsWithPaymentMethod.push({
+          node: subscription,
+        });
+    }
   }
 
   return { edges: subscriptionsWithPaymentMethod };

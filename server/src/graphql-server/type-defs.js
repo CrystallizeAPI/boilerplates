@@ -128,6 +128,7 @@ module.exports = gql`
   type SubscriptionMutations {
     delete(id: String!): JSON
     updatePaymentMethod(id: String!, paymentMethodId: String!): Boolean
+    change(id: String!, plan: String!): Boolean
   }
 
   type Voucher {

@@ -1,0 +1,5 @@
+mutation ChangePlan($id: String!, $plan: String!) {
+  subscription {
+    change(id: $id, plan: $plan)
+  }
+}

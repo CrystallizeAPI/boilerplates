@@ -1,5 +1,5 @@
-const getProduct = require("./get-one");
+const getByPath = require("./get-one");
 
 module.exports = {
-  getProduct,
+  getByPath,
 };

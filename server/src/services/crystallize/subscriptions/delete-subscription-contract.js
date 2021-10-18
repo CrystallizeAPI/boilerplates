@@ -12,5 +12,5 @@ module.exports = async function deleteSubscriptionContract(id) {
     `,
   });
 
-  return response.data.subscription.delete;
+  return response.data.subscriptionContract.delete;
 };

@@ -6,6 +6,8 @@ module.exports = async function getProduct(path) {
       query GET_PRODUCT($path: String!) {
         catalogue(path: $path, language: "en") {
           ... on Product {
+            id
+            path
             variants {
               name
               sku
@@ -50,5 +52,5 @@ module.exports = async function getProduct(path) {
     },
   });
 
-  return r.data.catalogue.variants[0];
+  return r.data.catalogue;
 };

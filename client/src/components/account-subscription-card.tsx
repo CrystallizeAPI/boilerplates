@@ -1,20 +1,46 @@
+import { useMutation, useQueryClient } from "react-query";
 import { AllPlansQuery } from "@/crystallize/queries/allPlans.generated";
 import { Box, Spacer, Button, Typography, Link, Flex } from "@/design-system";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { componentContent } from "@/crystallize/utils/componentContent";
+import {
+  ChangePlanDocument,
+  ChangePlanMutation,
+  ChangePlanMutationVariables,
+} from "@/service-api/change-plan.generated";
+import { serviceAPIClient } from "@/clients";
+
+function useChangePlan(input: ChangePlanMutationVariables) {
+  const queryClient = useQueryClient();
+  return useMutation(
+    () => {
+      return serviceAPIClient.request<
+        ChangePlanMutation,
+        ChangePlanMutationVariables
+      >(ChangePlanDocument, input);
+    },
+    { onSuccess: () => queryClient.invalidateQueries("account") }
+  );
+}
 
 interface AccountSubscriptionCardProps {
+  subscription: any;
   isActive: boolean;
   plan: AllPlansQuery["catalogue"]["children"][number];
 }
 
 export const AccountSubscriptionCard = ({
+  subscription,
   isActive,
   plan: _plan,
 }: AccountSubscriptionCardProps) => {
   const plan = componentContent(_plan, "Product");
+  const changePlan = useChangePlan({ id: subscription?.id, plan: plan.path });
 
   const price = plan.variants[0].price;
+
+  const willRenew = !!subscription.status.renewAt;
+  console.log(willRenew);
 
   return (
     <Box
@@ -101,7 +127,7 @@ export const AccountSubscriptionCard = ({
 
       <Spacer space={9} />
 
-      {isActive ? (
+      {!willRenew ? null : isActive ? (
         <>
           <Button variant="secondary" on="primary" css={{ width: "$full" }}>
             Current Plan
@@ -119,8 +145,12 @@ export const AccountSubscriptionCard = ({
           </Link>
         </>
       ) : (
-        <Button variant="primary" css={{ width: "$full" }}>
-          Change Plan
+        <Button
+          variant="primary"
+          css={{ width: "$full" }}
+          onClick={() => changePlan.mutate()}
+        >
+          {changePlan.isLoading ? "Changing Plan..." : "Change Plan"}
         </Button>
       )}
 
