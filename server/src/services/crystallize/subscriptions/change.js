@@ -1,9 +1,4 @@
-const {
-  differenceInCalendarDays,
-  subMonths,
-  subDays,
-  addMonths,
-} = require("date-fns");
+const { differenceInCalendarDays, subMonths } = require("date-fns");
 const get = require("./get-subscription");
 const update = require("./update-subscription");
 const create = require("./create-subscription-contract");
@@ -11,8 +6,6 @@ const {
   createRecurringInput,
   createStatusInput,
   createSubscriptionContractInput,
-  createItemInput,
-  createSubsciptionPlanInput,
 } = require("./utils");
 const products = require("../products");
 const orders = require("../orders");
@@ -94,7 +87,6 @@ async function upgrade({ subscription, product, customerIdentifier }) {
   await orders.create(orderInput);
 
   // Update subscription
-  const recurringInput = createRecurringInput(subscriptionPlan);
   const input = createSubscriptionContractInput({
     customerIdentifier,
     product,
