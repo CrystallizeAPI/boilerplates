@@ -8,7 +8,7 @@ import { AuthLayout } from "@/components/layout-auth";
 
 const queryClient = new QueryClient();
 
-const authLayout = ["/login", "/signup"];
+const authLayout = ["/login", "/signup", "/confirmation"];
 
 export const MyApp = (props: AppProps) => {
   const router = useRouter();
@@ -18,7 +18,7 @@ export const MyApp = (props: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        {authLayout.includes(router.pathname) ? (
+        {authLayout.some((p) => router.pathname.includes(p)) ? (
           <AuthLayout {...props} />
         ) : (
           <MainLayout {...props} />

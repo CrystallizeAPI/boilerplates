@@ -52,24 +52,28 @@ export const AccountCurrentSubscription = ({
           })}
       </Flex>
 
-      <Spacer space={16} />
+      {renewalSubscription ? (
+        <>
+          <Spacer space={16} />
 
-      <Box
-        css={{
-          backgroundColor: "$white",
-          borderRadius: "$lg",
-          boxShadow: "$card",
-          p: "$6",
-        }}
-      >
-        <Typography>
-          Renew at{" "}
-          {Intl.DateTimeFormat().format(
-            new Date(renewalSubscription.status.renewAt)
-          )}{" "}
-          with {renewalSubscription.item.name} plan
-        </Typography>
-      </Box>
+          <Box
+            css={{
+              backgroundColor: "$white",
+              borderRadius: "$lg",
+              boxShadow: "$card",
+              p: "$6",
+            }}
+          >
+            <Typography>
+              Renew at{" "}
+              {Intl.DateTimeFormat().format(
+                new Date(renewalSubscription?.status?.renewAt)
+              )}{" "}
+              with {renewalSubscription?.item?.name} plan
+            </Typography>
+          </Box>
+        </>
+      ) : null}
     </Box>
   );
 };

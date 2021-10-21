@@ -2,6 +2,7 @@ const fetch = require("node-fetch");
 const { TILLIT_URL } = require("./constants");
 
 module.exports = async function createOrder({
+  baseUrl,
   basket,
   customer,
   company,
@@ -37,15 +38,15 @@ module.exports = async function createOrder({
     merchant_additional_info: "Best merchant in town.",
     merchant_order_id: "1232",
     // merchant_reference: "45aa52f387871e3a210645d4",
-    // merchant_urls: {
-    //   merchant_cancel_order_url: "{{merchant_url}}/cancel-order",
-    //   merchant_confirmation_url: "{{merchant_url}}/confimation",
-    //   merchant_edit_order_url: "{{merchant_url}}/edit-order",
-    //   merchant_invoice_url: "{{merchant_url}}/invoice",
-    //   merchant_order_verification_failed_url:
-    //     "{{merchant_url}}/order-verification-failed",
-    //   merchant_shipping_document_url: "{{merchant_url}}/shipping-document",
-    // },
+    merchant_urls: {
+      merchant_confirmation_url: `${baseUrl}/confirmation/tillit/{{order_id}}`,
+      //   merchant_cancel_order_url: "{{merchant_url}}/confimation",
+      //   merchant_edit_order_url: "{{merchant_url}}/edit-order",
+      //   merchant_invoice_url: "{{merchant_url}}/invoice",
+      //   merchant_order_verification_failed_url:
+      //     "{{merchant_url}}/order-verification-failed",
+      //   merchant_shipping_document_url: "{{merchant_url}}/shipping-document",
+    },
     billing_address: address,
     shipping_address: address,
     line_items: [

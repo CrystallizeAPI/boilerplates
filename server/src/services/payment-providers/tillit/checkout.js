@@ -3,7 +3,6 @@ const basketService = require("../../basket-service");
 const tillitToCrystallizeOrderModel = require("./to-crystallize-order-model");
 const getAddress = require("./get-address");
 const createTillitOrder = require("./create-order");
-const updateTillitOrder = require("./update-order");
 
 module.exports = async function checkout({
   checkoutModel,
@@ -37,6 +36,7 @@ module.exports = async function checkout({
 
     console.log("Creating Tillit order");
     const tillitOrder = await createTillitOrder({
+      baseUrl,
       basket,
       customer,
       company,
@@ -47,7 +47,7 @@ module.exports = async function checkout({
     console.log("Created Tillit order: " + tillitOrder.id);
 
     console.log("Creating Crystallize order");
-    const crystallizeOrder = await crystallize.orders.create(
+    await crystallize.orders.create(
       tillitToCrystallizeOrderModel({
         basket,
         checkoutModel,
@@ -55,13 +55,6 @@ module.exports = async function checkout({
         customerIdentifier: email,
       })
     );
-
-    await updateTillitOrder(tillitOrder.id, {
-      // ...tillitOrder,
-      merchant_urls: {
-        merchant_confirmation_url: `${baseUrl}/confirmation/tillit/${crystallizeOrder.id}`,
-      },
-    });
 
     return {
       success: true,

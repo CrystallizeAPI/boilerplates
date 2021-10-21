@@ -85,8 +85,6 @@ export const Tillit = ({ checkoutModel, onSuccess, onError }: PaymentProps) => {
     );
   }
 
-  console.log(pay);
-
   return (
     <>
       <Box css={{ width: "$full" }}>

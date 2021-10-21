@@ -39,8 +39,7 @@ export const AccountSubscriptionCard = ({
 
   const price = plan.variants[0].price;
 
-  const willRenew = !!subscription.status.renewAt;
-  console.log(willRenew);
+  const willRenew = !!subscription?.status?.renewAt;
 
   return (
     <Box

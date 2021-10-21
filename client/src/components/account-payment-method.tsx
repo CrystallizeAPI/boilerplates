@@ -1,12 +1,6 @@
 import { FormEventHandler, useState, useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { loadStripe } from "@stripe/stripe-js";
-import {
-  CardElement,
-  Elements,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import { useMutation, useQueryClient } from "react-query";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { serviceAPIClient } from "@/clients";
 import {
   UpdatePaymentMethodDocument,
@@ -144,20 +138,14 @@ export const Form = ({ subscriptionId, close }: FormProps) => {
   );
 };
 
-export const AccountPaymentMethod = ({
-  subscription,
+const StripePaymentMethod = ({
   paymentMethod,
+  subscription,
 }: AccountPaymentMethodProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <Box css={{ p: "$12", borderRadius: "$3xl", boxShadow: "$card" }}>
-      <Typography as="h3" variant="heading" size={6}>
-        Payment Method
-      </Typography>
-
-      <Spacer space={10} />
-
+    <>
       {!isEditing ? (
         <>
           <Flex>
@@ -193,6 +181,34 @@ export const AccountPaymentMethod = ({
           />
         </StripeLoader>
       )}
+    </>
+  );
+};
+
+const PaymentMethod = (props: AccountPaymentMethodProps) => {
+  switch (props.paymentMethod.provider) {
+    case "stripe":
+      return <StripePaymentMethod {...props} />;
+    case "custom":
+      const companyName = props.paymentMethod.properties.find(
+        (p) => p.property === "companyName"
+      )?.value;
+      return <Typography size={3}>Paid by {companyName} via Tillit</Typography>;
+    default:
+      return null;
+  }
+};
+
+export const AccountPaymentMethod = (props: AccountPaymentMethodProps) => {
+  return (
+    <Box css={{ p: "$12", borderRadius: "$3xl", boxShadow: "$card" }}>
+      <Typography as="h3" variant="heading" size={6}>
+        Payment Method
+      </Typography>
+
+      <Spacer space={10} />
+
+      <PaymentMethod {...props} />
     </Box>
   );
 };

@@ -157,6 +157,13 @@ function paymentToPaymentInput(payment) {
         provider: "stripe",
         stripe: { paymentMethodId: payment.paymentMethodId },
       };
+    case "custom":
+      return {
+        provider: "custom",
+        custom: {
+          properties: payment.properties,
+        },
+      };
     default:
       return payment;
   }

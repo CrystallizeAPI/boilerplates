@@ -1,6 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { serviceAPIClient } from "@/clients";
-import { Box, Spacer, Typography } from "@/design-system";
+import { Box, Flex, Link, Spacer, Typography } from "@/design-system";
 import {
   TillitConfirmationDocument,
   TillitConfirmationQuery,
@@ -29,7 +29,11 @@ export const ConfirmationTillit = (
   }
 
   return (
-    <Box css={{ width: "$content", mx: "auto", py: "$16" }}>
+    <Flex
+      direction="column"
+      align="center"
+      css={{ width: "$full", textAlign: "center" }}
+    >
       <Typography as="h1" variant="heading" size={6}>
         Order Confirmation
       </Typography>
@@ -37,11 +41,17 @@ export const ConfirmationTillit = (
       <Spacer space={4} />
 
       {order.state === "VERIFIED" ? (
-        <Typography size={4}>Thank you for your order!</Typography>
+        <>
+          <Typography size={4}>Thank you for your order!</Typography>
+          <Spacer />
+          <Link href="/login" css={{ fontWeight: "bold", fontSize: "$4" }}>
+            Login
+          </Link>
+        </>
       ) : (
         <Typography size={4}>Order Unverfied</Typography>
       )}
-    </Box>
+    </Flex>
   );
 };
 

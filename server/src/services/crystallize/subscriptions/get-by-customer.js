@@ -77,6 +77,12 @@ module.exports = async function getByCustomer(customerIdentifier) {
                   ... on StripePayment {
                     paymentMethodId
                   }
+                  ... on CustomPayment {
+                    properties {
+                      property
+                      value
+                    }
+                  }
                 }
               }
             }
@@ -100,6 +106,15 @@ module.exports = async function getByCustomer(customerIdentifier) {
           node: {
             ...subscription,
             paymentMethod,
+          },
+        });
+        break;
+      }
+      case "custom": {
+        subscriptionsWithPaymentMethod.push({
+          node: {
+            ...subscription,
+            paymentMethod: subscription.payment,
           },
         });
         break;

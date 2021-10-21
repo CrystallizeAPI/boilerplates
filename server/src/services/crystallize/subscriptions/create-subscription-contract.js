@@ -1,6 +1,4 @@
 const { callSubscriptionsApi } = require("../utils");
-const { createSubscriptionContractInput } = require("./utils");
-const { paymentToPaymentInput } = require("../utils");
 
 module.exports = async function createSubscriptionContract(input) {
   const response = await callSubscriptionsApi({
