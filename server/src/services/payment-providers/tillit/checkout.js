@@ -1,6 +1,9 @@
 const crystallize = require("../../crystallize");
 const basketService = require("../../basket-service");
-const tillitToCrystallizeOrderModel = require("./to-crystallize-order-model");
+const {
+  tillitToCrystallizeOrderModel,
+  tillitAddressToCrystallizeAddress,
+} = require("./to-crystallize-order-model");
 const getAddress = require("./get-address");
 const createTillitOrder = require("./create-order");
 
@@ -55,6 +58,25 @@ module.exports = async function checkout({
         customerIdentifier: email,
       })
     );
+
+    console.log("Updating Crystallize customer");
+    await crystallize.customers.update({
+      identifier: email,
+      customer: {
+        phone: phone,
+        companyName: company.name,
+        addresses: [
+          tillitAddressToCrystallizeAddress(
+            "billing",
+            tillitOrder.billing_address
+          ),
+          tillitAddressToCrystallizeAddress(
+            "delivery",
+            tillitOrder.billing_address
+          ),
+        ],
+      },
+    });
 
     return {
       success: true,
