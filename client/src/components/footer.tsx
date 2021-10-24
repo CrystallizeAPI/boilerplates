@@ -18,7 +18,7 @@ export const Footer = () => {
     <Flex css={{ width: "$full", py: "$20" }} direction="column">
       <Box
         css={{
-          width: "$content",
+          maxWidth: "$content",
           borderTop: "1px solid $colors$border",
           "& [data-desktop-only]": {
             display: "none",

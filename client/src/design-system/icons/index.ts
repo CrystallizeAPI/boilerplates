@@ -1,3 +1,4 @@
+export * from "./DownIcon";
 export * from "./HambugerMenuIcon";
 export * from "./YoutubeIcon";
 export * from "./InstagramIcon";

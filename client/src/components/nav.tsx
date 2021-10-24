@@ -18,7 +18,7 @@ export const Nav = () => {
     <Box css={{ width: "$full", py: "$6" }}>
       <Flex
         css={{
-          width: "$content",
+          maxWidth: "$content",
           mx: "auto",
           "& [data-desktop-only]": {
             display: "none",
