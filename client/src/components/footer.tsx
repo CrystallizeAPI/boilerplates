@@ -19,6 +19,7 @@ export const Footer = () => {
       <Box
         css={{
           maxWidth: "$content",
+          width: "$full",
           borderTop: "1px solid $colors$border",
           "& [data-desktop-only]": {
             display: "none",
