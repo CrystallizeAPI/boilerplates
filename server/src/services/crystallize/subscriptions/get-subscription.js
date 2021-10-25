@@ -10,6 +10,7 @@ module.exports = async function get(id) {
         subscriptionContracts {
           get(id: $id) {
             id
+            customerIdentifier
 
             subscriptionPlan {
               tenantId
@@ -70,6 +71,12 @@ module.exports = async function get(id) {
               }
               ... on StripePayment {
                 paymentMethodId
+              }
+              ... on CustomPayment {
+                properties {
+                  property
+                  value
+                }
               }
             }
           }

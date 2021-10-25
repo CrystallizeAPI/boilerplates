@@ -31,29 +31,34 @@ function getTillitCustomer(tillitOrder) {
 }
 
 function tillitToCrystallizeOrderModel({
-  basket,
-  // checkoutModel,
+  customer,
+  product,
   order,
-  customerIdentifier,
+  meta = [],
 }) {
-  const meta = [
-    {
-      key: "tillitOrderId",
-      value: order.id,
-    },
-  ];
-
+  const { createBasket } = require("../../crystallize/utils");
+  const basket = createBasket({
+    totalValue: Number(order.gross_amount) / 10,
+    currency: order.currency,
+    product,
+  });
   const tillitCustomer = getTillitCustomer(order);
 
   return {
     cart: basket.cart,
     total: basket.total,
-    meta,
+    meta: [
+      ...meta,
+      {
+        key: "tillitOrderId",
+        value: order.id,
+      },
+    ],
     customer: {
-      identifier: customerIdentifier,
-      firstName: tillitCustomer.firstName,
+      identifier: customer.identifier,
+      firstName: customer.firstName,
       middleName: "",
-      lastName: tillitCustomer.lastName,
+      lastName: customer.lastName,
       birthDate: Date,
       addresses: [
         tillitAddressToCrystallizeOrderAddress(

@@ -10,8 +10,13 @@ const {
 const products = require("../products");
 const orders = require("../orders");
 const customers = require("../customers");
-const { paymentToPaymentInput } = require("../utils");
+const {
+  paymentToPaymentInput,
+  createCharge,
+  createOrderInput,
+} = require("../utils");
 const createPaymentIntent = require("../../payment-providers/stripe/create-payment-intent-2");
+const stripeToCrystallizeOrderModel = require("../../payment-providers/stripe/to-crystallize-order-model-2");
 
 /**
  * Make a payment with pro-rated rate from current subscription contract period
@@ -28,6 +33,8 @@ const createPaymentIntent = require("../../payment-providers/stripe/create-payme
  *   - ==> new sub active from Jan 15 - Feb 15
  */
 async function upgrade({ subscription, product, customerIdentifier }) {
+  const customer = await customers.get({ identifier: customerIdentifier });
+
   const today = new Date();
   const activeUntil = new Date(subscription.status.activeUntil);
   const lastActive = subMonths(activeUntil, 1);
@@ -39,6 +46,7 @@ async function upgrade({ subscription, product, customerIdentifier }) {
   const alreadyPaid = subscription.status.price;
   const alreadyUsed = usage * alreadyPaid;
 
+  const payment = subscription.payment;
   const variant = product.variants[0];
   const subscriptionPlan = variant.subscriptionPlans[0];
   const newPriceVariant =
@@ -46,44 +54,24 @@ async function upgrade({ subscription, product, customerIdentifier }) {
   const newPrice = newPriceVariant.price;
   const toBeCharged = newPrice - alreadyPaid + alreadyUsed;
 
-  await createPaymentIntent({
-    email: customerIdentifier,
-    amount: toBeCharged * 100,
+  console.log("Charge");
+  const charge = await createCharge({
+    payment,
+    item: subscription.item,
+    customer,
+    totalValue: toBeCharged,
     currency: newPriceVariant.currency,
-    paymentMethodId: subscription.payment.paymentMethodId,
-    confirm: true,
   });
 
   // Create Order
-  const customer = await customers.get({ identifier: customerIdentifier });
-  const orderInput = {
-    total: {
-      net: toBeCharged,
-      gross: toBeCharged,
-      currency: newPriceVariant.currency,
-    },
-    cart: [
-      {
-        name: variant.name,
-        sku: variant.sku,
-        path: product.path,
-        quantity: 1,
-        priceVariantIdentifier: "default",
-        price: {
-          net: toBeCharged,
-          gross: toBeCharged,
-          currency: newPriceVariant.currency,
-        },
-      },
-    ],
-    customer: {
-      identifier: customerIdentifier,
-      firstName: customer.firstName,
-      lastName: customer.lastName,
-      addresses: [{ type: "billing", email: customerIdentifier }],
-    },
-    payment: [paymentToPaymentInput(subscription.payment)],
-  };
+  console.log("Create Order Input");
+  const orderInput = createOrderInput({
+    customer,
+    product,
+    payment: subscription.payment,
+    charge,
+  });
+  console.log("Create Order");
   await orders.create(orderInput);
 
   // Update subscription
@@ -92,7 +80,9 @@ async function upgrade({ subscription, product, customerIdentifier }) {
     product,
     paymentInput: paymentToPaymentInput(subscription.payment),
   });
+  console.log("Create new subscription");
   await create(input);
+  console.log("Update existing subscription");
   await update(subscription.id, {
     status: { renewAt: null, activeUntil: null },
   });

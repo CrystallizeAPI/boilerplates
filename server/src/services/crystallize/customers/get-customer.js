@@ -21,6 +21,7 @@ module.exports = async function getCustomer({ identifier, externalReference }) {
             externalReference: $externalReference
           ) {
             identifier
+            email
             firstName
             middleName
             lastName
