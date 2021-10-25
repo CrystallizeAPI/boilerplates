@@ -222,7 +222,7 @@ async function createCharge({ payment, item, customer, totalValue, currency }) {
     const address = await getTillitAddress(company);
 
     return await createTillitOrder({
-      baseUrl: "httt://localhost:3000",
+      baseUrl: process.env.SITE_URL,
       item: item,
       total: totalValue,
       customer,

@@ -1,6 +1,5 @@
 const createPaymentIntent = require("./create-payment-intent");
 const confirmOrder = require("./confirm-order");
-const createCharge = require("./create-charge");
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY;
@@ -14,5 +13,4 @@ module.exports = {
   },
   createPaymentIntent,
   confirmOrder,
-  createCharge,
 };

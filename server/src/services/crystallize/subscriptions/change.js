@@ -15,8 +15,6 @@ const {
   createCharge,
   createOrderInput,
 } = require("../utils");
-const createPaymentIntent = require("../../payment-providers/stripe/create-payment-intent-2");
-const stripeToCrystallizeOrderModel = require("../../payment-providers/stripe/to-crystallize-order-model-2");
 
 /**
  * Make a payment with pro-rated rate from current subscription contract period
