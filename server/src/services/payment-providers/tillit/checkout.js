@@ -1,6 +1,9 @@
 const crystallize = require("../../crystallize");
 const basketService = require("../../basket-service");
-const tillitToCrystallizeOrderModel = require("./to-crystallize-order-model");
+const {
+  tillitToCrystallizeOrderModel,
+  tillitAddressToCrystallizeAddress,
+} = require("./to-crystallize-order-model");
 const getAddress = require("./get-address");
 const createTillitOrder = require("./create-order");
 
@@ -24,21 +27,16 @@ module.exports = async function checkout({
       identifier: email,
     });
 
-    if (!crystallizeCustomer) {
-      console.log("Create Crystallize customer");
-      await crystallize.customers.create({
-        identifier: email,
-        email: email,
-        firstName: customer.firstName,
-        lastName: customer.lastName,
-      });
-    }
+    const product = await crystallize.products.getByPath(
+      `/pricing-page/${basket.cart[0].sku}`
+    );
 
     console.log("Creating Tillit order");
     const tillitOrder = await createTillitOrder({
       baseUrl,
-      basket,
-      customer,
+      item: basket.cart[0],
+      total: basket.total.gross,
+      customer: crystallizeCustomer,
       company,
       phone,
       address,
@@ -49,12 +47,31 @@ module.exports = async function checkout({
     console.log("Creating Crystallize order");
     await crystallize.orders.create(
       tillitToCrystallizeOrderModel({
-        basket,
-        checkoutModel,
         order: tillitOrder,
-        customerIdentifier: email,
+        product,
+        customer: crystallizeCustomer,
+        meta: [{ key: "isFirstOrder", value: "1" }],
       })
     );
+
+    console.log("Updating Crystallize customer");
+    await crystallize.customers.update({
+      identifier: email,
+      customer: {
+        phone: phone,
+        companyName: company.name,
+        addresses: [
+          tillitAddressToCrystallizeAddress(
+            "billing",
+            tillitOrder.billing_address
+          ),
+          tillitAddressToCrystallizeAddress(
+            "delivery",
+            tillitOrder.billing_address
+          ),
+        ],
+      },
+    });
 
     return {
       success: true,

@@ -15,6 +15,42 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return { props: { data } };
 };
 
+const OrderConfirmation = ({ order }) => {
+  const lineItem = order.line_items[0];
+  const address = order.billing_address;
+  const company = order.buyer.company;
+  const representative = order.buyer.representative;
+  return (
+    <Flex direction="column" align="start">
+      <Typography size={3}>
+        Order: {lineItem.name} - ${Number(order.gross_amount) / 10}/month
+      </Typography>
+      <Spacer space={4} />
+      <Typography size={3}>Bill to {company.company_name}</Typography>
+      <Spacer space={4} />
+      <Typography size={3}>
+        Billing address: {address.street_address}, {address.city}{" "}
+        {address.postalCode} {address.country}
+      </Typography>
+      <Spacer space={4} />
+      <Typography size={3}>
+        Purchased by {representative.first_name} {representative.last_name}
+      </Typography>
+      <Spacer space={4} />
+      <Typography size={3}>
+        {representative.email} - {representative.phone_number}
+      </Typography>
+      <Spacer space={8} />
+      <Link
+        href="/login"
+        css={{ fontWeight: "bold", fontSize: "$4", alignSelf: "center" }}
+      >
+        Login
+      </Link>
+    </Flex>
+  );
+};
+
 export const ConfirmationTillit = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
@@ -38,16 +74,10 @@ export const ConfirmationTillit = (
         Order Confirmation
       </Typography>
 
-      <Spacer space={4} />
+      <Spacer space={8} />
 
       {order.state === "VERIFIED" ? (
-        <>
-          <Typography size={4}>Thank you for your order!</Typography>
-          <Spacer />
-          <Link href="/login" css={{ fontWeight: "bold", fontSize: "$4" }}>
-            Login
-          </Link>
-        </>
+        <OrderConfirmation order={order} />
       ) : (
         <Typography size={4}>Order Unverfied</Typography>
       )}

@@ -1,5 +1,12 @@
 const invariant = require("invariant");
 const fetch = require("node-fetch");
+const createPaymentIntent = require("../../services/payment-providers/stripe/create-payment-intent-2");
+const stripeToCrystallizeOrderModel = require("../../services/payment-providers/stripe/to-crystallize-order-model-2");
+const getTillitAddress = require("../../services/payment-providers/tillit/get-address");
+const createTillitOrder = require("../../services/payment-providers/tillit/create-order");
+const {
+  tillitToCrystallizeOrderModel,
+} = require("../../services/payment-providers/tillit/to-crystallize-order-model");
 
 const CRYSTALLIZE_TENANT_IDENTIFIER = process.env.CRYSTALLIZE_TENANT_IDENTIFIER;
 const CRYSTALLIZE_ACCESS_TOKEN_ID = process.env.CRYSTALLIZE_ACCESS_TOKEN_ID;
@@ -169,6 +176,82 @@ function paymentToPaymentInput(payment) {
   }
 }
 
+function createBasket({ totalValue, currency, product }) {
+  const variant = product.variants[0];
+  return {
+    total: {
+      net: totalValue,
+      gross: totalValue,
+      currency: currency,
+    },
+    cart: [
+      {
+        name: variant.name,
+        sku: variant.sku,
+        path: product.path,
+        quantity: 1,
+        priceVariantIdentifier: "default",
+        price: {
+          net: totalValue,
+          gross: totalValue,
+          currency: currency,
+        },
+      },
+    ],
+  };
+}
+
+async function createCharge({ payment, item, customer, totalValue, currency }) {
+  if (payment.provider === "stripe") {
+    console.log("Create Stripe payment intent");
+    return createPaymentIntent({
+      email: customer.email,
+      amount: totalValue * 100,
+      currency: currency,
+      paymentMethodId: payment.paymentMethodId,
+      confirm: true,
+    });
+  } else if (payment.provider === "custom") {
+    console.log("Create Tillit order");
+
+    const company = {
+      id: payment.properties?.find((p) => p.property === "companyId")?.value,
+      name: payment.properties?.find((p) => p.property === "companyName")
+        ?.value,
+    };
+    const address = await getTillitAddress(company);
+
+    return await createTillitOrder({
+      baseUrl: "httt://localhost:3000",
+      item: item,
+      total: totalValue,
+      customer,
+      company,
+      phone: customer.phone,
+      address,
+    });
+  }
+}
+
+function createOrderInput({ customer, payment, charge, product }) {
+  if (payment.provider === "stripe") {
+    const paymentIntent = charge;
+    return stripeToCrystallizeOrderModel({
+      customer,
+      product,
+      payment,
+      paymentIntent,
+    });
+  } else if (payment.provider === "custom") {
+    const tillitOrder = charge;
+    return tillitToCrystallizeOrderModel({
+      customer,
+      product,
+      order: tillitOrder,
+    });
+  }
+}
+
 module.exports = {
   paymentToPaymentInput,
   normaliseOrderModel,
@@ -178,4 +261,7 @@ module.exports = {
   callPimApi,
   callSubscriptionsApi,
   getTenantId,
+  createBasket,
+  createCharge,
+  createOrderInput,
 };

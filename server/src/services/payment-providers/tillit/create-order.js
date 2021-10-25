@@ -3,19 +3,18 @@ const { TILLIT_URL } = require("./constants");
 
 module.exports = async function createOrder({
   baseUrl,
-  basket,
+  item,
+  total,
   customer,
   company,
   phone,
   address,
 }) {
-  const email = customer.addresses[0].email;
-  const item = basket.cart[0];
-  const total = String(basket.total.gross * 10);
+  const totalValue = String(total * 10);
 
   const input = {
-    gross_amount: total,
-    net_amount: total,
+    gross_amount: totalValue,
+    net_amount: totalValue,
     currency: "USD",
     discount_amount: "0",
     discount_rate: "0",
@@ -29,7 +28,7 @@ module.exports = async function createOrder({
         organization_number: company.id,
       },
       representative: {
-        email: email,
+        email: customer.email,
         first_name: customer.firstName,
         last_name: customer.lastName,
         phone_number: phone,
@@ -53,8 +52,8 @@ module.exports = async function createOrder({
       {
         description: `PhotoFinder subscription: ${item.name}`,
         name: `PhotoFinder - ${item.name}`,
-        gross_amount: total,
-        net_amount: total,
+        gross_amount: totalValue,
+        net_amount: totalValue,
         tax_amount: "0",
         discount_amount: "0",
         quantity: 1.0,
@@ -62,7 +61,7 @@ module.exports = async function createOrder({
         tax_class_name: "",
         tax_rate: "0",
         type: "DIGITAL",
-        unit_price: total,
+        unit_price: totalValue,
         image_url: "https://via.placeholder.com/150",
         product_page_url: "https://saas.boilerplate.app",
       },

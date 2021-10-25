@@ -1,59 +1,72 @@
-function tillitAddressToCrystallizeAddress(type, address, customer) {
+function tillitAddressToCrystallizeOrderAddress(address, customer) {
   return {
-    type,
+    ...address,
     firstName: customer.firstName,
     middleName: "",
     lastName: customer.lastName,
+    phone: customer.phone,
+    email: customer.email,
+  };
+}
+
+function tillitAddressToCrystallizeAddress(type, address) {
+  return {
+    type,
     street: address.street_address,
     street2: "",
     postalCode: address.postal_code,
     city: address.city,
     state: address.region,
     country: address.country,
-    phone: customer.phone,
-    email: customer.email,
   };
 }
 
-module.exports = function tillitToCrystallizeOrderModel({
-  basket,
-  // checkoutModel,
-  order,
-  customerIdentifier,
-}) {
-  const meta = [
-    {
-      key: "tillitOrderId",
-      value: order.id,
-    },
-  ];
-
-  const tillitCustomer = {
-    firstName: order.buyer.representative.first_name,
-    lastName: order.buyer.representative.last_name,
-    email: order.buyer.representative.email,
-    phone: order.buyer.representative.phone_number,
+function getTillitCustomer(tillitOrder) {
+  return {
+    firstName: tillitOrder.buyer.representative.first_name,
+    lastName: tillitOrder.buyer.representative.last_name,
+    email: tillitOrder.buyer.representative.email,
+    phone: tillitOrder.buyer.representative.phone_number,
   };
+}
+
+function tillitToCrystallizeOrderModel({
+  customer,
+  product,
+  order,
+  meta = [],
+}) {
+  const { createBasket } = require("../../crystallize/utils");
+  const basket = createBasket({
+    totalValue: Number(order.gross_amount) / 10,
+    currency: order.currency,
+    product,
+  });
+  const tillitCustomer = getTillitCustomer(order);
 
   return {
     cart: basket.cart,
     total: basket.total,
-    meta,
+    meta: [
+      ...meta,
+      {
+        key: "tillitOrderId",
+        value: order.id,
+      },
+    ],
     customer: {
-      identifier: customerIdentifier,
-      firstName: tillitCustomer.firstName,
+      identifier: customer.identifier,
+      firstName: customer.firstName,
       middleName: "",
-      lastName: tillitCustomer.lastName,
+      lastName: customer.lastName,
       birthDate: Date,
       addresses: [
-        tillitAddressToCrystallizeAddress(
-          "billing",
-          order.billing_address,
+        tillitAddressToCrystallizeOrderAddress(
+          tillitAddressToCrystallizeAddress("billing", order.billing_address),
           tillitCustomer
         ),
-        tillitAddressToCrystallizeAddress(
-          "delivery",
-          order.billing_address,
+        tillitAddressToCrystallizeOrderAddress(
+          tillitAddressToCrystallizeAddress("delivery", order.billing_address),
           tillitCustomer
         ),
       ],
@@ -77,4 +90,11 @@ module.exports = function tillitToCrystallizeOrderModel({
       },
     ],
   };
+}
+
+module.exports = {
+  getTillitCustomer,
+  tillitAddressToCrystallizeAddress,
+  tillitAddressToCrystallizeOrderAddress,
+  tillitToCrystallizeOrderModel,
 };

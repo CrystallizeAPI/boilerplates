@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode, ReactComponentElement } from "react";
 
 import { styled, CSS, StitchesVariants } from "@/design-system/theme";
 import type * as Polymorphic from "@radix-ui/react-polymorphic";
@@ -127,8 +127,8 @@ const StyledTextFieldWrapper = styled("div", {
 type TextFieldCSSProp = {
   css?: CSS;
   cssForWrapper?: CSS;
-  LeadingIcon?: string;
-  TrailingIcon?: string;
+  LeadingIcon?: React.FC;
+  TrailingIcon?: React.FC;
 };
 type TextFieldVariants = StitchesVariants<typeof StyledTextField>;
 type TextFieldOwnProps = TextFieldCSSProp & TextFieldVariants;

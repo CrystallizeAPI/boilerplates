@@ -7,11 +7,11 @@ module.exports = async function orderCreated(payload) {
 
   const order = await crystallize.orders.get(payload.id);
 
-  console.log(JSON.stringify(order, null, 2));
+  // console.log(JSON.stringify(order, null, 2));
 
   await emailService.sendOrderConfirmation(order);
 
-  if (!order.meta?.find((p) => p.key === "isFirstOrder")?.value === "1") {
+  if (order.meta?.find((p) => p.key === "isFirstOrder")?.value !== "1") {
     return;
   }
 
@@ -27,5 +27,6 @@ module.exports = async function orderCreated(payload) {
     }
   );
 
+  console.log("Create Subscription");
   await crystallize.subscriptions.create(input);
 };
