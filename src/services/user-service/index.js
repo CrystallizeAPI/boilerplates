@@ -46,15 +46,19 @@ module.exports = {
       return null;
     }
 
-    const jwt = require("jsonwebtoken");
-    const decoded = jwt.verify(token, JWT_SECRET);
-    if (!decoded) {
+    try {
+      const jwt = require("jsonwebtoken");
+      const decoded = jwt.verify(token, JWT_SECRET);
+      if (!decoded) {
+        return null;
+      }
+
+      return {
+        email: decoded.email,
+      };
+    } catch (e) {
       return null;
     }
-
-    return {
-      email: decoded.email,
-    };
   },
   async sendMagicLink({ email, redirectURLAfterLogin, context }) {
     invariant(JWT_SECRET, "process.env.JWT_SECRET is not defined");
