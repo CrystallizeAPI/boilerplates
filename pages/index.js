@@ -132,6 +132,36 @@ export default function Home({ data }) {
   return (
     <>
       <Meta {...meta} />
+      {/*crystallize-boilerplates-topbar-start*/}
+      <div
+        id="cr-boilers"
+        style={{ height: "52px" }}
+        dangerouslySetInnerHTML={{
+          __html: `
+            <script>(function () {const d = document.createElement('script');d.src='https://crystallize.com/static-min/scripts/boilerplate-topbar.min.js';d.defer=true;document.head.appendChild(d);}())</script>
+          `,
+        }}
+      />
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            #cr-boilers {
+              position: relative;
+              z-index: 999;
+            }
+
+            #cr-boilers a {
+              color: inherit;
+            }
+            
+            #cr-boilers .i {
+              max-width: none;
+              padding: 0 120px;
+            }
+          `,
+        }}
+      ></style>
+      {/*crystallize-boilerplates-topbar-end*/}
       <Layout tint="black">
         <Outer>
           {grid?.rows?.map((row, i) => (
