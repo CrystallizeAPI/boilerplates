@@ -1,4 +1,5 @@
 import { TeamFragment } from "@/crystallize/shapes/folders/team.generated";
+
 import { Image } from "@crystallize/react-image";
 import { ContentTransformer } from "@crystallize/react-content-transformer";
 import { Box, Flex, Typography, Spacer } from "@/design-system";

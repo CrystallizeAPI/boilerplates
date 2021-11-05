@@ -29,6 +29,3 @@ jspm_packages/
 
 # Next
 .next
-
-# GraphQL CodeGen
-*.generated*
