@@ -1,3 +1,4 @@
+import Script from "next/script";
 import styled from "styled-components";
 
 import Layout from "components/layout";
@@ -133,15 +134,14 @@ export default function Home({ data }) {
     <>
       <Meta {...meta} />
       {/*crystallize-boilerplates-topbar-start*/}
-      <div
-        id="cr-boilers"
-        style={{ height: "52px" }}
-        dangerouslySetInnerHTML={{
-          __html: `
-            <script>(function () {const d = document.createElement('script');d.src='https://crystallize.com/static-min/scripts/boilerplate-topbar.min.js';d.defer=true;document.head.appendChild(d);}())</script>
-          `,
-        }}
-      />
+      <div id="cr-boilers" style={{ height: "52px" }}>
+        <Script
+          src="https://crystallize.com/static-min/scripts/boilerplate-topbar.min.js"
+          strategy="afterInteractive"
+          defer
+        />
+      </div>
+
       <style
         dangerouslySetInnerHTML={{
           __html: `
