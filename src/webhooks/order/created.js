@@ -1,5 +1,5 @@
 const emailService = require("../../services/email-service");
-const handleFBAFulfilment = require("./fulfilment-fba")
+const handleFBAFulfilment = require("../../services/fulfillment-service/amazon-fba")
 
 module.exports = async function orderCreated(payload) {
   console.log("Webhook payload: orderCreated");
