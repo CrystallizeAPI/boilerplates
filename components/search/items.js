@@ -60,7 +60,7 @@ const Product = ({
 }) => {
   return (
     <li>
-      <Link href="/shop/[product]" as={path}>
+      <Link href={path}>
         <a onClick={() => redirecting()}>
           <Item>
             <ItemImage>
@@ -80,7 +80,7 @@ const Product = ({
 const Document = ({ name, path, redirecting }) => {
   return (
     <li>
-      <Link href="/shop/[product]" as={path}>
+      <Link href={path}>
         <a onClick={() => redirecting()}>
           <Item className="search-document">
             <div></div>

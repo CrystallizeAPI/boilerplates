@@ -73,7 +73,11 @@ export default function Search({ children }) {
 
   useOnOutsideClick({
     element: outerRef.current,
-    onOutsideClick: () => dispatch({ action: "blur" }),
+    onOutsideClick: () => {
+      if (isOpen) {
+        dispatch({ action: "blur" });
+      }
+    },
   });
 
   // Initiate searching

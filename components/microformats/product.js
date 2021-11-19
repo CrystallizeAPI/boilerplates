@@ -81,7 +81,7 @@ const Outer = styled.a`
 
 const Product = ({ path, name, defaultVariant }) => (
   <DimensionsKeeper>
-    <Link href="/shop/[product]" as={path} passHref>
+    <Link href={path} passHref>
       <Outer>
         <ImgWrapper>
           <Image {...defaultVariant?.images?.[0]} sizes="25vw" />
