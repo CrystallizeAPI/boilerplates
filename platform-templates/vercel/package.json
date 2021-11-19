@@ -27,7 +27,8 @@
     "node-fetch": "^2.6.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "stripe": "^8.130.0"
+    "stripe": "^8.130.0",
+    "amazon-sp-api": "^0.6.0"
   },
   "devDependencies": {
     "eslint": "^7.18.0",
