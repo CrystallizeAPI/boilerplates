@@ -98,6 +98,7 @@ module.exports = gql`
     vipps: PaymentProvider!
     mollie: PaymentProvider!
     paypal: PaymentProvider!
+    invoice: PaymentProvider!
   }
 
   type PaymentProvider {
@@ -199,6 +200,7 @@ module.exports = gql`
     mollie: MollieMutations!
     vipps: VippsMutations!
     paypal: PaypalMutation!
+    invoice: InvoiceMutation!
   }
 
   type StripeMutations {
@@ -263,6 +265,15 @@ module.exports = gql`
   }
 
   type PaypalPaymentResponse {
+    success: Boolean!
+    orderId: String
+  }
+
+  type InvoiceMutation {
+    createInvoice(checkoutModel: CheckoutModelInput!): CreateInvoiceMutation!
+  }
+
+  type CreateInvoiceMutation {
     success: Boolean!
     orderId: String
   }
