@@ -34,13 +34,13 @@ module.exports = {
     }
 
     /**
-     * Get all products from Crystallize from their paths
+     * Get all products from Crystallize
      */
     const {
       getProductsFromCrystallize,
     } = require("./get-products-from-crystallize");
     const productDataFromCrystallize = await getProductsFromCrystallize({
-      paths: basketFromClient.cart.map((p) => p.path),
+      skus: basketFromClient.cart.map((p) => p.sku),
       language: locale.crystallizeCatalogueLanguage,
     });
 

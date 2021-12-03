@@ -138,7 +138,6 @@ module.exports = gql`
 
   input SimpleCartItem {
     sku: String!
-    path: String!
     quantity: Int
     priceVariantIdentifier: String!
   }
