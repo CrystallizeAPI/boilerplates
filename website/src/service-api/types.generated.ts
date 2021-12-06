@@ -47,7 +47,6 @@ export type BasketModelInput = {
   locale: LocaleInput;
   cart: Array<SimpleCartItem>;
   crystallizeOrderId?: Maybe<Scalars['String']>;
-  klarnaOrderId?: Maybe<Scalars['String']>;
 };
 
 export enum CacheControlScope {
@@ -102,46 +101,12 @@ export type KeyValuePairInput = {
   value?: Maybe<Scalars['String']>;
 };
 
-export type KlarnaMutations = {
-  __typename?: 'KlarnaMutations';
-  renderCheckout: KlarnaRenderCheckoutReponse;
-};
-
-
-export type KlarnaMutationsRenderCheckoutArgs = {
-  checkoutModel: CheckoutModelInput;
-};
-
-export type KlarnaRenderCheckoutReponse = {
-  __typename?: 'KlarnaRenderCheckoutReponse';
-  html: Scalars['String'];
-  klarnaOrderId: Scalars['String'];
-  crystallizeOrderId: Scalars['String'];
-};
-
 export type LocaleInput = {
   locale: Scalars['String'];
   displayName?: Maybe<Scalars['String']>;
   appLanguage: Scalars['String'];
   crystallizeCatalogueLanguage?: Maybe<Scalars['String']>;
   crystallizePriceVariant?: Maybe<Scalars['String']>;
-};
-
-export type MollieCreatePaymentResponse = {
-  __typename?: 'MollieCreatePaymentResponse';
-  success: Scalars['Boolean'];
-  checkoutLink?: Maybe<Scalars['String']>;
-  crystallizeOrderId: Scalars['String'];
-};
-
-export type MollieMutations = {
-  __typename?: 'MollieMutations';
-  createPayment: MollieCreatePaymentResponse;
-};
-
-
-export type MollieMutationsCreatePaymentArgs = {
-  checkoutModel: CheckoutModelInput;
 };
 
 export type Mutation = {
@@ -193,10 +158,6 @@ export type PaymentProvider = {
 export type PaymentProvidersMutations = {
   __typename?: 'PaymentProvidersMutations';
   stripe: StripeMutations;
-  klarna: KlarnaMutations;
-  mollie: MollieMutations;
-  vipps: VippsMutations;
-  paypal: PaypalMutation;
   tillit: TillitMutation;
 };
 
@@ -204,29 +165,6 @@ export type PaymentProvidersQueries = {
   __typename?: 'PaymentProvidersQueries';
   stripe: PaymentProvider;
   tillit: TillitPaymentProvider;
-};
-
-export type PaypalMutation = {
-  __typename?: 'PaypalMutation';
-  createPayment: PaypalPaymentResponse;
-  confirmPayment: PaypalPaymentResponse;
-};
-
-
-export type PaypalMutationCreatePaymentArgs = {
-  checkoutModel: CheckoutModelInput;
-};
-
-
-export type PaypalMutationConfirmPaymentArgs = {
-  checkoutModel: CheckoutModelInput;
-  orderId?: Maybe<Scalars['String']>;
-};
-
-export type PaypalPaymentResponse = {
-  __typename?: 'PaypalPaymentResponse';
-  success: Scalars['Boolean'];
-  orderId?: Maybe<Scalars['String']>;
 };
 
 export type Price = {
@@ -447,21 +385,4 @@ export type VatType = {
   __typename?: 'VatType';
   name: Scalars['String'];
   percent: Scalars['Int'];
-};
-
-export type VippsInitiatePaymentResponse = {
-  __typename?: 'VippsInitiatePaymentResponse';
-  success: Scalars['Boolean'];
-  checkoutLink?: Maybe<Scalars['String']>;
-  crystallizeOrderId: Scalars['String'];
-};
-
-export type VippsMutations = {
-  __typename?: 'VippsMutations';
-  initiatePayment: VippsInitiatePaymentResponse;
-};
-
-
-export type VippsMutationsInitiatePaymentArgs = {
-  checkoutModel: CheckoutModelInput;
 };

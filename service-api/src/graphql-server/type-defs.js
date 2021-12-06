@@ -126,7 +126,6 @@ module.exports = gql`
     locale: LocaleInput!
     cart: [SimpleCartItem!]!
     crystallizeOrderId: String
-    klarnaOrderId: String
   }
 
   input LocaleInput {
@@ -198,10 +197,6 @@ module.exports = gql`
 
   type PaymentProvidersMutations {
     stripe: StripeMutations!
-    klarna: KlarnaMutations!
-    mollie: MollieMutations!
-    vipps: VippsMutations!
-    paypal: PaypalMutation!
     tillit: TillitMutation!
   }
 
@@ -218,55 +213,6 @@ module.exports = gql`
   }
 
   type StripeConfirmOrderResponse {
-    success: Boolean!
-    orderId: String
-  }
-
-  type KlarnaMutations {
-    renderCheckout(
-      checkoutModel: CheckoutModelInput!
-    ): KlarnaRenderCheckoutReponse!
-  }
-
-  type KlarnaRenderCheckoutReponse {
-    html: String!
-    klarnaOrderId: String!
-    crystallizeOrderId: String!
-  }
-
-  type MollieMutations {
-    createPayment(
-      checkoutModel: CheckoutModelInput!
-    ): MollieCreatePaymentResponse!
-  }
-
-  type MollieCreatePaymentResponse {
-    success: Boolean!
-    checkoutLink: String
-    crystallizeOrderId: String!
-  }
-
-  type VippsMutations {
-    initiatePayment(
-      checkoutModel: CheckoutModelInput!
-    ): VippsInitiatePaymentResponse!
-  }
-
-  type VippsInitiatePaymentResponse {
-    success: Boolean!
-    checkoutLink: String
-    crystallizeOrderId: String!
-  }
-
-  type PaypalMutation {
-    createPayment(checkoutModel: CheckoutModelInput!): PaypalPaymentResponse!
-    confirmPayment(
-      checkoutModel: CheckoutModelInput!
-      orderId: String
-    ): PaypalPaymentResponse!
-  }
-
-  type PaypalPaymentResponse {
     success: Boolean!
     orderId: String
   }

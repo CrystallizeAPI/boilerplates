@@ -31,20 +31,12 @@ module.exports = async function getByCustomer(customerIdentifier) {
                     provider
                     paymentMethod
                   }
-                  ... on PaypalPayment {
-                    provider
-                    orderId
-                  }
                   ... on CustomPayment {
                     provider
                     properties {
                       property
                       value
                     }
-                  }
-                  ... on KlarnaPayment {
-                    provider
-                    orderId
                   }
                 }
                 cart {
