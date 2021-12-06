@@ -3,5 +3,6 @@ query Auth {
     isLoggedIn
     logoutLink
     email
+    hasActiveSubscriptionContract
   }
 }

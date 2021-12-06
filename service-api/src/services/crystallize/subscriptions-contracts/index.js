@@ -1,4 +1,4 @@
-const get = require("./get-subscription");
+const get = require("./get-subscription-contract");
 const create = require("./create-subscription-contract");
 const _delete = require("./delete-subscription-contract");
 const getByCustomer = require("./get-by-customer");

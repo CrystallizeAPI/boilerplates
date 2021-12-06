@@ -1,5 +1,5 @@
-mutation DeleteSubscription($id: String!) {
-  subscription {
+mutation DeleteSubscriptionContract($id: String!) {
+  subscriptionContracts {
     delete(id: $id)
   }
 }

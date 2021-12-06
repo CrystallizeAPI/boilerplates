@@ -6,8 +6,7 @@ The Service API comes with the following features:
 
 - User authentication with magic link
 - Basket with cart validation
-- Voucher codes
-- Checkout with Stripe, Mollie, Klarna or Vipps
+- Checkout with Stripe or Tillit
 - A lot of Crystallize webhooks examples
 
 ---

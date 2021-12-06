@@ -41,13 +41,11 @@ export type Basket = {
   __typename?: 'Basket';
   cart: Array<CartItem>;
   total: Price;
-  voucher?: Maybe<Voucher>;
 };
 
 export type BasketModelInput = {
   locale: LocaleInput;
   cart: Array<SimpleCartItem>;
-  voucherCode?: Maybe<Scalars['String']>;
   crystallizeOrderId?: Maybe<Scalars['String']>;
   klarnaOrderId?: Maybe<Scalars['String']>;
 };
@@ -150,14 +148,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   user?: Maybe<UserMutations>;
   order?: Maybe<OrderMutations>;
-  subscription?: Maybe<SubscriptionMutations>;
+  subscriptionContracts?: Maybe<SubscriptionContractMutations>;
   paymentProviders: PaymentProvidersMutations;
-};
-
-export type MyCustomBusinnessQueries = {
-  __typename?: 'MyCustomBusinnessQueries';
-  whatIsThis: Scalars['String'];
-  dynamicRandomInt: Scalars['Int'];
 };
 
 export type OrderCustomerInput = {
@@ -211,10 +203,6 @@ export type PaymentProvidersMutations = {
 export type PaymentProvidersQueries = {
   __typename?: 'PaymentProvidersQueries';
   stripe: PaymentProvider;
-  klarna: PaymentProvider;
-  vipps: PaymentProvider;
-  mollie: PaymentProvider;
-  paypal: PaymentProvider;
   tillit: TillitPaymentProvider;
 };
 
@@ -260,23 +248,16 @@ export type PriceVariant = {
 
 export type Query = {
   __typename?: 'Query';
-  myCustomBusinessThing: MyCustomBusinnessQueries;
   basket: Basket;
   user: User;
   paymentProviders: PaymentProvidersQueries;
   orders: OrderQueries;
-  subscriptions: SubscriptionQueries;
-  voucher: VoucherResponse;
+  subscriptionContracts: SubscriptionContractQueries;
 };
 
 
 export type QueryBasketArgs = {
   basketModel: BasketModelInput;
-};
-
-
-export type QueryVoucherArgs = {
-  code: Scalars['String'];
 };
 
 export type SendMagicLinkResponse = {
@@ -317,37 +298,37 @@ export type StripeMutationsConfirmOrderArgs = {
   paymentIntentId: Scalars['String'];
 };
 
-export type SubscriptionMutations = {
-  __typename?: 'SubscriptionMutations';
+export type SubscriptionContractMutations = {
+  __typename?: 'SubscriptionContractMutations';
   delete?: Maybe<Scalars['JSON']>;
   updatePaymentMethod?: Maybe<Scalars['Boolean']>;
   change?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type SubscriptionMutationsDeleteArgs = {
+export type SubscriptionContractMutationsDeleteArgs = {
   id: Scalars['String'];
 };
 
 
-export type SubscriptionMutationsUpdatePaymentMethodArgs = {
+export type SubscriptionContractMutationsUpdatePaymentMethodArgs = {
   id: Scalars['String'];
   paymentMethodId: Scalars['String'];
 };
 
 
-export type SubscriptionMutationsChangeArgs = {
+export type SubscriptionContractMutationsChangeArgs = {
   id: Scalars['String'];
   plan: Scalars['String'];
 };
 
-export type SubscriptionQueries = {
-  __typename?: 'SubscriptionQueries';
+export type SubscriptionContractQueries = {
+  __typename?: 'SubscriptionContractQueries';
   getByCustomer?: Maybe<Scalars['JSON']>;
 };
 
 
-export type SubscriptionQueriesGetByCustomerArgs = {
+export type SubscriptionContractQueriesGetByCustomerArgs = {
   customerIdentifier: Scalars['String'];
 };
 
@@ -420,6 +401,7 @@ export type User = {
   __typename?: 'User';
   logoutLink: Scalars['String'];
   isLoggedIn: Scalars['Boolean'];
+  hasActiveSubscriptionContract: Scalars['Boolean'];
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   middleName?: Maybe<Scalars['String']>;
@@ -482,17 +464,4 @@ export type VippsMutations = {
 
 export type VippsMutationsInitiatePaymentArgs = {
   checkoutModel: CheckoutModelInput;
-};
-
-export type Voucher = {
-  __typename?: 'Voucher';
-  code: Scalars['String'];
-  discountAmount?: Maybe<Scalars['Int']>;
-  discountPercent?: Maybe<Scalars['Float']>;
-};
-
-export type VoucherResponse = {
-  __typename?: 'VoucherResponse';
-  voucher?: Maybe<Voucher>;
-  isValid: Scalars['Boolean'];
 };

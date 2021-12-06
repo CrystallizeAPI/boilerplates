@@ -5,9 +5,8 @@ module.exports = async function orderCreated(payload) {
   console.log("Webhook payload: orderCreated");
   console.log(JSON.stringify(payload, null, 2));
 
-  const order = await crystallize.orders.get(payload.id);
-
-  // console.log(JSON.stringify(order, null, 2));
+  // const order = await crystallize.orders.get(payload.order.get.id);
+  const order = payload.order.get;
 
   await emailService.sendOrderConfirmation(order);
 
@@ -16,10 +15,10 @@ module.exports = async function orderCreated(payload) {
   }
 
   const product = await crystallize.products.getByPath(
-    `/pricing-page/${order.cart[0].sku}`
+    `/plans/${order.cart[0].sku}`
   );
 
-  const input = crystallize.subscriptions.utils.createSubscriptionContractInput(
+  const input = await crystallize.subscriptionContracts.utils.createSubscriptionContractInput(
     {
       customerIdentifier: order.customer.addresses[0].email,
       product,
@@ -28,5 +27,5 @@ module.exports = async function orderCreated(payload) {
   );
 
   console.log("Create Subscription");
-  await crystallize.subscriptions.create(input);
+  await crystallize.subscriptionContracts.create(input);
 };

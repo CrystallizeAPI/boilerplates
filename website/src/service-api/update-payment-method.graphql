@@ -1,5 +1,5 @@
 mutation updatePaymentMethod($id: String!, $paymentMethodId: String!) {
-  subscription {
+  subscriptionContracts {
     updatePaymentMethod(id: $id, paymentMethodId: $paymentMethodId)
   }
 }

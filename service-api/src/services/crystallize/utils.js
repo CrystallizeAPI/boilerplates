@@ -50,7 +50,7 @@ function createApiCaller(uri) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function normaliseOrderModel({ customer, cart, total, voucher, ...rest }) {
+function normaliseOrderModel({ customer, cart, total, ...rest }) {
   return {
     ...rest,
     ...(total && {

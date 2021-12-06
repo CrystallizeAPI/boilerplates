@@ -11,7 +11,7 @@ import { Box, Flex, Spacer, Button, Typography, global } from "@/design-system";
 import { StripeLoader } from "@/components/stripe-loader";
 
 interface AccountPaymentMethodProps {
-  subscription: any;
+  subscriptionContract: any;
   paymentMethod: any;
 }
 
@@ -140,7 +140,7 @@ export const Form = ({ subscriptionId, close }: FormProps) => {
 
 const StripePaymentMethod = ({
   paymentMethod,
-  subscription,
+  subscriptionContract,
 }: AccountPaymentMethodProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -176,7 +176,7 @@ const StripePaymentMethod = ({
       ) : (
         <StripeLoader loading={<Typography>Loading...</Typography>}>
           <Form
-            subscriptionId={subscription.id}
+            subscriptionId={subscriptionContract.id}
             close={() => setIsEditing(false)}
           />
         </StripeLoader>
@@ -186,7 +186,7 @@ const StripePaymentMethod = ({
 };
 
 const PaymentMethod = (props: AccountPaymentMethodProps) => {
-  switch (props.paymentMethod.provider) {
+  switch (props.subscriptionContract.payment.provider) {
     case "stripe":
       return <StripePaymentMethod {...props} />;
     case "custom":

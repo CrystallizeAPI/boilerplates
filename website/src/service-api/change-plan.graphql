@@ -1,5 +1,5 @@
 mutation ChangePlan($id: String!, $plan: String!) {
-  subscription {
+  subscriptionContracts {
     change(id: $id, plan: $plan)
   }
 }

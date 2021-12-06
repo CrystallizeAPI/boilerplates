@@ -54,13 +54,15 @@ export const AccountPage: NextPage<AllPlansQuery> = ({ catalogue }) => {
   const query = useAccountQuery();
 
   if (query.data) {
-    const activeSubscription = query.data.subscriptions.data?.edges?.find(
-      ({ node }) => !!node.status.activeUntil
-    )?.node;
-    const renewalSubscription = query.data.subscriptions.data?.edges?.find(
-      ({ node }) => !!node.status.renewAt
-    )?.node;
-    const paymentMethod = activeSubscription?.paymentMethod;
+    const activeSubscriptionContract =
+      query.data.subscriptionContracts.data?.edges?.find(
+        ({ node }) => !!node.status.activeUntil
+      )?.node;
+    const renewalSubscriptionContract =
+      query.data.subscriptionContracts.data?.edges?.find(
+        ({ node }) => !!node.status.renewAt
+      )?.node;
+    const paymentMethod = activeSubscriptionContract?.paymentMethod;
     return (
       <Box css={{ width: "$content", mx: "auto", py: "$16" }}>
         <Box as="section">
@@ -77,12 +79,12 @@ export const AccountPage: NextPage<AllPlansQuery> = ({ catalogue }) => {
 
           <AccountPersonalInfo customer={query.data.user} />
 
-          {activeSubscription && paymentMethod ? (
+          {activeSubscriptionContract && paymentMethod ? (
             <>
               <Spacer space={12} />
 
               <AccountPaymentMethod
-                subscription={activeSubscription}
+                subscriptionContract={activeSubscriptionContract}
                 paymentMethod={paymentMethod}
               />
             </>
@@ -92,8 +94,8 @@ export const AccountPage: NextPage<AllPlansQuery> = ({ catalogue }) => {
         <Spacer space={24} />
 
         <AccountCurrentSubscription
-          activeSubscription={activeSubscription}
-          renewalSubscription={renewalSubscription}
+          activeSubscriptionContract={activeSubscriptionContract}
+          renewalSubscriptionContract={renewalSubscriptionContract}
           plans={catalogue}
         />
 

@@ -1,5 +1,5 @@
 query AllPlans {
-  catalogue(path: "/pricing-page", language: "en") {
+  catalogue(path: "/plans", language: "en") {
     children {
       ... on Product {
         __typename

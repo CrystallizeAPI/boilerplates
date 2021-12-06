@@ -4,19 +4,19 @@ import { AccountSubscriptionCard } from "@/components/account-subscription-card"
 import { componentContent } from "@/crystallize/utils/componentContent";
 
 interface AccountCurrentSubscriptionProps {
-  activeSubscription: any;
-  renewalSubscription: any;
+  activeSubscriptionContract: any;
+  renewalSubscriptionContract: any;
   plans: AllPlansQuery["catalogue"];
 }
 
 export const AccountCurrentSubscription = ({
-  activeSubscription,
-  renewalSubscription,
+  activeSubscriptionContract,
+  renewalSubscriptionContract,
   plans,
 }: AccountCurrentSubscriptionProps) => {
   const isDifferent =
-    Boolean(renewalSubscription) &&
-    renewalSubscription?.id !== activeSubscription?.id;
+    Boolean(renewalSubscriptionContract) &&
+    renewalSubscriptionContract?.id !== activeSubscriptionContract?.id;
 
   return (
     <Box as="section">
@@ -40,11 +40,12 @@ export const AccountCurrentSubscription = ({
           )
           .map((_plan) => {
             const plan = componentContent(_plan, "Product");
-            const isActive = activeSubscription?.item?.name === plan.name;
+            const isActive =
+              activeSubscriptionContract?.item?.name === plan.name;
             return (
               <AccountSubscriptionCard
                 key={plan.id}
-                subscription={activeSubscription}
+                subscription={activeSubscriptionContract}
                 plan={plan}
                 isActive={isActive}
               />
@@ -52,7 +53,7 @@ export const AccountCurrentSubscription = ({
           })}
       </Flex>
 
-      {renewalSubscription ? (
+      {renewalSubscriptionContract ? (
         <>
           <Spacer space={16} />
 
@@ -67,9 +68,9 @@ export const AccountCurrentSubscription = ({
             <Typography>
               Renew at{" "}
               {Intl.DateTimeFormat().format(
-                new Date(renewalSubscription?.status?.renewAt)
+                new Date(renewalSubscriptionContract?.status?.renewAt)
               )}{" "}
-              with {renewalSubscription?.item?.name} plan
+              with {renewalSubscriptionContract?.item?.name} plan
             </Typography>
           </Box>
         </>

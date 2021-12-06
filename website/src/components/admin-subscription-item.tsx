@@ -2,23 +2,23 @@ import { useMutation, useQueryClient } from "react-query";
 import { serviceAPIClient } from "@/clients";
 import { Box, Flex, Button, Typography } from "@/design-system";
 import {
-  DeleteSubscriptionDocument,
-  DeleteSubscriptionMutation,
-  DeleteSubscriptionMutationVariables,
+  DeleteSubscriptionContractDocument,
+  DeleteSubscriptionContractMutation,
+  DeleteSubscriptionContractMutationVariables,
 } from "@/service-api/delete-subscription.generated";
 
 interface AdminSubscriptionItemProps {
-  subscription: any;
+  subscriptionContract: any;
 }
 
-export function useDeleteSubscription(id: string) {
+export function useDeleteSubscriptionContract(id: string) {
   const queryClient = useQueryClient();
   return useMutation(
     () =>
       serviceAPIClient.request<
-        DeleteSubscriptionMutation,
-        DeleteSubscriptionMutationVariables
-      >(DeleteSubscriptionDocument, { id }),
+        DeleteSubscriptionContractMutation,
+        DeleteSubscriptionContractMutationVariables
+      >(DeleteSubscriptionContractDocument, { id }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("account");
@@ -28,13 +28,15 @@ export function useDeleteSubscription(id: string) {
 }
 
 export const AdminSubscriptionItem = ({
-  subscription,
+  subscriptionContract,
 }: AdminSubscriptionItemProps) => {
-  const deleteSubscription = useDeleteSubscription(subscription.id);
+  const deleteSubscriptionContract = useDeleteSubscriptionContract(
+    subscriptionContract.id
+  );
 
   return (
     <Flex
-      key={subscription.id}
+      key={subscriptionContract.id}
       justify="between"
       css={{
         width: "$full",
@@ -43,14 +45,14 @@ export const AdminSubscriptionItem = ({
         borderRadius: "$lg",
       }}
     >
-      <Typography>Subscription ID: {subscription.id}</Typography>
+      <Typography>Subscription ID: {subscriptionContract.id}</Typography>
       <Box>
         <Button
           variant="secondary"
           size="sm"
-          onClick={() => deleteSubscription.mutate()}
+          onClick={() => deleteSubscriptionContract.mutate()}
         >
-          {deleteSubscription.isLoading ? "Deleting..." : "Delete"}
+          {deleteSubscriptionContract.isLoading ? "Deleting..." : "Delete"}
         </Button>
       </Box>
     </Flex>

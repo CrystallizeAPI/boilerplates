@@ -7,7 +7,7 @@ module.exports = async function update(id, input) {
       input: input,
     },
     query: `
-      mutation updateSubscription($id: ID!, $input: UpdateSubscriptionContractInput!){
+      mutation updateSubscriptionContract($id: ID!, $input: UpdateSubscriptionContractInput!){
         subscriptionContracts {
           update(id: $id, input: $input) {
             id

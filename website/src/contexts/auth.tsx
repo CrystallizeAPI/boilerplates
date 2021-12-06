@@ -12,6 +12,7 @@ const initialAuthValue: AuthContextValue = {
   logoutLink: "",
   email: null,
   isChecked: false,
+  hasActiveSubscriptionContract: false,
 };
 
 export const AuthContext = createContext<AuthContextValue>(initialAuthValue);
@@ -60,11 +61,13 @@ export const useAuth = () => useContext(AuthContext);
 
 export const useOnlyAuthenticated = () => {
   const router = useRouter();
-  const { isChecked, isLoggedIn } = useAuth();
+  const { isChecked, isLoggedIn, hasActiveSubscriptionContract } = useAuth();
 
   useEffect(() => {
     if (isChecked && !isLoggedIn) router.push("/login");
   }, [isChecked, isLoggedIn]);
+
+  return { isChecked, isLoggedIn, hasActiveSubscriptionContract };
 };
 
 export const useOnlyUnauthenticated = () => {

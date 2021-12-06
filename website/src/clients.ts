@@ -5,7 +5,6 @@ const NEXT_PUBLIC_SERVICE_API_URL = process.env.NEXT_PUBLIC_SERVICE_API_URL;
 // Catalogue API
 const CATALOGUE_API_URL = `https://api.crystallize.com/${process.env.NEXT_PUBLIC_CRYSTALLIZE_TENANT_IDENTIFIER}/catalogue`;
 export const catalogueClient = new GraphQLClient(CATALOGUE_API_URL, {
-  credentials: "include",
   mode: "cors",
 });
 // export const catalogueClient = new GraphQLClient(`${NEXT_PUBLIC_SERVICE_API_URL}/api/crystallize/catalogue`, {

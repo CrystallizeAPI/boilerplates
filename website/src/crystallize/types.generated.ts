@@ -49,21 +49,21 @@ export type ComponentChoiceContent = {
 export type ComponentContent = BooleanContent | ComponentChoiceContent | ContentChunkContent | DatetimeContent | GridRelationsContent | ImageContent | ItemRelationsContent | LocationContent | NumericContent | ParagraphCollectionContent | PropertiesTableContent | RichTextContent | SelectionContent | SingleLineContent | VideoContent;
 
 export enum ComponentType {
-  Boolean = 'boolean',
-  ComponentChoice = 'componentChoice',
-  ContentChunk = 'contentChunk',
-  Datetime = 'datetime',
-  GridRelations = 'gridRelations',
-  Images = 'images',
-  ItemRelations = 'itemRelations',
-  Location = 'location',
-  Numeric = 'numeric',
-  ParagraphCollection = 'paragraphCollection',
-  PropertiesTable = 'propertiesTable',
-  RichText = 'richText',
-  Selection = 'selection',
+  Videos = 'videos',
   SingleLine = 'singleLine',
-  Videos = 'videos'
+  Selection = 'selection',
+  RichText = 'richText',
+  PropertiesTable = 'propertiesTable',
+  ParagraphCollection = 'paragraphCollection',
+  Numeric = 'numeric',
+  Location = 'location',
+  ItemRelations = 'itemRelations',
+  Images = 'images',
+  GridRelations = 'gridRelations',
+  Datetime = 'datetime',
+  ContentChunk = 'contentChunk',
+  ComponentChoice = 'componentChoice',
+  Boolean = 'boolean'
 }
 
 export type ContentChunkContent = {
@@ -310,6 +310,12 @@ export type ItemVersion = {
 };
 
 
+export type KeyValuePair = {
+  __typename?: 'KeyValuePair';
+  key: Scalars['String'];
+  value?: Maybe<Scalars['String']>;
+};
+
 export type LocationContent = {
   __typename?: 'LocationContent';
   lat?: Maybe<Scalars['Float']>;
@@ -405,6 +411,14 @@ export type ProductPriceVariant = {
   currency?: Maybe<Scalars['String']>;
 };
 
+export type ProductStockLocation = {
+  __typename?: 'ProductStockLocation';
+  identifier: Scalars['String'];
+  name: Scalars['String'];
+  meta?: Maybe<Array<KeyValuePair>>;
+  stock?: Maybe<Scalars['Int']>;
+};
+
 export type ProductVariant = {
   __typename?: 'ProductVariant';
   id: Scalars['ID'];
@@ -417,6 +431,7 @@ export type ProductVariant = {
   price?: Maybe<Scalars['Float']>;
   priceVariants?: Maybe<Array<ProductPriceVariant>>;
   stock?: Maybe<Scalars['Int']>;
+  stockLocations?: Maybe<Array<ProductStockLocation>>;
   attributes?: Maybe<Array<Maybe<ProductVariantAttribute>>>;
   externalReference?: Maybe<Scalars['String']>;
   subscriptionPlans?: Maybe<Array<ProductVariantSubscriptionPlan>>;
@@ -425,6 +440,11 @@ export type ProductVariant = {
 
 
 export type ProductVariantPriceArgs = {
+  identifier?: Maybe<Scalars['String']>;
+};
+
+
+export type ProductVariantStockArgs = {
   identifier?: Maybe<Scalars['String']>;
 };
 

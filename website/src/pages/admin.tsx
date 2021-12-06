@@ -51,6 +51,7 @@ export const AdminPage: NextPage<AllPlansQuery> = ({ catalogue }) => {
   const query = useAccountQuery();
 
   if (query.data) {
+    const subscriptionContracts = query.data.subscriptionContracts?.data?.edges;
     return (
       <Box css={{ width: "$content", mx: "auto", py: "$16" }}>
         <Typography as="h2" size="4" css={{ fontWeight: "bold" }}>
@@ -78,17 +79,15 @@ export const AdminPage: NextPage<AllPlansQuery> = ({ catalogue }) => {
         <Spacer space={4} />
 
         <Flex direction="column" align="start" css={{ gap: "$4" }}>
-          {query.data.subscriptions?.data?.edges?.length ? (
-            query.data.subscriptions?.data?.edges?.map(
-              ({ node: subscription }) => {
-                return (
-                  <AdminSubscriptionItem
-                    key={subscription.id}
-                    subscription={subscription}
-                  />
-                );
-              }
-            )
+          {subscriptionContracts ? (
+            subscriptionContracts.map(({ node: subscriptionContract }) => {
+              return (
+                <AdminSubscriptionItem
+                  key={subscriptionContract.id}
+                  subscriptionContract={subscriptionContract}
+                />
+              );
+            })
           ) : (
             <Typography>No Subscriptions...</Typography>
           )}

@@ -4,29 +4,16 @@ module.exports = gql`
   scalar JSON
 
   type Query {
-    myCustomBusinessThing: MyCustomBusinnessQueries!
     basket(basketModel: BasketModelInput!): Basket!
     user: User!
     paymentProviders: PaymentProvidersQueries!
     orders: OrderQueries!
-    subscriptions: SubscriptionQueries!
-    voucher(code: String!): VoucherResponse!
-  }
-
-  type VoucherResponse {
-    voucher: Voucher
-    isValid: Boolean!
-  }
-
-  type MyCustomBusinnessQueries {
-    whatIsThis: String!
-    dynamicRandomInt: Int!
+    subscriptionContracts: SubscriptionContractQueries!
   }
 
   type Basket {
     cart: [CartItem!]!
     total: Price!
-    voucher: Voucher
   }
 
   type CartItem {
@@ -86,6 +73,7 @@ module.exports = gql`
   type User {
     logoutLink: String!
     isLoggedIn: Boolean!
+    hasActiveSubscriptionContract: Boolean!
     email: String
     firstName: String
     middleName: String
@@ -96,10 +84,6 @@ module.exports = gql`
 
   type PaymentProvidersQueries {
     stripe: PaymentProvider!
-    klarna: PaymentProvider!
-    vipps: PaymentProvider!
-    mollie: PaymentProvider!
-    paypal: PaymentProvider!
     tillit: TillitPaymentProvider!
   }
 
@@ -121,33 +105,26 @@ module.exports = gql`
     delete(id: String!): JSON
   }
 
-  type SubscriptionQueries {
+  type SubscriptionContractQueries {
     getByCustomer(customerIdentifier: String!): JSON
   }
 
-  type SubscriptionMutations {
+  type SubscriptionContractMutations {
     delete(id: String!): JSON
     updatePaymentMethod(id: String!, paymentMethodId: String!): Boolean
     change(id: String!, plan: String!): Boolean
   }
 
-  type Voucher {
-    code: String!
-    discountAmount: Int
-    discountPercent: Float
-  }
-
   type Mutation {
     user: UserMutations
     order: OrderMutations
-    subscription: SubscriptionMutations
+    subscriptionContracts: SubscriptionContractMutations
     paymentProviders: PaymentProvidersMutations!
   }
 
   input BasketModelInput {
     locale: LocaleInput!
     cart: [SimpleCartItem!]!
-    voucherCode: String
     crystallizeOrderId: String
     klarnaOrderId: String
   }

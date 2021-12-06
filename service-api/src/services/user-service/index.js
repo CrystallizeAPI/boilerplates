@@ -20,6 +20,7 @@ async function getUser({ context }) {
     isLoggedIn: Boolean(userInContext && "email" in userInContext),
     email: userInContext && userInContext.email,
     logoutLink: `${context.publicHost}/user/logout`,
+    hasActiveSubscriptionContract: false,
   };
 
   if (user && user.isLoggedIn) {
@@ -187,8 +188,11 @@ module.exports = {
   },
   async startSignUp({ firstName, lastName, email }) {
     try {
-      const subscription = await crystallize.subscriptions.getByCustomer(email);
-      if (subscription.edges.length > 0) throw new Error();
+      const subscriptionContract = await crystallize.subscriptionContracts.getByCustomer(
+        email
+      );
+
+      if (subscriptionContract.edges.length > 0) throw new Error();
       try {
         await crystallize.customers.create({
           identifier: email,

@@ -17,21 +17,8 @@ function getTotals({ cart, vatType }) {
 }
 
 module.exports = {
-  async get({ basketModel, context }) {
-    const { locale, voucherCode, ...basketFromClient } = basketModel;
-
-    /**
-     * Resolve all the voucher codes to valid vouchers for the user
-     */
-    let voucher;
-    if (voucherCode) {
-      const voucherService = require("../voucher-service");
-      const response = await voucherService.get({ code: voucherCode, context });
-
-      if (response.isValid) {
-        voucher = response.voucher;
-      }
-    }
+  async get({ basketModel }) {
+    const { locale, ...basketFromClient } = basketModel;
 
     /**
      * Get all products from Crystallize from their paths
@@ -93,50 +80,8 @@ module.exports = {
     // Calculate the totals
     let total = getTotals({ cart, vatType });
 
-    // Add a voucher
-    let cartWithVoucher = cart;
-    if (cart.length > 0 && voucher) {
-      const {
-        calculateVoucherDiscountAmount,
-      } = require("./calculate-voucher-discount-amount");
-      const discountAmount = calculateVoucherDiscountAmount({
-        voucher,
-        amount: total.gross,
-      });
-
-      // Reduce the price for each item
-      cartWithVoucher = cart.map((cartItem) => {
-        const portionOfTotal =
-          (cartItem.price.gross * cartItem.quantity) / total.gross;
-
-        /**
-         * Each cart item gets a portion of the voucher that
-         * is relative to their own portion of the total discount
-         */
-        const portionOfDiscount = discountAmount * portionOfTotal;
-
-        const gross =
-          cartItem.price.gross - portionOfDiscount / cartItem.quantity;
-        const net = (gross * 100) / (100 + cartItem.vatType.percent);
-
-        return {
-          ...cartItem,
-          price: {
-            ...cartItem.price,
-            gross,
-            net,
-          },
-        };
-      });
-
-      // Adjust totals
-      total = getTotals({ cart: cartWithVoucher, vatType });
-      total.discount = discountAmount;
-    }
-
     return {
-      voucher,
-      cart: cartWithVoucher,
+      cart,
       total,
     };
   },

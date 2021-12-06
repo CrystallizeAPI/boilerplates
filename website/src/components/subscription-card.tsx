@@ -3,13 +3,15 @@ import { FC } from "react";
 import { Box, Spacer, Button, Typography, Flex } from "@/design-system";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { Plan } from "@/types/basket";
+import { ProductPriceVariant } from "@/crystallize/types.generated";
+import { PriceVariant } from "@/components/price-variant";
 
 interface SubscriptionInterface {
   name: string;
-  price: string;
-  type: string;
-  description: string;
+  price: ProductPriceVariant;
   isActive?: boolean;
+  downloadsPrMonth: number;
+  usersPrMonth: number;
   plan: Plan;
   onSelect: (plan: Plan) => void;
 }
@@ -17,14 +19,16 @@ interface SubscriptionInterface {
 export const SubscriptionCard: FC<SubscriptionInterface> = ({
   name,
   price,
-  type,
-  description,
   isActive = false,
   plan,
+  downloadsPrMonth,
+  usersPrMonth,
   onSelect,
 }) => {
   return (
     <Box
+      as="label"
+      htmlFor={`plan-${plan.value}`}
       css={{
         display: "flex",
         flexDirection: "column",
@@ -34,6 +38,7 @@ export const SubscriptionCard: FC<SubscriptionInterface> = ({
         borderRadius: "$3xl",
         p: "$3",
         backgroundColor: isActive ? "$primary" : "initial",
+        cursor: "pointer",
 
         "& [data-card-text]": {
           opacity: 0.7,
@@ -48,8 +53,26 @@ export const SubscriptionCard: FC<SubscriptionInterface> = ({
           opacity: 1,
           color: "$white",
         },
+
+        "& [data-input]": {
+          opacity: 0,
+          height: 0,
+          width: 0,
+        },
       }}
     >
+      <input
+        type="checkbox"
+        checked={isActive}
+        tabIndex={-1}
+        onChange={(e) => {
+          if (e.target.checked) {
+            onSelect(plan);
+          }
+        }}
+        data-input
+        id={`plan-${plan.value}`}
+      />
       <Flex justify="start" css={{ width: "$full" }}>
         <Box
           css={{
@@ -85,15 +108,21 @@ export const SubscriptionCard: FC<SubscriptionInterface> = ({
         data-card-price
         data-card-text-active={isActive}
       >
-        {price || type}
-        <Typography
-          variant="heading"
-          size="5"
-          data-card-price
-          data-card-text-active={isActive}
-        >
-          {price ? `/${type}` : ""}
-        </Typography>
+        {!price.price ? (
+          "Free"
+        ) : (
+          <>
+            <PriceVariant {...price} />
+            <Typography
+              variant="heading"
+              size="5"
+              data-card-price
+              data-card-text-active={isActive}
+            >
+              /month
+            </Typography>
+          </>
+        )}
       </Typography>
 
       <Spacer space={5} />
@@ -103,15 +132,23 @@ export const SubscriptionCard: FC<SubscriptionInterface> = ({
         variant="text"
         size="2"
         css={{ lineHeight: "$relaxed" }}
-        dangerouslySetInnerHTML={{ __html: description }}
         data-card-text
         data-card-text-active={isActive}
-      />
+      >
+        Full access to library.
+        <br />
+        {downloadsPrMonth} downloads / month
+        <br />
+        {!usersPrMonth
+          ? "unlimited"
+          : `${usersPrMonth} user${usersPrMonth === 1 ? "" : "s"}`}
+      </Typography>
 
       <Spacer space={9} />
 
       <Button
         variant="primary"
+        type="button"
         on={isActive ? "primary" : "default"}
         disabled={isActive}
         css={{ width: "$full", ...(isActive ? { color: "$black" } : {}) }}

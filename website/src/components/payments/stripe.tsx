@@ -49,7 +49,7 @@ export const Form = ({
   stripeClientSecret,
   checkoutModel,
   onSuccess,
-  onError,
+  onError = (error) => console.log(error),
 }: FormProps) => {
   stripeStyles();
 
@@ -76,7 +76,7 @@ export const Form = ({
       }
 
       const { customer } = checkoutModel;
-
+      debugger;
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         stripeClientSecret,
         {

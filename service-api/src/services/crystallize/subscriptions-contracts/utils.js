@@ -1,3 +1,5 @@
+const { getTenantId } = require("../utils");
+
 function createRecurringInput(subscriptionPlan) {
   return {
     price: subscriptionPlan.periods[0].recurring.priceVariants[0].price,
@@ -27,7 +29,7 @@ function createSubsciptionPlanInput(subscriptionPlan) {
   };
 }
 
-function createSubscriptionContractInput({
+async function createSubscriptionContractInput({
   customerIdentifier,
   product,
   paymentInput,
@@ -38,7 +40,7 @@ function createSubscriptionContractInput({
   const recurringInput = createRecurringInput(subscriptionPlan);
 
   return {
-    tenantId: process.env.CRYSTALLIZE_TENANT_ID,
+    tenantId: await getTenantId(),
     customerIdentifier: customerIdentifier,
     subscriptionPlan: createSubsciptionPlanInput(subscriptionPlan),
     item: createItemInput(variant),

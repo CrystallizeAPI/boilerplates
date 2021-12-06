@@ -1,4 +1,4 @@
-module.exports = async function subscriptionToCrystallizeOrderModel(
+module.exports = async function subscriptionContractToCrystallizeOrderModel(
   subscription
 ) {
   const meta = [];

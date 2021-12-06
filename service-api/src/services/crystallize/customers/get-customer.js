@@ -32,9 +32,34 @@ module.exports = async function getCustomer({ identifier, externalReference }) {
             }
           }
         }
+
+        subscriptionContract {
+          getMany (
+            tenantId: $tenantId
+            customerIdentifier: $identifier
+          ) {
+            edges {
+              node {
+                id
+                status {
+                  activeUntil
+                }
+              }
+            }
+          }
+        }
       }
     `,
   });
 
-  return response.data.customer.get;
+  const customer = response.data.customer.get;
+
+  const [subscriptionContract] =
+    response.data.subscriptionContract.getMany?.edges || [];
+  if (subscriptionContract) {
+    customer.hasActiveSubscriptionContract =
+      new Date(subscriptionContract.node.status.activeUntil) >= new Date();
+  }
+
+  return customer;
 };

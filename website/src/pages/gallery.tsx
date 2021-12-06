@@ -1,4 +1,5 @@
 import { NextPage, GetStaticProps } from "next";
+import Link from "next/link";
 import { normalizeDocumentNode } from "@/crystallize/utils/normalizeDocumentNode";
 import { componentContent } from "@/crystallize/utils/componentContent";
 import {
@@ -23,7 +24,51 @@ export const getStaticProps: GetStaticProps<GalleryPageProps> = async () => {
 };
 
 export const GalleryPage: NextPage<GalleryPageProps> = ({ gallery }) => {
-  useOnlyAuthenticated();
+  const auth = useOnlyAuthenticated();
+
+  if (!auth.isChecked) {
+    return (
+      <Box
+        as="h2"
+        css={{
+          padding: "$7",
+          textAlign: "center",
+        }}
+      >
+        <Typography
+          css={{
+            fontSize: "$3",
+          }}
+        >
+          Checking your subscription...
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (!auth.hasActiveSubscriptionContract) {
+    return (
+      <Box
+        as="h2"
+        css={{
+          padding: "$7",
+          textAlign: "center",
+        }}
+      >
+        <Typography
+          css={{
+            fontSize: "$3",
+          }}
+        >
+          Looks like you don't have an active subscription. Head over to{" "}
+          <Link href="/signup">
+            <a>signup</a>
+          </Link>{" "}
+          to get one!
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box css={{ maxWidth: "$content", mx: "auto" }}>

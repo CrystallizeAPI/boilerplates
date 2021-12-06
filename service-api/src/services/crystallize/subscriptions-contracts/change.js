@@ -1,6 +1,6 @@
 const { differenceInCalendarDays, subMonths } = require("date-fns");
-const get = require("./get-subscription");
-const update = require("./update-subscription");
+const get = require("./get-subscription-contract");
+const update = require("./update-subscription-contract");
 const create = require("./create-subscription-contract");
 const {
   createRecurringInput,
@@ -30,21 +30,21 @@ const {
  *   - ==> charge $60 - $10.32 = $49.68
  *   - ==> new sub active from Jan 15 - Feb 15
  */
-async function upgrade({ subscription, product, customerIdentifier }) {
+async function upgrade({ subscriptionContract, product, customerIdentifier }) {
   const customer = await customers.get({ identifier: customerIdentifier });
 
   const today = new Date();
-  const activeUntil = new Date(subscription.status.activeUntil);
+  const activeUntil = new Date(subscriptionContract.status.activeUntil);
   const lastActive = subMonths(activeUntil, 1);
 
   const alreadyPast = differenceInCalendarDays(today, lastActive);
   const fullPeriod = differenceInCalendarDays(activeUntil, lastActive);
   const usage =
     Math.round((alreadyPast / fullPeriod + Number.EPSILON) * 100) / 100;
-  const alreadyPaid = subscription.status.price;
+  const alreadyPaid = subscriptionContract.status.price;
   const alreadyUsed = usage * alreadyPaid;
 
-  const payment = subscription.payment;
+  const payment = subscriptionContract.payment;
   const variant = product.variants[0];
   const subscriptionPlan = variant.subscriptionPlans[0];
   const newPriceVariant =
@@ -55,7 +55,7 @@ async function upgrade({ subscription, product, customerIdentifier }) {
   console.log("Charge");
   const charge = await createCharge({
     payment,
-    item: subscription.item,
+    item: subscriptionContract.item,
     customer,
     totalValue: toBeCharged,
     currency: newPriceVariant.currency,
@@ -66,22 +66,22 @@ async function upgrade({ subscription, product, customerIdentifier }) {
   const orderInput = createOrderInput({
     customer,
     product,
-    payment: subscription.payment,
+    payment: subscriptionContract.payment,
     charge,
   });
   console.log("Create Order");
   await orders.create(orderInput);
 
   // Update subscription
-  const input = createSubscriptionContractInput({
+  const input = await createSubscriptionContractInput({
     customerIdentifier,
     product,
-    paymentInput: paymentToPaymentInput(subscription.payment),
+    paymentInput: paymentToPaymentInput(subscriptionContract.payment),
   });
   console.log("Create new subscription");
   await create(input);
   console.log("Update existing subscription");
-  await update(subscription.id, {
+  await update(subscriptionContract.id, {
     status: { renewAt: null, activeUntil: null },
   });
 
@@ -95,9 +95,13 @@ async function upgrade({ subscription, product, customerIdentifier }) {
  * - we create a new subscription contract with new plan that's not active
  * - we set current subscriptiopn's renewAt to `null`
  */
-async function downgrade({ subscription, product, customerIdentifier }) {
+async function downgrade({
+  subscriptionContract,
+  product,
+  customerIdentifier,
+}) {
   try {
-    await update(subscription.id, { status: { renewAt: null } });
+    await update(subscriptionContract.id, { status: { renewAt: null } });
     const variant = product.variants[0];
     const subscriptionPlan = variant.subscriptionPlans[0];
     const recurringInput = createRecurringInput(subscriptionPlan);
@@ -105,10 +109,10 @@ async function downgrade({ subscription, product, customerIdentifier }) {
       ...createStatusInput(recurringInput),
       activeUntil: null,
     };
-    const input = createSubscriptionContractInput({
+    const input = await createSubscriptionContractInput({
       customerIdentifier,
       product,
-      paymentInput: paymentToPaymentInput(subscription.payment),
+      paymentInput: paymentToPaymentInput(subscriptionContract.payment),
       overrides: { status: statusInput },
     });
     await create(input);
@@ -121,14 +125,14 @@ async function downgrade({ subscription, product, customerIdentifier }) {
 
 module.exports = async function change({ id, plan, context }) {
   const customerIdentifier = context.user.email;
-  const subscription = await get(id);
+  const subscriptionContract = await get(id);
   const product = await products.getByPath(plan);
   const subscriptionPlan = product.variants[0].subscriptionPlans[0];
   const priceVariant = subscriptionPlan.periods[0].recurring.priceVariants[0];
 
-  if (priceVariant.price < subscription.status.price) {
-    return downgrade({ product, subscription, customerIdentifier });
+  if (priceVariant.price < subscriptionContract.status.price) {
+    return downgrade({ product, subscriptionContract, customerIdentifier });
   } else {
-    return upgrade({ product, subscription, customerIdentifier });
+    return upgrade({ product, subscriptionContract, customerIdentifier });
   }
 };

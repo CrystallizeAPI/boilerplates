@@ -1,5 +1,5 @@
 const { getClient } = require("../../payment-providers/stripe/utils");
-const updateSubscription = require("./update-subscription");
+const updateSubscriptionContract = require("./update-subscription-contract");
 
 module.exports = async function updatePaymentMethod({
   id,
@@ -16,7 +16,7 @@ module.exports = async function updatePaymentMethod({
     customer: stripeCustomer.id,
   });
 
-  await updateSubscription(id, {
+  await updateSubscriptionContract(id, {
     payment: {
       provider: "stripe",
       stripe: {

@@ -28,7 +28,7 @@ module.exports = async function checkout({
     });
 
     const product = await crystallize.products.getByPath(
-      `/pricing-page/${basket.cart[0].sku}`
+      `/plans/${basket.cart[0].sku}`
     );
 
     console.log("Creating Tillit order");

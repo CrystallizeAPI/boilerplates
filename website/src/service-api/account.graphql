@@ -8,7 +8,7 @@ query Account($customerIdentifier: String!) {
   orders {
     data: getByCustomer(customerIdentifier: $customerIdentifier)
   }
-  subscriptions {
+  subscriptionContracts {
     data: getByCustomer(customerIdentifier: $customerIdentifier)
   }
 }
