@@ -19,8 +19,12 @@ export const ArticlePreview = ({
   isHeroItem = false,
   css,
 }: ArticlePreviewProps) => {
+  if (!article) {
+    return null;
+  }
+
   const author = componentContent(
-    article.byline?.content,
+    article?.byline?.content,
     "ItemRelationsContent"
   ).items[0];
   const authorImage = author
