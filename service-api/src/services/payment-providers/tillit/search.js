@@ -5,7 +5,8 @@ module.exports = async function search({ searchTerm, locale }) {
     // Select the proper region to search in here.
     let TILLIT_REGION = "no";
     if (locale.appLanguage === "en-GB") {
-      TILLIT_REGION = "gb";
+      // TILLIT_REGION = "gb";
+      console.log("You could change to gb here if you like");
     }
 
     const response = await fetch(
