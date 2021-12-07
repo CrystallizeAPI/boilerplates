@@ -76,7 +76,7 @@ export const Form = ({
       }
 
       const { customer } = checkoutModel;
-      debugger;
+      
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         stripeClientSecret,
         {
