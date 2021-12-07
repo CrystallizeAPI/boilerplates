@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { AuthProvider } from "@/contexts/auth";
@@ -21,7 +22,31 @@ export const MyApp = (props: AppProps) => {
         {authLayout.some((p) => router.pathname.includes(p)) ? (
           <AuthLayout {...props} />
         ) : (
-          <MainLayout {...props} />
+          <>
+            {/*crystallize-boilerplates-topbar-start*/}
+            <div id="cr-boilers" style={{ height: "52px" }}>
+              <Script
+                src="https://crystallize.com/static-min/scripts/boilerplate-topbar.min.js"
+                strategy="afterInteractive"
+                defer
+              />
+            </div>
+
+            <style
+              dangerouslySetInnerHTML={{
+                __html: `
+                #cr-boilers {
+                  font-family: var(--fonts-body);
+                }
+                #cr-boilers a {
+                  color: inherit;
+                }
+              `,
+              }}
+            ></style>
+            {/*crystallize-boilerplates-topbar-end*/}
+            <MainLayout {...props} />
+          </>
         )}
       </AuthProvider>
     </QueryClientProvider>
