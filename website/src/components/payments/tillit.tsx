@@ -12,8 +12,8 @@ import {
 import { TillitCompany } from "@/service-api/types.generated";
 import {
   TillitSearchDocument,
-  TillitSearchMutation,
-  TillitSearchMutationVariables,
+  TillitSearchQuery,
+  TillitSearchQueryVariables,
 } from "@/service-api/tillit-search.generated";
 import {
   TillitCheckoutDocument,
@@ -32,10 +32,11 @@ export const Tillit = ({ checkoutModel, onSuccess, onError }: PaymentProps) => {
     "companies",
     async () => {
       const data = await serviceAPIClient.request<
-        TillitSearchMutation,
-        TillitSearchMutationVariables
+        TillitSearchQuery,
+        TillitSearchQueryVariables
       >(TillitSearchDocument, {
         searchTerm: company,
+        locale: checkoutModel.basketModel.locale,
       });
       return data.paymentProviders.tillit.search.data || [];
     },

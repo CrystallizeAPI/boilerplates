@@ -302,13 +302,7 @@ export type TillitCompanyInput = {
 
 export type TillitMutation = {
   __typename?: 'TillitMutation';
-  search: TillitSearchResponse;
   checkout?: Maybe<TillitCheckoutResponse>;
-};
-
-
-export type TillitMutationSearchArgs = {
-  searchTerm: Scalars['String'];
 };
 
 
@@ -320,7 +314,14 @@ export type TillitMutationCheckoutArgs = {
 
 export type TillitPaymentProvider = {
   __typename?: 'TillitPaymentProvider';
+  search: TillitSearchResponse;
   confirmation?: Maybe<Scalars['JSON']>;
+};
+
+
+export type TillitPaymentProviderSearchArgs = {
+  searchTerm: Scalars['String'];
+  locale: LocaleInput;
 };
 
 

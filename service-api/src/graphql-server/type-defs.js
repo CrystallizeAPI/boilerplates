@@ -93,7 +93,19 @@ module.exports = gql`
   }
 
   type TillitPaymentProvider {
+    search(searchTerm: String!, locale: LocaleInput!): TillitSearchResponse!
     confirmation(id: String!): JSON
+  }
+
+  type TillitSearchResponse {
+    success: Boolean!
+    data: [TillitCompany]
+  }
+
+  type TillitCompany {
+    id: String!
+    name: String!
+    highlight: String!
   }
 
   type OrderQueries {
@@ -218,23 +230,11 @@ module.exports = gql`
   }
 
   type TillitMutation {
-    search(searchTerm: String!): TillitSearchResponse!
     checkout(
       checkoutModel: CheckoutModelInput!
       tillitInput: TillitCheckoutInput!
       baseUrl: String!
     ): TillitCheckoutResponse
-  }
-
-  type TillitSearchResponse {
-    success: Boolean!
-    data: [TillitCompany]
-  }
-
-  type TillitCompany {
-    id: String!
-    name: String!
-    highlight: String!
   }
 
   input TillitCompanyInput {

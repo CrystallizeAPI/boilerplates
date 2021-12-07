@@ -28,6 +28,7 @@ module.exports = {
     tillit: () => ({}),
   },
   TillitPaymentProvider: {
+    search: (_, args, context) => tillitService.search({ ...args, context }),
     confirmation: (parent, args) => tillitService.confirmation(args.id),
   },
   OrderQueries: {
@@ -75,7 +76,6 @@ module.exports = {
       stripeService.confirmOrder({ ...args, context }),
   },
   TillitMutation: {
-    search: (_, args) => tillitService.search(args),
     checkout: (_, args, context) =>
       tillitService.checkout({ ...args, context }),
   },

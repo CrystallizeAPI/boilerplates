@@ -1,7 +1,7 @@
-mutation TillitSearch($searchTerm: String!) {
+query TillitSearch($searchTerm: String!, $locale: LocaleInput!) {
   paymentProviders {
     tillit {
-      search(searchTerm: $searchTerm) {
+      search(searchTerm: $searchTerm, locale: $locale) {
         success
         data {
           id
