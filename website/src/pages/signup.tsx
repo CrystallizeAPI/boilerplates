@@ -209,6 +209,8 @@ export const SignupPage: NextPage<AllPlansQuery> = (props) => {
 
             <TextField
               placeholder="Email"
+              type="email"
+              required
               cssForWrapper={{ width: "$full" }}
               value={email}
               onChange={(e) => setEmail(e.currentTarget.value)}
