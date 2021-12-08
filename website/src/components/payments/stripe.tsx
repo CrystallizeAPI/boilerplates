@@ -1,6 +1,7 @@
 import { FormEventHandler, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { loadStripe } from "@stripe/stripe-js";
+
 import {
   CardElement,
   Elements,
@@ -8,8 +9,6 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { serviceAPIClient } from "@/clients";
-import { useStripeConfig } from "@/hooks/useStripeConfig";
-import { useStripeLoader } from "@/hooks/useStripeLoader";
 import { CheckoutModelInput } from "@/service-api/types.generated";
 import {
   StripePaymentIntentDocument,
@@ -55,6 +54,8 @@ export const Form = ({
 
   const stripe = useStripe();
   const elements = useElements();
+  const router = useRouter();
+  const [status, setStatus] = useState<"idle" | "submitting">("idle");
 
   useEffect(() => {
     if (stripe) {
@@ -70,13 +71,14 @@ export const Form = ({
     go();
 
     async function go() {
+      setStatus("submitting");
       if (!stripe || !elements) {
         setTimeout(go, 100);
         return;
       }
 
       const { customer } = checkoutModel;
-      
+
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         stripeClientSecret,
         {
@@ -91,11 +93,13 @@ export const Form = ({
 
       if (error) {
         onError(new Error(error.message));
+        setStatus("idle");
         return;
       }
 
       // The payment has been processed!
       if (paymentIntent.status !== "succeeded") {
+        setStatus("idle");
         return;
       }
 
@@ -115,8 +119,10 @@ export const Form = ({
       const { success, orderId } =
         response.paymentProviders.stripe.confirmOrder;
 
+      setStatus("idle");
+
       if (success) {
-        onSuccess();
+        router.push(`/confirmation/stripe/${orderId}`);
       } else {
         onError(new Error("Unknown"));
       }
@@ -140,8 +146,12 @@ export const Form = ({
 
       <Spacer space={6} />
 
-      <Button type="submit" css={{ width: "$full" }}>
-        Pay
+      <Button
+        type="submit"
+        css={{ width: "$full" }}
+        disabled={status !== "idle"}
+      >
+        {status === "idle" ? "Pay" : "Hang on..."}
       </Button>
     </Box>
   );

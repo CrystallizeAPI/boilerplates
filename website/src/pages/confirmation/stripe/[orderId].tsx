@@ -2,44 +2,38 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { serviceAPIClient } from "@/clients";
 import { Box, Flex, Link, Spacer, Typography } from "@/design-system";
 import {
-  TillitConfirmationDocument,
-  TillitConfirmationQuery,
-  TillitConfirmationQueryVariables,
-} from "@/service-api/tillit-confirmation.generated";
+  GetOrderDocument,
+  GetOrderQuery,
+  GetOrderQueryVariables,
+} from "@/service-api/get-order.generated";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const data = await serviceAPIClient.request<
-    TillitConfirmationQuery,
-    TillitConfirmationQueryVariables
-  >(TillitConfirmationDocument, { id: params.orderId as string });
+    GetOrderQuery,
+    GetOrderQueryVariables
+  >(GetOrderDocument, { id: params.orderId as string });
   return { props: { data } };
 };
 
 const OrderConfirmation = ({ order }) => {
-  const lineItem = order.line_items[0];
-  const address = order.billing_address;
-  const company = order.buyer.company;
-  const representative = order.buyer.representative;
+  const lineItem = order.cart[0];
+  const { customer } = order;
+
   return (
     <Flex direction="column" align="start">
       <Typography size={3}>
-        Plan: {lineItem.name} - ${Number(order.gross_amount) / 10}/month
-      </Typography>
-      <Spacer space={4} />
-      <Typography size={3}>Bill to {company.company_name}</Typography>
-      <Spacer space={4} />
-      <Typography size={3}>
-        Billing address: {address.street_address}, {address.city}{" "}
-        {address.postalCode} {address.country}
+        Plan: {lineItem.name} - ${Number(order.total.gross) / 10}/month
       </Typography>
       <Spacer space={4} />
       <Typography size={3}>
-        Purchased by {representative.first_name} {representative.last_name}
+        Bill to: {customer.firstName} {customer.lastName}
       </Typography>
       <Spacer space={4} />
       <Typography size={3}>
-        {representative.email} - {representative.phone_number}
+        Email: {customer.addresses.find((a) => a.type === "billing")?.email}
       </Typography>
+      <Spacer space={4} />
+
       <Spacer space={8} />
       <Link
         href="/login"
@@ -51,10 +45,10 @@ const OrderConfirmation = ({ order }) => {
   );
 };
 
-export const ConfirmationTillit = (
+export const ConfirmationStripe = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const order = props.data?.paymentProviders?.tillit?.confirmation;
+  const order = props.data?.orders?.get;
 
   if (!order) {
     return (
@@ -76,13 +70,9 @@ export const ConfirmationTillit = (
 
       <Spacer space={8} />
 
-      {order.state === "VERIFIED" ? (
-        <OrderConfirmation order={order} />
-      ) : (
-        <Typography size={4}>Order Unverfied</Typography>
-      )}
+      <OrderConfirmation order={order} />
     </Flex>
   );
 };
 
-export default ConfirmationTillit;
+export default ConfirmationStripe;

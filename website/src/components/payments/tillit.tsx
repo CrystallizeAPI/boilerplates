@@ -23,7 +23,7 @@ import {
 
 import { PaymentProps } from "./types";
 
-export const Tillit = ({ checkoutModel, onSuccess, onError }: PaymentProps) => {
+export const Tillit = ({ checkoutModel, onError }: PaymentProps) => {
   const [company, setCompany] = useState("");
   const [selectedCompany, setSelectedCompany] = useState<TillitCompany>(null);
   const [phone, setPhone] = useState("");

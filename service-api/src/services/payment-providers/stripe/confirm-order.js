@@ -5,7 +5,7 @@ module.exports = async function confirmOrder({
 }) {
   const crystallize = require("../../crystallize");
   const basketService = require("../../basket-service");
-  debugger;
+
   const toCrystallizeOrderModel = require("./to-crystallize-order-model");
 
   const { basketModel } = checkoutModel;
