@@ -20,10 +20,12 @@ export const LoginPage: NextPage<LoginPageProps> = () => {
 
   const [email, setEmail] = useState("");
   const [response, setResponse] = useState<any>(null);
+  const [status, setStatus] = useState<"idle" | "submitting">("idle");
 
   async function login(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
+      setStatus("submitting");
       const response = await serviceAPIClient.request(LoginDocument, {
         email: email,
         redirectURLAfterLogin: `${location.protocol}//${location.host}/account`,
@@ -32,6 +34,7 @@ export const LoginPage: NextPage<LoginPageProps> = () => {
     } catch (e) {
       console.log(e);
     }
+    setStatus("idle");
   }
 
   return (
@@ -75,6 +78,7 @@ export const LoginPage: NextPage<LoginPageProps> = () => {
           placeholder="Email"
           css={{ width: "$full" }}
           value={email}
+          type="email"
           onChange={(e) => setEmail(e.currentTarget.value)}
         />
       </Box>
@@ -89,8 +93,12 @@ export const LoginPage: NextPage<LoginPageProps> = () => {
           },
         }}
       >
-        <Button css={{ width: "$full" }} type="submit">
-          Log In
+        <Button
+          css={{ width: "$full" }}
+          type="submit"
+          disabled={status === "submitting"}
+        >
+          {status === "submitting" ? "Please wait..." : "Log In"}
         </Button>
       </Box>
 

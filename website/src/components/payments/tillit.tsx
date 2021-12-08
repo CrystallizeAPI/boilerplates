@@ -43,7 +43,9 @@ export const Tillit = ({ checkoutModel, onSuccess, onError }: PaymentProps) => {
     { enabled: false, retry: 0 }
   );
 
-  function searchCompany() {
+  function searchCompany(e) {
+    e.preventDefault();
+
     setSelectedCompany(null);
     companies.refetch();
   }
@@ -67,6 +69,12 @@ export const Tillit = ({ checkoutModel, onSuccess, onError }: PaymentProps) => {
     }
   });
 
+  function onPay(e) {
+    e.preventDefault();
+
+    pay.mutate();
+  }
+
   if (pay.data) {
     return (
       <>
@@ -88,7 +96,7 @@ export const Tillit = ({ checkoutModel, onSuccess, onError }: PaymentProps) => {
 
   return (
     <>
-      <Box css={{ width: "$full" }}>
+      <Box css={{ width: "$full" }} as="form" onSubmit={searchCompany}>
         <Flex>
           <TextField
             placeholder="Company"
@@ -99,70 +107,74 @@ export const Tillit = ({ checkoutModel, onSuccess, onError }: PaymentProps) => {
 
           <Spacer direction="horizontal" space={2} />
 
-          <Button variant="secondary" onClick={searchCompany}>
-            Search
+          <Button variant="secondary" type="submit" css={{ minWidth: "150px" }}>
+            {companies.isFetching ? "Searching..." : "Search"}
           </Button>
         </Flex>
       </Box>
 
-      {companies.data?.length > 0 && (
-        <>
-          <Spacer space={5} />
+      <Box as="form" onSubmit={onPay} css={{ width: "$full" }}>
+        {companies.data?.length > 0 && (
+          <>
+            <Spacer space={5} />
 
-          <Flex
-            direction="column"
-            align="start"
-            css={{ width: "$full", gap: "$2" }}
-          >
-            {companies.data.map((company) => (
-              <Flex key={company.id} as="label" align="center">
-                <input
-                  type="radio"
-                  name="selectedCompany"
-                  onChange={() => setSelectedCompany(company)}
-                  checked={company.id === selectedCompany?.id}
-                />
-                <Spacer direction="horizontal" space={2} />
-                <Typography
-                  as="span"
-                  variant="text"
-                  size={2}
-                  css={{ textAlign: "left" }}
-                >
-                  {company.name}
-                </Typography>
-              </Flex>
-            ))}
-          </Flex>
-        </>
-      )}
+            <Flex
+              direction="column"
+              align="start"
+              css={{ width: "$full", gap: "$2" }}
+            >
+              {companies.data.map((company) => (
+                <Flex key={company.id} as="label" align="center">
+                  <input
+                    type="radio"
+                    name="selectedCompany"
+                    onChange={() => setSelectedCompany(company)}
+                    checked={company.id === selectedCompany?.id}
+                    required
+                  />
+                  <Spacer direction="horizontal" space={2} />
+                  <Typography
+                    as="span"
+                    variant="text"
+                    size={2}
+                    css={{ textAlign: "left" }}
+                  >
+                    {company.name}
+                  </Typography>
+                </Flex>
+              ))}
+            </Flex>
+          </>
+        )}
 
-      <Spacer space={5} />
+        <Spacer space={5} />
 
-      <TextField
-        placeholder="Phone Number"
-        cssForWrapper={{ width: "$full" }}
-        value={phone}
-        onChange={(e) => setPhone(e.currentTarget.value)}
-      />
+        <TextField
+          placeholder="Phone Number"
+          cssForWrapper={{ width: "$full" }}
+          required
+          value={phone}
+          onChange={(e) => setPhone(e.currentTarget.value)}
+        />
 
-      <Spacer space={5} />
+        <Spacer space={5} />
 
-      {pay.isError ? (
-        <>
-          <Typography
-            size={4}
-            css={{ width: "$full", color: "$error", textAlign: "left" }}
-          >
-            {(pay.error as Error)?.message}
-          </Typography>
-          <Spacer space={5} />
-        </>
-      ) : null}
+        {pay.isError ? (
+          <>
+            <Typography
+              size={4}
+              css={{ width: "$full", color: "$error", textAlign: "left" }}
+            >
+              {(pay.error as Error)?.message}
+            </Typography>
+            <Spacer space={5} />
+          </>
+        ) : null}
 
-      <Button css={{ width: "$full" }} onClick={() => pay.mutate()}>
-        {pay.status === "loading" ? "Paying..." : "Pay"}
-      </Button>
+        <Button css={{ width: "$full" }} type="submit">
+          {pay.status === "loading" ? "Paying..." : "Pay"}
+        </Button>
+      </Box>
     </>
   );
 };
