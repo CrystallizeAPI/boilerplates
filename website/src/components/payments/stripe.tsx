@@ -119,11 +119,10 @@ export const Form = ({
       const { success, orderId } =
         response.paymentProviders.stripe.confirmOrder;
 
-      setStatus("idle");
-
       if (success) {
         router.push(`/confirmation/stripe/${orderId}`);
       } else {
+        setStatus("idle");
         onError(new Error("Unknown"));
       }
     }
