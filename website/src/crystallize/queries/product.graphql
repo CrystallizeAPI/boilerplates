@@ -1,0 +1,53 @@
+query Product($path: String!) {
+  product: catalogue(path: $path, language: "en") {
+    component(id: "summary"){
+      ...component # RichText
+    }
+    ... on Product {
+      __typename
+      id
+      name
+      type
+      path
+      isVirtual
+      isSubscriptionOnly
+      defaultVariant {
+        firstImage {
+          url
+          altText
+        }
+      }
+
+      variants {
+        id
+        name
+        sku
+        price
+        priceVariants {
+          identifier
+          name
+          price
+          currency
+        }
+        stock
+        isDefault
+        images {
+          url
+          altText
+          key
+
+          variants {
+            key
+            width
+            url
+          }
+        }
+      }
+
+      vatType {
+        name
+        percent
+      }
+    }
+  }
+}

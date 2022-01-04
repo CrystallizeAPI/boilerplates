@@ -1,0 +1,20 @@
+schema: http://localhost:3001/api/graphql
+documents:
+  - src/service-api/**/*.graphql
+generates:
+  ./src/service-api/types.generated.ts:
+    plugins:
+      - typescript
+
+  ./:
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: src/service-api/types.generated.ts
+    plugins:
+      - typescript-operations
+      - typed-document-node
+    config:
+      preResolveTypes: false
+# hooks:
+#   afterAllFileWrite:
+#     - prettier --write

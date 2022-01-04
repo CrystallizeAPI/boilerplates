@@ -1,0 +1,9 @@
+fragment sponsor on Item {
+  id
+  url: component(id: "url") {
+    ...component # SingleLine
+  }
+  logo: component(id: "logo") {
+    ...component # Images
+  }
+}

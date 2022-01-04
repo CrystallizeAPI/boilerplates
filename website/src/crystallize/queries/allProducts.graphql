@@ -1,0 +1,53 @@
+query AllProducts {
+  catalogue(path: "/merch", language: "en") {
+    children {
+      path
+      ... on Product {
+        __typename
+        id
+        name
+        type
+        path
+        isVirtual
+        isSubscriptionOnly
+        defaultVariant {
+          firstImage {
+            url
+            altText
+          }
+        }
+
+        variants {
+          id
+          name
+          sku
+          price
+          priceVariants {
+            identifier
+            name
+            price
+            currency
+          }
+          stock
+          isDefault
+          images {
+            url
+            altText
+            key
+
+            variants {
+              key
+              width
+              url
+            }
+          }
+        }
+
+        vatType {
+          name
+          percent
+        }
+      }
+    }
+  }
+}

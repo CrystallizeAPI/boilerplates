@@ -1,0 +1,14 @@
+query Account($customerIdentifier: String!) {
+  user {
+    email
+    firstName
+    lastName
+    phone
+  }
+  orders {
+    data: getByCustomer(customerIdentifier: $customerIdentifier)
+  }
+  subscriptionContracts {
+    data: getByCustomer(customerIdentifier: $customerIdentifier)
+  }
+}

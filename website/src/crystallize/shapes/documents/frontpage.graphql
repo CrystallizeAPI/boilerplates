@@ -1,0 +1,167 @@
+fragment frontpage on Item {
+  id
+  title: component(id: "title") {
+    ...component # SingleLine
+  }
+
+  description: component(id: "description") {
+    ...component # RichText
+  }
+
+  hero: component(id: "hero") {
+    ...component # Image
+  }
+
+  heroCTA: component(id: "cta") {
+    # ContentChunk
+    ...component
+  }
+
+  mainSponsors: component(id: "main-sponsors") {
+    # ContentChunk
+    # sponsors - ItemRelations - Organization
+    content {
+      ... on ContentChunkContent {
+        __typename
+        chunks {
+          content {
+            ...content
+            ... on ItemRelationsContent {
+              __typename
+              items {
+                ...sponsor
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  usp: component(id: "usp") {
+    # ContentChunk
+    ...component
+  }
+
+  speakers: component(id: "speakers") {
+    # ContentChunk
+    # speakers - ItemRelations - Speaker
+    content {
+      ... on ContentChunkContent {
+        __typename
+        chunks {
+          content {
+            ...content
+            ... on ItemRelationsContent {
+              __typename
+              items {
+                ...speaker
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  scheduleHeader: component(id: "schedule-header") {
+    ...component # SingleLine
+  }
+
+  schedule: component(id: "talk") {
+    # ContentChunk
+    content {
+      ... on ContentChunkContent {
+        __typename
+        chunks {
+          content {
+            ...content
+            ... on ItemRelationsContent {
+              __typename
+              items {
+                ...speaker
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  jobBoardHeader: component(id: "job-board-header") {
+    ...component # SingleLine
+  }
+
+  jobs: component(id: "jobs") {
+    # ContentChunk
+    # sponsors - ItemRelations - Organization
+    content {
+      ... on ContentChunkContent {
+        __typename
+        chunks {
+          content {
+            ...content
+            ... on ItemRelationsContent {
+              __typename
+              items {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  gallery: component(id: "gallery") {
+    # ContentChunk
+    ...component
+  }
+
+  sponsors: component(id: "sponsors") {
+    # ContentChunk
+    # sponsors - ItemRelations - Organization
+    content {
+      ... on ContentChunkContent {
+        __typename
+        chunks {
+          content {
+            ...content
+            ... on ItemRelationsContent {
+              __typename
+              items {
+                ...sponsor
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  partners: component(id: "partners") {
+    # ContentChunk
+    # partners - ItemRelations - Organization
+    content {
+      ... on ContentChunkContent {
+        __typename
+        chunks {
+          content {
+            ...content
+            ... on ItemRelationsContent {
+              __typename
+              items {
+                ...sponsor
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  meta: component(id: "meta"){
+    # ContentChunk
+    ...component
+  }
+}
