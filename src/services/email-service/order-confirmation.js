@@ -13,7 +13,7 @@ module.exports = async function sendOrderConfirmation(orderId) {
     if (!email) {
       return {
         success: false,
-        error: "No email is conntected with the customer object",
+        error: "No email found for the customer",
       };
     }
 
