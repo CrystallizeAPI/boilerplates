@@ -61,10 +61,26 @@ module.exports = async function getOrder(id) {
               }
             }
             customer {
+              identifier
               firstName
+              middleName
               lastName
+              birthDate
+              companyName
+              taxNumber
               addresses {
                 type
+                firstName
+                middleName
+                lastName
+                street
+                street2
+                streetNumber
+                postalCode
+                city
+                state
+                country
+                phone
                 email
               }
             }
