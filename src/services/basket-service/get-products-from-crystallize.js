@@ -1,10 +1,31 @@
 /**
+ * Handle language specific VAT types.
+ * VAT types in Crystallize gets a name and a percentage, and
+ * you later assign products to the VAT types.
+ * The percentage might not be the same for all regions, which
+ * makes this a good place to make any overrides if needed.
+ */
+const VATOverrides = [
+  {
+    locale: "the locale.locale from the storefront locales here",
+    vatTypes: [
+      {
+        name: "Standard",
+        percent: 50,
+      },
+    ],
+  },
+];
+
+/**
  * Gets information for products using SKU for lookup.
  */
-async function getProductsFromCrystallize({ skus, language }) {
+async function getProductsFromCrystallize({ skus, locale }) {
   if (skus.length === 0) {
     return [];
   }
+
+  const language = locale.crystallizeCatalogueLanguage;
 
   const { callCatalogueApi, callSearchApi } = require("../crystallize/utils");
 
@@ -100,7 +121,22 @@ async function getProductsFromCrystallize({ skus, language }) {
     }`,
   });
 
-  return paths.map((_, i) => response.data[`product${i}`]).filter((p) => !!p);
+  const vatTypeOverridesForLocale = VATOverrides.find(
+    (v) => v.locale === locale.locale
+  );
+
+  return paths
+    .map((_, i) => response.data[`product${i}`])
+    .filter((p) => !!p)
+    .map(function doVATOverride(product) {
+      const vatTypeOverride = vatTypeOverridesForLocale.vatTypes.find(
+        (v) => v.name === product.vatType.name
+      );
+      if (vatTypeOverride) {
+        product.vatType = vatTypeOverride;
+      }
+      return product;
+    });
 }
 
 module.exports = {

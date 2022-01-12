@@ -41,7 +41,7 @@ module.exports = {
     } = require("./get-products-from-crystallize");
     const productDataFromCrystallize = await getProductsFromCrystallize({
       skus: basketFromClient.cart.map((p) => p.sku),
-      language: locale.crystallizeCatalogueLanguage,
+      locale,
     });
 
     let vatType;
