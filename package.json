@@ -11,7 +11,7 @@
     "@crystallize/content-transformer": "^7.0.0",
     "@crystallize/react-content-transformer": "^1.1.1",
     "@crystallize/react-image": "^6.1.0",
-    "@crystallize/react-video": "^1.6.3",
+    "@crystallize/react-video": "^1.7.0",
     "immer": "^9.0.1",
     "next": "^12.0.3",
     "next-seo": "^4.23.0",
