@@ -18,12 +18,24 @@ export const MyApp = (props: AppProps) => {
   globalStyles();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <BasketProvider locale={locale}>
-      <MainLayout {...props} />
-      </BasketProvider>
-      
-    </QueryClientProvider>
+    <>
+      {/*crystallize-boilerplates-topbar-start*/}
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `
+        <div id="cr-boilers" style="height: 52px;">
+          <script>(function () {const d = document.createElement('script');d.src='https://crystallize.com/static-min/scripts/boilerplate-topbar.min.js';d.defer=true;document.head.appendChild(d);}())</script>
+        </div>
+        `,
+        }}
+      />
+      {/*crystallize-boilerplates-topbar-end*/}
+      <QueryClientProvider client={queryClient}>
+        <BasketProvider locale={locale}>
+          <MainLayout {...props} />
+        </BasketProvider>
+      </QueryClientProvider>
+    </>
   );
 };
 
