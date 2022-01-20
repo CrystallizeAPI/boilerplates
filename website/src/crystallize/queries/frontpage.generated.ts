@@ -15914,1116 +15914,6 @@ export type FrontpageQuery = (
                   )>> }
                 )> }
               )> }
-            )>> }
-          ) | (
-            { __typename: 'LocationContent' }
-            & Pick<Types.LocationContent, 'lat' | 'long'>
-          ) | (
-            { __typename: 'NumericContent' }
-            & Pick<Types.NumericContent, 'number' | 'unit'>
-          ) | (
-            { __typename: 'ParagraphCollectionContent' }
-            & { paragraphs?: Types.Maybe<Array<(
-              { __typename?: 'ParagraphContent' }
-              & { title?: Types.Maybe<(
-                { __typename: 'SingleLineContent' }
-                & Pick<Types.SingleLineContent, 'text'>
-              )>, body?: Types.Maybe<(
-                { __typename: 'RichTextContent' }
-                & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-              )>, images?: Types.Maybe<Array<(
-                { __typename: 'Image' }
-                & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                & { caption?: Types.Maybe<(
-                  { __typename: 'RichTextContent' }
-                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                )>, variants?: Types.Maybe<Array<(
-                  { __typename?: 'ImageVariant' }
-                  & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                )>> }
-              )>> }
-            )>> }
-          ) | (
-            { __typename: 'PropertiesTableContent' }
-            & { sections?: Types.Maybe<Array<(
-              { __typename: 'PropertiesTableSection' }
-              & Pick<Types.PropertiesTableSection, 'title'>
-              & { properties?: Types.Maybe<Array<(
-                { __typename?: 'PropertiesTableValue' }
-                & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-              )>> }
-            )>> }
-          ) | (
-            { __typename: 'RichTextContent' }
-            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-          ) | (
-            { __typename: 'SelectionContent' }
-            & { options?: Types.Maybe<Array<(
-              { __typename?: 'SelectionComponentOption' }
-              & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-            )>> }
-          ) | (
-            { __typename: 'SingleLineContent' }
-            & Pick<Types.SingleLineContent, 'text'>
-          ) | (
-            { __typename: 'VideoContent' }
-            & { videos?: Types.Maybe<Array<(
-              { __typename: 'Video' }
-              & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-              & { thumbnails?: Types.Maybe<Array<(
-                { __typename: 'Image' }
-                & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                & { variants?: Types.Maybe<Array<(
-                  { __typename?: 'ImageVariant' }
-                  & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                )>> }
-              )>> }
-            )>> }
-          )> }
-        )>> }
-      ) | { __typename?: 'DatetimeContent' } | { __typename?: 'GridRelationsContent' } | { __typename?: 'ImageContent' } | { __typename?: 'ItemRelationsContent' } | { __typename?: 'LocationContent' } | { __typename?: 'NumericContent' } | { __typename?: 'ParagraphCollectionContent' } | { __typename?: 'PropertiesTableContent' } | { __typename?: 'RichTextContent' } | { __typename?: 'SelectionContent' } | { __typename?: 'SingleLineContent' } | { __typename?: 'VideoContent' }> }
-    )>, scheduleHeader?: Types.Maybe<(
-      { __typename: 'Component' }
-      & { content?: Types.Maybe<(
-        { __typename: 'BooleanContent' }
-        & Pick<Types.BooleanContent, 'value'>
-      ) | { __typename?: 'ComponentChoiceContent' } | (
-        { __typename: 'ContentChunkContent' }
-        & { chunks: Array<Array<(
-          { __typename?: 'Component' }
-          & { content?: Types.Maybe<(
-            { __typename: 'BooleanContent' }
-            & Pick<Types.BooleanContent, 'value'>
-          ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
-            { __typename: 'DatetimeContent' }
-            & Pick<Types.DatetimeContent, 'datetime'>
-          ) | { __typename?: 'GridRelationsContent' } | (
-            { __typename: 'ImageContent' }
-            & { images?: Types.Maybe<Array<(
-              { __typename: 'Image' }
-              & Pick<Types.Image, 'url' | 'altText' | 'key'>
-              & { variants?: Types.Maybe<Array<(
-                { __typename?: 'ImageVariant' }
-                & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-              )>> }
-            )>> }
-          ) | { __typename?: 'ItemRelationsContent' } | (
-            { __typename: 'LocationContent' }
-            & Pick<Types.LocationContent, 'lat' | 'long'>
-          ) | (
-            { __typename: 'NumericContent' }
-            & Pick<Types.NumericContent, 'number' | 'unit'>
-          ) | (
-            { __typename: 'ParagraphCollectionContent' }
-            & { paragraphs?: Types.Maybe<Array<(
-              { __typename?: 'ParagraphContent' }
-              & { title?: Types.Maybe<(
-                { __typename: 'SingleLineContent' }
-                & Pick<Types.SingleLineContent, 'text'>
-              )>, body?: Types.Maybe<(
-                { __typename: 'RichTextContent' }
-                & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-              )>, images?: Types.Maybe<Array<(
-                { __typename: 'Image' }
-                & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                & { caption?: Types.Maybe<(
-                  { __typename: 'RichTextContent' }
-                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                )>, variants?: Types.Maybe<Array<(
-                  { __typename?: 'ImageVariant' }
-                  & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                )>> }
-              )>> }
-            )>> }
-          ) | (
-            { __typename: 'PropertiesTableContent' }
-            & { sections?: Types.Maybe<Array<(
-              { __typename: 'PropertiesTableSection' }
-              & Pick<Types.PropertiesTableSection, 'title'>
-              & { properties?: Types.Maybe<Array<(
-                { __typename?: 'PropertiesTableValue' }
-                & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-              )>> }
-            )>> }
-          ) | (
-            { __typename: 'RichTextContent' }
-            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-          ) | (
-            { __typename: 'SelectionContent' }
-            & { options?: Types.Maybe<Array<(
-              { __typename?: 'SelectionComponentOption' }
-              & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-            )>> }
-          ) | (
-            { __typename: 'SingleLineContent' }
-            & Pick<Types.SingleLineContent, 'text'>
-          ) | (
-            { __typename: 'VideoContent' }
-            & { videos?: Types.Maybe<Array<(
-              { __typename: 'Video' }
-              & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-              & { thumbnails?: Types.Maybe<Array<(
-                { __typename: 'Image' }
-                & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                & { variants?: Types.Maybe<Array<(
-                  { __typename?: 'ImageVariant' }
-                  & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                )>> }
-              )>> }
-            )>> }
-          )> }
-        )>> }
-      ) | (
-        { __typename: 'DatetimeContent' }
-        & Pick<Types.DatetimeContent, 'datetime'>
-      ) | { __typename?: 'GridRelationsContent' } | (
-        { __typename: 'ImageContent' }
-        & { images?: Types.Maybe<Array<(
-          { __typename: 'Image' }
-          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-          & { variants?: Types.Maybe<Array<(
-            { __typename?: 'ImageVariant' }
-            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-          )>> }
-        )>> }
-      ) | { __typename?: 'ItemRelationsContent' } | (
-        { __typename: 'LocationContent' }
-        & Pick<Types.LocationContent, 'lat' | 'long'>
-      ) | (
-        { __typename: 'NumericContent' }
-        & Pick<Types.NumericContent, 'number' | 'unit'>
-      ) | (
-        { __typename: 'ParagraphCollectionContent' }
-        & { paragraphs?: Types.Maybe<Array<(
-          { __typename?: 'ParagraphContent' }
-          & { title?: Types.Maybe<(
-            { __typename: 'SingleLineContent' }
-            & Pick<Types.SingleLineContent, 'text'>
-          )>, body?: Types.Maybe<(
-            { __typename: 'RichTextContent' }
-            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-          )>, images?: Types.Maybe<Array<(
-            { __typename: 'Image' }
-            & Pick<Types.Image, 'url' | 'altText' | 'key'>
-            & { caption?: Types.Maybe<(
-              { __typename: 'RichTextContent' }
-              & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-            )>, variants?: Types.Maybe<Array<(
-              { __typename?: 'ImageVariant' }
-              & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-            )>> }
-          )>> }
-        )>> }
-      ) | (
-        { __typename: 'PropertiesTableContent' }
-        & { sections?: Types.Maybe<Array<(
-          { __typename: 'PropertiesTableSection' }
-          & Pick<Types.PropertiesTableSection, 'title'>
-          & { properties?: Types.Maybe<Array<(
-            { __typename?: 'PropertiesTableValue' }
-            & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-          )>> }
-        )>> }
-      ) | (
-        { __typename: 'RichTextContent' }
-        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-      ) | (
-        { __typename: 'SelectionContent' }
-        & { options?: Types.Maybe<Array<(
-          { __typename?: 'SelectionComponentOption' }
-          & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-        )>> }
-      ) | (
-        { __typename: 'SingleLineContent' }
-        & Pick<Types.SingleLineContent, 'text'>
-      ) | (
-        { __typename: 'VideoContent' }
-        & { videos?: Types.Maybe<Array<(
-          { __typename: 'Video' }
-          & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-          & { thumbnails?: Types.Maybe<Array<(
-            { __typename: 'Image' }
-            & Pick<Types.Image, 'url' | 'altText' | 'key'>
-            & { variants?: Types.Maybe<Array<(
-              { __typename?: 'ImageVariant' }
-              & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-            )>> }
-          )>> }
-        )>> }
-      )> }
-    )>, schedule?: Types.Maybe<(
-      { __typename?: 'Component' }
-      & { content?: Types.Maybe<{ __typename?: 'BooleanContent' } | { __typename?: 'ComponentChoiceContent' } | (
-        { __typename: 'ContentChunkContent' }
-        & { chunks: Array<Array<(
-          { __typename?: 'Component' }
-          & { content?: Types.Maybe<(
-            { __typename: 'BooleanContent' }
-            & Pick<Types.BooleanContent, 'value'>
-          ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
-            { __typename: 'DatetimeContent' }
-            & Pick<Types.DatetimeContent, 'datetime'>
-          ) | { __typename?: 'GridRelationsContent' } | (
-            { __typename: 'ImageContent' }
-            & { images?: Types.Maybe<Array<(
-              { __typename: 'Image' }
-              & Pick<Types.Image, 'url' | 'altText' | 'key'>
-              & { variants?: Types.Maybe<Array<(
-                { __typename?: 'ImageVariant' }
-                & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-              )>> }
-            )>> }
-          ) | (
-            { __typename: 'ItemRelationsContent' }
-            & { items?: Types.Maybe<Array<(
-              { __typename?: 'Document' }
-              & Pick<Types.Document, 'id'>
-              & { name?: Types.Maybe<(
-                { __typename: 'Component' }
-                & { content?: Types.Maybe<(
-                  { __typename: 'BooleanContent' }
-                  & Pick<Types.BooleanContent, 'value'>
-                ) | { __typename?: 'ComponentChoiceContent' } | (
-                  { __typename: 'ContentChunkContent' }
-                  & { chunks: Array<Array<(
-                    { __typename?: 'Component' }
-                    & { content?: Types.Maybe<(
-                      { __typename: 'BooleanContent' }
-                      & Pick<Types.BooleanContent, 'value'>
-                    ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
-                      { __typename: 'DatetimeContent' }
-                      & Pick<Types.DatetimeContent, 'datetime'>
-                    ) | { __typename?: 'GridRelationsContent' } | (
-                      { __typename: 'ImageContent' }
-                      & { images?: Types.Maybe<Array<(
-                        { __typename: 'Image' }
-                        & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                        & { variants?: Types.Maybe<Array<(
-                          { __typename?: 'ImageVariant' }
-                          & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                        )>> }
-                      )>> }
-                    ) | { __typename?: 'ItemRelationsContent' } | (
-                      { __typename: 'LocationContent' }
-                      & Pick<Types.LocationContent, 'lat' | 'long'>
-                    ) | (
-                      { __typename: 'NumericContent' }
-                      & Pick<Types.NumericContent, 'number' | 'unit'>
-                    ) | (
-                      { __typename: 'ParagraphCollectionContent' }
-                      & { paragraphs?: Types.Maybe<Array<(
-                        { __typename?: 'ParagraphContent' }
-                        & { title?: Types.Maybe<(
-                          { __typename: 'SingleLineContent' }
-                          & Pick<Types.SingleLineContent, 'text'>
-                        )>, body?: Types.Maybe<(
-                          { __typename: 'RichTextContent' }
-                          & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                        )>, images?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { caption?: Types.Maybe<(
-                            { __typename: 'RichTextContent' }
-                            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                          )>, variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'PropertiesTableContent' }
-                      & { sections?: Types.Maybe<Array<(
-                        { __typename: 'PropertiesTableSection' }
-                        & Pick<Types.PropertiesTableSection, 'title'>
-                        & { properties?: Types.Maybe<Array<(
-                          { __typename?: 'PropertiesTableValue' }
-                          & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    ) | (
-                      { __typename: 'SelectionContent' }
-                      & { options?: Types.Maybe<Array<(
-                        { __typename?: 'SelectionComponentOption' }
-                        & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                      )>> }
-                    ) | (
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    ) | (
-                      { __typename: 'VideoContent' }
-                      & { videos?: Types.Maybe<Array<(
-                        { __typename: 'Video' }
-                        & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                        & { thumbnails?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    )> }
-                  )>> }
-                ) | (
-                  { __typename: 'DatetimeContent' }
-                  & Pick<Types.DatetimeContent, 'datetime'>
-                ) | { __typename?: 'GridRelationsContent' } | (
-                  { __typename: 'ImageContent' }
-                  & { images?: Types.Maybe<Array<(
-                    { __typename: 'Image' }
-                    & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                    & { variants?: Types.Maybe<Array<(
-                      { __typename?: 'ImageVariant' }
-                      & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                    )>> }
-                  )>> }
-                ) | { __typename?: 'ItemRelationsContent' } | (
-                  { __typename: 'LocationContent' }
-                  & Pick<Types.LocationContent, 'lat' | 'long'>
-                ) | (
-                  { __typename: 'NumericContent' }
-                  & Pick<Types.NumericContent, 'number' | 'unit'>
-                ) | (
-                  { __typename: 'ParagraphCollectionContent' }
-                  & { paragraphs?: Types.Maybe<Array<(
-                    { __typename?: 'ParagraphContent' }
-                    & { title?: Types.Maybe<(
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    )>, body?: Types.Maybe<(
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    )>, images?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { caption?: Types.Maybe<(
-                        { __typename: 'RichTextContent' }
-                        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                      )>, variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'PropertiesTableContent' }
-                  & { sections?: Types.Maybe<Array<(
-                    { __typename: 'PropertiesTableSection' }
-                    & Pick<Types.PropertiesTableSection, 'title'>
-                    & { properties?: Types.Maybe<Array<(
-                      { __typename?: 'PropertiesTableValue' }
-                      & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'RichTextContent' }
-                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                ) | (
-                  { __typename: 'SelectionContent' }
-                  & { options?: Types.Maybe<Array<(
-                    { __typename?: 'SelectionComponentOption' }
-                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                  )>> }
-                ) | (
-                  { __typename: 'SingleLineContent' }
-                  & Pick<Types.SingleLineContent, 'text'>
-                ) | (
-                  { __typename: 'VideoContent' }
-                  & { videos?: Types.Maybe<Array<(
-                    { __typename: 'Video' }
-                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                    & { thumbnails?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                )> }
-              )>, company?: Types.Maybe<(
-                { __typename: 'Component' }
-                & { content?: Types.Maybe<(
-                  { __typename: 'BooleanContent' }
-                  & Pick<Types.BooleanContent, 'value'>
-                ) | { __typename?: 'ComponentChoiceContent' } | (
-                  { __typename: 'ContentChunkContent' }
-                  & { chunks: Array<Array<(
-                    { __typename?: 'Component' }
-                    & { content?: Types.Maybe<(
-                      { __typename: 'BooleanContent' }
-                      & Pick<Types.BooleanContent, 'value'>
-                    ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
-                      { __typename: 'DatetimeContent' }
-                      & Pick<Types.DatetimeContent, 'datetime'>
-                    ) | { __typename?: 'GridRelationsContent' } | (
-                      { __typename: 'ImageContent' }
-                      & { images?: Types.Maybe<Array<(
-                        { __typename: 'Image' }
-                        & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                        & { variants?: Types.Maybe<Array<(
-                          { __typename?: 'ImageVariant' }
-                          & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                        )>> }
-                      )>> }
-                    ) | { __typename?: 'ItemRelationsContent' } | (
-                      { __typename: 'LocationContent' }
-                      & Pick<Types.LocationContent, 'lat' | 'long'>
-                    ) | (
-                      { __typename: 'NumericContent' }
-                      & Pick<Types.NumericContent, 'number' | 'unit'>
-                    ) | (
-                      { __typename: 'ParagraphCollectionContent' }
-                      & { paragraphs?: Types.Maybe<Array<(
-                        { __typename?: 'ParagraphContent' }
-                        & { title?: Types.Maybe<(
-                          { __typename: 'SingleLineContent' }
-                          & Pick<Types.SingleLineContent, 'text'>
-                        )>, body?: Types.Maybe<(
-                          { __typename: 'RichTextContent' }
-                          & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                        )>, images?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { caption?: Types.Maybe<(
-                            { __typename: 'RichTextContent' }
-                            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                          )>, variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'PropertiesTableContent' }
-                      & { sections?: Types.Maybe<Array<(
-                        { __typename: 'PropertiesTableSection' }
-                        & Pick<Types.PropertiesTableSection, 'title'>
-                        & { properties?: Types.Maybe<Array<(
-                          { __typename?: 'PropertiesTableValue' }
-                          & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    ) | (
-                      { __typename: 'SelectionContent' }
-                      & { options?: Types.Maybe<Array<(
-                        { __typename?: 'SelectionComponentOption' }
-                        & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                      )>> }
-                    ) | (
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    ) | (
-                      { __typename: 'VideoContent' }
-                      & { videos?: Types.Maybe<Array<(
-                        { __typename: 'Video' }
-                        & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                        & { thumbnails?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    )> }
-                  )>> }
-                ) | (
-                  { __typename: 'DatetimeContent' }
-                  & Pick<Types.DatetimeContent, 'datetime'>
-                ) | { __typename?: 'GridRelationsContent' } | (
-                  { __typename: 'ImageContent' }
-                  & { images?: Types.Maybe<Array<(
-                    { __typename: 'Image' }
-                    & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                    & { variants?: Types.Maybe<Array<(
-                      { __typename?: 'ImageVariant' }
-                      & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                    )>> }
-                  )>> }
-                ) | { __typename?: 'ItemRelationsContent' } | (
-                  { __typename: 'LocationContent' }
-                  & Pick<Types.LocationContent, 'lat' | 'long'>
-                ) | (
-                  { __typename: 'NumericContent' }
-                  & Pick<Types.NumericContent, 'number' | 'unit'>
-                ) | (
-                  { __typename: 'ParagraphCollectionContent' }
-                  & { paragraphs?: Types.Maybe<Array<(
-                    { __typename?: 'ParagraphContent' }
-                    & { title?: Types.Maybe<(
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    )>, body?: Types.Maybe<(
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    )>, images?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { caption?: Types.Maybe<(
-                        { __typename: 'RichTextContent' }
-                        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                      )>, variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'PropertiesTableContent' }
-                  & { sections?: Types.Maybe<Array<(
-                    { __typename: 'PropertiesTableSection' }
-                    & Pick<Types.PropertiesTableSection, 'title'>
-                    & { properties?: Types.Maybe<Array<(
-                      { __typename?: 'PropertiesTableValue' }
-                      & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'RichTextContent' }
-                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                ) | (
-                  { __typename: 'SelectionContent' }
-                  & { options?: Types.Maybe<Array<(
-                    { __typename?: 'SelectionComponentOption' }
-                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                  )>> }
-                ) | (
-                  { __typename: 'SingleLineContent' }
-                  & Pick<Types.SingleLineContent, 'text'>
-                ) | (
-                  { __typename: 'VideoContent' }
-                  & { videos?: Types.Maybe<Array<(
-                    { __typename: 'Video' }
-                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                    & { thumbnails?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                )> }
-              )>, job?: Types.Maybe<(
-                { __typename: 'Component' }
-                & { content?: Types.Maybe<(
-                  { __typename: 'BooleanContent' }
-                  & Pick<Types.BooleanContent, 'value'>
-                ) | { __typename?: 'ComponentChoiceContent' } | (
-                  { __typename: 'ContentChunkContent' }
-                  & { chunks: Array<Array<(
-                    { __typename?: 'Component' }
-                    & { content?: Types.Maybe<(
-                      { __typename: 'BooleanContent' }
-                      & Pick<Types.BooleanContent, 'value'>
-                    ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
-                      { __typename: 'DatetimeContent' }
-                      & Pick<Types.DatetimeContent, 'datetime'>
-                    ) | { __typename?: 'GridRelationsContent' } | (
-                      { __typename: 'ImageContent' }
-                      & { images?: Types.Maybe<Array<(
-                        { __typename: 'Image' }
-                        & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                        & { variants?: Types.Maybe<Array<(
-                          { __typename?: 'ImageVariant' }
-                          & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                        )>> }
-                      )>> }
-                    ) | { __typename?: 'ItemRelationsContent' } | (
-                      { __typename: 'LocationContent' }
-                      & Pick<Types.LocationContent, 'lat' | 'long'>
-                    ) | (
-                      { __typename: 'NumericContent' }
-                      & Pick<Types.NumericContent, 'number' | 'unit'>
-                    ) | (
-                      { __typename: 'ParagraphCollectionContent' }
-                      & { paragraphs?: Types.Maybe<Array<(
-                        { __typename?: 'ParagraphContent' }
-                        & { title?: Types.Maybe<(
-                          { __typename: 'SingleLineContent' }
-                          & Pick<Types.SingleLineContent, 'text'>
-                        )>, body?: Types.Maybe<(
-                          { __typename: 'RichTextContent' }
-                          & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                        )>, images?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { caption?: Types.Maybe<(
-                            { __typename: 'RichTextContent' }
-                            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                          )>, variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'PropertiesTableContent' }
-                      & { sections?: Types.Maybe<Array<(
-                        { __typename: 'PropertiesTableSection' }
-                        & Pick<Types.PropertiesTableSection, 'title'>
-                        & { properties?: Types.Maybe<Array<(
-                          { __typename?: 'PropertiesTableValue' }
-                          & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    ) | (
-                      { __typename: 'SelectionContent' }
-                      & { options?: Types.Maybe<Array<(
-                        { __typename?: 'SelectionComponentOption' }
-                        & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                      )>> }
-                    ) | (
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    ) | (
-                      { __typename: 'VideoContent' }
-                      & { videos?: Types.Maybe<Array<(
-                        { __typename: 'Video' }
-                        & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                        & { thumbnails?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    )> }
-                  )>> }
-                ) | (
-                  { __typename: 'DatetimeContent' }
-                  & Pick<Types.DatetimeContent, 'datetime'>
-                ) | { __typename?: 'GridRelationsContent' } | (
-                  { __typename: 'ImageContent' }
-                  & { images?: Types.Maybe<Array<(
-                    { __typename: 'Image' }
-                    & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                    & { variants?: Types.Maybe<Array<(
-                      { __typename?: 'ImageVariant' }
-                      & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                    )>> }
-                  )>> }
-                ) | { __typename?: 'ItemRelationsContent' } | (
-                  { __typename: 'LocationContent' }
-                  & Pick<Types.LocationContent, 'lat' | 'long'>
-                ) | (
-                  { __typename: 'NumericContent' }
-                  & Pick<Types.NumericContent, 'number' | 'unit'>
-                ) | (
-                  { __typename: 'ParagraphCollectionContent' }
-                  & { paragraphs?: Types.Maybe<Array<(
-                    { __typename?: 'ParagraphContent' }
-                    & { title?: Types.Maybe<(
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    )>, body?: Types.Maybe<(
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    )>, images?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { caption?: Types.Maybe<(
-                        { __typename: 'RichTextContent' }
-                        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                      )>, variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'PropertiesTableContent' }
-                  & { sections?: Types.Maybe<Array<(
-                    { __typename: 'PropertiesTableSection' }
-                    & Pick<Types.PropertiesTableSection, 'title'>
-                    & { properties?: Types.Maybe<Array<(
-                      { __typename?: 'PropertiesTableValue' }
-                      & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'RichTextContent' }
-                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                ) | (
-                  { __typename: 'SelectionContent' }
-                  & { options?: Types.Maybe<Array<(
-                    { __typename?: 'SelectionComponentOption' }
-                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                  )>> }
-                ) | (
-                  { __typename: 'SingleLineContent' }
-                  & Pick<Types.SingleLineContent, 'text'>
-                ) | (
-                  { __typename: 'VideoContent' }
-                  & { videos?: Types.Maybe<Array<(
-                    { __typename: 'Video' }
-                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                    & { thumbnails?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                )> }
-              )>, image?: Types.Maybe<(
-                { __typename: 'Component' }
-                & { content?: Types.Maybe<(
-                  { __typename: 'BooleanContent' }
-                  & Pick<Types.BooleanContent, 'value'>
-                ) | { __typename?: 'ComponentChoiceContent' } | (
-                  { __typename: 'ContentChunkContent' }
-                  & { chunks: Array<Array<(
-                    { __typename?: 'Component' }
-                    & { content?: Types.Maybe<(
-                      { __typename: 'BooleanContent' }
-                      & Pick<Types.BooleanContent, 'value'>
-                    ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
-                      { __typename: 'DatetimeContent' }
-                      & Pick<Types.DatetimeContent, 'datetime'>
-                    ) | { __typename?: 'GridRelationsContent' } | (
-                      { __typename: 'ImageContent' }
-                      & { images?: Types.Maybe<Array<(
-                        { __typename: 'Image' }
-                        & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                        & { variants?: Types.Maybe<Array<(
-                          { __typename?: 'ImageVariant' }
-                          & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                        )>> }
-                      )>> }
-                    ) | { __typename?: 'ItemRelationsContent' } | (
-                      { __typename: 'LocationContent' }
-                      & Pick<Types.LocationContent, 'lat' | 'long'>
-                    ) | (
-                      { __typename: 'NumericContent' }
-                      & Pick<Types.NumericContent, 'number' | 'unit'>
-                    ) | (
-                      { __typename: 'ParagraphCollectionContent' }
-                      & { paragraphs?: Types.Maybe<Array<(
-                        { __typename?: 'ParagraphContent' }
-                        & { title?: Types.Maybe<(
-                          { __typename: 'SingleLineContent' }
-                          & Pick<Types.SingleLineContent, 'text'>
-                        )>, body?: Types.Maybe<(
-                          { __typename: 'RichTextContent' }
-                          & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                        )>, images?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { caption?: Types.Maybe<(
-                            { __typename: 'RichTextContent' }
-                            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                          )>, variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'PropertiesTableContent' }
-                      & { sections?: Types.Maybe<Array<(
-                        { __typename: 'PropertiesTableSection' }
-                        & Pick<Types.PropertiesTableSection, 'title'>
-                        & { properties?: Types.Maybe<Array<(
-                          { __typename?: 'PropertiesTableValue' }
-                          & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    ) | (
-                      { __typename: 'SelectionContent' }
-                      & { options?: Types.Maybe<Array<(
-                        { __typename?: 'SelectionComponentOption' }
-                        & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                      )>> }
-                    ) | (
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    ) | (
-                      { __typename: 'VideoContent' }
-                      & { videos?: Types.Maybe<Array<(
-                        { __typename: 'Video' }
-                        & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                        & { thumbnails?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    )> }
-                  )>> }
-                ) | (
-                  { __typename: 'DatetimeContent' }
-                  & Pick<Types.DatetimeContent, 'datetime'>
-                ) | { __typename?: 'GridRelationsContent' } | (
-                  { __typename: 'ImageContent' }
-                  & { images?: Types.Maybe<Array<(
-                    { __typename: 'Image' }
-                    & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                    & { variants?: Types.Maybe<Array<(
-                      { __typename?: 'ImageVariant' }
-                      & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                    )>> }
-                  )>> }
-                ) | { __typename?: 'ItemRelationsContent' } | (
-                  { __typename: 'LocationContent' }
-                  & Pick<Types.LocationContent, 'lat' | 'long'>
-                ) | (
-                  { __typename: 'NumericContent' }
-                  & Pick<Types.NumericContent, 'number' | 'unit'>
-                ) | (
-                  { __typename: 'ParagraphCollectionContent' }
-                  & { paragraphs?: Types.Maybe<Array<(
-                    { __typename?: 'ParagraphContent' }
-                    & { title?: Types.Maybe<(
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    )>, body?: Types.Maybe<(
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    )>, images?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { caption?: Types.Maybe<(
-                        { __typename: 'RichTextContent' }
-                        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                      )>, variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'PropertiesTableContent' }
-                  & { sections?: Types.Maybe<Array<(
-                    { __typename: 'PropertiesTableSection' }
-                    & Pick<Types.PropertiesTableSection, 'title'>
-                    & { properties?: Types.Maybe<Array<(
-                      { __typename?: 'PropertiesTableValue' }
-                      & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'RichTextContent' }
-                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                ) | (
-                  { __typename: 'SelectionContent' }
-                  & { options?: Types.Maybe<Array<(
-                    { __typename?: 'SelectionComponentOption' }
-                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                  )>> }
-                ) | (
-                  { __typename: 'SingleLineContent' }
-                  & Pick<Types.SingleLineContent, 'text'>
-                ) | (
-                  { __typename: 'VideoContent' }
-                  & { videos?: Types.Maybe<Array<(
-                    { __typename: 'Video' }
-                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                    & { thumbnails?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                )> }
-              )>, social?: Types.Maybe<(
-                { __typename: 'Component' }
-                & { content?: Types.Maybe<(
-                  { __typename: 'BooleanContent' }
-                  & Pick<Types.BooleanContent, 'value'>
-                ) | { __typename?: 'ComponentChoiceContent' } | (
-                  { __typename: 'ContentChunkContent' }
-                  & { chunks: Array<Array<(
-                    { __typename?: 'Component' }
-                    & { content?: Types.Maybe<(
-                      { __typename: 'BooleanContent' }
-                      & Pick<Types.BooleanContent, 'value'>
-                    ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
-                      { __typename: 'DatetimeContent' }
-                      & Pick<Types.DatetimeContent, 'datetime'>
-                    ) | { __typename?: 'GridRelationsContent' } | (
-                      { __typename: 'ImageContent' }
-                      & { images?: Types.Maybe<Array<(
-                        { __typename: 'Image' }
-                        & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                        & { variants?: Types.Maybe<Array<(
-                          { __typename?: 'ImageVariant' }
-                          & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                        )>> }
-                      )>> }
-                    ) | { __typename?: 'ItemRelationsContent' } | (
-                      { __typename: 'LocationContent' }
-                      & Pick<Types.LocationContent, 'lat' | 'long'>
-                    ) | (
-                      { __typename: 'NumericContent' }
-                      & Pick<Types.NumericContent, 'number' | 'unit'>
-                    ) | (
-                      { __typename: 'ParagraphCollectionContent' }
-                      & { paragraphs?: Types.Maybe<Array<(
-                        { __typename?: 'ParagraphContent' }
-                        & { title?: Types.Maybe<(
-                          { __typename: 'SingleLineContent' }
-                          & Pick<Types.SingleLineContent, 'text'>
-                        )>, body?: Types.Maybe<(
-                          { __typename: 'RichTextContent' }
-                          & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                        )>, images?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { caption?: Types.Maybe<(
-                            { __typename: 'RichTextContent' }
-                            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                          )>, variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'PropertiesTableContent' }
-                      & { sections?: Types.Maybe<Array<(
-                        { __typename: 'PropertiesTableSection' }
-                        & Pick<Types.PropertiesTableSection, 'title'>
-                        & { properties?: Types.Maybe<Array<(
-                          { __typename?: 'PropertiesTableValue' }
-                          & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    ) | (
-                      { __typename: 'SelectionContent' }
-                      & { options?: Types.Maybe<Array<(
-                        { __typename?: 'SelectionComponentOption' }
-                        & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                      )>> }
-                    ) | (
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    ) | (
-                      { __typename: 'VideoContent' }
-                      & { videos?: Types.Maybe<Array<(
-                        { __typename: 'Video' }
-                        & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                        & { thumbnails?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    )> }
-                  )>> }
-                ) | (
-                  { __typename: 'DatetimeContent' }
-                  & Pick<Types.DatetimeContent, 'datetime'>
-                ) | { __typename?: 'GridRelationsContent' } | (
-                  { __typename: 'ImageContent' }
-                  & { images?: Types.Maybe<Array<(
-                    { __typename: 'Image' }
-                    & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                    & { variants?: Types.Maybe<Array<(
-                      { __typename?: 'ImageVariant' }
-                      & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                    )>> }
-                  )>> }
-                ) | { __typename?: 'ItemRelationsContent' } | (
-                  { __typename: 'LocationContent' }
-                  & Pick<Types.LocationContent, 'lat' | 'long'>
-                ) | (
-                  { __typename: 'NumericContent' }
-                  & Pick<Types.NumericContent, 'number' | 'unit'>
-                ) | (
-                  { __typename: 'ParagraphCollectionContent' }
-                  & { paragraphs?: Types.Maybe<Array<(
-                    { __typename?: 'ParagraphContent' }
-                    & { title?: Types.Maybe<(
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    )>, body?: Types.Maybe<(
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    )>, images?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { caption?: Types.Maybe<(
-                        { __typename: 'RichTextContent' }
-                        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                      )>, variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'PropertiesTableContent' }
-                  & { sections?: Types.Maybe<Array<(
-                    { __typename: 'PropertiesTableSection' }
-                    & Pick<Types.PropertiesTableSection, 'title'>
-                    & { properties?: Types.Maybe<Array<(
-                      { __typename?: 'PropertiesTableValue' }
-                      & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'RichTextContent' }
-                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                ) | (
-                  { __typename: 'SelectionContent' }
-                  & { options?: Types.Maybe<Array<(
-                    { __typename?: 'SelectionComponentOption' }
-                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                  )>> }
-                ) | (
-                  { __typename: 'SingleLineContent' }
-                  & Pick<Types.SingleLineContent, 'text'>
-                ) | (
-                  { __typename: 'VideoContent' }
-                  & { videos?: Types.Maybe<Array<(
-                    { __typename: 'Video' }
-                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                    & { thumbnails?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                )> }
-              )> }
             ) | (
               { __typename?: 'Folder' }
               & Pick<Types.Folder, 'id'>
@@ -18046,6 +16936,513 @@ export type FrontpageQuery = (
                   )>> }
                 )> }
               )>, company?: Types.Maybe<(
+                { __typename: 'Component' }
+                & { content?: Types.Maybe<(
+                  { __typename: 'BooleanContent' }
+                  & Pick<Types.BooleanContent, 'value'>
+                ) | { __typename?: 'ComponentChoiceContent' } | (
+                  { __typename: 'ContentChunkContent' }
+                  & { chunks: Array<Array<(
+                    { __typename?: 'Component' }
+                    & { content?: Types.Maybe<(
+                      { __typename: 'BooleanContent' }
+                      & Pick<Types.BooleanContent, 'value'>
+                    ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
+                      { __typename: 'DatetimeContent' }
+                      & Pick<Types.DatetimeContent, 'datetime'>
+                    ) | { __typename?: 'GridRelationsContent' } | (
+                      { __typename: 'ImageContent' }
+                      & { images?: Types.Maybe<Array<(
+                        { __typename: 'Image' }
+                        & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                        & { variants?: Types.Maybe<Array<(
+                          { __typename?: 'ImageVariant' }
+                          & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                        )>> }
+                      )>> }
+                    ) | { __typename?: 'ItemRelationsContent' } | (
+                      { __typename: 'LocationContent' }
+                      & Pick<Types.LocationContent, 'lat' | 'long'>
+                    ) | (
+                      { __typename: 'NumericContent' }
+                      & Pick<Types.NumericContent, 'number' | 'unit'>
+                    ) | (
+                      { __typename: 'ParagraphCollectionContent' }
+                      & { paragraphs?: Types.Maybe<Array<(
+                        { __typename?: 'ParagraphContent' }
+                        & { title?: Types.Maybe<(
+                          { __typename: 'SingleLineContent' }
+                          & Pick<Types.SingleLineContent, 'text'>
+                        )>, body?: Types.Maybe<(
+                          { __typename: 'RichTextContent' }
+                          & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                        )>, images?: Types.Maybe<Array<(
+                          { __typename: 'Image' }
+                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                          & { caption?: Types.Maybe<(
+                            { __typename: 'RichTextContent' }
+                            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                          )>, variants?: Types.Maybe<Array<(
+                            { __typename?: 'ImageVariant' }
+                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                          )>> }
+                        )>> }
+                      )>> }
+                    ) | (
+                      { __typename: 'PropertiesTableContent' }
+                      & { sections?: Types.Maybe<Array<(
+                        { __typename: 'PropertiesTableSection' }
+                        & Pick<Types.PropertiesTableSection, 'title'>
+                        & { properties?: Types.Maybe<Array<(
+                          { __typename?: 'PropertiesTableValue' }
+                          & Pick<Types.PropertiesTableValue, 'key' | 'value'>
+                        )>> }
+                      )>> }
+                    ) | (
+                      { __typename: 'RichTextContent' }
+                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                    ) | (
+                      { __typename: 'SelectionContent' }
+                      & { options?: Types.Maybe<Array<(
+                        { __typename?: 'SelectionComponentOption' }
+                        & Pick<Types.SelectionComponentOption, 'key' | 'value'>
+                      )>> }
+                    ) | (
+                      { __typename: 'SingleLineContent' }
+                      & Pick<Types.SingleLineContent, 'text'>
+                    ) | (
+                      { __typename: 'VideoContent' }
+                      & { videos?: Types.Maybe<Array<(
+                        { __typename: 'Video' }
+                        & Pick<Types.Video, 'id' | 'title' | 'playlists'>
+                        & { thumbnails?: Types.Maybe<Array<(
+                          { __typename: 'Image' }
+                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                          & { variants?: Types.Maybe<Array<(
+                            { __typename?: 'ImageVariant' }
+                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                          )>> }
+                        )>> }
+                      )>> }
+                    )> }
+                  )>> }
+                ) | (
+                  { __typename: 'DatetimeContent' }
+                  & Pick<Types.DatetimeContent, 'datetime'>
+                ) | { __typename?: 'GridRelationsContent' } | (
+                  { __typename: 'ImageContent' }
+                  & { images?: Types.Maybe<Array<(
+                    { __typename: 'Image' }
+                    & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                    & { variants?: Types.Maybe<Array<(
+                      { __typename?: 'ImageVariant' }
+                      & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                    )>> }
+                  )>> }
+                ) | { __typename?: 'ItemRelationsContent' } | (
+                  { __typename: 'LocationContent' }
+                  & Pick<Types.LocationContent, 'lat' | 'long'>
+                ) | (
+                  { __typename: 'NumericContent' }
+                  & Pick<Types.NumericContent, 'number' | 'unit'>
+                ) | (
+                  { __typename: 'ParagraphCollectionContent' }
+                  & { paragraphs?: Types.Maybe<Array<(
+                    { __typename?: 'ParagraphContent' }
+                    & { title?: Types.Maybe<(
+                      { __typename: 'SingleLineContent' }
+                      & Pick<Types.SingleLineContent, 'text'>
+                    )>, body?: Types.Maybe<(
+                      { __typename: 'RichTextContent' }
+                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                    )>, images?: Types.Maybe<Array<(
+                      { __typename: 'Image' }
+                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                      & { caption?: Types.Maybe<(
+                        { __typename: 'RichTextContent' }
+                        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                      )>, variants?: Types.Maybe<Array<(
+                        { __typename?: 'ImageVariant' }
+                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                      )>> }
+                    )>> }
+                  )>> }
+                ) | (
+                  { __typename: 'PropertiesTableContent' }
+                  & { sections?: Types.Maybe<Array<(
+                    { __typename: 'PropertiesTableSection' }
+                    & Pick<Types.PropertiesTableSection, 'title'>
+                    & { properties?: Types.Maybe<Array<(
+                      { __typename?: 'PropertiesTableValue' }
+                      & Pick<Types.PropertiesTableValue, 'key' | 'value'>
+                    )>> }
+                  )>> }
+                ) | (
+                  { __typename: 'RichTextContent' }
+                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                ) | (
+                  { __typename: 'SelectionContent' }
+                  & { options?: Types.Maybe<Array<(
+                    { __typename?: 'SelectionComponentOption' }
+                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
+                  )>> }
+                ) | (
+                  { __typename: 'SingleLineContent' }
+                  & Pick<Types.SingleLineContent, 'text'>
+                ) | (
+                  { __typename: 'VideoContent' }
+                  & { videos?: Types.Maybe<Array<(
+                    { __typename: 'Video' }
+                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
+                    & { thumbnails?: Types.Maybe<Array<(
+                      { __typename: 'Image' }
+                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                      & { variants?: Types.Maybe<Array<(
+                        { __typename?: 'ImageVariant' }
+                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                      )>> }
+                    )>> }
+                  )>> }
+                )> }
+              )>, job?: Types.Maybe<(
+                { __typename: 'Component' }
+                & { content?: Types.Maybe<(
+                  { __typename: 'BooleanContent' }
+                  & Pick<Types.BooleanContent, 'value'>
+                ) | { __typename?: 'ComponentChoiceContent' } | (
+                  { __typename: 'ContentChunkContent' }
+                  & { chunks: Array<Array<(
+                    { __typename?: 'Component' }
+                    & { content?: Types.Maybe<(
+                      { __typename: 'BooleanContent' }
+                      & Pick<Types.BooleanContent, 'value'>
+                    ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
+                      { __typename: 'DatetimeContent' }
+                      & Pick<Types.DatetimeContent, 'datetime'>
+                    ) | { __typename?: 'GridRelationsContent' } | (
+                      { __typename: 'ImageContent' }
+                      & { images?: Types.Maybe<Array<(
+                        { __typename: 'Image' }
+                        & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                        & { variants?: Types.Maybe<Array<(
+                          { __typename?: 'ImageVariant' }
+                          & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                        )>> }
+                      )>> }
+                    ) | { __typename?: 'ItemRelationsContent' } | (
+                      { __typename: 'LocationContent' }
+                      & Pick<Types.LocationContent, 'lat' | 'long'>
+                    ) | (
+                      { __typename: 'NumericContent' }
+                      & Pick<Types.NumericContent, 'number' | 'unit'>
+                    ) | (
+                      { __typename: 'ParagraphCollectionContent' }
+                      & { paragraphs?: Types.Maybe<Array<(
+                        { __typename?: 'ParagraphContent' }
+                        & { title?: Types.Maybe<(
+                          { __typename: 'SingleLineContent' }
+                          & Pick<Types.SingleLineContent, 'text'>
+                        )>, body?: Types.Maybe<(
+                          { __typename: 'RichTextContent' }
+                          & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                        )>, images?: Types.Maybe<Array<(
+                          { __typename: 'Image' }
+                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                          & { caption?: Types.Maybe<(
+                            { __typename: 'RichTextContent' }
+                            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                          )>, variants?: Types.Maybe<Array<(
+                            { __typename?: 'ImageVariant' }
+                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                          )>> }
+                        )>> }
+                      )>> }
+                    ) | (
+                      { __typename: 'PropertiesTableContent' }
+                      & { sections?: Types.Maybe<Array<(
+                        { __typename: 'PropertiesTableSection' }
+                        & Pick<Types.PropertiesTableSection, 'title'>
+                        & { properties?: Types.Maybe<Array<(
+                          { __typename?: 'PropertiesTableValue' }
+                          & Pick<Types.PropertiesTableValue, 'key' | 'value'>
+                        )>> }
+                      )>> }
+                    ) | (
+                      { __typename: 'RichTextContent' }
+                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                    ) | (
+                      { __typename: 'SelectionContent' }
+                      & { options?: Types.Maybe<Array<(
+                        { __typename?: 'SelectionComponentOption' }
+                        & Pick<Types.SelectionComponentOption, 'key' | 'value'>
+                      )>> }
+                    ) | (
+                      { __typename: 'SingleLineContent' }
+                      & Pick<Types.SingleLineContent, 'text'>
+                    ) | (
+                      { __typename: 'VideoContent' }
+                      & { videos?: Types.Maybe<Array<(
+                        { __typename: 'Video' }
+                        & Pick<Types.Video, 'id' | 'title' | 'playlists'>
+                        & { thumbnails?: Types.Maybe<Array<(
+                          { __typename: 'Image' }
+                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                          & { variants?: Types.Maybe<Array<(
+                            { __typename?: 'ImageVariant' }
+                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                          )>> }
+                        )>> }
+                      )>> }
+                    )> }
+                  )>> }
+                ) | (
+                  { __typename: 'DatetimeContent' }
+                  & Pick<Types.DatetimeContent, 'datetime'>
+                ) | { __typename?: 'GridRelationsContent' } | (
+                  { __typename: 'ImageContent' }
+                  & { images?: Types.Maybe<Array<(
+                    { __typename: 'Image' }
+                    & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                    & { variants?: Types.Maybe<Array<(
+                      { __typename?: 'ImageVariant' }
+                      & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                    )>> }
+                  )>> }
+                ) | { __typename?: 'ItemRelationsContent' } | (
+                  { __typename: 'LocationContent' }
+                  & Pick<Types.LocationContent, 'lat' | 'long'>
+                ) | (
+                  { __typename: 'NumericContent' }
+                  & Pick<Types.NumericContent, 'number' | 'unit'>
+                ) | (
+                  { __typename: 'ParagraphCollectionContent' }
+                  & { paragraphs?: Types.Maybe<Array<(
+                    { __typename?: 'ParagraphContent' }
+                    & { title?: Types.Maybe<(
+                      { __typename: 'SingleLineContent' }
+                      & Pick<Types.SingleLineContent, 'text'>
+                    )>, body?: Types.Maybe<(
+                      { __typename: 'RichTextContent' }
+                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                    )>, images?: Types.Maybe<Array<(
+                      { __typename: 'Image' }
+                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                      & { caption?: Types.Maybe<(
+                        { __typename: 'RichTextContent' }
+                        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                      )>, variants?: Types.Maybe<Array<(
+                        { __typename?: 'ImageVariant' }
+                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                      )>> }
+                    )>> }
+                  )>> }
+                ) | (
+                  { __typename: 'PropertiesTableContent' }
+                  & { sections?: Types.Maybe<Array<(
+                    { __typename: 'PropertiesTableSection' }
+                    & Pick<Types.PropertiesTableSection, 'title'>
+                    & { properties?: Types.Maybe<Array<(
+                      { __typename?: 'PropertiesTableValue' }
+                      & Pick<Types.PropertiesTableValue, 'key' | 'value'>
+                    )>> }
+                  )>> }
+                ) | (
+                  { __typename: 'RichTextContent' }
+                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                ) | (
+                  { __typename: 'SelectionContent' }
+                  & { options?: Types.Maybe<Array<(
+                    { __typename?: 'SelectionComponentOption' }
+                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
+                  )>> }
+                ) | (
+                  { __typename: 'SingleLineContent' }
+                  & Pick<Types.SingleLineContent, 'text'>
+                ) | (
+                  { __typename: 'VideoContent' }
+                  & { videos?: Types.Maybe<Array<(
+                    { __typename: 'Video' }
+                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
+                    & { thumbnails?: Types.Maybe<Array<(
+                      { __typename: 'Image' }
+                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                      & { variants?: Types.Maybe<Array<(
+                        { __typename?: 'ImageVariant' }
+                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                      )>> }
+                    )>> }
+                  )>> }
+                )> }
+              )>, image?: Types.Maybe<(
+                { __typename: 'Component' }
+                & { content?: Types.Maybe<(
+                  { __typename: 'BooleanContent' }
+                  & Pick<Types.BooleanContent, 'value'>
+                ) | { __typename?: 'ComponentChoiceContent' } | (
+                  { __typename: 'ContentChunkContent' }
+                  & { chunks: Array<Array<(
+                    { __typename?: 'Component' }
+                    & { content?: Types.Maybe<(
+                      { __typename: 'BooleanContent' }
+                      & Pick<Types.BooleanContent, 'value'>
+                    ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
+                      { __typename: 'DatetimeContent' }
+                      & Pick<Types.DatetimeContent, 'datetime'>
+                    ) | { __typename?: 'GridRelationsContent' } | (
+                      { __typename: 'ImageContent' }
+                      & { images?: Types.Maybe<Array<(
+                        { __typename: 'Image' }
+                        & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                        & { variants?: Types.Maybe<Array<(
+                          { __typename?: 'ImageVariant' }
+                          & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                        )>> }
+                      )>> }
+                    ) | { __typename?: 'ItemRelationsContent' } | (
+                      { __typename: 'LocationContent' }
+                      & Pick<Types.LocationContent, 'lat' | 'long'>
+                    ) | (
+                      { __typename: 'NumericContent' }
+                      & Pick<Types.NumericContent, 'number' | 'unit'>
+                    ) | (
+                      { __typename: 'ParagraphCollectionContent' }
+                      & { paragraphs?: Types.Maybe<Array<(
+                        { __typename?: 'ParagraphContent' }
+                        & { title?: Types.Maybe<(
+                          { __typename: 'SingleLineContent' }
+                          & Pick<Types.SingleLineContent, 'text'>
+                        )>, body?: Types.Maybe<(
+                          { __typename: 'RichTextContent' }
+                          & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                        )>, images?: Types.Maybe<Array<(
+                          { __typename: 'Image' }
+                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                          & { caption?: Types.Maybe<(
+                            { __typename: 'RichTextContent' }
+                            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                          )>, variants?: Types.Maybe<Array<(
+                            { __typename?: 'ImageVariant' }
+                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                          )>> }
+                        )>> }
+                      )>> }
+                    ) | (
+                      { __typename: 'PropertiesTableContent' }
+                      & { sections?: Types.Maybe<Array<(
+                        { __typename: 'PropertiesTableSection' }
+                        & Pick<Types.PropertiesTableSection, 'title'>
+                        & { properties?: Types.Maybe<Array<(
+                          { __typename?: 'PropertiesTableValue' }
+                          & Pick<Types.PropertiesTableValue, 'key' | 'value'>
+                        )>> }
+                      )>> }
+                    ) | (
+                      { __typename: 'RichTextContent' }
+                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                    ) | (
+                      { __typename: 'SelectionContent' }
+                      & { options?: Types.Maybe<Array<(
+                        { __typename?: 'SelectionComponentOption' }
+                        & Pick<Types.SelectionComponentOption, 'key' | 'value'>
+                      )>> }
+                    ) | (
+                      { __typename: 'SingleLineContent' }
+                      & Pick<Types.SingleLineContent, 'text'>
+                    ) | (
+                      { __typename: 'VideoContent' }
+                      & { videos?: Types.Maybe<Array<(
+                        { __typename: 'Video' }
+                        & Pick<Types.Video, 'id' | 'title' | 'playlists'>
+                        & { thumbnails?: Types.Maybe<Array<(
+                          { __typename: 'Image' }
+                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                          & { variants?: Types.Maybe<Array<(
+                            { __typename?: 'ImageVariant' }
+                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                          )>> }
+                        )>> }
+                      )>> }
+                    )> }
+                  )>> }
+                ) | (
+                  { __typename: 'DatetimeContent' }
+                  & Pick<Types.DatetimeContent, 'datetime'>
+                ) | { __typename?: 'GridRelationsContent' } | (
+                  { __typename: 'ImageContent' }
+                  & { images?: Types.Maybe<Array<(
+                    { __typename: 'Image' }
+                    & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                    & { variants?: Types.Maybe<Array<(
+                      { __typename?: 'ImageVariant' }
+                      & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                    )>> }
+                  )>> }
+                ) | { __typename?: 'ItemRelationsContent' } | (
+                  { __typename: 'LocationContent' }
+                  & Pick<Types.LocationContent, 'lat' | 'long'>
+                ) | (
+                  { __typename: 'NumericContent' }
+                  & Pick<Types.NumericContent, 'number' | 'unit'>
+                ) | (
+                  { __typename: 'ParagraphCollectionContent' }
+                  & { paragraphs?: Types.Maybe<Array<(
+                    { __typename?: 'ParagraphContent' }
+                    & { title?: Types.Maybe<(
+                      { __typename: 'SingleLineContent' }
+                      & Pick<Types.SingleLineContent, 'text'>
+                    )>, body?: Types.Maybe<(
+                      { __typename: 'RichTextContent' }
+                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                    )>, images?: Types.Maybe<Array<(
+                      { __typename: 'Image' }
+                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                      & { caption?: Types.Maybe<(
+                        { __typename: 'RichTextContent' }
+                        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                      )>, variants?: Types.Maybe<Array<(
+                        { __typename?: 'ImageVariant' }
+                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                      )>> }
+                    )>> }
+                  )>> }
+                ) | (
+                  { __typename: 'PropertiesTableContent' }
+                  & { sections?: Types.Maybe<Array<(
+                    { __typename: 'PropertiesTableSection' }
+                    & Pick<Types.PropertiesTableSection, 'title'>
+                    & { properties?: Types.Maybe<Array<(
+                      { __typename?: 'PropertiesTableValue' }
+                      & Pick<Types.PropertiesTableValue, 'key' | 'value'>
+                    )>> }
+                  )>> }
+                ) | (
+                  { __typename: 'RichTextContent' }
+                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+                ) | (
+                  { __typename: 'SelectionContent' }
+                  & { options?: Types.Maybe<Array<(
+                    { __typename?: 'SelectionComponentOption' }
+                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
+                  )>> }
+                ) | (
+                  { __typename: 'SingleLineContent' }
+                  & Pick<Types.SingleLineContent, 'text'>
+                ) | (
+                  { __typename: 'VideoContent' }
+                  & { videos?: Types.Maybe<Array<(
+                    { __typename: 'Video' }
+                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
+                    & { thumbnails?: Types.Maybe<Array<(
+                      { __typename: 'Image' }
+                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
+                      & { variants?: Types.Maybe<Array<(
+                        { __typename?: 'ImageVariant' }
+                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                      )>> }
+                    )>> }
+                  )>> }
+                )> }
+              )>, social?: Types.Maybe<(
                 { __typename: 'Component' }
                 & { content?: Types.Maybe<(
                   { __typename: 'BooleanContent' }
@@ -22972,200 +22369,30 @@ export type FrontpageQuery = (
                 & { caption?: Types.Maybe<(
                   { __typename: 'RichTextContent' }
                   & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                ) | (
-                  { __typename: 'SelectionContent' }
-                  & { options?: Types.Maybe<Array<(
-                    { __typename?: 'SelectionComponentOption' }
-                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                  )>> }
-                ) | (
-                  { __typename: 'SingleLineContent' }
-                  & Pick<Types.SingleLineContent, 'text'>
-                ) | (
-                  { __typename: 'VideoContent' }
-                  & { videos?: Types.Maybe<Array<(
-                    { __typename: 'Video' }
-                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                    & { thumbnails?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                )> }
-              )>, logo?: Types.Maybe<(
-                { __typename: 'Component' }
-                & { content?: Types.Maybe<(
-                  { __typename: 'BooleanContent' }
-                  & Pick<Types.BooleanContent, 'value'>
-                ) | { __typename?: 'ComponentChoiceContent' } | (
-                  { __typename: 'ContentChunkContent' }
-                  & { chunks: Array<Array<(
-                    { __typename?: 'Component' }
-                    & { content?: Types.Maybe<(
-                      { __typename: 'BooleanContent' }
-                      & Pick<Types.BooleanContent, 'value'>
-                    ) | { __typename?: 'ComponentChoiceContent' } | { __typename?: 'ContentChunkContent' } | (
-                      { __typename: 'DatetimeContent' }
-                      & Pick<Types.DatetimeContent, 'datetime'>
-                    ) | { __typename?: 'GridRelationsContent' } | (
-                      { __typename: 'ImageContent' }
-                      & { images?: Types.Maybe<Array<(
-                        { __typename: 'Image' }
-                        & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                        & { variants?: Types.Maybe<Array<(
-                          { __typename?: 'ImageVariant' }
-                          & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                        )>> }
-                      )>> }
-                    ) | { __typename?: 'ItemRelationsContent' } | (
-                      { __typename: 'LocationContent' }
-                      & Pick<Types.LocationContent, 'lat' | 'long'>
-                    ) | (
-                      { __typename: 'NumericContent' }
-                      & Pick<Types.NumericContent, 'number' | 'unit'>
-                    ) | (
-                      { __typename: 'ParagraphCollectionContent' }
-                      & { paragraphs?: Types.Maybe<Array<(
-                        { __typename?: 'ParagraphContent' }
-                        & { title?: Types.Maybe<(
-                          { __typename: 'SingleLineContent' }
-                          & Pick<Types.SingleLineContent, 'text'>
-                        )>, body?: Types.Maybe<(
-                          { __typename: 'RichTextContent' }
-                          & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                        )>, images?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { caption?: Types.Maybe<(
-                            { __typename: 'RichTextContent' }
-                            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                          )>, variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'PropertiesTableContent' }
-                      & { sections?: Types.Maybe<Array<(
-                        { __typename: 'PropertiesTableSection' }
-                        & Pick<Types.PropertiesTableSection, 'title'>
-                        & { properties?: Types.Maybe<Array<(
-                          { __typename?: 'PropertiesTableValue' }
-                          & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                        )>> }
-                      )>> }
-                    ) | (
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    ) | (
-                      { __typename: 'SelectionContent' }
-                      & { options?: Types.Maybe<Array<(
-                        { __typename?: 'SelectionComponentOption' }
-                        & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                      )>> }
-                    ) | (
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    ) | (
-                      { __typename: 'VideoContent' }
-                      & { videos?: Types.Maybe<Array<(
-                        { __typename: 'Video' }
-                        & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                        & { thumbnails?: Types.Maybe<Array<(
-                          { __typename: 'Image' }
-                          & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                          & { variants?: Types.Maybe<Array<(
-                            { __typename?: 'ImageVariant' }
-                            & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                          )>> }
-                        )>> }
-                      )>> }
-                    )> }
-                  )>> }
-                ) | (
-                  { __typename: 'DatetimeContent' }
-                  & Pick<Types.DatetimeContent, 'datetime'>
-                ) | { __typename?: 'GridRelationsContent' } | (
-                  { __typename: 'ImageContent' }
-                  & { images?: Types.Maybe<Array<(
-                    { __typename: 'Image' }
-                    & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                    & { variants?: Types.Maybe<Array<(
-                      { __typename?: 'ImageVariant' }
-                      & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                    )>> }
-                  )>> }
-                ) | { __typename?: 'ItemRelationsContent' } | (
-                  { __typename: 'LocationContent' }
-                  & Pick<Types.LocationContent, 'lat' | 'long'>
-                ) | (
-                  { __typename: 'NumericContent' }
-                  & Pick<Types.NumericContent, 'number' | 'unit'>
-                ) | (
-                  { __typename: 'ParagraphCollectionContent' }
-                  & { paragraphs?: Types.Maybe<Array<(
-                    { __typename?: 'ParagraphContent' }
-                    & { title?: Types.Maybe<(
-                      { __typename: 'SingleLineContent' }
-                      & Pick<Types.SingleLineContent, 'text'>
-                    )>, body?: Types.Maybe<(
-                      { __typename: 'RichTextContent' }
-                      & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                    )>, images?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { caption?: Types.Maybe<(
-                        { __typename: 'RichTextContent' }
-                        & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                      )>, variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'PropertiesTableContent' }
-                  & { sections?: Types.Maybe<Array<(
-                    { __typename: 'PropertiesTableSection' }
-                    & Pick<Types.PropertiesTableSection, 'title'>
-                    & { properties?: Types.Maybe<Array<(
-                      { __typename?: 'PropertiesTableValue' }
-                      & Pick<Types.PropertiesTableValue, 'key' | 'value'>
-                    )>> }
-                  )>> }
-                ) | (
-                  { __typename: 'RichTextContent' }
-                  & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
-                ) | (
-                  { __typename: 'SelectionContent' }
-                  & { options?: Types.Maybe<Array<(
-                    { __typename?: 'SelectionComponentOption' }
-                    & Pick<Types.SelectionComponentOption, 'key' | 'value'>
-                  )>> }
-                ) | (
-                  { __typename: 'SingleLineContent' }
-                  & Pick<Types.SingleLineContent, 'text'>
-                ) | (
-                  { __typename: 'VideoContent' }
-                  & { videos?: Types.Maybe<Array<(
-                    { __typename: 'Video' }
-                    & Pick<Types.Video, 'id' | 'title' | 'playlists'>
-                    & { thumbnails?: Types.Maybe<Array<(
-                      { __typename: 'Image' }
-                      & Pick<Types.Image, 'url' | 'altText' | 'key'>
-                      & { variants?: Types.Maybe<Array<(
-                        { __typename?: 'ImageVariant' }
-                        & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
-                      )>> }
-                    )>> }
-                  )>> }
-                )> }
-              )> }
+                )>, variants?: Types.Maybe<Array<(
+                  { __typename?: 'ImageVariant' }
+                  & Pick<Types.ImageVariant, 'url' | 'width' | 'key'>
+                )>> }
+              )>> }
+            )>> }
+          ) | (
+            { __typename: 'PropertiesTableContent' }
+            & { sections?: Types.Maybe<Array<(
+              { __typename: 'PropertiesTableSection' }
+              & Pick<Types.PropertiesTableSection, 'title'>
+              & { properties?: Types.Maybe<Array<(
+                { __typename?: 'PropertiesTableValue' }
+                & Pick<Types.PropertiesTableValue, 'key' | 'value'>
+              )>> }
+            )>> }
+          ) | (
+            { __typename: 'RichTextContent' }
+            & Pick<Types.RichTextContent, 'json' | 'html' | 'plainText'>
+          ) | (
+            { __typename: 'SelectionContent' }
+            & { options?: Types.Maybe<Array<(
+              { __typename?: 'SelectionComponentOption' }
+              & Pick<Types.SelectionComponentOption, 'key' | 'value'>
             )>> }
           ) | (
             { __typename: 'SingleLineContent' }
