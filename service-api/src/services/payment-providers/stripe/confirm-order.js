@@ -30,6 +30,12 @@ module.exports = async function confirmOrder({
    */
   const order = await crystallize.orders.create(crystallizeOrderModel);
 
+  //update stock for all items in cart once order is confirmed
+  const updateStock = await Promise.all(basketModel.cart.map(async (item) => {
+    const itemStockUpdate = await crystallize.orders.updateStock(item)
+    return await itemStockUpdate;
+  }))
+
   return {
     success: true,
     orderId: order.id,

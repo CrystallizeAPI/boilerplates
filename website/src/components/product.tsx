@@ -12,12 +12,10 @@ export const Product = ({ product }: ProductsProps) => {
   const basket = useBasket();
   let item = componentContent(product, "Product");
   let priceVariants = item.variants[0].priceVariants;
-  console.log(basket)
-  console.log("product: ", item.variants[0].stock)
 
   const buy = (priceVariantIdentifier) => {
     basket?.actions?.addItem({
-      id: item.variants[0].id,
+      id: item.id,
       sku: item.variants[0].sku,
       path: item.path,
       priceVariantIdentifier: priceVariantIdentifier,
