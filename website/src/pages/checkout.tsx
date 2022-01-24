@@ -24,6 +24,8 @@ const Checkout = () => {
     termsURL: getURL(`/terms`),
   };
 
+  console.log(checkoutModel)
+
   const router = useRouter();
 
   return (

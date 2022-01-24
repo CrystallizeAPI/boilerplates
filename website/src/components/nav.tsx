@@ -1,5 +1,4 @@
 import NextLink from "next/link";
-import { useAuth } from "@/contexts/auth";
 import {
   Box,
   Flex,
@@ -8,13 +7,11 @@ import {
   Spacer,
   IconButton,
   HamburgerMenuIcon,
-  CartIcon
 } from "@/design-system";
 import { Logo } from "@/design-system/theme/assets/logo";
 import { BasketButton } from "./basket/basket-button";
 
 export const Nav = () => {
-  const user = useAuth();
 
   return (
     <Box css={{ width: "$full", py: "$6" }}>

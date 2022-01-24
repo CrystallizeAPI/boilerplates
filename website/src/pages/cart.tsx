@@ -19,8 +19,8 @@ const CartPage = () => {
             direction="column"
             css={{ width: "$content", gap: "$10" }}
           >
-            {basket.cart.map((item) => (
-              <Box variant="card" css={{ width: "$full", padding: "20px" }}>
+            {basket.cart.map((item, index) => (
+              <Box key={index} variant="card" css={{ width: "$full", padding: "20px" }}>
                 <Flex css={{ gap: "30px" }}>
                   <Image {...item.images[0]} width="100px" height="100px" />
                   <Flex direction="column" align="start" css={{ gap: "20px" }}>

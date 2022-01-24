@@ -4,7 +4,6 @@ import { Box, Flex, Typography, Button } from "@/design-system";
 import { ProductQuery } from "@/crystallize/queries/product.generated";
 import { useBasket } from "@/components/basket";
 import { ContentTransformer } from "@crystallize/react-content-transformer";
-import { PriceVariant } from "./price-variant";
 interface ProductsProps {
   product: ProductQuery["product"];
 }
@@ -13,12 +12,16 @@ export const Product = ({ product }: ProductsProps) => {
   const basket = useBasket();
   let item = componentContent(product, "Product");
   let priceVariants = item.variants[0].priceVariants;
+  console.log(basket)
+  console.log("product: ", item.variants[0].stock)
 
   const buy = (priceVariantIdentifier) => {
     basket?.actions?.addItem({
+      id: item.variants[0].id,
       sku: item.variants[0].sku,
       path: item.path,
       priceVariantIdentifier: priceVariantIdentifier,
+      stock: item.variants[0].stock
     });
   };
 

@@ -138,10 +138,12 @@ module.exports = gql`
   }
 
   input SimpleCartItem {
+    id: String
     sku: String!
     path: String
     quantity: Int
     priceVariantIdentifier: String!
+    stock: Int
   }
 
   type UserMutations {

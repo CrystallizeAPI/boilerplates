@@ -11,9 +11,9 @@ interface ScheduleProps {
 
 export const Schedule = ({ header, schedule }: ScheduleProps) => {
   let talks = componentContent(schedule.content, "ContentChunkContent").chunks;
-  let talksArr = [];
-  let [date, setDate] = useState("2022-04-18T10:00:00.000Z");
-
+  let talksArr = []
+  let [date, setDate] = useState("2022-07-18T10:00:00.000Z");
+ 
   talks.forEach((talk) => {
     talk.map((item) => {
       if (
@@ -58,7 +58,7 @@ export const Schedule = ({ header, schedule }: ScheduleProps) => {
         direction="column"
         css={{ width: "$full", gap: "20px" }}
       >
-        {talksArr?.map((talk, index) => (
+        {talksArr.map((talk, index) => (
           //@ts-ignore
           <Talk talk={talk} key={index} />
         ))}

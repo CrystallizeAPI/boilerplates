@@ -1,8 +1,0 @@
-query Auth {
-  user {
-    isLoggedIn
-    logoutLink
-    email
-    hasActiveSubscriptionContract
-  }
-}

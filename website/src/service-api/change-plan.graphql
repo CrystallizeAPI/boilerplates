@@ -1,5 +1,0 @@
-mutation ChangePlan($id: String!, $plan: String!) {
-  subscriptionContracts {
-    change(id: $id, plan: $plan)
-  }
-}

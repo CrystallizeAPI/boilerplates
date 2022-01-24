@@ -9,7 +9,7 @@ export const initialState = {
    *  - path
    *  - priceVariantIdentifier
    *  - quantity
-   *  - serviceType
+   *  - stock
    */
   clientBasket: {
     cart: [],
@@ -96,7 +96,7 @@ export default produce(function reducer(draft, { action, ...rest }) {
     case 'remove-item':
     case 'increment-item':
     case 'decrement-item': {
-      const { sku, path, priceVariantIdentifier = 'default' } = rest;
+      const { id, sku, path, priceVariantIdentifier = 'default', stock } = rest;
 
       if (!sku || !path) {
         throw new Error(`Please provide "sku" and "path" for ${action}`);
@@ -119,10 +119,12 @@ export default produce(function reducer(draft, { action, ...rest }) {
       } else {
         if (!['remove-item', 'decrement-item'].includes(action)) {
           draft.clientBasket.cart.push({
+            id,
             sku,
             path,
             priceVariantIdentifier,
             quantity: 1,
+            stock
           });
         }
       }
@@ -147,12 +149,13 @@ export default produce(function reducer(draft, { action, ...rest }) {
           'https://service-api-demo.superfast.shop/api/graphql'
       ) {
         draft.clientBasket.cart = draft.serverBasket.cart.map(
-          ({ sku, path, quantity }) => ({
+          ({ id, sku, path, quantity, stock }) => ({
+            id,
             sku,
             path,
             quantity,
             priceVariantIdentifier: 'default',
-            
+            stock
           })
         );
       }

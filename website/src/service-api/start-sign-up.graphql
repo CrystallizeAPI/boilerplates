@@ -1,5 +1,0 @@
-mutation StartSignUp($email: String!, $firstName: String!, $lastName: String!) {
-  user {
-    startSignUp(email: $email, firstName: $firstName, lastName: $lastName)
-  }
-}

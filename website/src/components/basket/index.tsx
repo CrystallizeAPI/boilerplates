@@ -10,8 +10,8 @@ const BasketContext = React.createContext(undefined);
 
 export const useBasket = () => React.useContext(BasketContext);
 
-function clientCartItemForAPI({ sku, path, quantity, priceVariantIdentifier, serviceType }) {
-  return { sku, path, quantity, priceVariantIdentifier, serviceType };
+function clientCartItemForAPI({ id, sku, path, quantity, priceVariantIdentifier, stock }) {
+  return { id, sku, path, quantity, priceVariantIdentifier, stock };
 }
 
 export function BasketProvider({ locale, children }) {
