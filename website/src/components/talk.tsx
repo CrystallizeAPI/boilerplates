@@ -57,6 +57,8 @@ export const Talk = ({ talk }: TalkProps) => {
           <Image
             {...componentContent(speaker.image.content, "ImageContent")
               .images[0]}
+            loading="lazy"
+            sizes="100px"
           />
         </Box>
         <Flex

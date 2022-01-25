@@ -3,11 +3,36 @@ import { Typography, Box, Spacer, Flex, Button } from "@/design-system";
 import { Image } from "@crystallize/react-image";
 import NextLink from "next/link";
 
+function QuantityButton({ children, ...props }) {
+  return (
+    <Typography
+      as="button"
+      type="button"
+      css={{
+        appearance: "none",
+        border: "none",
+        background: "transparent",
+        cursor: "pointer",
+        padding: "0 10px",
+      }}
+      {...props}
+    >
+      {children}
+    </Typography>
+  );
+}
+
 const CartPage = () => {
   const basket = useBasket();
 
   return (
-    <Box css={{ width: "$content", margin: "50px auto", "@bp3": {width: "$full", padding: "0 $10"} }}>
+    <Box
+      css={{
+        width: "$content",
+        margin: "50px auto",
+        "@bp3": { width: "$full", padding: "0 $10" },
+      }}
+    >
       <Typography variant="heading" size={8}>
         Shopping Cart
       </Typography>
@@ -20,8 +45,19 @@ const CartPage = () => {
             css={{ width: "$content", gap: "$10" }}
           >
             {basket.cart.map((item, index) => (
-              <Box key={index} variant="card" css={{ width: "$full", padding: "20px" }}>
-                <Flex css={{ gap: "30px" }}>
+              <Box
+                key={index}
+                variant="card"
+                css={{ width: "$full", padding: "20px" }}
+              >
+                <Flex
+                  css={{
+                    gap: "30px",
+                    "& img": {
+                      objectFit: "contain",
+                    },
+                  }}
+                >
                   <Image {...item.images[0]} width="100px" height="100px" />
                   <Flex direction="column" align="start" css={{ gap: "20px" }}>
                     <Typography variant="heading" size={5}>
@@ -32,12 +68,12 @@ const CartPage = () => {
                     </Typography>
                     <Flex
                       css={{
-                        gap: "15px",
+                        gap: "5px",
                         border: "1px solid $border",
-                        padding: "3px 10px",
+                        padding: "3px 0",
                       }}
                     >
-                      <Typography
+                      <QuantityButton
                         onClick={() =>
                           basket.actions.decrementItem({
                             sku: item.sku,
@@ -46,9 +82,9 @@ const CartPage = () => {
                         }
                       >
                         -
-                      </Typography>
+                      </QuantityButton>
                       <Typography>{item.quantity}</Typography>
-                      <Typography
+                      <QuantityButton
                         onClick={() =>
                           basket.actions.incrementItem({
                             sku: item.sku,
@@ -57,7 +93,7 @@ const CartPage = () => {
                         }
                       >
                         +
-                      </Typography>
+                      </QuantityButton>
                     </Flex>
                   </Flex>
                 </Flex>

@@ -104,6 +104,7 @@ export const FrontpageHero = ({
           <Image
             {...componentContent(hero?.content, "ImageContent")?.images[0]}
             style={{ maxWidth: "90vw" }}
+            sizes="(max-width: 1023px) 100vw, 70vw"
           />
         </Box>
       </Flex>

@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
     "generate": "yarn generate:pim && yarn generate:service-api",
     "generate:pim": "graphql-codegen --config codegen.pim.yml",
     "generate:service-api": "graphql-codegen --config codegen.service-api.yml",

@@ -66,10 +66,12 @@ export const FrontpageBody = ({ body }: FrontpageBodyProps) => {
               </Button>
             </NextLink>
           </Box>
-          <Box css={{ width: "55%", "@bp3": {width: "100%"} }}>
+          <Box css={{ width: "55%", "@bp3": { width: "100%" } }}>
             <Image
               {...componentContent(body[2].content, "ImageContent").images[0]}
               style={{ width: "100%" }}
+              sizes="55vw"
+              loading="lazy"
             />
           </Box>
         </Flex>

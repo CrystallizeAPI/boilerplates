@@ -20,6 +20,12 @@ export const MyApp = (props: AppProps) => {
         <div id="cr-boilers" style="height: 52px;">
           <script>(function () {const d = document.createElement('script');d.src='https://crystallize.com/static-min/scripts/boilerplate-topbar.min.js';d.defer=true;document.head.appendChild(d);}())</script>
         </div>
+        <style>
+          #cr-boilers {
+            font-family: var(--fonts-body);
+            font-size: var(--fontSizes-2);
+          }
+        </style>
         `,
         }}
       />

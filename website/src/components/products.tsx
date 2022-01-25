@@ -28,12 +28,15 @@ export const Products = ({ products }: ProductsProps) => {
           passHref
         >
           <Box
+            as="a"
             css={{
               boxShadow:
                 "0px 0px 2px rgba(40, 41, 61, 0.04), 0px 4px 8px rgba(96, 97, 112, 0.16)",
               borderRadius: "12px",
               width: "320px",
               height: "350px",
+              color: "inherit",
+              textDecoration: "inherit",
               "@bp3": { width: "100%", height: "auto" },
             }}
           >

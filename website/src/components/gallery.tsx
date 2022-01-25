@@ -29,7 +29,7 @@ export const Gallery = ({ gallery }: GalleryProps) => {
       </Typography>
       <Spacer space={10} />
       <Flex
-        align={{"@intial": "start", "@bp3": "center"}}
+        align={{ "@intial": "start", "@bp3": "center" }}
         wrap="wrap"
         justify="start"
         css={{ width: "$full", gap: "$8" }}
@@ -41,10 +41,14 @@ export const Gallery = ({ gallery }: GalleryProps) => {
               maxWidth: "300px",
               overflow: "hidden",
               img: { width: "100%", objectFit: "cover", borderRadius: "20px" },
-              "@bp3": {maxWidth: "100%"}
+              "@bp3": { maxWidth: "100%" },
             }}
           >
-            <Image {...image} />
+            <Image
+              {...image}
+              loading="lazy"
+              sizes="(min-width: 1024px) 100vw, 300px"
+            />
           </Box>
         ))}
       </Flex>

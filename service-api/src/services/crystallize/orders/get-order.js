@@ -74,11 +74,5 @@ module.exports = async function getOrder(id) {
     `,
   });
 
-  const order = response.data.orders.get;
-
-  if (!order) {
-    throw new Error(`Cannot retrieve order "${id}"`);
-  }
-
-  return order;
+  return response.data?.orders?.get;
 };

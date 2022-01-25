@@ -13,6 +13,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     GetOrderQuery,
     GetOrderQueryVariables
   >(GetOrderDocument, { id: params.orderId as string });
+
   return { props: { data } };
 };
 
@@ -24,14 +25,16 @@ export const ConfirmationStripe = (
   if (!order) {
     return (
       <Box css={{ width: "$content", mx: "auto", py: "$16" }}>
-        <Typography size={4}>Error</Typography>
+        <Typography size={4}>
+          Please wait for the order to be processed...
+        </Typography>
       </Box>
     );
   }
 
   return (
     <Flex direction="column">
-      <Confirmation order={order} success={true}/>
+      <Confirmation order={order} success={true} />
     </Flex>
   );
 };

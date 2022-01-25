@@ -24,7 +24,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       data?.catalogue?.children?.map((product) => ({
         params: { product: product.path },
       })) || [],
-    fallback: true,
+    fallback: "blocking",
   };
 };
 
@@ -46,10 +46,10 @@ export const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
     <Box
       css={{
         mx: "auto",
-        mt: "100px"
+        mt: "100px",
       }}
     >
-     <Product product={product}/>
+      <Product product={product} />
     </Box>
   );
 };
