@@ -7,7 +7,6 @@ import {
   GetOrderQueryVariables,
 } from "@/service-api/get-order.generated";
 import Confirmation from "@/components/checkout/confirmation";
-import { useBasket } from "@/components/basket";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const data = await serviceAPIClient.request<

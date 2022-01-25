@@ -24,10 +24,6 @@ const Checkout = () => {
     termsURL: getURL(`/terms`),
   };
 
-  console.log(checkoutModel)
-
-  const router = useRouter();
-
   return (
     <>
       <Spacer space="20" />

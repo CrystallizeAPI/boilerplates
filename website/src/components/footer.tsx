@@ -40,7 +40,7 @@ export const Footer = () => {
             <Link variant="nav" href="/#partners">
               Partners
             </Link>
-            <Link variant="nav" href="/">
+            <Link variant="nav" href="/merch/intergalactic-ticket">
               Register
             </Link>
           </Flex>

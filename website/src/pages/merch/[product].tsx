@@ -10,7 +10,7 @@ import {
   ProductQuery,
 } from "@/crystallize/queries/product.generated";
 
-import { Box, Spacer } from "@/design-system";
+import { Box } from "@/design-system";
 import { Product } from "@/components/product";
 
 type ProductPageProps = ProductQuery & { path: string };

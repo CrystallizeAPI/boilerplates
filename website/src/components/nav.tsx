@@ -60,7 +60,7 @@ export const Nav = () => {
           <Flex css={{ ml: "auto" }} data-desktop-only>
           <BasketButton />
             <Spacer direction="horizontal" space="5" />
-            <NextLink href="/" passHref>
+            <NextLink href="/merch/intergalactic-ticket" passHref>
               <Button as="a" size="sm">
                 Register
               </Button>
