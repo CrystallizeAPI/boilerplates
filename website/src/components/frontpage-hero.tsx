@@ -21,7 +21,7 @@ export const FrontpageHero = ({
   const buttons = componentContent(
     heroCTA.content,
     "ContentChunkContent"
-  ).chunks;
+  ).chunks.filter((chunks) => !chunks.some((c) => c.content === null));
 
   return (
     <Flex
@@ -77,25 +77,21 @@ export const FrontpageHero = ({
           <Spacer space="7" />
 
           <Flex css={{ gap: "$2" }}>
-            {buttons.map(
-              (button, index) =>
-                button[0].content !== null && (
-                  <NextLink
-                    href={
-                      componentContent(button[1].content, "SingleLineContent")
-                        ?.text
-                    }
-                    key={index}
-                  >
-                    <Button as="a" variant="primary">
-                      {
-                        componentContent(button[0].content, "SingleLineContent")
-                          ?.text
-                      }
-                    </Button>
-                  </NextLink>
-                )
-            )}
+            {buttons.map((button, index) => (
+              <NextLink
+                href={
+                  componentContent(button[1].content, "SingleLineContent")?.text
+                }
+                key={index}
+              >
+                <Button as="a" variant="primary">
+                  {
+                    componentContent(button[0].content, "SingleLineContent")
+                      ?.text
+                  }
+                </Button>
+              </NextLink>
+            ))}
           </Flex>
         </Flex>
 
