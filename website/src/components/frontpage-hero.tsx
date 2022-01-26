@@ -46,7 +46,7 @@ export const FrontpageHero = ({
         <Flex
           css={{ flex: 2 }}
           direction="column"
-          align={{ "@initial": "center", "@bp3": "start" }}
+          align="start"
         >
           <Typography
             as="h1"
@@ -80,16 +80,7 @@ export const FrontpageHero = ({
 
           <Spacer space="7" />
 
-          <Flex css={{ gap: "$2" }}>
-            <NextLink href="/" passHref>
-              <Button as="a">
-                {
-                  componentContent(buttons[0][0]?.content, "SingleLineContent")
-                    ?.text
-                }
-              </Button>
-            </NextLink>
-            <NextLink href="/" passHref>
+            <NextLink href="/merch/intergalactic-ticket" passHref>
               <Button as="a" variant="secondary">
                 {
                   componentContent(buttons[1][0]?.content, "SingleLineContent")
@@ -97,7 +88,7 @@ export const FrontpageHero = ({
                 }
               </Button>
             </NextLink>
-          </Flex>
+         
         </Flex>
 
         <Box css={{ pl: "$6" }}>
