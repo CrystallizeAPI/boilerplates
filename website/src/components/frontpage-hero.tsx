@@ -23,8 +23,6 @@ export const FrontpageHero = ({
     "ContentChunkContent"
   ).chunks;
 
-  console.log("buttons", buttons);
-
   return (
     <Flex
       direction="column"
