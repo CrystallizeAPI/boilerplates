@@ -43,7 +43,7 @@ export const Product = ({ product }: ProductsProps) => {
         <Typography variant="heading" size={9}>
           {item.name}
         </Typography>
-        <Typography size={4} css={{ color: "$pink" }}>
+        <Typography size={4} css={{ color: "$price" }}>
           $ {item.variants[0].price}
         </Typography>
         <Typography css={{ textAlign: "center" }}>

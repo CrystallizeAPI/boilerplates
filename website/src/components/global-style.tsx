@@ -22,7 +22,7 @@ export const globalStyles = global({
     borderRadius: "50%",
     width: "25px",
     height: "25px",
-    background: "$pink",
+    background: "$price",
     border: "3px solid #fff",
   },
 });

@@ -63,7 +63,7 @@ export const Products = ({ products }: ProductsProps) => {
               <Typography size={4} css={{ fontWeight: "bold" }}>
                 {componentContent(product, "Product").name}
               </Typography>
-              <Typography size={4} css={{ color: "$pink" }}>
+              <Typography size={4} css={{ color: "$price" }}>
                 $ {componentContent(product, "Product").variants[0].price}
               </Typography>
             </Flex>

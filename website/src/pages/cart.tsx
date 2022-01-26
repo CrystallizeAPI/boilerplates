@@ -63,7 +63,7 @@ const CartPage = () => {
                     <Typography variant="heading" size={5}>
                       {item.name}
                     </Typography>
-                    <Typography css={{ color: "$pink" }} size={4}>
+                    <Typography css={{ color: "$price" }} size={4}>
                       $ {item.price.gross}
                     </Typography>
                     <Flex

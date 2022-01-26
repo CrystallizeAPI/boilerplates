@@ -41,6 +41,7 @@ export const IndexPage: NextPage<IndexPageProps> = ({ frontpage }) => {
     meta,
   } = frontpage;
 
+
   const metaData = componentContent(meta.content, "ContentChunkContent")
     .chunks[0];
 

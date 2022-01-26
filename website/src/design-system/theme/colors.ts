@@ -8,9 +8,7 @@ export const colors = {
   border: "#C8BBD4",
   transparentBlack: "rgba(0,0,0,.02)",
   transparentPrimary: "rgba(42, 115, 255, 0.4)",
-  grey: "#999999",
-  green: "#e5f3e7",
-  pink: "#D912D9",
+  price: "#D912D9",
   primaryGradient: "linear-gradient(90deg, #8218EF -28.2%, #B934FB 111.05%)",
   secondaryGradient: "linear-gradient(90deg, #B934FB -28.2%, #F16ECF 111.05%)"
 };

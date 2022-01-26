@@ -23,6 +23,8 @@ export const FrontpageHero = ({
     "ContentChunkContent"
   ).chunks;
 
+  console.log("buttons", buttons);
+
   return (
     <Flex
       direction="column"
@@ -43,11 +45,7 @@ export const FrontpageHero = ({
           "@bp3": { width: "$full" },
         }}
       >
-        <Flex
-          css={{ flex: 2 }}
-          direction="column"
-          align="start"
-        >
+        <Flex css={{ flex: 2 }} direction="column" align="start">
           <Typography
             as="h1"
             variant="heading"
@@ -80,15 +78,27 @@ export const FrontpageHero = ({
 
           <Spacer space="7" />
 
-            <NextLink href="/merch/intergalactic-ticket" passHref>
-              <Button as="a" variant="secondary">
-                {
-                  componentContent(buttons[1][0]?.content, "SingleLineContent")
-                    ?.text
-                }
-              </Button>
-            </NextLink>
-         
+          <Flex css={{ gap: "$2" }}>
+            {buttons.map(
+              (button, index) =>
+                button[0].content !== null && (
+                  <NextLink
+                    href={
+                      componentContent(button[1].content, "SingleLineContent")
+                        ?.text
+                    }
+                    key={index}
+                  >
+                    <Button as="a" variant="primary">
+                      {
+                        componentContent(button[0].content, "SingleLineContent")
+                          ?.text
+                      }
+                    </Button>
+                  </NextLink>
+                )
+            )}
+          </Flex>
         </Flex>
 
         <Box css={{ pl: "$6" }}>
