@@ -58,6 +58,8 @@ export const Talk = ({ talk }: TalkProps) => {
               .images[0]}
             loading="lazy"
             sizes="100px"
+            width="150"
+            height="150"
           />
         </Box>
         <Flex
