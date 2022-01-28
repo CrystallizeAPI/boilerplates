@@ -1,6 +1,6 @@
 query Product($path: String!) {
   product: catalogue(path: $path, language: "en") {
-    component(id: "summary"){
+    component(id: "summary") {
       ...component # RichText
     }
     ... on Product {
@@ -15,6 +15,13 @@ query Product($path: String!) {
         firstImage {
           url
           altText
+          variants {
+            url
+            key
+            width
+            height
+            size
+          }
         }
       }
 
@@ -37,9 +44,11 @@ query Product($path: String!) {
           key
 
           variants {
+            url
             key
             width
-            url
+            height
+            size
           }
         }
       }

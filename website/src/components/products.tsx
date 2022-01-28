@@ -9,6 +9,7 @@ interface ProductsProps {
 }
 
 export const Products = ({ products }: ProductsProps) => {
+  console.log(products)
   return (
     <Flex
       align="start"
@@ -57,7 +58,7 @@ export const Products = ({ products }: ProductsProps) => {
               <Image
                 {...componentContent(product, "Product").defaultVariant
                   .firstImage}
-                  sizes="(max-width: 1024px) 100vw, 300px"
+                  sizes="(max-width: 1024px) 100vw, 70vw"
               />
             </Box>
             <Flex direction="column" css={{ gap: "10px", p: "20px" }}>

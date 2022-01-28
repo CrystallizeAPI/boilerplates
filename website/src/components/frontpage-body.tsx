@@ -70,10 +70,8 @@ export const FrontpageBody = ({ body }: FrontpageBodyProps) => {
             <Image
               {...componentContent(body[2].content, "ImageContent").images[0]}
               style={{ width: "100%" }}
+              sizes="55vw"
               loading="lazy"
-              //@ts-ignore
-              width="500"
-              height={{"@intial": "500", "@bp5": "300"}}
             />
           </Box>
         </Flex>

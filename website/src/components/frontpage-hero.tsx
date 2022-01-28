@@ -23,6 +23,8 @@ export const FrontpageHero = ({
     "ContentChunkContent"
   ).chunks.filter((chunks) => !chunks.some((c) => c.content === null));
 
+  console.log(hero)
+
   return (
     <Flex
       direction="column"
@@ -105,8 +107,8 @@ export const FrontpageHero = ({
         <Box css={{ pl: "$6", "@bp3": { pl: "0" } }}>
           <Image
             {...componentContent(hero?.content, "ImageContent")?.images[0]}
-            style={{ maxWidth: "90vw" }}
-            sizes="(max-width: 1023px) 80vw, 70vw"
+    
+            sizes="100vw"
           />
         </Box>
       </Flex>

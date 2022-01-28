@@ -36,7 +36,13 @@ export const Product = ({ product }: ProductsProps) => {
         "@bp3": { width: "$full" },
       }}
     >
-      <Box css={{ width: "50%", img: { width: "100%", objectFit: "contain" } }}>
+      <Box
+        css={{
+          width: "50%",
+          img: { width: "100%", height: "100%", objectFit: "contain" },
+          "@bp3": { width: "90vw" },
+        }}
+      >
         <Image
           {...item.defaultVariant.firstImage}
           sizes="(max-width: 1024px) 100vw, 600px"

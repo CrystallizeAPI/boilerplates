@@ -61,6 +61,7 @@ module.exports = gql`
     url: String!
     width: Int
     height: Int
+    size: Int
   }
 
   type Price {
