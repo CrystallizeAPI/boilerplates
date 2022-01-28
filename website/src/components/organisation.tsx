@@ -15,6 +15,8 @@ export const Organisation = ({ item }) => {
         <Image
           {...componentContent(item.logo.content, "ImageContent").images[0]}
           loading="lazy"
+          width="150"
+          height="100"
         />
       </Box>
     </Link>

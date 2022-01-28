@@ -9,7 +9,7 @@ fragment frontpage on Item {
   }
 
   hero: component(id: "hero") {
-    ...component # Image
+    ...component # Images
   }
 
   heroCTA: component(id: "cta") {

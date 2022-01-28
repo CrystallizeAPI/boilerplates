@@ -25,7 +25,7 @@ const stitches = createCss({
     bp2: "(min-width: 768px)",
     bp3: "(max-width: 1024px)",
     bp4: "(min-width: 1280px)",
-    bp5: "(min-width: 1536px)",
+    bp5: "(max-width: 420px)",
     motion: "(prefers-reduced-motion)",
     hover: "(any-hover: hover)",
     dark: "(prefers-color-scheme: dark)",

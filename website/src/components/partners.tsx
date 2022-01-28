@@ -41,7 +41,7 @@ export const Partners = ({ partners }: PartnersProps) => {
       <Flex
         direction="row"
         wrap="wrap"
-        justify={{ "@initial": "between", "@bp3": "start" }}
+        justify={{ "@initial": "between", "@bp3": "center" }}
         css={{
           width: "$full",
           mx: "auto",

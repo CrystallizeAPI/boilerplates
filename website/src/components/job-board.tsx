@@ -1,6 +1,7 @@
 import { FrontpageFragment } from "@/crystallize/shapes/documents/frontpage.generated";
 import { componentContent } from "@/crystallize/utils/componentContent";
 import { Flex, Typography, Spacer, Box, LocationIcon } from "@/design-system";
+import NextLink from "next/link";
 
 interface JobBoardProps {
   header: FrontpageFragment["jobBoardHeader"];
@@ -36,41 +37,49 @@ export const JobBoard = ({ header, jobs }: JobBoardProps) => {
         direction={{ "@initial": "row", "@bp3": "column" }}
         align={{ "@initial": "start", "@bp3": "center" }}
         justify="between"
-        css={{ width: "$full", "@bp3": {gap: "$12"} }}
+        css={{ width: "$full", "@bp3": { gap: "$12" } }}
       >
         {jobsArr.map((job, index) => (
-          <Flex
+          <NextLink
+            href={componentContent(job[2].content, "SingleLineContent")?.text}
             key={index}
-            direction="column"
-            align="start"
-            css={{
-              gap: "15px",
-              border: "4px solid",
-              borderImage:
-                "linear-gradient(90deg, #8218EF -28.2%, #B934FB 111.05%)",
-              borderImageSlice: "1",
-              padding: "20px 30px",
-            }}
+            passHref
           >
-            <Typography variant="heading" size={4}>
-              {
-                componentContent(job[3].content, "ItemRelationsContent")
-                  .items[0].name
-              }
-            </Typography>
-            <Typography size={3}>
-              <i>
-                {componentContent(job[0].content, "SingleLineContent").text}
-              </i>
-            </Typography>
-            <Spacer space={1} />
-            <Flex css={{ gap: "10px" }}>
-              <LocationIcon />
-              <Typography>
-                {componentContent(job[1].content, "SingleLineContent").text}
+            <Flex
+              as="a"
+              direction="column"
+              align="start"
+              css={{
+                gap: "15px",
+                border: "4px solid",
+                borderImage:
+                  "linear-gradient(90deg, #8218EF -28.2%, #B934FB 111.05%)",
+                borderImageSlice: "1",
+                padding: "20px 30px",
+                color: "inherit",
+              textDecoration: "inherit",
+              }}
+            >
+              <Typography variant="heading" size={4}>
+                {
+                  componentContent(job[3].content, "ItemRelationsContent")
+                    .items[0].name
+                }
               </Typography>
+              <Typography size={3}>
+                <i>
+                  {componentContent(job[0].content, "SingleLineContent").text}
+                </i>
+              </Typography>
+              <Spacer space={1} />
+              <Flex css={{ gap: "10px" }}>
+                <LocationIcon />
+                <Typography>
+                  {componentContent(job[1].content, "SingleLineContent").text}
+                </Typography>
+              </Flex>
             </Flex>
-          </Flex>
+          </NextLink>
         ))}
       </Flex>
     </Flex>

@@ -33,7 +33,7 @@ export const Sponsors = ({ sponsors }: SponsorsProps) => {
         as="h2"
         variant="heading"
         size={9}
-        css={{ textAlign: "left" }}
+        css={{ textAlign: "left", "@bp3": {textAlign: "center"} }}
       >
         {componentContent(sponsorSection[0].content, "SingleLineContent").text}
       </Typography>
@@ -43,14 +43,12 @@ export const Sponsors = ({ sponsors }: SponsorsProps) => {
       <Flex
         direction="row"
         wrap="wrap"
-        justify={{ "@initial": "between", "@bp3": "start" }}
+        justify={{ "@initial": "between", "@bp3": "center" }}
         css={{
           width: "$full",
           mx: "auto",
           px: "$6",
-          gap: "$3",
-          "@bp1": { gap: "$16" },
-          "@bp3": { gap: "$20" },
+          gap: "$16"
         }}
       >
         {mainSponsors?.map((item, index) => (

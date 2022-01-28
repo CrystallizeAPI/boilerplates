@@ -17,12 +17,12 @@ export const FrontpageBody = ({ body }: FrontpageBodyProps) => {
       align="center"
       justify="start"
       direction="column"
-      css={{ width: "$content", mx: "auto", "@bp3": { width: "$full" } }}
+      css={{ pb: "$12", width: "$content", mx: "auto", "@bp3": { width: "$full" } }}
     >
       {bodies.map((body, index) => (
         <Flex
           key={index}
-          direction={{ "@initial": "rowReverse", "@bp3": "column" }}
+          direction={{ "@initial": "rowReverse", "@bp3": "columnReverse" }}
           justify="between"
         >
           <Box
@@ -70,8 +70,10 @@ export const FrontpageBody = ({ body }: FrontpageBodyProps) => {
             <Image
               {...componentContent(body[2].content, "ImageContent").images[0]}
               style={{ width: "100%" }}
-              sizes="55vw"
               loading="lazy"
+              //@ts-ignore
+              width="500"
+              height={{"@intial": "500", "@bp5": "300"}}
             />
           </Box>
         </Flex>

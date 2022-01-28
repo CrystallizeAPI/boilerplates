@@ -11,8 +11,7 @@ import {
 } from "@/design-system";
 import { ContentTransformer } from "@crystallize/react-content-transformer";
 import { Image } from "@crystallize/react-image";
-import ReactPlayer from "react-player";
-
+import ReactPlayer from "react-player/lazy";
 interface TalkProps {
   talk: FrontpageFragment["schedule"];
 }
@@ -99,6 +98,7 @@ export const Talk = ({ talk }: TalkProps) => {
         <IconButton
           onClick={() => setIsShowing(!isShowing)}
           css={{ alignSelf: "center" }}
+          aria-label="Open talk dropdown"
         >
           <DownIcon />
         </IconButton>
@@ -110,13 +110,19 @@ export const Talk = ({ talk }: TalkProps) => {
           display: isShowing ? "block" : "none",
           borderTop: "1px solid $black",
           pt: "30px",
+          pb: "50px",
+          height:"700px",
+          "@bp3": {height: "auto"}
         }}
       >
         <ReactPlayer
+          className="react-player"
+          style={{background: "#000"}}
           url={componentContent(talk[5].content, "SingleLineContent").text}
           width="100%"
           height="100%"
           controls
+          light="true"
         />
         <Spacer space={10} />
         <Typography size={3} css={{ lineHeight: "$relaxed" }}>

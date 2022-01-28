@@ -1,5 +1,5 @@
 import { AppProps } from "next/app";
-import { useRouter } from "next/router";
+import Script from "next/script";
 import { globalStyles } from "@/components/global-style";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MainLayout } from "@/components/layout-main";
@@ -14,21 +14,26 @@ export const MyApp = (props: AppProps) => {
   return (
     <>
       {/*crystallize-boilerplates-topbar-start*/}
-      <div
+      <div id="cr-boilers" style={{ height: "52px" }}>
+        <Script
+          src="https://crystallize.com/static-min/scripts/boilerplate-topbar.min.js"
+          strategy="afterInteractive"
+          defer
+        />
+      </div>
+
+      <style
         dangerouslySetInnerHTML={{
           __html: `
-        <div id="cr-boilers" style="height: 52px;">
-          <script>(function () {const d = document.createElement('script');d.src='https://crystallize.com/static-min/scripts/boilerplate-topbar.min.js';d.defer=true;document.head.appendChild(d);}())</script>
-        </div>
-        <style>
-          #cr-boilers {
-            font-family: var(--fonts-body);
-            font-size: var(--fontSizes-2);
-          }
-        </style>
-        `,
+        #cr-boilers {
+          font-family: var(--fonts-body);
+        }
+        #cr-boilers a {
+          color: inherit;
+        }
+      `,
         }}
-      />
+      ></style>
       {/*crystallize-boilerplates-topbar-end*/}
       <QueryClientProvider client={queryClient}>
         <BasketProvider locale={locale}>

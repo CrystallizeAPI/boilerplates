@@ -76,7 +76,10 @@ export const FrontpageHero = ({
 
           <Spacer space="7" />
 
-          <Flex css={{ gap: "$2" }}>
+          <Flex
+            css={{ gap: "$2" }}
+            direction={{ "@initial": "row", "@bp5": "column" }}
+          >
             {buttons.map((button, index) => (
               <NextLink
                 href={
@@ -84,7 +87,11 @@ export const FrontpageHero = ({
                 }
                 key={index}
               >
-                <Button as="a" variant="primary">
+                <Button
+                  as="a"
+                  variant="primary"
+                  css={{ width: "200px", "@bp5": { width: "300px" } }}
+                >
                   {
                     componentContent(button[0].content, "SingleLineContent")
                       ?.text
@@ -95,11 +102,11 @@ export const FrontpageHero = ({
           </Flex>
         </Flex>
 
-        <Box css={{ pl: "$6" }}>
+        <Box css={{ pl: "$6", "@bp3": { pl: "0" } }}>
           <Image
             {...componentContent(hero?.content, "ImageContent")?.images[0]}
             style={{ maxWidth: "90vw" }}
-            sizes="(max-width: 1023px) 100vw, 70vw"
+            sizes="(max-width: 1023px) 80vw, 70vw"
           />
         </Box>
       </Flex>
