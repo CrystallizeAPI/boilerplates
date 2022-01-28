@@ -70,7 +70,8 @@ export const FrontpageBody = ({ body }: FrontpageBodyProps) => {
             <Image
               {...componentContent(body[2].content, "ImageContent").images[0]}
               style={{ width: "100%" }}
-              sizes="55vw"
+              sizes="100vw"
+      
               loading="lazy"
             />
           </Box>

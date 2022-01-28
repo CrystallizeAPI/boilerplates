@@ -102,12 +102,16 @@ export const FrontpageHero = ({
           </Flex>
         </Flex>
 
-        <Box css={{ pl: "$6", "@bp3": { pl: "0" } }}>
+        <Box
+          css={{
+            pl: "$6",
+            img: { objectFit: "contain" },
+            "@bp3": { pl: "0", width: "300px", img: { width: "280px" } },
+          }}
+        >
           <Image
-          style={{width: "90vw"}}
             {...componentContent(hero?.content, "ImageContent")?.images[0]}
-            loading="lazy"
-            sizes="100vw"
+            sizes="50vw"
           />
         </Box>
       </Flex>
