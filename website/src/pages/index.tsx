@@ -45,8 +45,7 @@ export const IndexPage: NextPage<IndexPageProps> = ({ frontpage }) => {
   const metaData = componentContent(meta.content, "ContentChunkContent")
     .chunks[0];
 
-  const { asPath } = useRouter();
-  const url = window.location.origin;
+  let siteUrl = `${process.env.NEXT_PUBLIC_SITE_URL}`
 
   return (
     <>
@@ -68,7 +67,7 @@ export const IndexPage: NextPage<IndexPageProps> = ({ frontpage }) => {
               ?.url
           }
         />
-        <link href={`${url}${asPath}`} rel="canonical" />
+        <link href={`${siteUrl}`} rel="canonical" />
       </Head>
       <script
         type="application/ld+json"

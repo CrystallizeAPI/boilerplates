@@ -45,7 +45,8 @@ export const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
   if (!product) return null;
 
   const { asPath } = useRouter();
-  const url = window.location.origin;
+  let siteUrl = `${process.env.NEXT_PUBLIC_SITE_URL}`
+  
 
   return (
     <>
@@ -64,7 +65,7 @@ export const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
             componentContent(product, "Product").defaultVariant.firstImage.url
           }
         />
-        <link href={`${url}${asPath}`} rel="canonical" />
+        <link href={`${siteUrl}${asPath}`} rel="canonical" />
       </Head>
       <script
         type="application/ld+json"
