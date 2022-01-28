@@ -1,5 +1,5 @@
 # Conference Boilerplate
-This boilerplate provides an easy starting point for building a conference website with Crystallize and Next.js. You can also check out the [live demo](https://conference-boilerplate.netlify.app/) of this boilerplate.
+This boilerplate provides an easy starting point for building a conference website with Crystallize and Next.js. You can also check out the [live demo](https://conference.superfast.shop/) of this boilerplate.
 
 **What this guide covers:**
 
@@ -25,7 +25,7 @@ Running this command will allow you to add in the following:
 - The tenant: you can either enter your own tenant or go with the demo tenant to test everything out
 - Example data: if you would like your tenant to have the same data as the boilerplate, please select ‘Yes’
 
-You project now contains two folders - website and service-api.
+Your project now contains two folders - website and service-api.
 
 ## Running the Project
 
