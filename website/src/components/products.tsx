@@ -57,6 +57,7 @@ export const Products = ({ products }: ProductsProps) => {
               <Image
                 {...componentContent(product, "Product").defaultVariant
                   .firstImage}
+                  sizes="(max-width: 1024px) 100vw, 300px"
               />
             </Box>
             <Flex direction="column" css={{ gap: "10px", p: "20px" }}>

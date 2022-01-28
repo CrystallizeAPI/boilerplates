@@ -19,7 +19,7 @@ export const Product = ({ product }: ProductsProps) => {
       sku: item.variants[0].sku,
       path: item.path,
       priceVariantIdentifier: priceVariantIdentifier,
-      stock: item.variants[0].stock
+      stock: item.variants[0].stock,
     });
   };
 
@@ -37,10 +37,13 @@ export const Product = ({ product }: ProductsProps) => {
       }}
     >
       <Box css={{ width: "50%", img: { width: "100%", objectFit: "contain" } }}>
-        <Image {...item.defaultVariant.firstImage} />
+        <Image
+          {...item.defaultVariant.firstImage}
+          sizes="(max-width: 1024px) 100vw, 600px"
+        />
       </Box>
       <Flex direction="column" css={{ gap: "20px", maxWidth: "450px" }}>
-        <Typography variant="heading" size={9}>
+        <Typography variant="heading" size={9} as="h1">
           {item.name}
         </Typography>
         <Typography size={4} css={{ color: "$price" }}>
