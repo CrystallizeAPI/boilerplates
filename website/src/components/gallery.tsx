@@ -24,7 +24,7 @@ export const Gallery = ({ gallery }: GalleryProps) => {
         "@bp3": { width: "$full" },
       }}
     >
-      <Typography as="h2" variant="heading" size={9}>
+      <Typography as="h2" variant="heading" size={{"@initial": 9, "@bp5": 8}}>
         {componentContent(galleryInfo[0].content, "SingleLineContent").text}
       </Typography>
       <Spacer space={10} />
@@ -47,7 +47,7 @@ export const Gallery = ({ gallery }: GalleryProps) => {
             <Image
               {...image}
               loading="lazy"
-              sizes="(min-width: 1024px) 100vw, 300px"
+              sizes="(min-width: 1024px) 50vw, 300px"
             />
           </Box>
         ))}

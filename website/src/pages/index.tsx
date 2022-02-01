@@ -16,7 +16,6 @@ import { Box } from "@/design-system";
 import { JobBoard } from "@/components/job-board";
 import { Gallery } from "@/components/gallery";
 import { Partners } from "@/components/partners";
-import { useRouter } from "next/router";
 
 type IndexPageProps = FrontpageQuery & { path: string };
 

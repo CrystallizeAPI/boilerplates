@@ -33,7 +33,7 @@ export const SpeakerSection = ({ speakersInfo }: SpeakersProps) => {
       <Typography
         as="h2"
         variant="heading"
-        size="9"
+        size={{"@initial": 9, "@bp5": 8}}
         css={{ lineHeight: "$snug" }}
       >
         {componentContent(speakers[0].content, "SingleLineContent").text}

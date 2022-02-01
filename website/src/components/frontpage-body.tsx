@@ -36,7 +36,7 @@ export const FrontpageBody = ({ body }: FrontpageBodyProps) => {
             <Typography
               as="h2"
               variant="heading"
-              size="9"
+              size={{"@initial": 9, "@bp5": 8}}
               css={{ lineHeight: "$snug" }}
             >
               {componentContent(body[0].content, "SingleLineContent").text}
@@ -66,7 +66,7 @@ export const FrontpageBody = ({ body }: FrontpageBodyProps) => {
               </Button>
             </NextLink>
           </Box>
-          <Box css={{ width: "55%", "@bp3": { width: "100%" } }}>
+          <Box css={{ width: "55%", "@bp3": { width: "100%" }, img: {width: "500", height: "400"} }}>
             <Image
               {...componentContent(body[2].content, "ImageContent").images[0]}
               style={{ width: "100%" }}

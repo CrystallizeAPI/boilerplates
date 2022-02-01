@@ -31,7 +31,7 @@ export const Partners = ({ partners }: PartnersProps) => {
       <Typography
         as="h2"
         variant="heading"
-        size={9}
+        size={{"@initial": 9, "@bp5": 8}}
       >
         {componentContent(itemsArr[0].content, "SingleLineContent").text}
       </Typography>

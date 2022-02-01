@@ -26,7 +26,7 @@ export const JobBoard = ({ header, jobs }: JobBoardProps) => {
       <Typography
         as="h2"
         variant="heading"
-        size="9"
+        size={{"@initial": 9, "@bp5": 8}}
         css={{ lineHeight: "$snug" }}
       >
         {componentContent(header.content, "SingleLineContent").text}

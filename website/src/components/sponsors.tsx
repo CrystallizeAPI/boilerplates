@@ -32,7 +32,7 @@ export const Sponsors = ({ sponsors }: SponsorsProps) => {
       <Typography
         as="h2"
         variant="heading"
-        size={9}
+        size={{"@initial": 9, "@bp5": 8}}
         css={{ textAlign: "left", "@bp3": {textAlign: "center"} }}
       >
         {componentContent(sponsorSection[0].content, "SingleLineContent").text}

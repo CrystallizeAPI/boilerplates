@@ -105,7 +105,7 @@ export const FrontpageHero = ({
         <Box
           css={{
             pl: "$6",
-            img: { objectFit: "contain" },
+            img: { objectFit: "contain", width: "500", height: "400" },
             "@bp3": { pl: "0", width: "300px", img: { width: "280px" } },
           }}
         >
