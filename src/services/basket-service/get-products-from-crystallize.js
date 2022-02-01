@@ -34,9 +34,10 @@ async function getProductsFromCrystallize({ skus, locale }) {
   async function getNextSearchPage() {
     const searchAPIResponse = await callSearchApi({
       query: `
-        query GET_PRODUCTS_BY_SKU ($skus: [String!], $after: String) {
+        query GET_PRODUCTS_BY_SKU ($skus: [String!], $after: String, $language: String!) {
           search (
             after: $after
+            language: $language
             filter: {
               include: {
                 skus: $skus
@@ -58,6 +59,7 @@ async function getProductsFromCrystallize({ skus, locale }) {
       variables: {
         skus,
         after: searchAfterCursor,
+        language,
       },
     });
 
