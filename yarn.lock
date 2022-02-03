@@ -144,26 +144,25 @@
     "@babel/helper-validator-identifier" "^7.12.11"
     to-fast-properties "^2.0.0"
 
-"@crystallize/content-transformer@^7.0.0":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@crystallize/content-transformer/-/content-transformer-7.0.1.tgz#da1e74d3cf34f63f494e061b216b8940aca37b1d"
-  integrity sha512-BJN8NmS/FeeVpU2tVtX2umrxObmCV6Ep1v6m+Rcomk0GbaLVirikm9TC/XEi2rX1SMy4/lTdm1M6Ns5R4/Yuvg==
+"@crystallize/content-transformer@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@crystallize/content-transformer/-/content-transformer-9.0.1.tgz#ffa348b51b1cab76cc0f095022248cae7d3fcdad"
+  integrity sha512-kNnYyhFJ0uXxsoBCIEGDPuFgVgtB0Cc2dbQpjcHhyhqTnWTWXyOgBfhqqufXuLOUHalYPXu09MxRV74FC1ZN2g==
   dependencies:
-    html2json "^1.0.2"
     is-my-json-valid "^2.17.2"
     isarray "^2.0.4"
     ow "^0.4.0"
     parse5 "^6.0.1"
 
-"@crystallize/react-content-transformer@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@crystallize/react-content-transformer/-/react-content-transformer-1.1.1.tgz#d97a8bca69fd582c24b18dfd7c940f8e249d5b1d"
-  integrity sha512-AKwZuMEevXxcQPvh/lbG1iAJcT9BvV4U/hsmylPajJ99T0aON6LuhIhcxU/mQNmhNQe9YufV/z/2FNooZDmdNQ==
+"@crystallize/react-content-transformer@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@crystallize/react-content-transformer/-/react-content-transformer-2.0.0.tgz#c3f203ac600b81271c2111abbc5c552d56b50de5"
+  integrity sha512-gIefu9zn+2fQDDuDLZ3Q07F1OyIYifnysmRMLm2sInKerhwaxvuWMcQ14/81Xe27YQX2RuLUDI3zuvyizisizA==
 
-"@crystallize/react-image@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@crystallize/react-image/-/react-image-6.1.0.tgz#449a5e18757bc3ba639deabd9ecc7e74c68b0306"
-  integrity sha512-twaw4WNCHj82Qvv6SZvzNHhpdneeq6PWpdCzGZAHBouHV3++2TWBlQP+nQXHRyOF2KxCqvlXMjQJW6XoB2rofA==
+"@crystallize/react-image@^7.3.1":
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@crystallize/react-image/-/react-image-7.3.1.tgz#970a182560af4d3202f3855c0933cd6ca603806d"
+  integrity sha512-7+GMNsqmSVsyJ+qCiyZgiYnSdRI1hX5rZSPJ1+ku+6e9zJh0Zv7I92am62gxtAAq4iEZY/dJz+ArXwgwj6PUiA==
 
 "@crystallize/react-video@^1.7.0":
   version "1.7.0"
@@ -1022,11 +1021,6 @@ hoist-non-react-statics@^3.0.0:
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
   dependencies:
     react-is "^16.7.0"
-
-html2json@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/html2json/-/html2json-1.0.2.tgz#c9d6d202fa65402386c202b345cf51bce80ed1ef"
-  integrity sha1-ydbSAvplQCOGwgKzRc9RvOgO0e8=
 
 http-errors@1.7.3:
   version "1.7.3"
