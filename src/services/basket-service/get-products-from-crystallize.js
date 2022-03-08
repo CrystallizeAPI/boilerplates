@@ -7,7 +7,7 @@
  */
 const VATOverrides = [
   {
-    locale: "the locale.locale from the storefront locales here",
+    locale: "??", // "the locale.locale from the storefront locales here (example: en)"
     vatTypes: [
       {
         name: "Standard",
@@ -131,7 +131,7 @@ async function getProductsFromCrystallize({ skus, locale }) {
     .map((_, i) => response.data[`product${i}`])
     .filter((p) => !!p)
     .map(function doVATOverride(product) {
-      const vatTypeOverride = vatTypeOverridesForLocale.vatTypes.find(
+      const vatTypeOverride = vatTypeOverridesForLocale?.vatTypes.find(
         (v) => v.name === product.vatType.name
       );
       if (vatTypeOverride) {
