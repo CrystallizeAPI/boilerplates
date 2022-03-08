@@ -1,0 +1,13 @@
+{
+    "type": "oss-monorepository",
+    "many-repositories": {
+        "remix": {
+            "name": "Remix Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/product-storytelling-examples.git"
+        },
+        "nuxtjs": {
+            "name": "Nuxt JS Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/crystallize-nuxtjs-boilerplate.git"
+        }
+    }
+}
