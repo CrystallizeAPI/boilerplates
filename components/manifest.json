@@ -8,6 +8,10 @@
         "nuxtjs": {
             "name": "Nuxt JS Boilerplate",
             "git": "git@github.com:CrystallizeAPI/crystallize-nuxtjs-boilerplate.git"
+        },
+        "flutter": {
+            "name": "Flutter Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/crystallize-flutter-boilerplate.git"
         }
     }
 }
