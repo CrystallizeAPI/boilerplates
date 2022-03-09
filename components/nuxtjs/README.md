@@ -1,4 +1,4 @@
-# Crystallize NuxtJS Boilerplate
+# Crystallize - NuxtJS Boilerplate
 
 [![Crystallize Community Slack][21]][22]
 [![Nuxt: latest][2]][3] [![Vue][0]][1]
