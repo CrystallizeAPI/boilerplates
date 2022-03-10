@@ -1,5 +1,13 @@
 # Crystallize - NuxtJS Boilerplate
 
+----
+
+This repository is what we call a "subtree split": a read-only copy of one directory of the main repository. 
+
+If you want to report or contribute, you should do it on the main repository: https://github.com/CrystallizeAPI/boilerplates
+
+----
+
 [![Crystallize Community Slack][21]][22]
 [![Nuxt: latest][2]][3] [![Vue][0]][1]
 [![code style: prettier][4]][5]

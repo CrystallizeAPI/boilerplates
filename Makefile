@@ -27,7 +27,7 @@ add-component: ## Create an empty structure for a new Component
 .PHONY: add-component-compliance-files
 add-component-compliance-files: ## Add the compliance files into all the component if they don't existß
 	@for COMPONENT in $(shell ls components); do \
-		if [ ! -d "components/${COMPONENT}" ]; then \
+		if [ -d "components/$${COMPONENT}" ]; then \
 			rsync -uavzcC .github/readonly/ components/$${COMPONENT}/.github/; \
 			cp LICENSE components/$${COMPONENT}/LICENSE; \
 			if [ ! -f components/$${COMPONENT}/README.md ]; then \

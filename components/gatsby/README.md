@@ -1,5 +1,13 @@
 # Crystallize Gatsby Boilerplate
 
+----
+
+This repository is what we call a "subtree split": a read-only copy of one directory of the main repository. 
+
+If you want to report or contribute, you should do it on the main repository: https://github.com/CrystallizeAPI/boilerplates
+
+----
+
 [![React: latest][0]][1] [![Gatsby: latest][2]][3]
 
 The bare minimum skeleton you need to get a frontend up and running on the
