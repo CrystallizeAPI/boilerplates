@@ -12,6 +12,14 @@
         "flutter": {
             "name": "Flutter Boilerplate",
             "git": "git@github.com:CrystallizeAPI/crystallize-flutter-boilerplate.git"
+        },
+        "gatsby": {
+            "name": "Gatsby Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/crystallize-gatsby-boilerplate.git"
+        },
+        "saas": {
+            "name": "SaaS Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/crystallize-saas-boilerplate.git"
         }
     }
 }

@@ -8,6 +8,7 @@
 | [Nuxt JS](https://github.com/CrystallizeAPI/crystallize-nuxtjs-boilerplate) | ![MIT] |
 | [Flutter](https://github.com/CrystallizeAPI/crystallize-flutter-boilerplate) | ![MIT] |
 | [Gatsby](https://github.com/CrystallizeAPI/crystallize-gatsby-boilerplate) | ![MIT] |
+| [SaaS](https://github.com/CrystallizeAPI/crystallize-saas-boilerplate) | ![MIT] |
 
 ## Adding a new Component (Boilerplate)
 
