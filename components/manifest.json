@@ -20,6 +20,10 @@
         "saas": {
             "name": "SaaS Boilerplate",
             "git": "git@github.com:CrystallizeAPI/crystallize-saas-boilerplate.git"
+        },
+        "content-commerce": {
+            "name": "Content Commerce Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/content-commerce-boilerplate.git"
         }
     }
 }
