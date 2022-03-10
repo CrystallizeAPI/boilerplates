@@ -7,6 +7,7 @@
 | [Remix Boilerplate](https://github.com/CrystallizeAPI/product-storytelling-examples) | ![MIT] |
 | [Nuxt JS](https://github.com/CrystallizeAPI/crystallize-nuxtjs-boilerplate) | ![MIT] |
 | [Flutter](https://github.com/CrystallizeAPI/crystallize-flutter-boilerplate) | ![MIT] |
+| [Gatsby](https://github.com/CrystallizeAPI/crystallize-gatsby-boilerplate) | ![MIT] |
 
 ## Adding a new Component (Boilerplate)
 
