@@ -4,9 +4,9 @@
 
 | Bundles | Licence(s) |
 | ------- | ---------- |
-| [Remix Boilerplate](https://github.com/CrystallizeAPI/product-storytelling-examples):  ??? | ![MIT] |
-| [Nuxt JS](https://github.com/CrystallizeAPI/crystallize-nuxtjs-boilerplate): ??? | ![MIT] |
-| [Flutter](https://github.com/CrystallizeAPI/crystallize-flutter-boilerplate): ??? | ![MIT] |
+| [Remix Boilerplate](https://github.com/CrystallizeAPI/product-storytelling-examples) | ![MIT] |
+| [Nuxt JS](https://github.com/CrystallizeAPI/crystallize-nuxtjs-boilerplate) | ![MIT] |
+| [Flutter](https://github.com/CrystallizeAPI/crystallize-flutter-boilerplate) | ![MIT] |
 
 ## Adding a new Component (Boilerplate)
 
