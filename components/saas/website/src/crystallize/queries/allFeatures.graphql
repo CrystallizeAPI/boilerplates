@@ -1,0 +1,10 @@
+query AllFeatures($path: String!) {
+  allFeaturesPage: catalogue(path: $path, language: "en") {
+    ...feature
+
+    features: children {
+      path
+      name
+    }
+  }
+}

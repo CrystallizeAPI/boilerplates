@@ -1,0 +1,15 @@
+fragment gallery on Item {
+  id
+
+  title: component(id: "title") {
+    ...component # SingleLine
+  }
+
+  intro: component(id: "intro") {
+    ...component # RichText
+  }
+
+  images: component(id: "images") {
+    ...component # Images
+  }
+}

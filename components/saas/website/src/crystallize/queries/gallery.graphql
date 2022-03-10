@@ -1,0 +1,5 @@
+query Gallery($path: String!) {
+  gallery: catalogue(path: $path, language: "en") {
+    ...gallery
+  }
+}

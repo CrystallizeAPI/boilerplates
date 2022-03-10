@@ -1,0 +1,5 @@
+query Home($path: String!) {
+  home: catalogue(path: $path, language: "en") {
+    ...home
+  }
+}

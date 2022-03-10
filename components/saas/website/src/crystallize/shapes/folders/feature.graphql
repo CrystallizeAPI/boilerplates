@@ -1,0 +1,19 @@
+fragment feature on Item {
+  id
+
+  title: component(id: "title") {
+    ...component # SingleLine
+  }
+
+  intro: component(id: "intro") {
+    ...component # RichText
+  }
+
+  heroImage: component(id: "hero-image") {
+    ...component # Image
+  }
+
+  body: component(id: "body") {
+    ...component # ParagraphCollection
+  }
+}

@@ -1,0 +1,10 @@
+query AllArticles {
+  blog: catalogue(path: "/blog", language: "en") {
+    categories: children {
+      path
+      articles: children {
+        path
+      }
+    }
+  }
+}

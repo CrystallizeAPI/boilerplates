@@ -1,0 +1,5 @@
+query Article($path: String!) {
+  article: catalogue(path: $path, language: "en") {
+    ...article
+  }
+}

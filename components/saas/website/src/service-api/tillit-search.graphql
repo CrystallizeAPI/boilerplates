@@ -1,0 +1,14 @@
+query TillitSearch($searchTerm: String!, $locale: LocaleInput!) {
+  paymentProviders {
+    tillit {
+      search(searchTerm: $searchTerm, locale: $locale) {
+        success
+        data {
+          id
+          name
+          highlight
+        }
+      }
+    }
+  }
+}

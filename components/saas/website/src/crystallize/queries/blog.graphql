@@ -1,0 +1,19 @@
+query Blog($path: String!) {
+  blog: catalogue(path: $path, language: "en") {
+    ...category
+
+    categories: children {
+      path
+      title: component(id: "title") {
+        ...component
+      }
+      articles: subtree(first: 3, sort: asc) {
+        edges {
+          node {
+            ...articlePreview
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+fragment team on Item {
+  id
+
+  title: component(id: "title") {
+    ...component # SingleLine
+  }
+
+  intro: component(id: "intro") {
+    ...component # RichText
+  }
+
+  hero: component(id: "hero") {
+    ...component # Image
+  }
+
+  values: component(id: "values") {
+    # ContentChunk
+    # title - SingleLine
+    # description - RichText
+    # values - ParagraphCollection
+    ...component
+  }
+
+  team: component(id: "team") {
+    # ContentChunk
+    # title - SingleLine
+    # team - ItemRelations - Member
+    content {
+      ... on ContentChunkContent {
+        __typename
+        chunks {
+          content {
+            ...content
+            ... on ItemRelationsContent {
+              __typename
+              items {
+                ...member
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+fragment category on Item {
+  id
+
+  title: component(id: "title") {
+    ...component
+  }
+
+  brief: component(id: "brief") {
+    ...component
+  }
+
+  featured: component(id: "featured") {
+    content {
+      __typename
+      ... on ComponentChoiceContent {
+        selectedComponent {
+          content {
+            __typename
+            # 1 featured article
+            ... on ItemRelationsContent {
+              items {
+                ...articlePreview
+              }
+            }
+
+            # grid of featured articles
+            ... on GridRelationsContent {
+              grids {
+                rows {
+                  columns {
+                    layout {
+                      rowspan
+                      colspan
+                    }
+                    item {
+                      ...articlePreview
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  meta: component(id: "meta") {
+    # ContentChunk
+    # title - singleLine
+    # description - richText
+    # image - images
+    ...component
+  }
+}

@@ -1,0 +1,12 @@
+fragment author on Item {
+  path
+  name: component(id: "name") {
+    ...component
+  }
+  bio: component(id: "bio") {
+    ...component # RichText
+  }
+  avatar: component(id: "avatar") {
+    ...component # Images
+  }
+}

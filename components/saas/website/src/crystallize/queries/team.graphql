@@ -1,0 +1,5 @@
+query Team($path: String!) {
+  team: catalogue(path: $path, language: "en") {
+    ...team
+  }
+}

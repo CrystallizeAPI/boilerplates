@@ -1,0 +1,15 @@
+fragment member on Item {
+  id
+  name: component(id: "name") {
+    ...component
+  }
+  title: component(id: "title") {
+    ...component # RichText
+  }
+  avatar: component(id: "avatar") {
+    ...component # Images
+  }
+  social: component(id: "social") {
+    ...component # ContentChunk
+  }
+}

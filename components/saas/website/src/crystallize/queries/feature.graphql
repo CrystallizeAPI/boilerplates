@@ -1,0 +1,11 @@
+query Feature($path: String!) {
+  feature: catalogue(path: $path, language: "en") {
+    ...feature
+    parent {
+      features: children {
+        path
+        name
+      }
+    }
+  }
+}

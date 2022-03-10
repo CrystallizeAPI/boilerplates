@@ -1,0 +1,87 @@
+query AllPlans {
+  catalogue(path: "/plans", language: "en") {
+    children {
+      ... on Product {
+        __typename
+        id
+        name
+        type
+        path
+        isVirtual
+        isSubscriptionOnly
+
+        variants {
+          id
+          name
+          sku
+          price
+          priceVariants {
+            identifier
+            name
+            price
+            currency
+          }
+          stock
+          isDefault
+          images {
+            url
+            altText
+            key
+
+            variants {
+              key
+              width
+              url
+            }
+          }
+
+          subscriptionPlans {
+            identifier
+            name
+            periods {
+              id
+              name
+              initial {
+                priceVariants {
+                  identifier
+                  name
+                  price
+                  currency
+                }
+              }
+              recurring {
+                priceVariants {
+                  identifier
+                  name
+                  price
+                  currency
+                }
+                meteredVariables {
+                  id
+                  name
+                  identifier
+                  tiers {
+                    threshold
+                    price
+                    priceVariants {
+                      identifier
+                      name
+                      price
+                      currency
+                    }
+                  }
+                  tierType
+                }
+              }
+            }
+          }
+        }
+
+        vatType {
+          name
+          percent
+        }
+      }
+    }
+  }
+}
