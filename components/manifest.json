@@ -24,6 +24,10 @@
         "content-commerce": {
             "name": "Content Commerce Boilerplate",
             "git": "git@github.com:CrystallizeAPI/content-commerce-boilerplate.git"
+        },
+        "conference": {
+            "name": "Conference Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/conference-boilerplate.git"
         }
     }
 }
