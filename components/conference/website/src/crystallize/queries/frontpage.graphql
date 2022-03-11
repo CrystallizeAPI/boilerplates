@@ -1,0 +1,5 @@
+query Frontpage($path: String!) {
+  frontpage: catalogue(path: $path, language: "en") {
+    ...frontpage
+  }
+}

@@ -1,0 +1,20 @@
+schema: https://api.crystallize.com/testagain/catalogue
+documents:
+  - src/crystallize/**/*.graphql
+generates:
+  ./src/crystallize/types.generated.ts:
+    plugins:
+      - typescript
+
+  ./:
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: ./src/crystallize/types.generated.ts
+    plugins:
+      - typescript-operations
+      - typed-document-node
+    config:
+      preResolveTypes: false
+# hooks:
+#   afterAllFileWrite:
+#     - prettier --write

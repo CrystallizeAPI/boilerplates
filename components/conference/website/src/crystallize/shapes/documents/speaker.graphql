@@ -1,0 +1,19 @@
+fragment speaker on Item {
+  id
+  name: component(id: "name") {
+    ...component # SingleLine
+  }
+  company: component(id: "company") {
+    ...component # SingleLine
+  }
+  job: component(id: "job-title") {
+    ...component # SingleLine
+  }
+  image: component(id: "speaker-image") {
+    ...component # Images
+  }
+  social: component(id: "social"){
+    # ContentChunk
+    ...component
+  }
+}
