@@ -28,6 +28,10 @@
         "conference": {
             "name": "Conference Boilerplate",
             "git": "git@github.com:CrystallizeAPI/conference-boilerplate.git"
+        },
+        "react-native": {
+            "name": "React Native Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/crystallize-react-native-boilerplate.git"
         }
     }
 }
