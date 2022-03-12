@@ -32,6 +32,10 @@
         "react-native": {
             "name": "React Native Boilerplate",
             "git": "git@github.com:CrystallizeAPI/crystallize-react-native-boilerplate.git"
+        },
+        "service-api": {
+            "name": "Service API Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/service-api-boilerplate.git"
         }
     }
 }
