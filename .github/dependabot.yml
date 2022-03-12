@@ -1,0 +1,43 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/components/conference"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/components/content-commerce"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/components/flutter"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/components/gatsby"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/components/nextjs"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/components/nuxtjs"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/components/react-native"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/components/remix"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/components/saas"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/components/service-api"
+    schedule:
+      interval: "weekly"
+

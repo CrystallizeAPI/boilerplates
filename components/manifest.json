@@ -1,13 +1,13 @@
 {
     "type": "oss-monorepository",
     "many-repositories": {
-        "remix": {
-            "name": "Remix Boilerplate",
-            "git": "git@github.com:CrystallizeAPI/product-storytelling-examples.git"
+        "conference": {
+            "name": "Conference Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/conference-boilerplate.git"
         },
-        "nuxtjs": {
-            "name": "Nuxt JS Boilerplate",
-            "git": "git@github.com:CrystallizeAPI/crystallize-nuxtjs-boilerplate.git"
+        "content-commerce": {
+            "name": "Content Commerce Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/content-commerce-boilerplate.git"
         },
         "flutter": {
             "name": "Flutter Boilerplate",
@@ -17,29 +17,29 @@
             "name": "Gatsby Boilerplate",
             "git": "git@github.com:CrystallizeAPI/crystallize-gatsby-boilerplate.git"
         },
-        "saas": {
-            "name": "SaaS Boilerplate",
-            "git": "git@github.com:CrystallizeAPI/crystallize-saas-boilerplate.git"
+        "nextjs": {
+            "name": "NextJS Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/crystallize-nextjs-boilerplate.git"
         },
-        "content-commerce": {
-            "name": "Content Commerce Boilerplate",
-            "git": "git@github.com:CrystallizeAPI/content-commerce-boilerplate.git"
-        },
-        "conference": {
-            "name": "Conference Boilerplate",
-            "git": "git@github.com:CrystallizeAPI/conference-boilerplate.git"
+        "nuxtjs": {
+            "name": "Nuxt JS Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/crystallize-nuxtjs-boilerplate.git"
         },
         "react-native": {
             "name": "React Native Boilerplate",
             "git": "git@github.com:CrystallizeAPI/crystallize-react-native-boilerplate.git"
         },
+        "remix": {
+            "name": "Remix Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/product-storytelling-examples.git"
+        },
+        "saas": {
+            "name": "SaaS Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/crystallize-saas-boilerplate.git"
+        },
         "service-api": {
             "name": "Service API Boilerplate",
             "git": "git@github.com:CrystallizeAPI/service-api-boilerplate.git"
-        },
-        "nextjs": {
-            "name": "NextJS Boilerplate",
-            "git": "git@github.com:CrystallizeAPI/crystallize-nextjs-boilerplate.git"
         }
     }
 }
