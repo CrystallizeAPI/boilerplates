@@ -20,7 +20,7 @@
     "nuxt": "^2.15.4",
     "nuxt-i18n": "^6.23.0",
     "video.js": "7.11.8",
-    "videojs-contrib-dash": "4.1.0",
+    "videojs-contrib-dash": "5.1.1",
     "vue-fragment": "^1.5.2"
   },
   "devDependencies": {
