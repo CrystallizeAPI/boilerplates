@@ -36,6 +36,10 @@
         "service-api": {
             "name": "Service API Boilerplate",
             "git": "git@github.com:CrystallizeAPI/service-api-boilerplate.git"
+        },
+        "nextjs": {
+            "name": "NextJS Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/crystallize-nextjs-boilerplate.git"
         }
     }
 }
