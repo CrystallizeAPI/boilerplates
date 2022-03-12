@@ -1,0 +1,171 @@
+service:
+  name: aws-service-api
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+provider:
+  name: aws
+  region: eu-central-1
+  runtime: nodejs14.x
+  timeout: 15
+  apiGateway:
+    shouldStartNameWithService: true
+
+functions:
+  graphql:
+    handler: handlers/graphql.graphql
+    description: The main Service API GraphQL server
+    events:
+      - http:
+          path: /graphql
+          method: post
+          cors:
+            origins:
+              - http://*
+              - https://*
+            allowCredentials: true
+      - http:
+          path: /graphql
+          method: get
+  userLogout:
+    handler: handlers/user/logout.logout
+    description: Logging out the user
+    events:
+      - http:
+          path: /user/logout
+          method: get
+  userMagicLink:
+    handler: handlers/user/login.loginMagicLink
+    description: Landing page for the magic link token
+    events:
+      - http:
+          path: /user/login-magic-link
+          method: get
+
+  # Crystallize API proxy
+  crystallizeCatalogueProxy:
+    handler: handlers/crystallize.catalogue
+    events:
+      - http:
+          path: /crystallize/catalogue
+          method: post
+  crystallizeSearchProxy:
+    handler: handlers/crystallize.search
+    events:
+      - http:
+          path: /crystallize/search
+          method: post
+
+  # Crystallize item webhooks
+  webhookItemCreated:
+    handler: handlers/webhooks/item.created
+    events:
+      - http:
+          path: /webhooks/item/created
+          method: post
+  webhookItemUpdated:
+    handler: handlers/webhooks/item.updated
+    events:
+      - http:
+          path: /webhooks/item/updated
+          method: post
+  webhookItemDeleted:
+    handler: handlers/webhooks/item.deleted
+    events:
+      - http:
+          path: /webhooks/item/deleted
+          method: post
+  webhookItemPublished:
+    handler: handlers/webhooks/item.published
+    events:
+      - http:
+          path: /webhooks/item/published
+          method: post
+  webhookItemUnpublished:
+    handler: handlers/webhooks/item.unpublished
+    events:
+      - http:
+          path: /webhooks/item/unpublished
+          method: post
+
+  # Crystallize order webhooks
+  webhookOrderCreated:
+    handler: handlers/webhooks/order.created
+    events:
+      - http:
+          path: /webhooks/order/created
+          method: post
+  webhookOrderUpdated:
+    handler: handlers/webhooks/order.updated
+    events:
+      - http:
+          path: /webhooks/order/updated
+          method: post
+  webhookOrderDeleted:
+    handler: handlers/webhooks/order.deleted
+    events:
+      - http:
+          path: /webhooks/order/deleted
+          method: post
+  webhookOrderPipelineRemoved:
+    handler: handlers/webhooks/order.pipelineRemoved
+    events:
+      - http:
+          path: /webhooks/order/pipeline-removed
+          method: post
+  webhookOrderPipelineStageChanged:
+    handler: handlers/webhooks/order.pipelineStageChanged
+    events:
+      - http:
+          path: /webhooks/order/pipeline-stage-changed
+          method: post
+
+  # Mollie payment webhooks
+  webhookMollieOrderUpdate:
+    handler: handlers/webhooks/payment-providers/mollie.orderUpdate
+    events:
+      - http:
+          path: /webhooks/payment-providers/mollie/order-update
+          method: post
+
+  # Klarna payment webhooks
+  webhookKlarnaPush:
+    handler: handlers/webhooks/payment-providers/klarna.push
+    events:
+      - http:
+          path: /webhooks/payment-providers/klarna/push
+          method: post
+  webhookKlarnaCapture:
+    handler: handlers/webhooks/payment-providers/klarna.capture
+    events:
+      - http:
+          path: /webhooks/payment-providers/klarna/capture
+          method: post
+
+  # Vipps payment webhooks
+  webhookVippsFallback:
+    handler: handlers/webhooks/payment-providers/vipps.fallback
+    events:
+      - http:
+          path: /webhooks/payment-providers/vipps/fallback/{orderId}
+          method: get
+  webhookVippsOrderUpdate:
+    handler: handlers/webhooks/payment-providers/vipps.orderUpdate
+    events:
+      - http:
+          path: /webhooks/payment-providers/vipps/order-update/v2/payments/{orderId}
+          method: post
+  webhookVippsShipping:
+    handler: handlers/webhooks/payment-providers/vipps.shipping
+    events:
+      - http:
+          path: /webhooks/payment-providers/vipps/shipping/v2/payments/{orderId}/shippingDetails
+          method: post
+  webhookVippsConsentRemoval:
+    handler: handlers/webhooks/payment-providers/vipps.consentRemoval
+    events:
+      - http:
+          path: /webhooks/payment-providers/vipps/consent-removal/v2/consents/{userId}
+          method: delete

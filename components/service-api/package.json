@@ -1,0 +1,26 @@
+{
+  "name": "service-api-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "prettier": "^2.2.1"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CrystallizeAPI/service-api-boilerplate.git"
+  },
+  "keywords": [],
+  "author": "Håkon Krogh <hakon@crystallize.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CrystallizeAPI/service-api-boilerplate/issues"
+  },
+  "homepage": "https://github.com/CrystallizeAPI/service-api-boilerplate#readme",
+  "dependencies": {
+    "@apollo/gateway": "^0.28.1"
+  }
+}

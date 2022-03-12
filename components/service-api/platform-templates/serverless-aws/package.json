@@ -1,0 +1,38 @@
+{
+  "name": "aws-service-api",
+  "version": "1.0.0",
+  "description": "Serverless example for apollo lambda",
+  "main": "handler.js",
+  "scripts": {
+    "deploy": "serverless deploy",
+    "dev:boilerplate": "rm -rf src && cp -r ../../src src && npm run dev",
+    "dev": "serverless offline --httpPort 3001"
+  },
+  "dependencies": {
+    "@crystallize/node-klarna": "^4.8.0",
+    "@crystallize/node-vipps": "^0.1.4",
+    "@mollie/api-client": "^3.4.0",
+    "@paypal/checkout-server-sdk": "^1.0.2",
+    "@sendgrid/mail": "^7.4.1",
+    "apollo-server-lambda": "^2.16.1",
+    "apollo-server-micro": "2.11.0",
+    "cookie": "^0.4.1",
+    "dotenv": "^8.2.0",
+    "dotenv-expand": "^5.1.0",
+    "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
+    "invariant": "^2.2.4",
+    "jsonwebtoken": "^8.5.1",
+    "mjml": "^4.8.1",
+    "node-fetch": "^2.6.1",
+    "source-map-support": "^0.5.10",
+    "stripe": "^8.130.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "serverless": "^2.22.0",
+    "serverless-dotenv-plugin": "^3.1.0",
+    "serverless-offline": "^6.8.0"
+  },
+  "license": "MIT"
+}
