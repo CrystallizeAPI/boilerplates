@@ -10,7 +10,7 @@
     "start": "nuxt start"
   },
   "dependencies": {
-    "@crystallize/content-transformer": "^6.1.0",
+    "@crystallize/content-transformer": "^9.1.2",
     "@videojs/vhs-utils": "^3.0.1",
     "@vue-stripe/vue-stripe": "github:devictoribero/vue-stripe",
     "bl": "^5.0.0",
