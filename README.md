@@ -12,8 +12,8 @@ All contributions will happen here:
 
 ## Managed Repositories
 
-| Bundles | Licence(s) |
-| ------- | ---------- |
+| Boilerplates | Licence(s) |
+| ------------ | ---------- |
 | [Next JS](https://github.com/CrystallizeAPI/crystallize-nextjs-boilerplate) | ![MIT] |
 | [Remix Boilerplate](https://github.com/CrystallizeAPI/product-storytelling-examples) | ![MIT] |
 | [Nuxt JS](https://github.com/CrystallizeAPI/crystallize-nuxtjs-boilerplate) | ![MIT] |
