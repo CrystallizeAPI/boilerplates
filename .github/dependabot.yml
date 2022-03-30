@@ -40,4 +40,7 @@ updates:
     directory: "/components/service-api"
     schedule:
       interval: "weekly"
-
+  - package-ecosystem: "npm"
+    directory: "/components/furnituremix"
+    schedule:
+      interval: "weekly"
