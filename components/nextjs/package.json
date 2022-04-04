@@ -59,7 +59,7 @@
     "uuid": "3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "7.9.6",
+    "@babel/core": "7.17.8",
     "@crystallize/import-utilities": "0.10.4",
     "eslint": "^7.29.0",
     "eslint-config-next": "^11.0.1",
