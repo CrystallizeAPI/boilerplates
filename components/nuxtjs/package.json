@@ -19,7 +19,7 @@
     "lodash": "^4.17.21",
     "nuxt": "^2.15.4",
     "nuxt-i18n": "^6.23.0",
-    "video.js": "7.11.8",
+    "video.js": "7.18.1",
     "videojs-contrib-dash": "4.1.0",
     "vue-fragment": "^1.5.2"
   },
