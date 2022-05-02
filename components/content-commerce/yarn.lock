@@ -144,10 +144,10 @@
     "@babel/helper-validator-identifier" "^7.12.11"
     to-fast-properties "^2.0.0"
 
-"@crystallize/content-transformer@^9.0.1":
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/@crystallize/content-transformer/-/content-transformer-9.0.1.tgz#ffa348b51b1cab76cc0f095022248cae7d3fcdad"
-  integrity sha512-kNnYyhFJ0uXxsoBCIEGDPuFgVgtB0Cc2dbQpjcHhyhqTnWTWXyOgBfhqqufXuLOUHalYPXu09MxRV74FC1ZN2g==
+"@crystallize/content-transformer@^9.2.0":
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/@crystallize/content-transformer/-/content-transformer-9.2.0.tgz#352f76a1dd36034f8b839b1b9e356d9d08b84f28"
+  integrity sha512-5kVATtXSAUSXAPS54xylaUbdkrBVxE3et/c4v9eCuod08e1yxYQZ7tQOIA9BsIJrIPqFntgPP8BiR11lP3rmyA==
   dependencies:
     is-my-json-valid "^2.17.2"
     isarray "^2.0.4"
