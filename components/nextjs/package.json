@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.9.6",
-    "@crystallize/import-utilities": "0.10.4",
+    "@crystallize/import-utilities": "0.88.0",
     "eslint": "^7.29.0",
     "eslint-config-next": "^11.0.1",
     "eslint-config-prettier": "6.11.0",
