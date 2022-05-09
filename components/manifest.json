@@ -40,6 +40,10 @@
         "service-api": {
             "name": "Service API Boilerplate",
             "git": "git@github.com:CrystallizeAPI/service-api-boilerplate.git"
+        },
+        "furnituremix": {
+            "name": "Furniture Remix Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/furniture-remix.git"
         }
     }
 }
