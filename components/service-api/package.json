@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/CrystallizeAPI/service-api-boilerplate#readme",
   "dependencies": {
-    "@apollo/gateway": "^0.28.1"
+    "@apollo/gateway": "^2.0.2"
   }
 }
