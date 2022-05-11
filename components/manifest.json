@@ -43,7 +43,7 @@
         },
         "furnituremix": {
             "name": "Furniture Remix Boilerplate",
-            "git": "git@github.com:CrystallizeAPI/service-api-boilerplate.git"
+            "git": "git@github.com:CrystallizeAPI/furniture-remix.git"
         }
     }
 }
