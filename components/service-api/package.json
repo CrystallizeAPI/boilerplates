@@ -1,26 +1,32 @@
 {
-  "name": "service-api-boilerplate",
-  "version": "1.0.0",
-  "description": "",
+  "scripts": {
+      "dev": "tsc && concurrently 'PORT=3020 nodemon -r dotenv/config ./dist' 'tsc -W'",
+      "build": "tsc"
+  },
   "devDependencies": {
-    "eslint": "^7.18.0",
-    "prettier": "^2.2.1"
+      "@tsconfig/node16": "^1.0.2",
+      "@types/koa": "^2.13.4",
+      "@types/koa-bodyparser": "^4.3.7",
+      "@types/mjml": "^4.7.0",
+      "@types/node": "^17.0.14",
+      "@types/nodemailer": "^6.4.4",
+      "concurrently": "^7.0.0",
+      "nodemon": "^2.0.15"
   },
-  "engines": {
-    "node": ">=14"
+  "volta": {
+      "node": "16.14.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CrystallizeAPI/service-api-boilerplate.git"
-  },
-  "keywords": [],
-  "author": "Håkon Krogh <hakon@crystallize.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/CrystallizeAPI/service-api-boilerplate/issues"
-  },
-  "homepage": "https://github.com/CrystallizeAPI/service-api-boilerplate#readme",
   "dependencies": {
-    "@apollo/gateway": "^0.28.1"
-  }
+      "@crystallize/js-api-client": "^0.6.0",
+      "@crystallize/node-service-api-request-handlers": "^0.3.0",
+      "@crystallize/node-service-api-router": "^0.3.0",
+      "dotenv": "^8.2.0",
+      "koa": "^2.13.4",
+      "koa-bodyparser": "^4.3.0",
+      "mjml": "^4.12.0",
+      "nodemailer": "^6.7.3",
+      "typescript": "^4.5.5",
+      "zod": "^3.14.4"
+  },
+  "license": "MIT"
 }

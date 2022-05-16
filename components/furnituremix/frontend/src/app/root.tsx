@@ -24,9 +24,9 @@ export function links() {
 }
 
 export const meta: MetaFunction = () => ({
-    charset: "utf-8",
-    title: "Crystallize Furniture v2 Remix Boilerplate",
-    viewport: "width=device-width,initial-scale=1",
+  charset: "utf-8",
+  title: "Crystallize Furniture v2 Remix Boilerplate",
+  viewport: "width=device-width,initial-scale=1",
 });
 
 export const headers: HeadersFunction = () => {
@@ -50,85 +50,101 @@ export let loader: LoaderFunction = async () => {
     );
 };
 
-const Document: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <html lang="en">
-        <head>
-            <Meta />
-            <Links />
-        </head>
-        <body>
-            {children}
-            <ScrollRestoration />
-            <Scripts />
-            <LiveReload port={443} />
-        </body>
-    </html>
+const Document: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}: {
+  children: any;
+}) => (
+  <html lang="en">
+    <head>
+      <Meta />
+      <Links />
+    </head>
+    <body>
+      {children}
+      <ScrollRestoration />
+      <Scripts />
+      <LiveReload port={443} />
+    </body>
+  </html>
 );
 
+const Layout: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}: {
+  children: any;
+}) => {
+  const { navigation, ENV } = useLoaderData();
+  return (
+    <>
+      <header className="lg:w-content w-full mx-auto p-8 sm:px-6">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(ENV)}`,
+          }}
+        ></script>
+        <Header navItem={navigation.tree.name} />
+      </header>
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { navigation, ENV } = useLoaderData();
-    return (<>
-        <header className="lg:w-content w-full mx-auto p-8 sm:px-6">
-            <script
-                dangerouslySetInnerHTML={{
-                    __html: `window.ENV = ${JSON.stringify(ENV)}`,
-                }}
-            ></script>
-            <Cart />
-            <Header navigation={navigation} />
-        </header>
-        <div>
-            <div>{children}</div>
-        </div>
-        <Footer />
+      <div>
+        <div>{children}</div>
+      </div>
+      <Footer />
     </>
-    );
-}
+  );
+};
 
-const App: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <Document>
-        <Layout>
-            <Outlet />
-        </Layout>
-    </Document>
-)
+const App: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}: {
+  children: any;
+}) => (
+  <Document>
+    <Layout>
+      <Outlet />
+    </Layout>
+  </Document>
+);
 
-export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
-    console.error(error);
-    return (
-        <html>
-            <head>
-                <title>Oh no!</title>
-                <Meta />
-                <Links />
-            </head>
-            <body>
-                {error.message}
-                {/* add the UI you want your users to see */}
-                <Scripts />
-            </body>
-        </html>
-    );
-}
+export const ErrorBoundary: ErrorBoundaryComponent = ({
+  error,
+}: {
+  error: any;
+}) => {
+  console.error(error);
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        {error.message}
+        {/* add the UI you want your users to see */}
+        <Scripts />
+      </body>
+    </html>
+  );
+};
 
 export const CatchBoundary: CatchBoundaryComponent = () => {
-    const caught = useCatch();
-    return (
-        <html>
-            <head>
-                <title>Oops!</title>
-                <Meta />
-                <Links />
-            </head>
-            <body>
-                <h1>
-                    {caught.status} {caught.statusText}
-                </h1>
-                <Scripts />
-            </body>
-        </html>
-    );
+  const caught = useCatch();
+  return (
+    <html>
+      <head>
+        <title>Oops!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <h1>
+          {caught.status} {caught.statusText}
+        </h1>
+        <Scripts />
+      </body>
+    </html>
+  );
 };
 
 export default App;
