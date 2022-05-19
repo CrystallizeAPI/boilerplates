@@ -92,11 +92,11 @@ export async function fetchProducts(apiClient: ClientInterface, path: string) {
     return response.catalogue.children.filter((item: any) => item.__typename === 'Product');
 }
 
-export async function fetchCampaignPage(apiClient: ClientInterface, path: string) {
+export async function fetchCampaignPage(apiClient: ClientInterface, path: string, version: any) {
     return (
         await apiClient.catalogueApi(
-            `query ($language: String!, $path: String!) {
-    catalogue(path: $path, language: $language) {
+            `query ($language: String!, $path: String!, $version: VersionLabel) {
+    catalogue(path: $path, language: $language, version: $version) {
       ... on Item {
         name
         path
@@ -208,16 +208,17 @@ export async function fetchCampaignPage(apiClient: ClientInterface, path: string
             {
                 language: 'en',
                 path,
+                version: version === 'draft' ? 'draft' : 'published',
             },
         )
     ).catalogue;
 }
 
-export async function fetchDocument(apiClient: ClientInterface, path: string) {
+export async function fetchDocument(apiClient: ClientInterface, path: string, version: string) {
     return (
         await apiClient.catalogueApi(
-            `query ($language: String!, $path: String!) {
-    catalogue(path: $path, language: $language) {
+            `query ($language: String!, $path: String!, $version: VersionLabel) {
+    catalogue(path: $path, language: $language, version: $version) {
       ... on Item {
         name
         path
@@ -320,21 +321,21 @@ export async function fetchDocument(apiClient: ClientInterface, path: string) {
             {
                 language: 'en',
                 path,
+                version: version === 'draft' ? 'draft' : 'published',
             },
         )
     ).catalogue;
 }
 
-export async function fetchProduct(apiClient: ClientInterface, path: string) {
+export async function fetchProduct(apiClient: ClientInterface, path: string, version: string) {
     //should be using the createCatalogueFetcher
     // just did this way to have everything for now
 
     return (
         await apiClient.catalogueApi(
             `
-    
-  query ($language: String!, $path: String!) {
-    catalogue(language: $language, path: $path) {
+      query ($language: String!, $path: String!, $version: VersionLabel!) {
+      catalogue(language: $language, path: $path, version: $version) {
       ...on Product {
         ...product
         topics {
@@ -604,16 +605,17 @@ export async function fetchProduct(apiClient: ClientInterface, path: string) {
             {
                 language: 'en',
                 path,
+                version: version === 'draft' ? 'draft' : 'published',
             },
         )
     ).catalogue;
 }
 
-export async function fetchFolder(apiClient: ClientInterface, path: string) {
+export async function fetchFolder(apiClient: ClientInterface, path: string, version: string) {
     return (
         await apiClient.catalogueApi(
-            `query ($language: String!, $path: String!) {
-    catalogue(language: $language, path: $path) {
+            `query ($language: String!, $path: String!, $version: VersionLabel) {
+    catalogue(language: $language, path: $path, version: $version) {
         name
         components {
           type
@@ -675,6 +677,7 @@ export async function fetchFolder(apiClient: ClientInterface, path: string) {
             {
                 language: 'en',
                 path,
+                version: version === 'draft' ? 'draft' : 'published',
             },
         )
     ).catalogue;

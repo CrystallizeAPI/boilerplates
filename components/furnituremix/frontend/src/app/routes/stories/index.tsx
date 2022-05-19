@@ -10,9 +10,12 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
+    const url = new URL(request.url);
+    const preview = url.searchParams.get('preview');
+    const version = preview ? 'draft' : 'published';
     const path = `/stories`;
     const superFast = await getSuperFast(request.headers.get('Host')!);
-    const folder = await fetchFolder(superFast.apiClient, path);
+    const folder = await fetchFolder(superFast.apiClient, path, version);
     return json({ folder }, SuperFastHttpCacheHeaderTagger('30s', '30s', [path], superFast.config));
 };
 
