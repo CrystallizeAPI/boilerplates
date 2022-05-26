@@ -55,7 +55,59 @@ export async function fetchCart(cartId: string) {
 }
 
 export async function fetchNavigation(apiClient: ClientInterface) {
-    return await createNavigationFetcher(apiClient).byFolders('/shop', 'en', 3);
+    const fetch = createNavigationFetcher(apiClient).byFolders;
+    const builder = catalogueFetcherGraphqlBuilder;
+    const response = await fetch(
+        '/shop',
+        'en',
+        3,
+        {
+            tenant: {
+                __args: {
+                    language: 'en',
+                },
+                name: true,
+            },
+        },
+        (level) => {
+            switch (level) {
+                case 0:
+                    return {};
+                case 1:
+                    return {
+                        __on: [
+                            builder.onItem({
+                                ...builder.onComponent('description', 'RichText', {
+                                    json: true,
+                                }),
+                            }),
+                            builder.onFolder(),
+                        ],
+                    };
+                case 2:
+                    return {
+                        __on: [
+                            builder.onItem(),
+                            builder.onProduct({
+                                defaultVariant: {
+                                    price: true,
+                                    firstImage: {
+                                        altText: true,
+                                        variants: {
+                                            width: true,
+                                            url: true,
+                                        },
+                                    },
+                                },
+                            }),
+                        ],
+                    };
+                default:
+                    return {};
+            }
+        },
+    );
+    return response;
 }
 
 export async function fetchProducts(apiClient: ClientInterface, path: string) {
@@ -92,6 +144,28 @@ export async function fetchProducts(apiClient: ClientInterface, path: string) {
     return response.catalogue.children.filter((item: any) => item.__typename === 'Product');
 }
 
+export async function search(apiClient: ClientInterface, value: string): Promise<any[]> {
+    const data = await apiClient.searchApi(
+        `query Search ($searchTerm: String!){
+                        search(language:"en", filter: { 
+                            searchTerm: $searchTerm, 
+                            type: PRODUCT, 
+                            productVariants: { isDefault: true }}){
+                          edges {
+                            node {
+                              name
+                              path
+                            }
+                          }
+                        }
+                      }
+            `,
+        {
+            searchTerm: value,
+        },
+    );
+    return data.search.edges;
+}
 export async function fetchCampaignPage(apiClient: ClientInterface, path: string, version: any) {
     return (
         await apiClient.catalogueApi(
@@ -221,6 +295,7 @@ export async function fetchDocument(apiClient: ClientInterface, path: string, ve
     catalogue(path: $path, language: $language, version: $version) {
       ... on Item {
         name
+        createdAt
         path
         components {
           type
@@ -236,6 +311,7 @@ export async function fetchDocument(apiClient: ClientInterface, path: string, ve
               images {
                 variants {
                   url
+                  width
                 }
               }
             }
@@ -255,6 +331,7 @@ export async function fetchDocument(apiClient: ClientInterface, path: string, ve
                     images {
                       variants {
                         url
+                        width
                       }
                     }
                   }
@@ -270,6 +347,7 @@ export async function fetchDocument(apiClient: ClientInterface, path: string, ve
                     images {
                       variants {
                         url
+                        width
                       }
                     }
                     price
@@ -288,6 +366,7 @@ export async function fetchDocument(apiClient: ClientInterface, path: string, ve
                             images {
                               variants {
                                 url
+                                width
                               }
                             }
                           }
@@ -309,6 +388,7 @@ export async function fetchDocument(apiClient: ClientInterface, path: string, ve
                 images {
                   variants {
                     url
+                    width
                   }
                 }
               }
@@ -626,6 +706,39 @@ export async function fetchFolder(apiClient: ClientInterface, path: string, vers
             ...on RichTextContent {
               plainText
             }
+            ... on ComponentChoiceContent {
+              selectedComponent {
+                name
+                content {
+                  ... on ItemRelationsContent {
+                    items {
+                      name
+                      components {
+                        content {
+                          ... on SingleLineContent {
+                            text
+                          }
+                          ... on RichTextContent {
+                            plainText
+                          }
+                          ... on ComponentChoiceContent {
+                            selectedComponent {
+                              content {
+                                ... on ImageContent {
+                                  firstImage {
+                                    url
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
         children {
@@ -681,4 +794,145 @@ export async function fetchFolder(apiClient: ClientInterface, path: string, vers
             },
         )
     ).catalogue;
+}
+
+export async function searchOrderBy(apiClient: ClientInterface, path: string, orderBy?: any, fitlers?: any) {
+    const field = orderBy?.split('_')[0];
+    const direction = orderBy?.split('_')[1];
+    const priceRangeParams = fitlers.price;
+
+    const results = await apiClient.searchApi(
+        `query SEARCH_ORDERBY(
+        $path: [String!]
+        $field: OrderField!
+        $direction: OrderDirection!
+        $min: Float
+        $max: Float
+      ) {
+        search(
+          orderBy: { field: $field, direction: $direction }
+          filter: {
+            type: PRODUCT
+            productVariants: { isDefault: true, priceRange: { min: $min, max: $max } }
+            include: { paths: $path }
+          }
+        ) {
+          edges {
+            node {
+              name
+              path
+              ... on Product {
+                  matchingVariant {
+                  price
+                  images {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `,
+        {
+            path,
+            field: field === 'NAME' ? 'ITEM_NAME' : field,
+            direction,
+            min: priceRangeParams.min ? parseFloat(priceRangeParams.min) : 0.0,
+            max: priceRangeParams.max ? parseFloat(priceRangeParams.max) : 0.0,
+        },
+    );
+
+    return results?.search?.edges || [];
+}
+
+export async function orderByPriceRange(apiClient: ClientInterface, path: string, orderSearchParams: any) {
+    return await apiClient.searchApi(
+        `query SEARCH_ORDER_BY_PRICE_RANGE($path: [String!]) {
+        search(
+          filter: {
+            type: PRODUCT
+            include: { paths: $path }
+            productVariants: { isDefault: true }
+          }
+        ) {
+          edges {
+            node {
+              name
+              path
+              ... on Product {
+                matchingVariant {
+                  price
+                  images {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }`,
+        {
+            path,
+        },
+    );
+}
+
+export async function getPriceRange(apiClient: ClientInterface, path: string) {
+    return await apiClient.searchApi(
+        `query GET_PRICE_RANGE($path: [String!]) {
+        search(
+          filter: {
+            type: PRODUCT
+            include: { paths: $path }
+          }
+        ) {
+          aggregations {
+            price {
+              min
+              max
+            }
+          }
+        }
+      }
+      `,
+        {
+            path,
+        },
+    );
+}
+
+export async function filterByPriceRange(apiClient: ClientInterface, path: string, min: string, max: string) {
+    return await apiClient.searchApi(
+        `query SEARCH_ORDER_BY_PRICE_RANGE($path: [String!], $min: Float, $max: Float) {
+        search(
+          filter: {
+            type: PRODUCT
+            include: { paths: $path }
+            productVariants: { isDefault: true, priceRange: { min: $min, max: $max } }
+          }
+        ) {
+          edges {
+            node {
+              name
+              path
+              ... on Product {
+                matchingVariant {
+                  price
+                  images {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `,
+        {
+            path,
+            min,
+            max,
+        },
+    );
 }
