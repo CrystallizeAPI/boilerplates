@@ -4,76 +4,71 @@ import { Link, useLocation } from '@remix-run/react';
 import { useSuperFast } from 'src/lib/superfast/SuperFastProvider/Provider';
 import { SearchBar } from './search';
 import { BasketButton } from './basket-button';
+import { TopicNavigation } from './topic-navigation';
 
 export const Header: React.FC<{ navigation: any }> = ({ navigation }) => {
     const { state: superFast } = useSuperFast();
-    let paths = ['/cart', '/checkout', '/confirmation'];
+    let checkoutFlow = ['/cart', '/checkout', '/confirmation'];
     let location = useLocation();
+    let paths = [
+        { path: '/cart', name: 'Cart' },
+        { path: '/checkout', name: 'Checkout' },
+        { path: '/confirmation', name: 'Confirmation' },
+    ];
+
     return (
         <>
-            {paths.includes(location.pathname) ? (
+            {checkoutFlow.includes(location.pathname) ? (
                 <div className="flex gap-20 flex-auto items-center justify-between mb-5 w-full">
                     <div className="flex flex-auto justify-between items-center w-1/4">
-                        <Link to="/">
+                        <Link to="/" prefetch="intent">
                             <img src={superFast.config.logo} style={{ width: '200px' }} />
                         </Link>
                     </div>
                     <div className="flex w-3/4 gap-5">
-                        <div
-                            className={`w-1/4 border-b-2 pb-2 ${
-                                location.pathname === '/cart'
-                                    ? 'border-b-[#000] text-[#000]'
-                                    : 'border-b-grey5 text-grey5'
-                            }`}
-                        >
-                            <Link to="/cart">Cart</Link>
-                        </div>
-                        <div
-                            className={`w-1/4 border-b-2 pb-2 ${
-                                location.pathname === '/checkout'
-                                    ? 'border-b-[#000] text-[#000]'
-                                    : 'border-b-grey5 text-grey5'
-                            }`}
-                        >
-                            Checkout
-                        </div>
-                        <div
-                            className={`w-1/4 border-b-2 pb-2 ${
-                                location.pathname === '/checkout'
-                                    ? 'border-b-[#000] text-[#000]'
-                                    : 'border-b-grey5 text-grey5'
-                            }`}
-                        >
-                            Details
-                        </div>
-                        <div
-                            className={`w-1/4 border-b-2 pb-2 ${
-                                location.pathname === '/confirmation'
-                                    ? 'border-b-[#000] text-[#000]'
-                                    : 'border-b-grey5 text-grey5'
-                            }`}
-                        >
-                            Confirmation
-                        </div>
+                        {paths.map((path) => (
+                            <div
+                                className={`w-1/4 border-b-2 pb-2 ${
+                                    location.pathname === path.path
+                                        ? 'border-b-[#000] text-[#000]'
+                                        : 'border-b-grey5 text-grey5'
+                                }`}
+                            >
+                                <Link to={path.path} prefetch="intent">
+                                    {path.name}
+                                </Link>
+                            </div>
+                        ))}
                     </div>
                 </div>
             ) : (
                 <div className="flex flex-auto items-center justify-between mb-5 w-full">
                     <div className="flex flex-auto justify-between items-center">
-                        <Link to="/">
-                            <img src={superFast.config.logo} style={{ width: '200px' }} />
-                        </Link>
-                        <SearchBar />
-                        <p>
-                            <Link to="/shop">{navigation.tree.name}</Link>
-                        </p>
-                        <p>
-                            <Link to="/stories">Stories</Link>
-                        </p>
+                        <div className="flex gap-10 items-center">
+                            <Link to="/" prefetch="intent">
+                                <img
+                                    src={superFast.config.logo}
+                                    width=""
+                                    height=""
+                                    alt="Logo"
+                                    style={{ width: '150px' }}
+                                />
+                            </Link>
+                            <div className="flex gap-4 items-center">
+                                <SearchBar />
+                                <Link to="/shop" prefetch="intent" className="hover:underline">
+                                    {navigation.tree.name}
+                                </Link>
+                                <Link to="/stories" prefetch="intent" className="hover:underline">
+                                    Stories
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                     <div className="flex flex-auto items-center justify-end gap-5">
                         <img src={`${UserIcon}`} />
                         <BasketButton />
+                        <TopicNavigation />
                     </div>
                 </div>
             )}
