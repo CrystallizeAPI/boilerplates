@@ -117,7 +117,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }>();
     return (
         <>
-            <header className="container 2xl w-full mx-auto p-8 sm:px-6">
+            <header className="container 2xl w-full mx-auto p-8 px-6">
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `window.ENV = ${JSON.stringify(ENV)}`,
