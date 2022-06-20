@@ -1,7 +1,7 @@
 {
     "private": true,
     "devDependencies": {
-        "prettier": "2.6.0"
+        "prettier": "2.7.1"
     },
     "scripts": {
         "prettier": "prettier --write ."
