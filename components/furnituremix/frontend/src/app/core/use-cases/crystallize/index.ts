@@ -1512,6 +1512,13 @@ async function filterByPriceRange(apiClient: ClientInterface, path: string, min:
 async function searchByTopic(apiClient: ClientInterface, value: string) {
     return await apiClient.searchApi(
         `query SEARCH_BY_TOPIC($value: String!) {
+      topics: search(language: "en"){
+        aggregations {
+          topics {
+            name
+          }
+        }
+      }
           search(
             filter: {
               type: PRODUCT
@@ -1555,7 +1562,6 @@ async function searchByTopic(apiClient: ClientInterface, value: string) {
             }
           }
         }
-        
       `,
         {
             value,
