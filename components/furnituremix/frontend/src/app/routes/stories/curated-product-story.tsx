@@ -2,8 +2,8 @@ import { ContentTransformer, Image } from '@crystallize/reactjs-components';
 import { CuratedProduct } from '~/core/components/curated-product';
 import { useState } from 'react';
 import { AddToCartBtn } from '~/core/components/add-to-cart-button';
-import { useAppContext } from '~/core/app-context/provider';
 import { Price } from '~/lib/pricing/pricing-component';
+import { useAppContext } from '~/core/app-context/provider';
 
 const getComponentContent = (components: any, id: string) => {
     let component = components.find((component: any) => component.id === id);
@@ -13,7 +13,7 @@ const getComponentContent = (components: any, id: string) => {
 export function CuratedProductStory({ document }: { document: any }) {
     const [activePoint, setActivePoint] = useState('');
     let [variants, setVariants] = useState([]);
-    const { state: contextState } = useAppContext();
+    const { state: appContextState } = useAppContext();
 
     let title = getComponentContent(document?.components, 'title')?.text;
     let description = getComponentContent(document?.components, 'description')?.json;
@@ -55,9 +55,9 @@ export function CuratedProductStory({ document }: { document: any }) {
                                         </div>
                                         <div>
                                             <div className="text-xs">{product.name}</div>
-                                            <Price currencyCode={contextState.currency.code}>
-                                                {product.defaultVariant.price}
-                                            </Price>
+                                            <div className="text-xs font-bold">
+                                                {appContextState.currency.code} {product.defaultVariant.price}
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
@@ -87,7 +87,7 @@ export function CuratedProductStory({ document }: { document: any }) {
                     ))}
                     <div className="flex pt-5 mt-5 border-solid border-t-[1px] border-[#dfdfdf] items-center justify-between">
                         <div className="text-2xl font-bold text-green2">
-                            <Price currencyCode={contextState.currency.code}>{totalAmountToPay}</Price>
+                            <Price currencyCode={appContextState.currency.code}>{totalAmountToPay}</Price>
                         </div>
                         <AddToCartBtn products={variants} label={`Add ${variants?.length} to cart`} />
                     </div>
