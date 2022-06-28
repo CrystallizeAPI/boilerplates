@@ -86,7 +86,7 @@ export function CuratedProductStory({ document }: { document: any }) {
                         </div>
                     ))}
                     <div className="flex pt-5 mt-5 border-solid border-t-[1px] border-[#dfdfdf] items-center justify-between">
-                        <div className="text-3xl font-bold text-green2">
+                        <div className="text-2xl font-bold text-green2">
                             <Price currencyCode={contextState.currency.code}>{totalAmountToPay}</Price>
                         </div>
                         <AddToCartBtn products={variants} label={`Add ${variants?.length} to cart`} />
