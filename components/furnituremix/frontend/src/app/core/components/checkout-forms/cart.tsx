@@ -35,7 +35,7 @@ export const CheckoutCart: React.FC = () => {
                                 </div>
                                 <div className="flex flex-col">
                                     <p className="text-md font-regular w-full">{item.product.name}</p>
-                                    <p className="text-md font-semibold w-full">€{item.price.gross}</p>
+                                    <p className="text-md font-semibold w-full">€{item.price.gross.toFixed(5)}</p>
                                 </div>
                             </div>
                         </div>
