@@ -6,7 +6,7 @@ RED=$(shell echo "\033[00;31m")
 RESTORE=$(shell echo "\033[0m")
 
 # Variables
-DOCKER_COMPOSE_ARGS := COMPOSE_PROJECT_NAME=furnituremix COMPOSE_FILE=provisioning/dev/docker-compose.yaml
+DOCKER_COMPOSE_ARGS := COMPOSE_PROJECT_NAME=koaserviceapi COMPOSE_FILE=provisioning/dev/docker-compose.yaml
 DOCKER_COMPOSE := $(DOCKER_COMPOSE_ARGS) docker compose
 NPM := npm
 CADDY = caddy
@@ -24,27 +24,27 @@ list:
 
 .PHONY: clean
 clean: stop ## Clean non-essential files
-	@rm -rf application/node_modules
+	@rm -rf service-api/node_modules
 	@$(DOCKER_COMPOSE) down
 	
 .PHONY: install
 install: install-certificates ## Install
 	@$(NPM) install
-	@cd application && cp .env.dist .env && cd ..
-	@cd application && $(NPM) install && cd ..	
-	
+	@cd service-api && cp .env.dist .env && cd ..
+	@cd service-api && $(NPM) install && cd ..
+
 .PHONY: install-certificates
 install-certificates: ## Install the certificates
 	@$(MKCERT) -install
-	@cd provisioning/dev/certs && $(MKCERT) --cert-file domains.pem -key-file key.pem "*.superfast.crystal"
+	@cd provisioning/dev/certs && $(MKCERT) --cert-file domains.pem -key-file key.pem "*.sapi.superfast.crystal"
 
 .PHONY: npmupdate
 npmupdate: ## npmupdate
-	@cd application && $(NPM) update && cd ..
+	@cd service-api && $(NPM) update && cd ..
 
-.PHONY: serve-application
-serve-application: ## Service the Application
-	@cd application && $(NPM) run dev
+.PHONY: serve-service-api
+serve-service-api: ## Service the Service API
+	@cd service-api && $(NPM) run dev
 
 .PHONY: stop
 stop: ## Stop all the local services you need
@@ -60,7 +60,7 @@ stop: ## Stop all the local services you need
 serve: stop ## Run all the local services you need
 	@$(DOCKER_COMPOSE) up -d
 	@$(CADDY) start --config provisioning/dev/Caddyfile --pidfile provisioning/dev/caddy.dev.pid
-	@$(MAKE) serve-application
+	@$(MAKE) serve-service-api
 	
 .PHONY: codeclean
 codeclean: ## Code Clean
