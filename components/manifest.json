@@ -44,6 +44,10 @@
         "furnituremix": {
             "name": "Furniture Remix Boilerplate",
             "git": "git@github.com:CrystallizeAPI/furniture-remix.git"
+        },
+        "service-api-koajs": {
+            "name": "Service API in KOAJS Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/service-api-koajs.git"
         }
     }
 }
