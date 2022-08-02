@@ -1,0 +1,17 @@
+{
+    "browse": "Browse categories",
+    "view": "View all",
+    "relatedProducts": "You might also be interested in",
+    "search": {
+        "placeholder": "Names, SKUs, categories",
+        "label": "Search",
+        "foundResults": "Found {{count}} matching result",
+        "noResults": "No results found"
+    },
+    "addToCart": "Add to cart",
+    "stock": {
+        "outOfStock": "Out of stock",
+        "inStock": "20+ in stock",
+        "lowStock": "Less then 20 in stock"
+    }
+}

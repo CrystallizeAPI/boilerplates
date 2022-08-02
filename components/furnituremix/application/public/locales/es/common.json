@@ -1,0 +1,17 @@
+{
+    "browse": "Tienda de navegador",
+    "view": "Ver todo",
+    "relatedProducts": "Usted también puede estar interesado en",
+    "search": {
+        "placeholder": "Nombres, SKUs, categorías",
+        "label": "Buscar",
+        "foundResults": "Hemos encontrado {{count}} resultado de búsqueda",
+        "noResults": "No se han encontrado resultados"
+    },
+    "addToCart": "Añadir al carrito",
+    "stock": {
+        "outOfStock": "Fuera de stock",
+        "inStock": "20+ en stock",
+        "lowStock": "Menos de 20 en stock"
+    }
+}

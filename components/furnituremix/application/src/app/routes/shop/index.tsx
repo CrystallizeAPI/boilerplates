@@ -3,6 +3,7 @@ import { HeadersFunction, json, LoaderFunction, MetaFunction } from '@remix-run/
 import { Link, useLoaderData } from '@remix-run/react';
 import { CategoryList } from '~/core/components/category-list';
 import { Grid } from '~/core/components/grid-cells/grid';
+import { useTranslation } from 'react-i18next';
 
 import splideStyles from '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import {
@@ -26,7 +27,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
     return HttpCacheHeaderTaggerFromLoader(loaderHeaders).headers;
 };
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ request }) => {
     const url = new URL(request.url);
     const preview = url.searchParams.get('preview');
     const version = preview ? 'draft' : 'published';
@@ -45,6 +46,7 @@ export default () => {
     const hero = folder.components.find((component: any) => component.id === 'hero-content')?.content
         ?.selectedComponent;
     let grid = hero?.content?.grids?.[0];
+    let { t } = useTranslation('common');
 
     return (
         <>
@@ -55,7 +57,7 @@ export default () => {
             )}
             <div className="2xl container mx-auto px-4 md:px-10">
                 <div className="flex flex-wrap gap-4 pt-20 mb-10  items-center">
-                    <h2 className="font-medium text-md text-md w-full block">Browse categories</h2>
+                    <h2 className="font-medium text-md text-md w-full block">{t('browse')}</h2>
                     {navigation?.tree?.children?.map((child: any) => (
                         <Link
                             to={child?.path}
@@ -85,7 +87,7 @@ export default () => {
                                     className="w-auto bg-grey py-2 px-6 text-center rounded-md text-md font-bold hover:bg-black hover:text-white mt-6 sm:mt-0"
                                     key={child.name}
                                 >
-                                    View all {child.name.toLowerCase()}
+                                    {t('view')} {child.name.toLowerCase()}
                                 </Link>
                             </div>
                             <div className="grid md:grid-col-5 grid-flow-col gap-5 overflow-auto">

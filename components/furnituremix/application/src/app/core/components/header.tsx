@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useAppContext } from '../app-context/provider';
 import { Image } from '@crystallize/reactjs-components';
 import { Price } from '~/lib/pricing/pricing-component';
+import { LocaleSwitcher } from './locale-switcher';
 
 function TenantLogo({ identifier, logo }: { identifier: string; logo: any }) {
     if (typeof logo === 'string') {
@@ -168,7 +169,7 @@ export const Header: React.FC<{ navigation: any; logo: any }> = ({ navigation, l
                                 </div>
                             </div>
 
-                            <div className="flex flex-auto items-center justify-end ">
+                            <div className="flex flex-auto items-center justify-evenly">
                                 <Link to="/orders" className="p-2 rounded-md hover:bg-[#efefef]">
                                     <img
                                         className="w-[30px] h-[30px]"
@@ -179,6 +180,7 @@ export const Header: React.FC<{ navigation: any; logo: any }> = ({ navigation, l
                                     />
                                 </Link>
                                 <BasketButton />
+                                <LocaleSwitcher />
                             </div>
                             <div className="z-50 p-[10px] h-[40px] text-center rounded-md cursor-pointer hover:bg-[#efefef] lg:hidden block">
                                 <button

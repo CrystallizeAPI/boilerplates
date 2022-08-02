@@ -1,5 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 const StockIndicators = ({ location }: { location: any }) => {
     const stock = location?.stock;
+    let { t } = useTranslation('common');
     if (stock < 1) {
         return (
             <>
@@ -7,7 +10,7 @@ const StockIndicators = ({ location }: { location: any }) => {
                     <div className="w-2.5 h-2.5 rounded-full bg-[#F42C04]" />
                     <p className="font-medium">{location.name}</p>
                 </div>
-                <p className="font-medium text-[#F42C04]">Out of stock</p>
+                <p className="font-medium text-[#F42C04]">{t('stock.outOfStock')}</p>
             </>
         );
     }
@@ -18,7 +21,7 @@ const StockIndicators = ({ location }: { location: any }) => {
                     <div className="w-2.5 h-2.5 rounded-full bg-[#FFC60A]" />
                     <p className="font-medium">{location.name}</p>
                 </div>
-                <p className="font-medium text-[#E0AC00]">Less then 20 in stock</p>
+                <p className="font-medium text-[#E0AC00]">{t('stock.lowStock')}</p>
             </>
         );
     }
@@ -28,7 +31,7 @@ const StockIndicators = ({ location }: { location: any }) => {
                 <div className="w-2.5 h-2.5 rounded-full bg-green2" />
                 <p className="font-regular">{location.name}</p>
             </div>
-            <p className="font-medium text-green2">20+ in stock</p>
+            <p className="font-medium text-green2">{t('stock.inStock')}</p>
         </>
     );
 };

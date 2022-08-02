@@ -1,0 +1,17 @@
+{
+    "browse": "Nettleserbutikk",
+    "view": "Vis alle",
+    "relatedProducts": "Du kan også være interessert i",
+    "search": {
+        "placeholder": "Navn, SKUs, kategorier",
+        "label": "Søk",
+        "foundResults": "Fant {{count}} resultat",
+        "noResults": "Ingen resultater"
+    },
+    "addToCart": "Legg i handlekurven",
+    "stock": {
+        "outOfStock": "Utsolgt",
+        "inStock": "20+ på lager",
+        "lowStock": "Mindre enn 20 på lager"
+    }
+}

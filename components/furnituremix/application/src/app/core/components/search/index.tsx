@@ -6,6 +6,7 @@ import { CrystallizeAPI } from '~/core/use-cases/crystallize';
 import { useStoreFront } from '~/core/storefront/provider';
 import { Image } from '@crystallize/reactjs-components';
 import { useAppContext } from '~/core/app-context/provider';
+import { useTranslation } from 'react-i18next';
 
 export const SearchBar = () => {
     const ref = useRef<HTMLDivElement>(null);
@@ -14,6 +15,7 @@ export const SearchBar = () => {
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const { apiClient: client } = useStoreFront();
     const { state: appContextState } = useAppContext();
+    let { t } = useTranslation('common');
 
     //close dropdown on outside click
     useEffect(() => {
@@ -50,7 +52,7 @@ export const SearchBar = () => {
             <div className="relative z-30 flex items-center justify-between bg-grey h-10 rounded-full overflow-hidden focus-within:border">
                 <DebounceInput
                     minLength={2}
-                    placeholder="Names, skus, categories"
+                    placeholder={t('search.placeholder')}
                     debounceTimeout={200}
                     onChange={handleChange}
                     className="bg-grey rounded-full overflow-hidden focus:border-textBlack outline-none px-6 w-full placeholder:text-[14px] placeholder:italic "

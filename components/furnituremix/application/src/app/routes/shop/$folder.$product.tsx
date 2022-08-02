@@ -18,6 +18,7 @@ import { buildMetas } from '~/core/MicrodataBuilder';
 import { AddToCartBtn } from '~/core/components/add-to-cart-button';
 import { buildSchemaMarkup } from '~/core/SchemaMarkupBuilder';
 import { getHost } from '~/core-server/http-utils.server';
+import { useTranslation } from 'react-i18next';
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
     return HttpCacheHeaderTaggerFromLoader(loaderHeaders).headers;
@@ -50,6 +51,8 @@ export default () => {
 
     let relatedProducts = product?.components?.find((component: any) => component.id === 'related-items')?.content
         ?.items;
+
+    let { t } = useTranslation('common');
 
     useEffect(() => {
         setSelectedVariant(primaryVariant);
@@ -101,7 +104,7 @@ export default () => {
                 </div>
                 {relatedProducts && (
                     <div className="w-full">
-                        <h3 className="font-bold mt-20 mb-10 text-xl">You might also be interested in</h3>
+                        <h3 className="font-bold mt-20 mb-10 text-xl">{t('relatedProducts')}</h3>
                         <div className="gap-5 grid-col-2 lg:grid grid-cols-5 pb-5 flex flex-wrap">
                             {relatedProducts?.map((item: any, index: number) => (
                                 <Product item={item} key={`${item?.id}-${index}`} />

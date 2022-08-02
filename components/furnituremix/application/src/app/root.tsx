@@ -16,6 +16,9 @@ import { CrystallizeProvider } from '@crystallize/reactjs-hooks';
 import { getCurrencyFromCode } from './lib/pricing/currencies';
 import { StoreFrontAwaretHttpCacheHeaderTagger } from './core-server/http-cache.server';
 import { getHost, isSecure } from './core-server/http-utils.server';
+import { i18n } from 'i18.server';
+import { useChangeLanguage } from 'remix-i18next';
+import { useTranslation } from 'react-i18next';
 
 export const meta: MetaFunction = () => {
     return {
@@ -46,6 +49,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 
 export let loader: LoaderFunction = async ({ request }) => {
     const host = getHost(request);
+    let locale = await i18n.getLocale(request);
     const { shared, secret } = await getStoreFront(host);
     const [folders, topics, tenantConfig] = await Promise.all([
         CrystallizeAPI.fetchNavigation(secret.apiClient, '/', 'en'),
@@ -54,7 +58,7 @@ export let loader: LoaderFunction = async ({ request }) => {
     ]);
     return json(
         {
-            locale: 'en-US',
+            locale,
             currencyCode: tenantConfig.currency,
             logo: tenantConfig.logo,
             country: 'US',
@@ -95,13 +99,16 @@ type LoaderData = {
         }>;
     };
 };
+
 const Document: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { storeFrontConfig, locale, currencyCode, logo, country } = useLoaderData<LoaderData>();
+    let { i18n } = useTranslation();
+    useChangeLanguage(locale);
     return (
         <StoreFrontConfigProvider config={storeFrontConfig}>
             <CrystallizeProvider language="en" tenantIdentifier={storeFrontConfig.tenantIdentifier}>
                 <AppContextProvider initialState={{ locale, country, currency: getCurrencyFromCode(currencyCode) }}>
-                    <html lang={locale.split('-')[0]}>
+                    <html lang={locale} dir={i18n.dir()}>
                         <head>
                             <meta charSet="utf-8" />
                             <meta name="viewport" content="width=device-width,initial-scale=1" />

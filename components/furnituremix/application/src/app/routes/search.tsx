@@ -8,6 +8,7 @@ import {
 import { getStoreFront } from '~/core-server/storefront.server';
 import { CrystallizeAPI } from '~/core/use-cases/crystallize';
 import { getHost } from '~/core-server/http-utils.server';
+import { useTranslation } from 'react-i18next';
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
     return HttpCacheHeaderTaggerFromLoader(loaderHeaders).headers;
@@ -23,16 +24,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default () => {
     let { data } = useLoaderData();
+    let { t } = useTranslation('common');
 
     return (
         <div className="container px-6 mx-auto w-full">
-            <h1 className="font-bold text-4xl mt-10">Search</h1>
+            <h1 className="font-bold text-4xl mt-10">{t('search.label')}</h1>
             {data.length > 0 ? (
                 <div>
                     <FilteredProducts products={data} />
                 </div>
             ) : (
-                <div className="mt-10">No results found.</div>
+                <div className="mt-10">{t('search.noResults')}</div>
             )}
         </div>
     );
