@@ -1,0 +1,42 @@
+name: Auto OSS Release Sync
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+jobs:
+  sync:
+    name: 🍿 Sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.10.0
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🏭 Checkout the OSS Releaser
+        uses: actions/checkout@v3
+        with:
+          repository: "CrystallizeAPI/oss-releaser"
+          path: oss-releaser
+
+      - name: ✨ Install the OSS Releaser
+        run: cd oss-releaser && make install
+
+      - name: 🍔 Install Splitsh-lite
+        run: |
+          curl https://github.com/splitsh/lite/releases/download/v1.0.1/lite_linux_amd64.tar.gz
+          tar -zxpf lite_linux_amd64.tar.gz --directory /usr/local/bin/
+
+      - name: 🚀 Sync it!
+        run: oss-releaser sync
