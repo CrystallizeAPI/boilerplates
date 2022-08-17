@@ -46,8 +46,8 @@ const pushOrderSubHandler = async (
                     net: item.price.net,
                     currency: 'EUR',
                     tax: {
-                        name: 'Exempt',
-                        percent: 0,
+                        name: 'VAT',
+                        percent: (item.price.net / item.price.gross - 1) * 100,
                     },
                 },
             };
