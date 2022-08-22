@@ -39,16 +39,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
                 max: url.searchParams.get('max'),
             },
         },
+        attributes: url.searchParams.getAll('attr'),
     };
-
     // we don't need to consider the preview params here.
     url.searchParams.delete('preview');
 
     //@todo: we have way too many query/fetch here, we need to agregate the query, GraphQL ;) => we can reduce to one call.
-    const [folder, products, priceRange] = await Promise.all([
+
+    const [folder, products, priceRangeAndAttributes] = await Promise.all([
         api.fetchFolder(path),
-        api.searchOrderBy(path, searchParams.orderBy, searchParams.filters),
-        api.fetchPriceRange(path),
+        api.searchOrderBy(path, searchParams.orderBy, searchParams.filters, searchParams.attributes),
+        api.fetchPriceRangeAndAttributes(path),
     ]);
 
     if (!folder) {
@@ -59,13 +60,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     }
 
     return json(
-        { products, folder, priceRange },
+        { products, folder, priceRangeAndAttributes },
         StoreFrontAwaretHttpCacheHeaderTagger('15s', '1w', [path], shared.config),
     );
 };
 
 export default () => {
-    const { folder, products, priceRange } = useLoaderData();
+    const { folder, products, priceRangeAndAttributes } = useLoaderData();
     let title =
         folder?.components.find((component: any) => component.type === 'singleLine')?.content?.text || folder.name;
     let description = folder?.components.find((component: any) => component.type === 'richText')?.content?.plainText;
@@ -85,7 +86,7 @@ export default () => {
                 </div>
             )}
             <div className="container 2xl mt-20 px-5 mx-auto w-full">
-                <Filter priceRange={priceRange} />
+                <Filter aggregations={priceRangeAndAttributes} />
                 <FilteredProducts products={products} />
             </div>
         </>

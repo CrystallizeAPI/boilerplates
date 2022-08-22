@@ -36,7 +36,7 @@ export const pushOrderSubHandler = async (
                     currency: item.price.currency,
                     discounts:
                         item.price.discounts?.map((discount) => ({
-                            percent: discount?.percent || 0,
+                            percent: discount?.percent || 0.0,
                         })) || [],
                     tax: {
                         name: 'VAT',
@@ -51,7 +51,7 @@ export const pushOrderSubHandler = async (
             net: cart.total.net,
             discounts:
                 cart.total.discounts?.map((discount) => ({
-                    percent: discount?.percent || 0,
+                    percent: discount?.percent || 0.0,
                 })) || [],
             tax: {
                 name: 'VAT',
@@ -59,6 +59,7 @@ export const pushOrderSubHandler = async (
             },
         },
         payment: [payment],
+        meta: [{ key: 'Additional info', value: cartWrapper?.customer?.additionalInfo }],
     });
     cartWrapperRepository.attachOrderId(cartWrapper, orderCreatedConfirmation.id);
     return orderCreatedConfirmation;
