@@ -1,12 +1,31 @@
-import { ClientInterface } from '@crystallize/js-api-client';
+import {
+    ClientInterface,
+    Image as APIImage,
+    Item,
+    Product as APIProduct,
+    ProductPriceVariant,
+    ProductStockLocation,
+    ProductVariantAttribute,
+} from '@crystallize/js-api-client';
+import _ from 'lodash';
+import { Product } from '~/core/contracts/Product';
+import { Image } from '~/core/contracts/Image';
+import {
+    chunksForChunkComponentWithId,
+    itemsForItemRelationComponentWithId,
+    paragraphsForParagraphCollectionComponentWithId,
+    sectionsForPropertyTableComponentWithId,
+    stringForRichTextComponentWithId,
+    stringForSingleLineComponentWithId,
+} from '~/lib/api-mappers';
+import { Price } from '~/core/contracts/Price';
+import { getCurrencyFromCode } from '~/lib/pricing/currencies';
+import { ProductVariant } from '~/core/contracts/ProductVariant';
+import { StockLocation } from '~/core/contracts/StockLocation';
 
-export default async (apiClient: ClientInterface, path: string, version: string, language: string) => {
-    //should be using the createCatalogueFetcher
-    // just did this way to have everything for now
-
-    return (
-        await apiClient.catalogueApi(
-            `
+export default async (apiClient: ClientInterface, path: string, version: string, language: string): Promise<any> => {
+    const data: { catalogue: any } = await apiClient.catalogueApi(
+        `
       query ($language: String!, $path: String!, $version: VersionLabel!) {
       catalogue(language: $language, path: $path, version: $version) {
         meta: component(id:"meta"){
@@ -301,11 +320,217 @@ export default async (apiClient: ClientInterface, path: string, version: string,
   }  
 
 `,
-            {
-                language,
-                path,
-                version: version === 'draft' ? 'draft' : 'published',
-            },
-        )
-    ).catalogue;
+        {
+            language,
+            path,
+            version: version === 'draft' ? 'draft' : 'published',
+        },
+    );
+    console.log(mapToProduct(data.catalogue));
+    return data.catalogue;
 };
+
+function mapToProduct(data: APIProduct & Item & { components: any }): Product {
+    const story = paragraphsForParagraphCollectionComponentWithId(data.components, 'story');
+    const sections = sectionsForPropertyTableComponentWithId(data.components, 'properties');
+    const firstDimensionsChunk = chunksForChunkComponentWithId(data.components, 'dimensions')?.[0];
+    const firstSeoChunk = chunksForChunkComponentWithId(data.components, 'meta')?.[0];
+    const downloads = chunksForChunkComponentWithId(data.components, 'downloads');
+    const relatedItems = itemsForItemRelationComponentWithId(data.components, 'related-items');
+
+    const typedImages = (images?: APIImage[]): Image[] => {
+        return (
+            images?.map((image) => {
+                return {
+                    url: image.url!,
+                    altText: image.altText || '',
+                    variants:
+                        image.variants?.map((variant) => {
+                            return {
+                                url: variant.url!,
+                                width: variant.width!,
+                                height: variant.height!,
+                            };
+                        }) || [],
+                };
+            }) || []
+        );
+    };
+
+    const variants: ProductVariant[] =
+        data?.variants?.map((variant) => ({
+            id: variant.id,
+            isDefault: !!variant.isDefault,
+            name: variant.name || data.name!,
+            sku: variant.sku,
+            priceVariants:
+                variant.priceVariants?.reduce((memo: Record<string, Price>, priceVariant: ProductPriceVariant) => {
+                    return {
+                        ...memo,
+                        [priceVariant.identifier]: {
+                            identifier: priceVariant.identifier,
+                            value: priceVariant.price || 0.0,
+                            currency: getCurrencyFromCode(priceVariant.currency || 'EUR'),
+                            name: priceVariant.name || 'Unkonwn',
+                        },
+                    };
+                }, {}) || {},
+            stockLocations:
+                variant.stockLocations?.reduce(
+                    (memo: Record<string, StockLocation>, stockLocation: ProductStockLocation) => {
+                        return {
+                            ...memo,
+                            [stockLocation.identifier]: {
+                                identifier: stockLocation.identifier,
+                                name: stockLocation.name || 'Unknown',
+                                stock: stockLocation.stock || 0,
+                            },
+                        };
+                    },
+                    {},
+                ) || {},
+            images: typedImages(variant.images),
+            attributes:
+                variant.attributes?.reduce((memo: Record<string, string>, attribute: ProductVariantAttribute) => {
+                    return {
+                        ...memo,
+                        [attribute.attribute]: attribute.value || '',
+                    };
+                }, {}) || {},
+        })) || [];
+
+    const defaultVariant = variants.find((variant) => variant.isDefault) || variants[0];
+
+    const dto: Product = {
+        id: data.id,
+        path: data.path!,
+        name: data.name!,
+        title: stringForSingleLineComponentWithId(data.components, 'title') || data.name!,
+        description: stringForRichTextComponentWithId(data.components, 'description') || data.name!,
+        story:
+            story?.map((paragraph) => {
+                return {
+                    title: paragraph.title?.text,
+                    body: paragraph.body?.json,
+                    images: typedImages(paragraph.images),
+                };
+            }) || [],
+        specifications:
+            sections?.map((section) => {
+                return {
+                    title: section.title || '',
+                    properties: section.properties || {},
+                };
+            }) || [],
+        dimensions: !firstDimensionsChunk
+            ? []
+            : firstDimensionsChunk.reduce(
+                  (
+                      memo: Record<
+                          string,
+                          {
+                              title: string;
+                              value: number;
+                              unit: string;
+                          }
+                      >,
+                      data: any,
+                  ) => {
+                      return {
+                          ...memo,
+                          [data.id]: {
+                              name: data.name,
+                              value: data.content.number || 0.0,
+                              unit: data.content.unit || '',
+                          },
+                      };
+                  },
+                  {},
+              ),
+        downloads:
+            downloads?.map((chunk) => {
+                const mapped = chunk.reduce((memo: Record<string, any>, data: any) => {
+                    let value = undefined;
+                    switch (data.type) {
+                        case 'singleLine':
+                            value = data.content.text || '';
+                            break;
+                        case 'richText':
+                            value = data.content.json || '';
+                            break;
+                        case 'files':
+                            value =
+                                data.content.files?.map((file: any) => {
+                                    return {
+                                        url: file.url,
+                                        title: file.title || '',
+                                    };
+                                }) || [];
+                            break;
+                    }
+                    return {
+                        ...memo,
+                        [data.id]: value,
+                    };
+                }, {});
+
+                return {
+                    title: mapped['title' as keyof typeof mapped] || '',
+                    description: mapped['description' as keyof typeof mapped],
+                    files: mapped['files' as keyof typeof mapped],
+                };
+            }) || [],
+        relatedItems:
+            relatedItems?.map((item) => {
+                return {
+                    name: item.name,
+                    path: item.path,
+                    defaultVariant: {
+                        price: item.defaultVariant.price,
+                        images: item.defaultVariant.images,
+                    },
+                };
+            }) || [],
+        topics:
+            data.topics?.map((topic) => {
+                return {
+                    name: topic.name,
+                    path: topic.path,
+                };
+            }) || [],
+        seo: !firstSeoChunk
+            ? {
+                  title: '',
+              }
+            : (firstSeoChunk.reduce(
+                  (memo: Record<string, string>, data: any) => {
+                      let value = undefined;
+                      switch (data.type) {
+                          case 'singleLine':
+                              value = data.content?.text || '';
+                              break;
+                          case 'richText':
+                              value = data.content?.plainText.join(' ');
+                              break;
+                          case 'images':
+                              value = data.content?.images?.[0]?.url;
+                              break;
+                      }
+                      return {
+                          ...memo,
+                          [data.id]: value,
+                      };
+                  },
+                  {
+                      title: '',
+                  },
+              ) as { title: string }),
+        vat: {
+            name: data.vatType?.name || 'Exempt.',
+            rate: data.vatType?.percent || 0.0,
+        },
+        variants,
+        defaultVariant,
+    };
+    return dto;
+}
