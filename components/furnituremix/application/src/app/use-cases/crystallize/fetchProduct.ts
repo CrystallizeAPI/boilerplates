@@ -326,8 +326,8 @@ export default async (apiClient: ClientInterface, path: string, version: string,
             version: version === 'draft' ? 'draft' : 'published',
         },
     );
-    console.log(mapToProduct(data.catalogue));
-    return data.catalogue;
+
+    return mapToProduct(data.catalogue);
 };
 
 function mapToProduct(data: APIProduct & Item & { components: any }): Product {
@@ -369,6 +369,7 @@ function mapToProduct(data: APIProduct & Item & { components: any }): Product {
                         ...memo,
                         [priceVariant.identifier]: {
                             identifier: priceVariant.identifier,
+                            price: priceVariant.price || 0.0,
                             value: priceVariant.price || 0.0,
                             currency: getCurrencyFromCode(priceVariant.currency || 'EUR'),
                             name: priceVariant.name || 'Unkonwn',
@@ -390,13 +391,7 @@ function mapToProduct(data: APIProduct & Item & { components: any }): Product {
                     {},
                 ) || {},
             images: typedImages(variant.images),
-            attributes:
-                variant.attributes?.reduce((memo: Record<string, string>, attribute: ProductVariantAttribute) => {
-                    return {
-                        ...memo,
-                        [attribute.attribute]: attribute.value || '',
-                    };
-                }, {}) || {},
+            attributes: variant.attributes,
         })) || [];
 
     const defaultVariant = variants.find((variant) => variant.isDefault) || variants[0];
@@ -425,42 +420,42 @@ function mapToProduct(data: APIProduct & Item & { components: any }): Product {
         dimensions: !firstDimensionsChunk
             ? []
             : firstDimensionsChunk.reduce(
-                  (
-                      memo: Record<
-                          string,
-                          {
-                              title: string;
-                              value: number;
-                              unit: string;
-                          }
-                      >,
-                      data: any,
-                  ) => {
-                      return {
-                          ...memo,
-                          [data.id]: {
-                              name: data.name,
-                              value: data.content.number || 0.0,
-                              unit: data.content.unit || '',
-                          },
-                      };
-                  },
-                  {},
-              ),
+                (
+                    memo: Record<
+                        string,
+                        {
+                            title: string;
+                            value: number;
+                            unit: string;
+                        }
+                    >,
+                    data: any,
+                ) => {
+                    return {
+                        ...memo,
+                        [data.id]: {
+                            name: data.name,
+                            value: data.content.number || 0.0,
+                            unit: data.content.unit || '',
+                        },
+                    };
+                },
+                {},
+            ),
         downloads:
             downloads?.map((chunk) => {
                 const mapped = chunk.reduce((memo: Record<string, any>, data: any) => {
                     let value = undefined;
                     switch (data.type) {
                         case 'singleLine':
-                            value = data.content.text || '';
+                            value = data.content?.text || '';
                             break;
                         case 'richText':
-                            value = data.content.json || '';
+                            value = data.content?.json || '';
                             break;
                         case 'files':
                             value =
-                                data.content.files?.map((file: any) => {
+                                data.content?.files?.map((file: any) => {
                                     return {
                                         url: file.url,
                                         title: file.title || '',
@@ -500,31 +495,31 @@ function mapToProduct(data: APIProduct & Item & { components: any }): Product {
             }) || [],
         seo: !firstSeoChunk
             ? {
-                  title: '',
-              }
+                title: '',
+            }
             : (firstSeoChunk.reduce(
-                  (memo: Record<string, string>, data: any) => {
-                      let value = undefined;
-                      switch (data.type) {
-                          case 'singleLine':
-                              value = data.content?.text || '';
-                              break;
-                          case 'richText':
-                              value = data.content?.plainText.join(' ');
-                              break;
-                          case 'images':
-                              value = data.content?.images?.[0]?.url;
-                              break;
-                      }
-                      return {
-                          ...memo,
-                          [data.id]: value,
-                      };
-                  },
-                  {
-                      title: '',
-                  },
-              ) as { title: string }),
+                (memo: Record<string, string>, data: any) => {
+                    let value = undefined;
+                    switch (data.type) {
+                        case 'singleLine':
+                            value = data.content?.text || '';
+                            break;
+                        case 'richText':
+                            value = data.content?.plainText.join(' ');
+                            break;
+                        case 'images':
+                            value = data.content?.images?.[0]?.url;
+                            break;
+                    }
+                    return {
+                        ...memo,
+                        [data.id]: value,
+                    };
+                },
+                {
+                    title: '',
+                },
+            ) as { title: string }),
         vat: {
             name: data.vatType?.name || 'Exempt.',
             rate: data.vatType?.percent || 0.0,

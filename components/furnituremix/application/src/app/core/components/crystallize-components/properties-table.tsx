@@ -6,10 +6,10 @@ export const PropertiesTable = ({ table }: { table: any }) => (
             <span>{table?.title}</span>
             <img src={`${Arrow}`} alt="Arrow" className="frntr-accordination-arrow w-[20px] h-[20px] mr-4" />
         </summary>
-        {table?.properties && table.properties.length > 0 && (
+        {table.properties && (
             <div className="rounded-md h-auto -mt-4 mb-10">
                 <div>
-                    {table.properties.map((property: any) => (
+                    {Object.values(table?.properties).map((property: any) => (
                         <div className="flex justify-between py-4 px-2 odd:bg-[#efefef]" key={property?.key}>
                             <p className="font-semibold text-md">{property?.key}</p>
                             <p className="text-md">{property?.value}</p>

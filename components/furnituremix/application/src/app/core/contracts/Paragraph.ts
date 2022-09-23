@@ -1,10 +1,10 @@
-import { RichText } from "./RichText";
-import { Image } from "./Image";
-import { Video } from "./Video";
+import { RichText } from './RichText';
+import { Image } from './Image';
+import { Video } from './Video';
 
 export type Paragraph = {
     title: string;
-    body: RichText
+    body: RichText;
     images: Image[];
     videos: Video[];
-}
+};

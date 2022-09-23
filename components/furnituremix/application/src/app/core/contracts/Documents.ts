@@ -1,8 +1,8 @@
-import { Image } from "./Image";
-import { RichText } from "./RichText";
-import { SEO } from "./SEO";
-import { Video } from "./Video";
-import { Paragraph } from "./Paragraph";
+import { Image } from './Image';
+import { RichText } from './RichText';
+import { SEO } from './SEO';
+import { Video } from './Video';
+import { Paragraph } from './Paragraph';
 
 export type Story = {
     id: string;
@@ -15,7 +15,7 @@ export type Story = {
     shape: string;
     media: Image[] | Video[];
     story: Paragraph[];
-    upNext: Array<any>
+    upNext: Array<any>;
     featuredProducts: Array<{
         name: string;
         path: string;
@@ -24,5 +24,5 @@ export type Story = {
             images: Image[];
         };
     }>;
-    seo: SEO,
-}
+    seo: SEO;
+};

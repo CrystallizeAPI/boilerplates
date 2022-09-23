@@ -43,18 +43,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default () => {
     const { product } = useLoaderData();
-    const primaryVariant = product.variants.find((v: any) => v.isDefault);
-    let [selectedVariant, setSelectedVariant] = useState(primaryVariant);
-    let title = product?.components?.find((component: any) => component.id === 'title')?.content?.text || product.name;
-    let description = product?.components?.find((component: any) => component.type === 'richText')?.content?.plainText;
+
+    let [selectedVariant, setSelectedVariant] = useState(product.defaultVariant);
     const onVariantChange = (variant: any) => setSelectedVariant(variant);
 
-    let relatedProducts = product?.components?.find((component: any) => component.id === 'related-items')?.content
-        ?.items;
-
     useEffect(() => {
-        setSelectedVariant(primaryVariant);
+        setSelectedVariant(product.defaultVariant);
     }, [product]);
+
     return (
         <>
             <script
@@ -69,14 +65,19 @@ export default () => {
                         <div className="img-container overflow-hidden rounded-md">
                             <ImageGallery images={selectedVariant?.images} />
                         </div>
-                        <ProductBody components={product?.components} />
+                        <ProductBody
+                            story={product?.story}
+                            propertiesTable={product?.specifications}
+                            dimension={product?.dimensions}
+                            downloads={product?.downloads}
+                        />
                     </div>
                     <div className="lg:w-2/6 w-full">
                         <div className="flex flex-col gap-2 sticky top-16 pb-10">
                             <div className="mb-2">{product.topics && <TopicLabels labels={product?.topics} />}</div>
                             <div className="pr-6 md:pr-6">
-                                <h1 className="font-bold text-4xl mb-2">{title}</h1>
-                                <p className="text-md font-normal">{description}</p>
+                                <h1 className="font-bold text-4xl mb-2">{product.title}</h1>
+                                <p className="text-md font-normal">{product.description}</p>
                             </div>
                             <VariantSelector
                                 variants={product.variants}
@@ -96,11 +97,11 @@ export default () => {
                     </div>
                 </div>
 
-                {relatedProducts && (
+                {product?.relatedItems.length > 0 && (
                     <div className="w-full border-t border-[#dfdfdf] pr-6 sm:pr-0">
                         <h3 className="font-bold mt-20 mb-4 text-xl">You might also be interested in</h3>
                         <div className="grid gap-5 grid-cols-2 grid md:grid-cols-4 lg:grid-cols-5 pb-5">
-                            {relatedProducts?.map((item: any, index: number) => (
+                            {product?.relatedItems?.map((item: any, index: number) => (
                                 <Product item={item} key={`${item?.id}-${index}`} />
                             ))}
                         </div>

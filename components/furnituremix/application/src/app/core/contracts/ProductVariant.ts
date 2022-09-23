@@ -10,5 +10,5 @@ export type ProductVariant = {
     priceVariants: Record<string, Price>;
     stockLocations: Record<string, StockLocation>;
     images: Image[];
-    attributes: Record<string, string>;
+    attributes: any;
 };

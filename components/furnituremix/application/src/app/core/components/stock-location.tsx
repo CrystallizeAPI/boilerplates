@@ -43,11 +43,13 @@ export const StockLocations = ({ locations }: { locations: any }) => {
     const [locationCountToShow, setLocationCountToShow] = useState(1);
     return (
         <div>
-            {locations?.slice(0, locationCountToShow).map((location: any) => (
-                <div key={location.identifier} className="flex pt-2 items-center gap-2 justify-between">
-                    <StockIndicators location={location} />
-                </div>
-            ))}
+            {Object.values(locations)
+                ?.slice(0, locationCountToShow)
+                .map((location: any) => (
+                    <div key={location.identifier} className="flex pt-2 items-center gap-2 justify-between">
+                        <StockIndicators location={location} />
+                    </div>
+                ))}
             {locations.length > 1 && (
                 <button
                     onClick={() =>

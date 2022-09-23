@@ -41,10 +41,7 @@ export function sectionsForPropertyTableComponentWithId(components: any[], id: s
     return component.sections.map((section: any) => {
         return {
             title: section.title,
-            properties: section.properties.reduce((memo: Record<string, string>, property: any) => {
-                memo[property.key] = property.value;
-                return memo;
-            }, {}),
+            properties: section.properties,
         };
     });
 }
