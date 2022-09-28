@@ -10,7 +10,6 @@ export const ProductBody: React.FC<{
     propertiesTable?: any;
     downloads?: any;
 }> = ({ story, dimension, propertiesTable, downloads }) => {
-    
     return (
         <>
             {story && <ParagraphCollection paragraphs={story} />}

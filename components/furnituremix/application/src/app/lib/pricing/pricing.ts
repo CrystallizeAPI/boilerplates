@@ -31,18 +31,18 @@ export default function displayPriceFor(
 
     let defaultPrice =
         Object.values(priceVariants)?.find(
-            (priceVariant: ProductPriceVariant) => priceVariant.identifier === identifiers.default,
-            // priceVariant.identifier === identifiers.default &&
-            // priceVariant?.currency?.toLocaleLowerCase() === currency.code?.toLocaleLowerCase(),
+            (priceVariant: ProductPriceVariant) =>
+                priceVariant.identifier === identifiers.default &&
+                priceVariant?.currency?.toLocaleLowerCase() === currency.code?.toLocaleLowerCase(),
         )?.price || 0;
 
     // if there is a forced discount we take it
     const discountedPrice = discount
         ? discount.amount
         : Object.values(priceVariants)?.find(
-              (priceVariant: ProductPriceVariant) => priceVariant.identifier === identifiers.discounted,
-              // priceVariant.identifier === identifiers.discounted &&
-              // priceVariant?.currency?.toLocaleLowerCase() === currency.code?.toLocaleLowerCase(),
+              (priceVariant: ProductPriceVariant) =>
+                  priceVariant.identifier === identifiers.discounted &&
+                  priceVariant?.currency?.toLocaleLowerCase() === currency.code?.toLocaleLowerCase(),
           )?.price || undefined;
 
     if (!discountedPrice) {

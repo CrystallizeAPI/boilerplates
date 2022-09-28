@@ -1,6 +1,5 @@
 import FileDownloadIcon from '~/assets/documentDownloadIcon.svg';
 import { ContentTransformer } from '@crystallize/reactjs-components/dist/content-transformer';
-import Arrow from '~/assets/arrow.svg';
 
 export const Files = ({ chunks }: { chunks: any }) => (
     <details className="border-t border-[#dfdfdf] hover:bg-[#fefefe] frntr-accordination min-h-fit" open>
