@@ -1,7 +1,5 @@
-import { Currency } from '~/lib/pricing/currencies';
-
 export type Price = {
-    currency: Currency;
+    currency: string;
     value: number;
     identifier: string;
     name: string;

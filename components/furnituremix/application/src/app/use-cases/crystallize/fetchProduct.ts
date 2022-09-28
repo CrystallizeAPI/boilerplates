@@ -371,7 +371,7 @@ function mapToProduct(data: APIProduct & Item & { components: any }): Product {
                             identifier: priceVariant.identifier,
                             price: priceVariant.price || 0.0,
                             value: priceVariant.price || 0.0,
-                            currency: getCurrencyFromCode(priceVariant.currency || 'EUR'),
+                            currency: getCurrencyFromCode(priceVariant.currency || 'EUR').code,
                             name: priceVariant.name || 'Unkonwn',
                         },
                     };

@@ -40,14 +40,8 @@ jobs:
 
       - uses: microsoft/playwright-github-action@v1
 
-      - name: Playwright
-        run: |
-          npx playwright install
-
       - name: 📥 Download deps
-        run: |
-          cd components/furnituremix && make install
+        run: cd components/furnituremix && make install
 
       - name: 🏄 Run the tests
-        run: |
-          cd components/furnituremix && make tests
+        run: cd components/furnituremix && make tests
