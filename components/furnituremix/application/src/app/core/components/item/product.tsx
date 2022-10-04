@@ -18,7 +18,6 @@ export const Product: React.FC<ItemViewComponentProps> = ({ item }) => {
         state.currency.code,
     );
     const attributes = item?.defaultVariant?.attributes || item?.attributes;
-
     return (
         <Link
             to={item.path}
@@ -33,18 +32,20 @@ export const Product: React.FC<ItemViewComponentProps> = ({ item }) => {
             <div className="img-container img-contain img-border border-solid border border-[#dfdfdf] aspect-[3/4] bg-[#fff] rounded-md h-full overflow-hidden grow-1">
                 <Image {...image} sizes="300px" loading="lazy" />
             </div>
-            <div className="pl-1">
-                <h3 className="text-md line-clamp-2 overflow-hidden">{name}</h3>
-            </div>
-            <div className="flex gap-3 my-2">
-                {attributes?.map((attribute: { attribute: string; value: string }) => (
-                    <div className="text-xs bg-grey py-1 px-3 rounded" key={attribute.value}>
-                        {attribute.value}
-                    </div>
-                ))}
-            </div>
-            <div className="pl-1">
-                <Price variant={item.defaultVariant} size="small" />
+
+            <div>
+                <h3 className="text-md line-clamp-2 overflow-hidden mt-2">{name}</h3>
+
+                <div className="flex gap-3 my-2">
+                    {attributes?.map((attribute: { attribute: string; value: string }) => (
+                        <div className="text-xs bg-grey py-1 px-3 rounded" key={attribute.value}>
+                            {attribute.value}
+                        </div>
+                    ))}
+                </div>
+                <div className="pl-1">
+                    <Price variant={item.defaultVariant} size="small" />
+                </div>
             </div>
         </Link>
     );
