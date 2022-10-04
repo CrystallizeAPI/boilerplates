@@ -52,6 +52,10 @@ export default async (apiClient: ClientInterface, path: string, version: any, la
                       ...on Product {
                         defaultVariant {
                           price
+                          attributes {
+                            value
+                            attribute
+                          }
                           priceVariants {
                             identifier
                             name
@@ -159,6 +163,10 @@ export default async (apiClient: ClientInterface, path: string, version: any, la
                                       id
                                       defaultVariant {
                                         price
+                                        attributes {
+                                            value
+                                            attribute
+                                        }
                                         priceVariants {
                                           identifier
                                           name

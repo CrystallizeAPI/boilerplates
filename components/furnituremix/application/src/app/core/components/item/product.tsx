@@ -18,6 +18,7 @@ export const Product: React.FC<ItemViewComponentProps> = ({ item }) => {
         state.currency.code,
     );
     const attributes = item?.defaultVariant?.attributes || item?.attributes;
+
     return (
         <Link
             to={item.path}
@@ -34,15 +35,17 @@ export const Product: React.FC<ItemViewComponentProps> = ({ item }) => {
             </div>
 
             <div>
-                <h3 className="text-md line-clamp-2 overflow-hidden mt-2">{name}</h3>
+                <h3 className="text-md line-clamp-2 overflow-hidden mt-2 pl-1">{name}</h3>
 
-                <div className="flex gap-3 my-2">
-                    {attributes?.map((attribute: { attribute: string; value: string }) => (
-                        <div className="text-xs bg-grey py-1 px-3 rounded" key={attribute.value}>
-                            {attribute.value}
-                        </div>
-                    ))}
-                </div>
+                {attributes?.length > 0 && (
+                    <div className="flex gap-3 my-2">
+                        {attributes?.map((attribute: { attribute: string; value: string }) => (
+                            <div className="text-xs bg-grey py-1 px-3 rounded" key={attribute.value}>
+                                {attribute.value}
+                            </div>
+                        ))}
+                    </div>
+                )}
                 <div className="pl-1">
                     <Price variant={item.defaultVariant} size="small" />
                 </div>
