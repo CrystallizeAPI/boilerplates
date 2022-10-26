@@ -1,0 +1,47 @@
+name: Furniture Remix CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  lint:
+    name: 💄 Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - uses: actionsx/prettier@v2
+        with:
+          # prettier CLI arguments.
+          args: --check ./components/furnituremix  --ignore-path ./components/furnituremix/.prettierignore  --config ./components/furnituremix/.prettierrc.json
+
+  test:
+    name: 🧪 Tests
+    runs-on: ubuntu-latest
+    needs: [lint]
+    strategy:
+      matrix:
+        node: [16, 18]
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - uses: microsoft/playwright-github-action@v1
+
+      - name: 📥 Download deps
+        run: cd components/furnituremix && make install
+
+      - name: 🏄 Run the tests
+        run: cd components/furnituremix && make tests

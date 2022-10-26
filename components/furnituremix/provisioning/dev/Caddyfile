@@ -1,0 +1,9 @@
+*.superfast.local {
+    push
+    @websockets {
+        header Connection *Upgrade*
+        header Upgrade websocket
+    }
+    reverse_proxy @websockets localhost:3019
+    reverse_proxy 127.0.0.1:3018
+}

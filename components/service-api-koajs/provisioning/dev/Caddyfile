@@ -1,0 +1,4 @@
+*.sapi.superfast.crystal {
+    tls ./provisioning/dev/certs/domains.pem ./provisioning/dev/certs/key.pem 
+    reverse_proxy 127.0.0.1:3020
+}

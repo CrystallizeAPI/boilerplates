@@ -14,16 +14,18 @@ All contributions will happen here:
 
 | Boilerplates | Licence(s) |
 | ------------ | ---------- |
+| [Furniture Remix (WiP)](https://github.com/CrystallizeAPI/furniture-remix) | ![MIT] |
+| [Service API - KOAJS (WiP)](https://github.com/CrystallizeAPI/service-api-koajs) | ![MIT] |
 | [Next JS](https://github.com/CrystallizeAPI/crystallize-nextjs-boilerplate) | ![MIT] |
 | [Remix Boilerplate](https://github.com/CrystallizeAPI/product-storytelling-examples) | ![MIT] |
+| [Conference](https://github.com/CrystallizeAPI/conference-boilerplate) | ![MIT] |
+| [Content Commerce](https://github.com/CrystallizeAPI/content-commerce-boilerplate) | ![MIT] |
+| [Service API](https://github.com/CrystallizeAPI/service-api-boilerplate) | ![MIT] |
 | [Nuxt JS](https://github.com/CrystallizeAPI/crystallize-nuxtjs-boilerplate) | ![MIT] |
-| [Flutter](https://github.com/CrystallizeAPI/crystallize-flutter-boilerplate) | ![MIT] |
 | [Gatsby](https://github.com/CrystallizeAPI/crystallize-gatsby-boilerplate) | ![MIT] |
 | [SaaS](https://github.com/CrystallizeAPI/crystallize-saas-boilerplate) | ![MIT] |
-| [Content Commerce](https://github.com/CrystallizeAPI/content-commerce-boilerplate) | ![MIT] |
-| [Conference](https://github.com/CrystallizeAPI/conference-boilerplate) | ![MIT] |
 | [React Native](https://github.com/CrystallizeAPI/crystallize-react-native-boilerplate) | ![MIT] |
-| [Service API](https://github.com/CrystallizeAPI/service-api-boilerplate) | ![MIT] |
+| [Flutter](https://github.com/CrystallizeAPI/crystallize-flutter-boilerplate) | ![MIT] |
 
 ## Contributions
 
