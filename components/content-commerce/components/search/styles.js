@@ -40,7 +40,7 @@ export const SearchWrapper = styled.div`
   transform: ${(p) => (p.isOpen ? "translateY(-0)" : "translateY(-100%)")};
   opacity: ${(p) => (p.isOpen ? "1" : "0")};
   transition: all 0.2s ease-in-out;
-  max-height: 100vh;
+  max-height: calc(var(--vh) * 100);
   ${({ theme }) => theme.responsive.smAndLess} {
     padding: 0 25px;
   } ;

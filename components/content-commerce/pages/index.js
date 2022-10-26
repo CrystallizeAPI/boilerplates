@@ -8,7 +8,7 @@ import Meta from "components/meta";
 
 const Outer = styled.div`
   background: #fff;
-  min-height: 100vh;
+  min-height: calc(var(--vh) * 100);
   padding: 150px 0;
 `;
 

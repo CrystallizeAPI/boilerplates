@@ -4,7 +4,7 @@ import { Image } from "@crystallize/react-image";
 import Video from "components/video";
 
 const StyledVideo = styled(Video)`
-  height: 100vh !important;
+  height: calc(var(--vh) * 100) !important;
   display: flex;
 
   > * {

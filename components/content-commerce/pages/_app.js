@@ -1,10 +1,12 @@
 import Head from "next/head";
+import { useState } from "react";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { DefaultSeo } from "next-seo";
 
 import { screen } from "ui/screen";
 import { responsive } from "ui/responsive";
 import { AuthProvider } from "components/auth";
+import { useEffect } from "react";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -54,6 +56,22 @@ export default function App({ Component, pageProps }) {
     // }
   };
 
+  // Expose 1vh unit as 1% of innerHeight, cap to screen.availHeight.
+  const [vh, setVh] = useState(1000);
+  useEffect(() => {
+    function set() {
+      let height = window.innerHeight;
+      if (height > window.screen.availHeight) {
+        height = window.screen.availHeight;
+      }
+      setVh(height / 100);
+    }
+    set();
+
+    addEventListener("resize", set);
+    return () => removeEventListener("resize", set);
+  }, []);
+
   return (
     <>
       <Head>
@@ -66,7 +84,9 @@ export default function App({ Component, pageProps }) {
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <AuthProvider>
-          <Component {...pageProps} />
+          <div style={{ "--vh": `${vh}px` }}>
+            <Component {...pageProps} />
+          </div>
         </AuthProvider>
       </ThemeProvider>
     </>
