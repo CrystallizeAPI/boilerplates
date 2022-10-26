@@ -374,7 +374,7 @@ export default function Story({ data }) {
     const features = product?.features?.content?.sections;
     const description = product?.description;
     const relatedProducts = product?.relatedProducts?.content?.items;
-    console.log({ relatedProducts });
+  
     const meta = {
         title: name,
         description: toText(product?.summary?.content?.json),
