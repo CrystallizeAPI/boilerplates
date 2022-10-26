@@ -6,7 +6,7 @@ import { useIntersectionObserver } from "lib/intersection-observer";
 import Media from "./media";
 
 const Outer = styled.section`
-  height: 100vh;
+  height: calc(var(--vh) * 100);
   overflow-y: auto;
   position: relative;
   scroll-snap-align: start;
@@ -47,7 +47,7 @@ const ContentWrapper = styled.div`
   width: 100%;
 `;
 
-export default function Section({ children, images, videos, nolazy }) {
+export default function Section({ children, images, videos, nolazy, first }) {
   const ref = useRef();
   const intersectionEntry = useIntersectionObserver(ref, {
     threshold: 0.2,
@@ -56,7 +56,7 @@ export default function Section({ children, images, videos, nolazy }) {
   const show = intersectionEntry?.intersectionRatio > 0.5;
 
   return (
-    <Outer ref={ref}>
+    <Outer ref={ref} data-ratio={intersectionEntry?.intersectionRatio}>
       <CoverMedia $show={show}>
         <Media images={images} videos={videos} show={show} nolazy={nolazy} />
       </CoverMedia>

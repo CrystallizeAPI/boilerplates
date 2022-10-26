@@ -7,7 +7,7 @@ import Meta from "components/meta";
 
 const Outer = styled.section`
   background: #fff;
-  min-height: 100vh;
+  min-height: calc(var(--vh) * 100);
 `;
 const Inner = styled.div`
   display: grid;
