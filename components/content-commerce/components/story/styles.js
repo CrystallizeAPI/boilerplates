@@ -3,7 +3,7 @@ import styled from "styled-components";
 const contentMaxWidth = "550px";
 
 export const ScrollWrapper = styled.div`
-  height: 100vh;
+  height: calc(var(--vh) * 100);
   overflow: hidden;
   position: relative;
 `;
@@ -47,15 +47,15 @@ export const Lead = styled.div`
 
 export const Outer = styled.div(
   ({ center }) => `
-  height:100vh;
+  height:calc(var(--vh) * 100);
   overflow: auto;
   scroll-snap-type: mandatory;
-  scroll-snap-points-y: repeat(100vh);
+  scroll-snap-points-y: repeat(calc(var(--vh) * 100));
   scroll-snap-type: y mandatory;
   ${
     center &&
     `
-    height: 100vh;
+    height: calc(var(--vh) * 100);
     display: flex;
     align-items: center;
     justify-content: center;

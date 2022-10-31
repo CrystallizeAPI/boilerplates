@@ -6,7 +6,7 @@ export const Outer = styled.div`
   justify-content: center;
   align-items: center;
   background: #fff;
-  min-height: 100vh;
+  min-height: calc(var(--vh) * 100);
 `;
 
 export const LoginStyle = styled.div`

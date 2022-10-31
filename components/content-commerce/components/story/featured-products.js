@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
-import Product from 'components/microformats/product'
+import Product from "components/microformats/product";
 
 const Outer = styled.div`
-  min-height: 100vh;
+  min-height: calc(var(--vh) * 100);
   padding: 50px 25px;
   background-size: 10px 10px;
   background: #fff;
@@ -13,7 +13,7 @@ const Outer = styled.div`
     scroll-snap-align: end;
     padding: 100px;
   }
-`
+`;
 const Inner = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -26,7 +26,7 @@ const Inner = styled.div`
   ${({ theme }) => theme.responsive.sm} {
     grid-template-columns: 1fr 1fr 1fr;
   }
-`
+`;
 const H2 = styled.h2`
   font-size: 24px;
   margin: 100px 0 50px;
@@ -36,7 +36,7 @@ const H2 = styled.h2`
     font-size: 45px;
     margin: 100px 0;
   }
-`
+`;
 
 const FeaturedProducts = ({ products }) => (
   <Outer>
@@ -47,6 +47,6 @@ const FeaturedProducts = ({ products }) => (
       ))}
     </Inner>
   </Outer>
-)
+);
 
-export default FeaturedProducts
+export default FeaturedProducts;

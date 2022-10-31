@@ -23,6 +23,7 @@ const stitches = createCss({
   media: {
     bp1: "(min-width: 640px)",
     bp2: "(min-width: 768px)",
+    bp2_max: "(max-width: 767px)",
     bp3: "(max-width: 1024px)",
     bp4: "(min-width: 1280px)",
     bp5: "(max-width: 420px)",

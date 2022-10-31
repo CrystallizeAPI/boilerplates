@@ -310,7 +310,7 @@ export default function Story({ data, isExclusivePath }) {
                         !!featuredProducts && (
                           <FeaturedProducts products={featuredProducts} />
                         )}
-                      <Section images={images} videos={videos}>
+                      <Section images={images} videos={videos} first={i === 0}>
                         <Content mirror={i % 2}>
                           <ContentInner>
                             <SectionHeading>{title?.text}</SectionHeading>

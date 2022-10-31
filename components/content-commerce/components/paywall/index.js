@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import Illustration from "./illustration";
 const Outer = styled.section`
-  height: 100vh;
+  height: calc(var(--vh) * 100);
   overflow-y: auto;
   position: relative;
   scroll-snap-align: start;
