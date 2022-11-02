@@ -2,6 +2,10 @@ import { RichText } from './RichText';
 import { Topic } from './Topic';
 import { Image } from './Image';
 import { ProductVariant } from './ProductVariant';
+import { CrystallizePropertiesTable } from './PropertiesTable';
+import { Dimensions } from './Dimensions';
+import { FileDownload } from './Files';
+import { RelatedItem } from './RelatedItem';
 
 export type Product = {
     id: string;
@@ -14,34 +18,10 @@ export type Product = {
         body?: RichText;
         images: Image[];
     }>;
-    specifications: Array<{
-        title: string;
-        properties: Record<string, string>;
-    }>;
-    dimensions: Record<
-        string,
-        {
-            title: string;
-            value: number;
-            unit: string;
-        }
-    >;
-    downloads: Array<{
-        title: string;
-        description?: RichText;
-        files: Array<{
-            title: string;
-            url: string;
-        }>;
-    }>;
-    relatedItems: Array<{
-        name: string;
-        path: string;
-        defaultVariant: {
-            price: number;
-            images: Image[];
-        };
-    }>;
+    specifications: Array<CrystallizePropertiesTable>;
+    dimensions: Dimensions;
+    downloads: Array<FileDownload>;
+    relatedItems: Array<RelatedItem>;
     topics: Array<Topic>;
     seo: {
         title: string;

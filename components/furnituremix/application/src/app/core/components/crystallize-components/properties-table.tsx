@@ -1,6 +1,7 @@
 import Arrow from '~/assets/arrow.svg';
+import { CrystallizePropertiesTable } from '~/core/contracts/PropertiesTable';
 
-export const PropertiesTable = ({ table }: { table: any }) => (
+export const PropertiesTable = ({ table }: { table: CrystallizePropertiesTable }) => (
     <details className="border-t border-[#dfdfdf] mt-20 hover:bg-[#fefefe] frntr-accordination" open>
         <summary className="font-bold text-2xl py-10 flex items-center justify-between w-full">
             <span>{table?.title}</span>

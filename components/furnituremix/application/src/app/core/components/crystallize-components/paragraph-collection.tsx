@@ -1,6 +1,8 @@
 import { ContentTransformer } from '@crystallize/reactjs-components/dist/content-transformer';
+import { Paragraph } from '~/core/contracts/Paragraph';
 import { ImageGallery } from '../image-gallery';
-export const ParagraphCollection = ({ paragraphs }: { paragraphs: any }) => {
+
+export const ParagraphCollection = ({ paragraphs }: { paragraphs: Paragraph[] }) => {
     return (
         <>
             {paragraphs?.map((paragraph: any, index: number) => (

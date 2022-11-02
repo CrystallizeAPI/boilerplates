@@ -1,7 +1,8 @@
 import FileDownloadIcon from '~/assets/documentDownloadIcon.svg';
 import { ContentTransformer } from '@crystallize/reactjs-components/dist/content-transformer';
+import { FileDownload } from '~/core/contracts/Files';
 
-export const Files = ({ chunks }: { chunks: any }) => (
+export const Files = ({ chunks }: { chunks: FileDownload[] }) => (
     <details className="border-t border-[#dfdfdf] hover:bg-[#fefefe] frntr-accordination min-h-fit" open>
         <div className="grid gap-5 grid-col-1 sm:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 h-auto -mt-4 mb-10">
             {chunks.map((chunk: any, index: number) => {

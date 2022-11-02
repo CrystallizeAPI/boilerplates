@@ -18,6 +18,7 @@ import { buildMetas } from '~/core/MicrodataBuilder';
 import { AddToCartBtn } from '~/core/components/add-to-cart-button';
 import { buildSchemaMarkup } from '~/core/SchemaMarkupBuilder';
 import { getHost } from '~/core-server/http-utils.server';
+import { Product as ProductType } from '~/core/contracts/Product';
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
     return HttpCacheHeaderTaggerFromLoader(loaderHeaders).headers;
@@ -42,7 +43,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 export default () => {
-    const { product } = useLoaderData();
+    const { product } = useLoaderData() as { product: ProductType };
 
     let [selectedVariant, setSelectedVariant] = useState(product.defaultVariant);
     const onVariantChange = (variant: any) => setSelectedVariant(variant);

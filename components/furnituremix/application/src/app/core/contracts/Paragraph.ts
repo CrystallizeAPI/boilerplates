@@ -6,5 +6,5 @@ export type Paragraph = {
     title: string;
     body: RichText;
     images: Image[];
-    videos: Video[];
+    videos?: Video[];
 };

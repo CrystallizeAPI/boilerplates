@@ -3,12 +3,15 @@ import { ParagraphCollection } from './crystallize-components/paragraph-collecti
 import { PropertiesTable } from './crystallize-components/properties-table';
 import { Files } from '~/core/components/crystallize-components/files';
 import { Paragraph } from '../contracts/Paragraph';
+import { Dimensions } from '../contracts/Dimensions';
+import { CrystallizePropertiesTable } from '../contracts/PropertiesTable';
+import { FileDownload } from '../contracts/Files';
 
 export const ProductBody: React.FC<{
     story?: Paragraph[];
     dimension?: any;
-    propertiesTable?: any;
-    downloads?: any;
+    propertiesTable?: CrystallizePropertiesTable[];
+    downloads?: FileDownload[];
 }> = ({ story, dimension, propertiesTable, downloads }) => {
     return (
         <>
@@ -17,7 +20,7 @@ export const ProductBody: React.FC<{
                 {propertiesTable &&
                     propertiesTable.map((table: any, index: number) => <PropertiesTable table={table} key={index} />)}
                 {dimension.length > 0 && <DimensionsTable dimensions={dimension} />}
-                {downloads.length > 0 && <Files chunks={downloads} />}
+                {downloads!.length > 0 && <Files chunks={downloads!} />}
             </div>
         </>
     );

@@ -1,6 +1,7 @@
 import Arrow from '~/assets/arrow.svg';
+import { Dimensions } from '~/core/contracts/Dimensions';
 
-export const DimensionsTable = ({ dimensions }: { dimensions: any }) => (
+export const DimensionsTable = ({ dimensions }: { dimensions: Dimensions }) => (
     <details className="border-t border-[#dfdfdf] hover:bg-[#fefefe] frntr-accordination" open>
         <summary className="font-bold text-2xl py-10 flex items-center justify-between w-full">
             <span>Dimensions</span>
