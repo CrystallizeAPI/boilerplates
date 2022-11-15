@@ -1,12 +1,9 @@
-import {
-    HttpCacheHeaderTaggerFromLoader,
-    StoreFrontAwaretHttpCacheHeaderTagger,
-} from '~/core-server/http-cache.server';
+import { HttpCacheHeaderTaggerFromLoader, StoreFrontAwaretHttpCacheHeaderTagger } from '~/use-cases/http/cache';
 import { HeadersFunction, json, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { getStoreFront } from '~/core-server/storefront.server';
 import { buildMetas } from '~/core/MicrodataBuilder';
-import { getContext } from '~/core-server/http-utils.server';
+import { getContext } from '~/use-cases/http/utils';
 import PageRenderer from '~/core/pages/index';
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -14,7 +11,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 };
 
 export let meta: MetaFunction = ({ data }) => {
-    return buildMetas(data);
+    return buildMetas(data.data);
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {

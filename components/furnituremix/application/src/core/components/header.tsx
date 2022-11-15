@@ -1,47 +1,23 @@
 import UserIcon from '~/assets/userIcon.svg';
-import { Link, useLocation } from '@remix-run/react';
+import Link from '~/bridge/Link';
 import { SearchBar } from './search';
 import { BasketButton } from './basket-button';
 import { TopicNavigation } from './topic-navigation';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '../app-context/provider';
 import { Image } from '@crystallize/reactjs-components';
-import { ProductVariant } from '@crystallize/js-api-client';
 import { Price } from './price';
 import { LanguageSwitcher } from './language-switcher';
+import { Tree } from '../../use-cases/contracts/Tree';
+import { TenantLogo } from '~/core/lib/tenant-logo';
+import useLocation from '~/bridge/useLocation';
 
-function TenantLogo({ identifier, logo }: { identifier: string; logo: any }) {
-    if (logo.key === 'superfast-originated-logo') {
-        return (
-            <img
-                src={logo.url}
-                width="150"
-                height="30"
-                alt={identifier + ` logo`}
-                style={{
-                    width: 'auto',
-                    height: '100%',
-                }}
-                loading="eager"
-            />
-        );
-    }
-    return (
-        <Image
-            {...logo}
-            sizes="150px"
-            alt={identifier + ` logo`}
-            className="w-auto h-full"
-            style={{
-                width: 'auto',
-                height: '100%',
-            }}
-            loading="eager"
-        />
-    );
-}
-
-export const Header: React.FC<{ navigation: any }> = ({ navigation }) => {
+export const Header: React.FC<{
+    navigation: {
+        folders: Tree[];
+        topics: Tree[];
+    };
+}> = ({ navigation }) => {
     const { state: appContextState, dispatch: appContextDispatch, path } = useAppContext();
     let checkoutFlow = ['/cart', '/checkout', '/confirmation'];
     let [isOpen, setIsOpen] = useState(false);
@@ -72,7 +48,7 @@ export const Header: React.FC<{ navigation: any }> = ({ navigation }) => {
             {appContextState.latestAddedCartItems.length > 0 && (
                 <div className="border-[#dfdfdf] border rounded-md shadow fixed max-w-full sm:top-2 sm:right-2 bg-[#fff]  z-[60]  p-6">
                     <p className="font-bold text-md mb-3 pb-2">Added product(s) to cart</p>
-                    {appContextState.latestAddedCartItems.map((item: ProductVariant, index: number) => {
+                    {appContextState.latestAddedCartItems.map((item, index) => {
                         return (
                             <div className="flex p-3 mt-1 items-center bg-grey2 gap-3" key={index}>
                                 <div className="max-w-[35px] max-h-[50px] img-container img-contain">
@@ -80,9 +56,9 @@ export const Header: React.FC<{ navigation: any }> = ({ navigation }) => {
                                 </div>
                                 <div>
                                     <p className="text-sm">{item.name}</p>
-                                    <p className="text-sm font-bold">
+                                    <div className="text-sm font-bold">
                                         <Price variant={item} size="small" />
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         );
@@ -143,11 +119,11 @@ export const Header: React.FC<{ navigation: any }> = ({ navigation }) => {
                                         } top-10 mt-5 bg-[#fff] w-full right-0 left-0 z-50 h-screen fixed left-0 bottom-0 px-10 py-10`}
                                     >
                                         <SearchBar />
-                                        {navigation?.folders?.tree?.children
-                                            .filter((item: any) => {
+                                        {navigation.folders
+                                            .filter((item) => {
                                                 return (
-                                                    item.__typename === 'Folder' &&
-                                                    item.children?.length > 0 &&
+                                                    item.type === 'folder' &&
+                                                    item.children.length > 0 &&
                                                     !item.name.startsWith('_')
                                                 );
                                             })

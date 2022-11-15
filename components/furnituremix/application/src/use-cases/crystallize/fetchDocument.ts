@@ -3,7 +3,8 @@ import { ClientInterface } from '@crystallize/js-api-client';
 export default async (apiClient: ClientInterface, path: string, version: string, language: string) => {
     return (
         await apiClient.catalogueApi(
-            `query ($language: String!, $path: String!, $version: VersionLabel) {
+            `#graphql
+query ($language: String!, $path: String!, $version: VersionLabel) {
     catalogue(path: $path, language: $language, version: $version) {
       ... on Item {
         name
@@ -58,6 +59,8 @@ export default async (apiClient: ClientInterface, path: string, version: string,
             ...on ContentChunkContent {
               chunks {
                 id
+                name
+                type
                 content {
                   ... on SingleLineContent {
                     text
@@ -74,7 +77,15 @@ export default async (apiClient: ClientInterface, path: string, version: string,
                       ...on Product {
                         id
                         defaultVariant {
-                          price
+                            id
+                            name
+                            sku
+                          priceVariants {
+                            identifier
+                            name
+                            price
+                            currency
+                        }
                           firstImage {
                             url
                             altText
@@ -83,6 +94,11 @@ export default async (apiClient: ClientInterface, path: string, version: string,
                               width
                               height
                             }
+                          }
+                        stockLocations {
+                            identifier
+                            name
+                            stock
                           }
                         }
                         variants {
@@ -156,6 +172,12 @@ export default async (apiClient: ClientInterface, path: string, version: string,
                 path
                 ...on Product {
                   defaultVariant {
+                    priceVariants {
+                        identifier
+                        name
+                        price
+                        currency
+                    }
                     images {
                       variants {
                         url

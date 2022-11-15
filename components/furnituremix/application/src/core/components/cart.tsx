@@ -1,10 +1,10 @@
-import { Link } from '@remix-run/react';
+import Link from '~/bridge/Link';
 import { useRemoteCart } from '../hooks/useRemoteCart';
 import { ClientOnly } from '@crystallize/reactjs-hooks';
 import { useLocalCart } from '../hooks/useLocalCart';
 import { Image } from '@crystallize/reactjs-components/dist/image';
 import trashIcon from '~/assets/trashIcon.svg';
-import { Price as CrystallizePrice } from '~/lib/pricing/pricing-component';
+import { Price as CrystallizePrice } from '~/core/lib/pricing/pricing-component';
 import { useAppContext } from '../app-context/provider';
 import { CartItemPrice } from './price';
 import { CartItem } from '@crystallize/node-service-api-request-handlers';
@@ -111,7 +111,6 @@ export const HydratedCart: React.FC = () => {
                     {cart &&
                         cart.items.map((item: CartItem, index: number) => {
                             const saving = savings[item.variant.sku]?.quantity > 0 ? savings[item.variant.sku] : null;
-                            console.log(item);
                             return (
                                 <div
                                     key={index}
@@ -134,7 +133,11 @@ export const HydratedCart: React.FC = () => {
                                             <button
                                                 className="font-semibold w-[25px] h-[25px] rounded-sm"
                                                 onClick={() => {
-                                                    addToCart(item.variant);
+                                                    addToCart({
+                                                        sku: item.variant.sku,
+                                                        name: item.variant.name!,
+                                                        price: item.variant.price!,
+                                                    });
                                                 }}
                                             >
                                                 {' '}
@@ -166,29 +169,23 @@ export const HydratedCart: React.FC = () => {
                         <div className="flex flex-col gap-2 border-b-2 border-grey4 py-4 items-end">
                             <div className="flex text-grey3 text-sm justify-between w-60">
                                 <p>{_t('cart.discount')}</p>
-                                <p>
-                                    <CrystallizePrice currencyCode={contextState.currency.code}>
-                                        {total.discounts.reduce((memo: number, discount: any) => {
-                                            return memo + discount?.amount || 0;
-                                        }, 0)}
-                                    </CrystallizePrice>
-                                </p>
+                                <CrystallizePrice currencyCode={contextState.currency.code}>
+                                    {total.discounts.reduce((memo: number, discount: any) => {
+                                        return memo + discount?.amount || 0;
+                                    }, 0)}
+                                </CrystallizePrice>
                             </div>
                             <div className="flex text-grey3 text-sm justify-between w-60">
                                 <p>{_t('cart.taxAmount')}</p>
-                                <p>
-                                    <CrystallizePrice currencyCode={contextState.currency.code}>
-                                        {total.taxAmount}
-                                    </CrystallizePrice>
-                                </p>
+                                <CrystallizePrice currencyCode={contextState.currency.code}>
+                                    {total.taxAmount}
+                                </CrystallizePrice>
                             </div>
                             <div className="flex font-bold mt-2 text-lg justify-between w-60 items-end">
                                 <p>{_t('cart.toPay')}</p>
-                                <p>
-                                    <CrystallizePrice currencyCode={contextState.currency.code}>
-                                        {total.gross}
-                                    </CrystallizePrice>
-                                </p>
+                                <CrystallizePrice currencyCode={contextState.currency.code}>
+                                    {total.gross}
+                                </CrystallizePrice>
                             </div>
                         </div>
                     )}

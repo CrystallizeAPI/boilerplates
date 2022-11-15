@@ -2,21 +2,18 @@ import { HeadersFunction, LoaderFunction } from '@remix-run/node';
 import { useEffect, useState } from 'react';
 import { MagickLoginForm } from '~/core/components/checkout-forms/magicklogin';
 import { useAuth } from '~/core/hooks/useAuth';
-import {
-    HttpCacheHeaderTaggerFromLoader,
-    StoreFrontAwaretHttpCacheHeaderTagger,
-} from '~/core-server/http-cache.server';
+import { HttpCacheHeaderTaggerFromLoader, StoreFrontAwaretHttpCacheHeaderTagger } from '~/use-cases/http/cache';
 import { getStoreFront } from '~/core-server/storefront.server';
 import { ServiceAPI } from '~/use-cases/service-api';
-import { Price } from '~/lib/pricing/pricing-component';
+import { Price } from '~/core/lib/pricing/pricing-component';
 import DefaultImage from '~/assets/defaultImage.svg';
 import { useAppContext } from '~/core/app-context/provider';
-import { getContext } from '~/core-server/http-utils.server';
+import { getContext } from '~/use-cases/http/utils';
 import { ClientOnly } from '@crystallize/reactjs-hooks';
 import DownloadIcon from '~/assets/downloadIcon.svg';
 import { useLoaderData } from '@remix-run/react';
 import { isAuthenticated as isServerSideAuthenticated } from '~/core-server/authentication.server';
-import { privateJson } from '~/core-server/privateJson.server';
+import { privateJson } from '~/bridge/privateJson.server';
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
     return HttpCacheHeaderTaggerFromLoader(loaderHeaders).headers;

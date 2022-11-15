@@ -1,11 +1,9 @@
-import ProductPage, { fetchData as ProductFetchData, Product } from './Product';
+import ProductPage, { fetchData as ProductFetchData } from './Product';
 import CategoryPage, { fetchData as CategoryFetchData } from './Category';
 import TopicPage, { fetchData as TopicFetchData } from './Topic';
-import CuratedStoryPage, { fetchData as CuratedStoryFetchData } from './CuratedStory';
-import StoryPage, { fetchData as StoryFetchData } from './Story';
 import AbstractStoryPage, { fetchData as AbstractFetchData } from './AbstractStory';
 import LandingPagePage, { fetchData as LandingPageFetchData } from './LandingPage';
-import { RequestContext } from '~/core-server/http-utils.server';
+import { RequestContext } from '~/use-cases/http/utils';
 
 export type PageRenderer<T> = {
     component: React.FunctionComponent<{ data: T }>;
@@ -27,13 +25,9 @@ const createPageRenderer = () => {
         resolve: (shapeIdentifier: string, request?: RequestContext, params?: any) => {
             switch (shapeIdentifier) {
                 case 'product':
-                    return buildRenderer<Product>(ProductPage, ProductFetchData);
+                    return buildRenderer<any>(ProductPage, ProductFetchData);
                 case 'category':
                     return buildRenderer<any>(CategoryPage, CategoryFetchData);
-                case 'story':
-                    return buildRenderer<any>(StoryPage, StoryFetchData);
-                case 'curated-product-story':
-                    return buildRenderer<any>(CuratedStoryPage, CuratedStoryFetchData);
                 case 'abstract-story':
                     return buildRenderer<any>(AbstractStoryPage, AbstractFetchData);
                 case '_topic':

@@ -28,11 +28,11 @@ import { buildStoreFrontConfiguration, getStoreFront } from './core-server/store
 import { CrystallizeAPI } from './use-cases/crystallize';
 import { AppContextProvider, useAppContext } from './core/app-context/provider';
 import { CrystallizeProvider } from '@crystallize/reactjs-hooks';
-import { StoreFrontAwaretHttpCacheHeaderTagger } from './core-server/http-cache.server';
-import { getContext } from './core-server/http-utils.server';
+import { StoreFrontAwaretHttpCacheHeaderTagger } from './use-cases/http/cache';
+import { getContext } from './use-cases/http/utils';
 import { FAVICON_VARIANTS } from './routes/$langMarket/favicon/$size[.png]';
 import { CatchBoundaryComponent } from '@remix-run/react/dist/routeModules';
-import { StoreFrontConfiguration } from './core/contract/StoreFrontConfiguration';
+import { StoreFrontConfiguration } from './use-cases/contracts/StoreFrontConfiguration';
 import {
     availableLanguages,
     buildLanguageMarketAwareLink,
@@ -40,6 +40,8 @@ import {
     isValidLanguageMarket,
 } from './core/LanguageAndMarket';
 import fetchTranslations from './use-cases/fetchTranslations.server';
+import { Tree } from './use-cases/contracts/Tree';
+import { Footer as FooterType } from './use-cases/contracts/Footer';
 
 export const meta: MetaFunction = () => {
     return {
@@ -87,11 +89,11 @@ export let loader: LoaderFunction = async ({ request }) => {
         apiClient: secret.apiClient,
         language: requestContext.language,
     });
-    const [folders, topics, tenantConfig, translations] = await Promise.all([
+    const [navigation, tenantConfig, translations, footer] = await Promise.all([
         api.fetchNavigation('/'),
-        api.fetchTopicNavigation('/'),
         api.fetchTenantConfig(secret.config.tenantIdentifier),
         fetchTranslations(requestContext.language),
+        api.fetchFooter('/footer'),
     ]);
 
     const apiPath = buildLanguageMarketAwareLink('/api', requestContext.language, requestContext.market);
@@ -107,12 +109,10 @@ export let loader: LoaderFunction = async ({ request }) => {
             isHTTPS: requestContext.isSecure,
             host: requestContext.host,
             frontConfiguration,
-            navigation: {
-                folders,
-                topics,
-            },
+            navigation,
             baseUrl: requestContext.baseUrl,
             translations,
+            footer,
         },
         {
             headers: {
@@ -126,11 +126,15 @@ export let loader: LoaderFunction = async ({ request }) => {
 
 type LoaderData = {
     frontConfiguration: StoreFrontConfiguration;
-    navigation: any;
+    navigation: {
+        folders: Tree[];
+        topics: Tree[];
+    };
     isHTTPS: boolean;
     host: string;
     translations: any;
     baseUrl: string;
+    footer: FooterType;
 };
 
 const Document: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -201,7 +205,8 @@ const Favicons: React.FC = () => {
 };
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { navigation } = useLoaderData<LoaderData>();
+    const { navigation, footer } = useLoaderData<LoaderData>();
+
     return (
         <>
             <header className="2xl w-full mx-auto lg:p-8 lg:px-6">
@@ -210,8 +215,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div>
                 <div>{children}</div>
             </div>
-            <footer className="2xl w-full mx-auto lg:p-8 lg:px-6">
-                <Footer />
+            <footer className="2xl w-full mx-auto">
+                <Footer footer={footer} />
             </footer>
         </>
     );

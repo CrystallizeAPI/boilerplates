@@ -1,6 +1,6 @@
-import { Grid as BaseGrid } from '~/lib/grid-tile/grid';
-import { Product } from '~/core/components/item/product';
-import { Document } from '~/core/components/item/document';
+import { Grid as BaseGrid } from '~/core/lib/grid-tile/grid';
+import { ProductFromCell } from '~/core/components/item/product';
+import { DocumentFromCell } from '~/core/components/item/document';
 import { Banner } from '~/core/components/tiles/banner';
 import { Embed } from '~/core/components/tiles/embed';
 import { Slider } from '~/core/components/tiles/slider';
@@ -14,8 +14,8 @@ const tileMapping = {
     heroslider: HeroSlider,
 };
 const itemMapping = {
-    product: Product,
-    document: Document,
+    product: ProductFromCell,
+    document: DocumentFromCell,
 };
 
 export const Grid: React.FC<{ grid: any }> = ({ grid }) => {
