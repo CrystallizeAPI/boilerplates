@@ -441,6 +441,98 @@
             ]
         },
         {
+            "identifier": "footer",
+            "name": "Footer",
+            "type": "document",
+            "components": [
+                {
+                    "id": "social",
+                    "name": "Social links",
+                    "description": null,
+                    "type": "contentChunk",
+                    "config": {
+                        "repeatable": true,
+                        "components": [
+                            {
+                                "id": "logo",
+                                "name": "Logo",
+                                "description": "",
+                                "type": "images",
+                                "config": null
+                            },
+                            {
+                                "id": "link",
+                                "name": "Link",
+                                "description": "",
+                                "type": "singleLine",
+                                "config": null
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "promotion-section-heading",
+                    "name": "Promotion section heading",
+                    "description": "",
+                    "type": "singleLine",
+                    "config": null
+                },
+                {
+                    "id": "promotion-cards",
+                    "name": "Promotion cards",
+                    "description": null,
+                    "type": "contentChunk",
+                    "config": {
+                        "repeatable": true,
+                        "components": [
+                            {
+                                "id": "title",
+                                "name": "Title",
+                                "description": "",
+                                "type": "singleLine",
+                                "config": null
+                            },
+                            {
+                                "id": "image",
+                                "name": "Image",
+                                "description": "",
+                                "type": "images",
+                                "config": null
+                            },
+                            {
+                                "id": "link",
+                                "name": "Link",
+                                "description": "",
+                                "type": "singleLine",
+                                "config": null
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "copyright",
+                    "name": "Copyright",
+                    "description": "",
+                    "type": "singleLine",
+                    "config": null
+                },
+                {
+                    "id": "contact-information",
+                    "name": "Contact information",
+                    "description": "",
+                    "type": "richText",
+                    "config": null
+                },
+                {
+                    "id": "links",
+                    "name": "Links",
+                    "description": "",
+                    "type": "richText",
+                    "config": null
+                }
+            ]
+        },
+        {
             "identifier": "landing-page",
             "name": "Landing page",
             "type": "document",
@@ -1058,6 +1150,273 @@
     "items": [
         {
             "name": {
+                "en": "Footer"
+            },
+            "cataloguePath": "/footer",
+            "externalReference": "crystallize-spec-ref-6380974e1035badc785db77e",
+            "shape": "footer",
+            "components": {
+                "social": [
+                    {
+                        "logo": [
+                            {
+                                "src": "https://media.crystallize.com/frntr-blueprint/22/11/25/1/twitter.svg",
+                                "altText": {
+                                    "en": null
+                                },
+                                "caption": {
+                                    "en": null
+                                }
+                            }
+                        ],
+                        "link": {
+                            "en": "https://twitter.com/CrystallizeAPI"
+                        }
+                    },
+                    {
+                        "logo": [
+                            {
+                                "src": "https://media.crystallize.com/frntr-blueprint/22/11/25/2/instagram.svg",
+                                "altText": {
+                                    "en": null
+                                },
+                                "caption": {
+                                    "en": null
+                                }
+                            }
+                        ],
+                        "link": {
+                            "en": "https://www.instagram.com/crystallizeapi"
+                        }
+                    },
+                    {
+                        "logo": [
+                            {
+                                "src": "https://media.crystallize.com/frntr-blueprint/22/11/25/3/youtube.svg",
+                                "altText": {
+                                    "en": null
+                                },
+                                "caption": {
+                                    "en": null
+                                }
+                            }
+                        ],
+                        "link": {
+                            "en": "https://www.youtube.com/c/Crystallize"
+                        }
+                    }
+                ],
+                "promotion-section-heading": {
+                    "en": "Promotions? All year round, every months every day, its just happening all the time!!!!"
+                },
+                "promotion-cards": [
+                    {
+                        "title": {
+                            "en": "This is the thing whenever this is happening"
+                        },
+                        "image": [
+                            {
+                                "src": "https://media.crystallize.com/frntr-blueprint/22/11/25/4/unicorn.png",
+                                "altText": {
+                                    "en": null
+                                },
+                                "caption": {
+                                    "en": null
+                                }
+                            }
+                        ],
+                        "link": {
+                            "en": "/"
+                        }
+                    },
+                    {
+                        "title": {
+                            "en": "This is the thing whenever this is happening"
+                        },
+                        "image": [
+                            {
+                                "src": "https://media.crystallize.com/frntr-blueprint/22/11/25/5/kiwi-bird.png",
+                                "altText": {
+                                    "en": null
+                                },
+                                "caption": {
+                                    "en": null
+                                }
+                            }
+                        ],
+                        "link": {
+                            "en": "/"
+                        }
+                    },
+                    {
+                        "title": {
+                            "en": "This is the thing whenever this is happening"
+                        },
+                        "image": [
+                            {
+                                "src": "https://media.crystallize.com/frntr-blueprint/22/11/25/6/unicorn.png",
+                                "altText": {
+                                    "en": null
+                                },
+                                "caption": {
+                                    "en": null
+                                }
+                            }
+                        ],
+                        "link": {
+                            "en": "/"
+                        }
+                    }
+                ],
+                "copyright": {
+                    "en": "Copyright by FRTNR @ 2022"
+                },
+                "contact-information": {
+                    "en": {
+                        "json": [
+                            {
+                                "kind": "block",
+                                "type": "paragraph",
+                                "metadata": {},
+                                "children": [
+                                    {
+                                        "kind": "inline",
+                                        "metadata": {},
+                                        "textContent": "hello@frntr.com"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "block",
+                                "type": "paragraph",
+                                "metadata": {},
+                                "children": [
+                                    {
+                                        "kind": "inline",
+                                        "metadata": {},
+                                        "textContent": "+381642247467"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "block",
+                                "type": "paragraph",
+                                "metadata": {},
+                                "children": [
+                                    {
+                                        "kind": "inline",
+                                        "metadata": {},
+                                        "textContent": "Main st. 10, EAC2CQ, London"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "links": {
+                    "en": {
+                        "json": [
+                            {
+                                "kind": "block",
+                                "metadata": {},
+                                "type": "unordered-list",
+                                "children": [
+                                    {
+                                        "kind": "block",
+                                        "type": "list-item",
+                                        "metadata": {},
+                                        "children": [
+                                            {
+                                                "kind": "inline",
+                                                "metadata": {},
+                                                "textContent": "About us"
+                                            },
+                                            {
+                                                "kind": "block",
+                                                "metadata": {},
+                                                "type": "unordered-list",
+                                                "children": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "list-item",
+                                                        "metadata": {},
+                                                        "children": [
+                                                            {
+                                                                "kind": "inline",
+                                                                "metadata": {},
+                                                                "textContent": "Blog"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "kind": "block",
+                                        "type": "list-item",
+                                        "metadata": {},
+                                        "children": [
+                                            {
+                                                "kind": "inline",
+                                                "metadata": {},
+                                                "textContent": "Shop"
+                                            },
+                                            {
+                                                "kind": "block",
+                                                "metadata": {},
+                                                "type": "unordered-list",
+                                                "children": [
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "list-item",
+                                                        "metadata": {},
+                                                        "children": [
+                                                            {
+                                                                "kind": "inline",
+                                                                "metadata": {},
+                                                                "textContent": "Plants"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "list-item",
+                                                        "metadata": {},
+                                                        "children": [
+                                                            {
+                                                                "kind": "inline",
+                                                                "metadata": {},
+                                                                "textContent": "Kitchen"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "kind": "block",
+                                                        "type": "list-item",
+                                                        "metadata": {},
+                                                        "children": [
+                                                            {
+                                                                "kind": "inline",
+                                                                "metadata": {},
+                                                                "textContent": "Wallart"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "topics": null
+        },
+        {
+            "name": {
                 "en": "Shop"
             },
             "cataloguePath": "/shop",
@@ -1366,6 +1725,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -1477,6 +1837,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -1588,6 +1949,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -1699,6 +2061,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -1810,6 +2173,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -1898,6 +2262,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -2009,6 +2374,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 }
                             ]
@@ -2156,6 +2522,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -2199,6 +2566,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -2242,6 +2610,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -2285,6 +2654,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -2328,6 +2698,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -2371,6 +2742,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 }
                             ]
@@ -2582,6 +2954,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -2610,6 +2983,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -2652,6 +3026,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 }
                             ]
@@ -2983,6 +3358,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -3025,6 +3401,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 }
                             ]
@@ -3161,6 +3538,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -3203,6 +3581,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 }
                             ]
@@ -3342,6 +3721,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -3384,6 +3764,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 }
                             ]
@@ -3539,6 +3920,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 },
                                 {
@@ -3581,6 +3963,7 @@
                                             }
                                         }
                                     ],
+                                    "subscriptionPlans": [],
                                     "components": {}
                                 }
                             ]
