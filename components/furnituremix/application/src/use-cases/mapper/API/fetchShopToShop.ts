@@ -15,7 +15,7 @@ export default (data: any): Shop => {
         hero?.content?.grids?.[0] ||
         (hero?.content?.items ? mapper.API.Object.AnyItemToGrid(hero?.content?.items) : null);
 
-    const firstSeoChunk = folder.meta.content?.chunks[0];
+    const firstSeoChunk = folder.meta?.content?.chunks[0];
     const dto: Shop = {
         name: folder.name,
         title: stringForSingleLineComponentWithId(folder.components, 'title') || data.name!,
@@ -28,12 +28,12 @@ export default (data: any): Shop => {
               }
             : undefined,
         seo: mapper.API.Object.APIMetaSEOComponentToSEO(firstSeoChunk),
-        categories: hierarchy.tree.children.map((child: any) => {
+        categories: hierarchy.tree?.children.map((child: any) => {
             return {
                 name: child.name,
                 path: child.path,
                 description: child.description?.content,
-                products: child.children.map((product: any): ProductSlim => {
+                products: child?.children?.map((product: any): ProductSlim => {
                     return {
                         id: product.id,
                         name: product.name,
