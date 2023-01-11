@@ -143,6 +143,7 @@ const normalizeTile = (cellItem: any): Tile | null => {
     if (!components) {
         return null;
     }
+
     const styling = componentChunkContent(cellItem, 'styling', 'properties', [])?.sections?.reduce(
         (result: any, section: any) => {
             const sectionName = section.title.toLowerCase();
@@ -179,6 +180,7 @@ const normalizeTile = (cellItem: any): Tile | null => {
         },
         styling,
         isFullWidth: componentChunkContent(cellItem, 'styling', 'use-full-width')?.value || false,
+        isReversed: componentChunkContent(cellItem, 'styling', 'reverse-layout')?.value || false,
         cssPreset: componentChunkContent(cellItem, 'styling', 'css-preset')?.options?.[0]?.key?.toLowerCase(),
     };
 };

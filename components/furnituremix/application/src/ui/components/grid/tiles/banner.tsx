@@ -4,18 +4,18 @@ import { LinkRenderer } from '../../../lib/grid-tile/linkRenderer';
 import { Video } from '@crystallize/reactjs-components';
 
 export const Banner: React.FC<TileViewComponentProps> = ({ tile }) => {
-    const { title, description, ctas, isFullWidth, content, styling } = tile;
+    const { title, description, ctas, isFullWidth, content, styling, isReversed } = tile;
     const { images, videos } = content;
     const { font, button } = styling || {};
 
     return (
         <div
-            className={` flex md:flex-row flex-col  w-full mx-auto  ${
+            className={` flex ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} flex-col  w-full mx-auto  ${
                 isFullWidth ? 'px-8 lg:px-10 max-w-[1600px] w-full items-center pt-10  md:py-0 ' : 'pl-10 pt-20'
             }`}
         >
             <div
-                className={`${
+                className={`${isReversed && 'ml-12'} ${
                     !images?.length ? 'py-40' : isFullWidth ? 'md:w-1/2' : 'md:w-2/5'
                 } items-center pr-8 flex-column relative z-10 `}
             >

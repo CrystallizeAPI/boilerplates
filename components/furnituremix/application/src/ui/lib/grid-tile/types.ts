@@ -46,6 +46,7 @@ export type Tile = {
         videos?: any[];
     };
     isFullWidth?: boolean;
+    isReversed?: boolean;
     styling?: any;
     cssPreset?: string;
 };
