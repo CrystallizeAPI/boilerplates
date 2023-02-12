@@ -12,7 +12,7 @@
         "@types/nodemailer": "^6.4.4",
         "@types/uuid": "^8.3.4",
         "concurrently": "^7.0.0",
-        "nodemon": "^2.0.15"
+        "nodemon": "^2.0.20"
     },
     "volta": {
         "node": "16.15.1"
