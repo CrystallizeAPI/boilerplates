@@ -2,7 +2,7 @@
 
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "${SCRIPT}")
-PROJECT_PATH="/Users/smeagol/Documents/GitHub/boilerplates/components/conference"
+PROJECT_PATH=${SCRIPTPATH}/../..
 
 console() {
     echo -e ${PROJECT_PATH}
