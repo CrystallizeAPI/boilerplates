@@ -44,6 +44,14 @@
         "service-api-koajs": {
             "name": "Service API in KOAJS Boilerplate",
             "git": "git@github.com:CrystallizeAPI/service-api-koajs.git"
+        },
+        "astrojs": {
+            "name": "AstroJS Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/dounut-astro.git"
+        },
+        "svelte": {
+            "name": "Svelte Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/dounut-svelte.git"
         }
     }
 }

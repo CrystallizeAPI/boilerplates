@@ -29,6 +29,8 @@ All contributions will happen here:
 | [SaaS](https://github.com/CrystallizeAPI/crystallize-saas-boilerplate) | ![MIT] |
 | [React Native](https://github.com/CrystallizeAPI/crystallize-react-native-boilerplate) | ![MIT] |
 | [Flutter](https://github.com/CrystallizeAPI/crystallize-flutter-boilerplate) | ![MIT] |
+| [Astro](https://github.com/CrystallizeAPI/dounut-astro) | ![MIT] |
+| [Svelte](https://github.com/CrystallizeAPI/dounut-svelte) | ![MIT] |
 
 ## Contributions
 
