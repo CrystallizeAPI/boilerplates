@@ -49,9 +49,5 @@
             "name": "AstroJS Boilerplate",
             "git": "git@github.com:CrystallizeAPI/dounut-astro.git"
         },
-        "svelte": {
-            "name": "Svelte Boilerplate",
-            "git": "git@github.com:CrystallizeAPI/dounut-svelte.git"
-        }
     }
 }
