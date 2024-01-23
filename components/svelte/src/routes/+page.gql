@@ -1,0 +1,34 @@
+query FrontPageGrid {
+    grid(id: "61f00cf757a0a54278834b38", language: "en") {
+        id
+        name
+        rows {
+            columns {
+                layout {
+                    rowspan
+                    colspan
+                }
+                item {
+                    name
+                    path
+                    topics {
+                        name
+                        path
+                    }
+                    ... on Product {
+                        defaultVariant {
+                            name
+                            price
+                            firstImage {
+                                url
+                                altText
+                                width
+                                height
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

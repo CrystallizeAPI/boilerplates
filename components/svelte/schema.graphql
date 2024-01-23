@@ -1,0 +1,636 @@
+directive @extends on INTERFACE | OBJECT
+
+directive @external(reason: String) on FIELD_DEFINITION | OBJECT
+
+directive @key(fields: _FieldSet!, resolvable: Boolean = true) on INTERFACE | OBJECT
+
+directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @tag(name: String!) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
+
+type BooleanContent {
+  value: Boolean
+}
+
+type Component {
+  content: ComponentContent
+  id: String!
+  meta: [MetaProperty!] @deprecated(reason: "meta properties on components are no longer supported and will be removed in a future release")
+  metaProperty(key: String!): String @deprecated(reason: "meta properties on components are no longer supported and will be removed in a future release")
+  name: String!
+  type: ComponentType!
+}
+
+type ComponentChoiceContent {
+  selectedComponent: Component!
+}
+
+union ComponentContent = BooleanContent | ComponentChoiceContent | ContentChunkContent | DatetimeContent | FileContent | GridRelationsContent | ImageContent | ItemRelationsContent | LocationContent | NumericContent | ParagraphCollectionContent | PropertiesTableContent | RichTextContent | SelectionContent | SingleLineContent | VideoContent
+
+enum ComponentType {
+  boolean
+  componentChoice
+  contentChunk
+  datetime
+  files
+  gridRelations
+  images
+  itemRelations
+  location
+  numeric
+  paragraphCollection
+  propertiesTable
+  richText
+  selection
+  singleLine
+  videos
+}
+
+type ContentChunkContent {
+  chunks(componentIds: [String!]): [[Component!]!]!
+}
+
+scalar Datetime
+
+type DatetimeContent {
+  datetime: Datetime
+}
+
+type Document implements Item {
+  children: [Item!]
+  component(id: String!): Component
+  components(ids: [String!]): [Component!]
+  createdAt: Datetime
+  externalReference: String
+  id: ID!
+  language: String
+  name: String
+  parent: Item
+  path: String
+  publishedAt: Datetime
+  relatingItems: [Item!]
+  shape: Shape!
+  subtree(after: String, before: String, first: Int, last: Int, sort: SortDirection = asc, sortField: ItemSortField = treePosition): SubtreeConnection!
+  topics: [Topic!]
+  type: String
+  updatedAt: Datetime
+  version: ItemVersion!
+}
+
+type File {
+  createdAt: Datetime
+  key: String!
+  meta: [MetaProperty!]
+  metaProperty(key: String!): String
+  size: Float
+  title: String
+  url: String!
+}
+
+type FileContent {
+  files: [File!]
+  firstFile: File
+}
+
+type FocalPoint {
+  x: Float!
+  y: Float!
+}
+
+type Folder implements Item {
+  children: [Item!]
+  component(id: String!): Component
+  components(ids: [String!]): [Component!]
+  createdAt: Datetime
+  externalReference: String
+  id: ID!
+  language: String
+  name: String
+  parent: Item
+  path: String
+  publishedAt: Datetime
+  relatingItems: [Item!]
+  shape: Shape!
+  subtree(after: String, before: String, first: Int, last: Int, sort: SortDirection = asc, sortField: ItemSortField = treePosition): SubtreeConnection!
+  topics: [Topic!]
+  type: String
+  updatedAt: Datetime
+  version: ItemVersion!
+}
+
+type Grid {
+  createdAt: Datetime
+  dimensions: GridDimensions
+  id: ID!
+  language: String!
+  meta: [MetaProperty!]
+  metaProperty(key: String!): String
+  name: String
+  rows: [GridRow!]!
+}
+
+type GridColumn {
+  item: Item
+  itemId: ID
+  itemType: String
+  layout: GridColumnLayout
+  meta: [MetaProperty!]
+  metaProperty(key: String!): String
+}
+
+type GridColumnLayout {
+  colIndex: Int
+  colspan: Int
+  rowIndex: Int
+  rowspan: Int
+}
+
+type GridDimensions {
+  columns: Int
+  rows: Int
+}
+
+type GridRelationsContent {
+  grids: [Grid!]
+}
+
+type GridRow {
+  columns: [GridColumn!]!
+  meta: [MetaProperty!]
+  metaProperty(key: String!): String
+}
+
+type Image {
+  altText: String
+  caption: RichTextContent
+  createdAt: Datetime
+  focalPoint: FocalPoint
+  height: Int
+  key: String!
+  meta: [MetaProperty!]
+  metaProperty(key: String!): String
+  topics(language: String!): [Topic!]
+  url: String!
+  variants: [ImageVariant!]
+  width: Int
+}
+
+type ImageConnection {
+  edges: [ImageEdge!]
+  pageInfo: PageInfo!
+}
+
+type ImageContent {
+  firstImage: Image
+  images: [Image!]
+}
+
+type ImageEdge {
+  cursor: String!
+  node: Image!
+}
+
+enum ImageFileNameFilterCondition {
+  contains
+  endsWith
+  startsWith
+}
+
+input ImageFileNameFilterInput {
+  condition: ImageFileNameFilterCondition! = contains
+  value: String!
+}
+
+input ImageFilterInput {
+  filename: ImageFileNameFilterInput
+  topicPaths: [String!]
+}
+
+type ImageVariant {
+  height: Int
+  key: String!
+  size: Int
+  url: String!
+  width: Int!
+}
+
+interface Item {
+  children: [Item!]
+  component(id: String!): Component
+  components(ids: [String!]): [Component!]
+  createdAt: Datetime
+  externalReference: String
+  id: ID!
+  language: String
+  name: String
+  parent: Item
+  path: String
+  publishedAt: Datetime
+  relatingItems: [Item!]
+  shape: Shape!
+  subtree(after: String, before: String, first: Int, last: Int, sort: SortDirection = asc, sortField: ItemSortField = treePosition): SubtreeConnection!
+  topics: [Topic!]
+  type: String
+  updatedAt: Datetime
+  version: ItemVersion!
+}
+
+type ItemRelationsContent {
+  items(version: VersionLabel = published): [Item!]
+  productVariants(version: VersionLabel = published): [ProductVariant!]
+}
+
+enum ItemSortField {
+  treePosition
+}
+
+type ItemVersion {
+  createdAt: Datetime
+  id: ID!
+  label: VersionLabel!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type KeyValuePair {
+  key: String!
+  value: String
+}
+
+type LocationContent {
+  lat: Float
+  long: Float
+}
+
+type MetaProperty {
+  key: String!
+  value: String
+}
+
+type NumericContent {
+  number: Float!
+  unit: String
+}
+
+type PageInfo {
+  endCursor: String!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  totalNodes: Int!
+}
+
+type ParagraphCollectionContent {
+  paragraphs: [ParagraphContent!]
+}
+
+type ParagraphContent {
+  body: RichTextContent
+  images: [Image!]
+  title: SingleLineContent
+  videos: [Video!]
+}
+
+type PriceList {
+  identifier: String!
+  modifierType: PriceListModifierType!
+  name: String!
+  productVariants(after: String, before: String, first: Int = 20, language: String!, last: Int): ProductVariantConnection!
+  products(after: String, before: String, first: Int = 20, language: String!, last: Int): ProductConnection
+  tenantId: ID!
+}
+
+enum PriceListModifierType {
+  ABSOLUTE
+  PERCENTAGE
+  RELATIVE
+}
+
+type Product implements Item {
+  children: [Item!]
+  component(id: String!): Component
+  components(ids: [String!]): [Component!]
+  createdAt: Datetime
+  defaultVariant: ProductVariant
+  externalReference: String
+  id: ID!
+  isSubscriptionOnly: Boolean @deprecated(reason: "option removed")
+  isVirtual: Boolean @deprecated(reason: "option removed")
+  language: String
+  name: String
+  parent: Item
+  path: String
+  publishedAt: Datetime
+  relatingItems: [Item!]
+  shape: Shape!
+  subtree(after: String, before: String, first: Int, last: Int, sort: SortDirection = asc, sortField: ItemSortField = treePosition): SubtreeConnection!
+  topics: [Topic!]
+  type: String
+  updatedAt: Datetime
+  variants: [ProductVariant!]
+  vatType: VatInfo
+  version: ItemVersion!
+}
+
+type ProductConnection {
+  edges: [ProductConnectionEdge!]
+  pageInfo: PageInfo!
+}
+
+type ProductConnectionEdge {
+  cursor: String!
+  node: Product!
+}
+
+type ProductPriceVariant {
+  currency: String
+  identifier: String!
+  name: String
+  price: Float
+  priceFor(marketIdentifiers: [String!]!): ProductVariantPriceList!
+  priceForEveryone: ProductVariantPriceList!
+  priceList(identifier: String!): ProductVariantPriceList
+}
+
+type ProductStockLocation {
+  identifier: String!
+  meta: [KeyValuePair!]
+  name: String!
+  stock: Int
+}
+
+type ProductVariant {
+  attributes: [ProductVariantAttribute]
+  component(id: String!): Component
+  components(ids: [String!]): [Component!]
+  externalReference: String
+  firstImage: Image
+  id: ID! @deprecated(reason: "Product variant IDs have been deprecated and replaced by SKUs.")
+  image: Image @deprecated(reason: "The `image` property is deprecated and will be removed in a future release. Use the `images` property instead.")
+  images: [Image!]
+  isDefault: Boolean
+  name: String
+  price(identifier: String = "default"): Float
+  priceVariant(identifier: String!): ProductPriceVariant
+  priceVariants: [ProductPriceVariant!]
+  product: Product
+  sku: String!
+  stock(identifier: String = "default"): Int
+  stockLocations: [ProductStockLocation!]
+  subscriptionPlans: [ProductVariantSubscriptionPlan!]
+  videos: [Video!]
+}
+
+type ProductVariantAttribute {
+  attribute: String!
+  value: String
+}
+
+type ProductVariantConnection {
+  edges: [ProductVariantConnectionEdge!]
+  pageInfo: PageInfo!
+}
+
+type ProductVariantConnectionEdge {
+  cursor: String!
+  node: ProductVariant!
+}
+
+type ProductVariantPriceList {
+  endDate: Datetime
+  identifier: String
+  modifier: Float
+  modifierType: PriceListModifierType
+  price: Float
+  startDate: Datetime
+}
+
+type ProductVariantSubscriptionMeteredVariable {
+  id: ID!
+  identifier: String!
+  name: String!
+  tierType: TierType!
+  tiers: [ProductVariantSubscriptionPlanTier!]!
+}
+
+type ProductVariantSubscriptionPlan {
+  identifier: String!
+  name: String
+  periods: [ProductVariantSubscriptionPlanPeriod!]!
+}
+
+type ProductVariantSubscriptionPlanPeriod {
+  id: ID!
+  initial: ProductVariantSubscriptionPlanPricing
+  name: String!
+  recurring: ProductVariantSubscriptionPlanPricing
+}
+
+type ProductVariantSubscriptionPlanPricing {
+  meteredVariables: [ProductVariantSubscriptionMeteredVariable!]
+  period: Int!
+  price(identifier: String = "default"): Float
+  priceVariants: [ProductPriceVariant!]
+  unit: SubscriptionPeriodUnit!
+}
+
+type ProductVariantSubscriptionPlanTier {
+  price(identifier: String = "default"): Float
+  priceVariants: [ProductPriceVariant!]
+  threshold: Int!
+}
+
+type PropertiesTableContent {
+  sections: [PropertiesTableSection!]
+}
+
+type PropertiesTableSection {
+  properties: [PropertiesTableValue!]
+  title: String
+}
+
+type PropertiesTableValue {
+  key: String!
+  value: String
+}
+
+type Query {
+  _service: _Service!
+  catalogue(language: String, path: String = "/", version: VersionLabel = published): Item
+  grid(id: ID!, language: String): Grid
+  image(key: String!, language: String!): Image
+  images(after: String, before: String, filter: ImageFilterInput, first: Int = 20, language: String!, last: Int): ImageConnection!
+
+  """**EXPERIMENTAL:** Watch out! This feature is still in testing process."""
+  priceList(identifier: String!): PriceList
+  tenant(language: String): Tenant
+  topic(language: String!, path: String!): Topic
+  topics(ancestry: [String!], language: String, name: String): [Topic!]!
+  tree(language: String, path: String = "/"): [Item] @deprecated(reason: "`tree` query is deprecated and will be removed in a future release. Use the `catalogue` query instead.")
+  version: VersionInfo
+}
+
+type RichTextContent {
+  html: [String!]
+  json: [JSON]
+  plainText: [String!]
+}
+
+type SelectionComponentOption {
+  key: String!
+  value: String!
+}
+
+type SelectionContent {
+  options: [SelectionComponentOption!]
+}
+
+type Shape {
+  createdAt: Datetime
+  id: ID! @deprecated(reason: "Shape ids have been deprecated in favor of human readable identifiers and will be removed in a future release.")
+  identifier: String!
+  meta: [MetaProperty!]
+  metaProperty(key: String!): String
+  name: String
+}
+
+type SingleLineContent {
+  text: String
+}
+
+enum SortDirection {
+  asc
+  desc
+}
+
+enum SubscriptionPeriodUnit {
+  day
+  month
+  week
+  year
+}
+
+type SubtreeConnection {
+  edges: [SubtreeEdge!]
+  pageInfo: PageInfo!
+}
+
+type SubtreeEdge {
+  cursor: String!
+  node: Item!
+}
+
+input TargetAudienceInput {
+  customerIdentifier: String
+  marketIdentifier: String
+  type: TargetAudienceType!
+}
+
+enum TargetAudienceType {
+  EVERYONE
+  SOME
+}
+
+type Tenant {
+  createdAt: Datetime
+  defaults: TenantDefaults
+  id: ID!
+  identifier: String!
+  isTrial: Boolean
+  language: String
+  logo: Image
+  name: String
+}
+
+type TenantDefaults {
+  currency: String
+  language: String
+}
+
+enum TierType {
+  graduated
+  volume
+}
+
+type Topic {
+  childCount: Int!
+  children: [Topic!]
+  createdAt: Datetime
+  id: ID!
+  images(after: String, before: String, first: Int, language: String!, last: Int, sort: SortDirection = desc, sortField: TopicImageSortField = createdAt): TopicImageConnection!
+  items(after: String, before: String, first: Int, last: Int, sort: SortDirection = desc, sortField: TopicItemSortField = createdAt): TopicItemConnection!
+  language: String
+  name: String!
+  parent: Topic
+  parentId: ID
+  path: String!
+}
+
+type TopicImageConnection {
+  edges: [TopicImageEdge!]
+  pageInfo: PageInfo!
+}
+
+type TopicImageEdge {
+  cursor: String!
+  node: Image!
+}
+
+enum TopicImageSortField {
+  createdAt
+}
+
+type TopicItemConnection {
+  edges: [TopicItemEdge!]
+  pageInfo: PageInfo!
+}
+
+type TopicItemEdge {
+  cursor: String!
+  node: Item!
+}
+
+enum TopicItemSortField {
+  createdAt
+}
+
+type VatInfo {
+  name: String
+  percent: Float
+}
+
+type VersionInfo {
+  apiVersion: String!
+  commitSha: String!
+}
+
+enum VersionLabel {
+  draft
+  published
+}
+
+type Video {
+  id: String!
+  playlist(type: String!): String
+  playlists: [String!]
+  thumbnails: [Image!]
+  title: String
+}
+
+type VideoContent {
+  firstVideo: Video
+  videos: [Video!]
+}
+
+scalar _Any
+
+scalar _FieldSet
+
+type _Service {
+  sdl: String
+}
