@@ -31,6 +31,7 @@ All contributions will happen here:
 | [Flutter](https://github.com/CrystallizeAPI/crystallize-flutter-boilerplate) | ![MIT] |
 | [Astro](https://github.com/CrystallizeAPI/dounut-astro) | ![MIT] |
 | [Svelte](https://github.com/CrystallizeAPI/dounut-svelte) | ![MIT] |
+| [Product Configurator](https://github.com/CrystallizeAPI/product-configurator) | ![MIT] |
 
 ## Contributions
 

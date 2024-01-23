@@ -48,6 +48,14 @@
         "astrojs": {
             "name": "AstroJS Boilerplate",
             "git": "git@github.com:CrystallizeAPI/dounut-astro.git"
+        },
+        "svelte": {
+            "name": "Svelte Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/dounut-svelte.git"
+        },
+        "product-configurator": {
+            "name": "Product Configurator Boilerplate",
+            "git": "git@github.com:CrystallizeAPI/product-configurator.git"
         }
     }
 }
