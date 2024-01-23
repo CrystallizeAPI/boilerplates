@@ -48,6 +48,6 @@
         "astrojs": {
             "name": "AstroJS Boilerplate",
             "git": "git@github.com:CrystallizeAPI/dounut-astro.git"
-        },
+        }
     }
 }
