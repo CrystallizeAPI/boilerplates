@@ -1,4 +1,5 @@
 {
+    "versionerEnabled": false,
     "type": "oss-monorepository",
     "many-repositories": {
         "conference": {
