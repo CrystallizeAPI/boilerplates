@@ -1,16 +1,14 @@
-import { Suspense } from "react";
+import Configurator from "./configurator";
+import { getProduct } from "@/use-cases/get-product";
 
-import { Configurator } from "@/components/configurator";
-import { getProduct } from "../actions/get-product";
+const mainProductPath = process.env.MAIN_PRODUCT_PATH || "/bicycles/speed-curve";
 
 export default async function Page() {
-    const { product } = await getProduct("/bicycles/speed-curve");
+    const { product } = await getProduct(mainProductPath);
 
     return (
-        <main className="flex flex-1 overflow-hidden">
-            <Suspense fallback={null}>
-                <Configurator product={product} />
-            </Suspense>
-        </main>
+        <div className="flex min-h-[100vh] bg-white relative  items-center justify-between min-w-full ">
+            <Configurator product={product} />
+        </div>
     );
 }
