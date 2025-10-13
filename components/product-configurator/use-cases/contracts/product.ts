@@ -1,10 +1,16 @@
-import { Component, ProductPriceVariant, ProductVariant } from "../__generated__/types";
+import {
+    Component,
+    ProductPriceVariant,
+    ProductVariant,
+} from "../__generated__/types";
 
 export type ApiProduct = {
     id: string;
     name: string;
     components?: Component[] | null;
-    variants?: Array<ProductVariant & { defaultPrice: ProductPriceVariant }> | null;
+    variants?: Array<
+        ProductVariant & { defaultPrice: ProductPriceVariant }
+    > | null;
 };
 
 type BaseItem = {
@@ -29,4 +35,11 @@ export type UiProduct = {
     name: string;
     options?: Option[];
     variants?: Variant[];
+};
+
+export type Skus = {
+    v: string;
+    grip?: string;
+    saddle?: string;
+    options?: string;
 };

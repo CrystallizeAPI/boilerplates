@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
+
 import { CartForm } from "./cart-form";
-import { useCart } from "./use-cart";
 import { OrderConfirmation } from "./order-confirmation";
-import { CART_ID } from "@/utils/const";
 
 type CartProps = {
     onClose: () => void;
@@ -12,16 +11,11 @@ type CartProps = {
 
 export const CartBody = ({ onClose }: CartProps) => {
     const [orderId, setOrderId] = useState<string | undefined>(undefined);
-    const { isLoading, cartItem, price } = useCart();
 
     const onCloseCart = () => {
         setOrderId(undefined);
         onClose();
     };
-
-    if (isLoading) {
-        return null;
-    }
 
     return (
         <>
@@ -34,26 +28,13 @@ export const CartBody = ({ onClose }: CartProps) => {
                 </svg>
             </button>
 
-            {!cartItem ? (
-                <div className="grid w-full h-full place-content-center text-base font-medium text-gray-500">
-                    <h2 className="font-medium text-gray-800 pb-8 text-2xl py-7 px-12">
-                        Your cart is empty
-                    </h2>
-                </div>
-            ) : !!orderId ? (
+            {!!orderId ? (
                 <OrderConfirmation
                     orderId={orderId}
                     onCloseCart={onCloseCart}
                 />
             ) : (
-                <CartForm
-                    cartItem={cartItem}
-                    price={price}
-                    onOrderPlaced={(id) => {
-                        localStorage.removeItem(CART_ID);
-                        setOrderId(id);
-                    }}
-                />
+                <CartForm onOrderPlaced={setOrderId} />
             )}
         </>
     );

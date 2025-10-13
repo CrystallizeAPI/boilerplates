@@ -1,7 +1,9 @@
 import { useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
-export const useUrlState = <T extends Record<string, string | string[] | undefined>>() => {
+export const useUrlState = <
+    T extends Record<string, string | string[] | undefined>
+>() => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();

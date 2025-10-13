@@ -2,10 +2,15 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import type { Option, UiProduct, Attribute } from "@/use-cases/contracts/product";
+import type {
+    Skus,
+    Option,
+    UiProduct,
+    Attribute,
+} from "@/use-cases/contracts/product";
 
-import { useUrlState } from "./use-url-state";
-import type { Skus, ModelViewerNode } from "../types";
+import { useUrlState } from "@/utils/use-url-state";
+import type { ModelViewerNode } from "../types";
 
 type OnChange =
     | { type: "frame"; value: string }
@@ -19,10 +24,17 @@ type GetBagDependencies = {
     options?: Option[];
 };
 
-const getBagDependencies = ({ grip, skuOptions, options }: GetBagDependencies) => {
+const getBagDependencies = ({
+    grip,
+    skuOptions,
+    options,
+}: GetBagDependencies) => {
     const modelAttribute = grip?.modelAttribute;
     const bagSku = options?.find((opt) => opt.id === "leatherBag")?.sku;
-    if (modelAttribute === "Natural-Leather" || (!!bagSku && !skuOptions?.includes(bagSku))) {
+    if (
+        modelAttribute === "Natural-Leather" ||
+        (!!bagSku && !skuOptions?.includes(bagSku))
+    ) {
         return { skuOptions, isBagHidden: false };
     }
 
@@ -34,7 +46,11 @@ const getBagDependencies = ({ grip, skuOptions, options }: GetBagDependencies) =
     return { skuOptions: nextOptions, isBagHidden: true };
 };
 
-const toggleOption = (node: ModelViewerNode | null, id: string, isVisible: boolean) => {
+const toggleOption = (
+    node: ModelViewerNode | null,
+    id: string,
+    isVisible: boolean
+) => {
     const optionKey = id as keyof typeof optionMap;
     const optionMap = {
         frontRack: () => node?.toggleLuggageRackFront(isVisible),
@@ -62,7 +78,9 @@ export const useConfigurator = (product: UiProduct) => {
 
                 try {
                     const { frameColor, saddles } = currentVariant ?? {};
-                    const saddle = saddles?.find((saddle) => saddle.sku === skus.saddle);
+                    const saddle = saddles?.find(
+                        (saddle) => saddle.sku === skus.saddle
+                    );
 
                     node.setFrameColor(frameColor?.modelAttribute);
                     setTimeout(() => {
@@ -81,7 +99,8 @@ export const useConfigurator = (product: UiProduct) => {
                 } catch {
                     // the model may throw is it is not loaded when trying to access it to set it up
                     retryCountRef.current = retryCountRef.current + 1;
-                    retryCountRef.current < 50 && setTimeout(() => setView(node), 200);
+                    retryCountRef.current < 50 &&
+                        setTimeout(() => setView(node), 200);
                 }
             };
 
@@ -112,7 +131,9 @@ export const useConfigurator = (product: UiProduct) => {
 
             switch (type) {
                 case "frame": {
-                    const nextVariant = variants?.find((variant) => variant.sku === value);
+                    const nextVariant = variants?.find(
+                        (variant) => variant.sku === value
+                    );
                     const { frameColor, saddles, grips } = nextVariant ?? {};
                     const saddle = saddles?.[0].sku;
                     const grip = grips?.[0].sku;
@@ -137,8 +158,14 @@ export const useConfigurator = (product: UiProduct) => {
                     break;
                 }
                 case "saddle": {
-                    const saddle = currentVariant?.saddles?.find((variantSaddle) => variantSaddle.sku === value);
-                    const grip = currentVariant?.grips?.find((variantGrip) => variantGrip.modelAttribute === saddle?.modelAttribute);
+                    const saddle = currentVariant?.saddles?.find(
+                        (variantSaddle) => variantSaddle.sku === value
+                    );
+                    const grip = currentVariant?.grips?.find(
+                        (variantGrip) =>
+                            variantGrip.modelAttribute ===
+                            saddle?.modelAttribute
+                    );
                     const { skuOptions, isBagHidden } = getBagDependencies({
                         grip,
                         skuOptions: skus.options,
@@ -156,8 +183,14 @@ export const useConfigurator = (product: UiProduct) => {
                     break;
                 }
                 case "grip": {
-                    const grip = currentVariant?.grips?.find((variantGrip) => variantGrip.sku === value);
-                    const saddle = currentVariant?.saddles?.find((variantSaddle) => variantSaddle.modelAttribute === grip?.modelAttribute);
+                    const grip = currentVariant?.grips?.find(
+                        (variantGrip) => variantGrip.sku === value
+                    );
+                    const saddle = currentVariant?.saddles?.find(
+                        (variantSaddle) =>
+                            variantSaddle.modelAttribute ===
+                            grip?.modelAttribute
+                    );
                     const { skuOptions, isBagHidden } = getBagDependencies({
                         grip,
                         skuOptions: skus.options,

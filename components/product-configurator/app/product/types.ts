@@ -1,10 +1,3 @@
-export type Skus = {
-    v: string;
-    grip?: string;
-    saddle?: string;
-    options?: string;
-};
-
 export type ModelViewerNode = HTMLElement & {
     setFrameColor: (attribute?: string) => void;
     setSaddleColor: (attribute?: string) => void;

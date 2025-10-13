@@ -1,7 +1,4 @@
-export const priceFormatter = (price?: {
-    value?: number;
-    currency?: string;
-}) => {
+export const formatPrice = (price?: { value?: number; currency?: string }) => {
     if (!price || typeof price.value !== "number" || !price.currency) {
         return "0";
     }

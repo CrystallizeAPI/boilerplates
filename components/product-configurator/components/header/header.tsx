@@ -1,10 +1,10 @@
 "use client";
 
-import { useCartContext } from "@/context/cart-context";
 import Link from "next/link";
+import { useCartContext } from "@/context/cart-context";
 
 export function Header() {
-    const { setIsCartOpen } = useCartContext();
+    const { setIsOpen } = useCartContext();
 
     return (
         <header className="bg-white px-12 py-4 flex border-b justify-between items-center">
@@ -34,7 +34,7 @@ export function Header() {
             <button
                 type="button"
                 className="p-2 cursor-pointer pr-0 relative"
-                onClick={() => setIsCartOpen?.(true)}
+                onClick={() => setIsOpen?.(true)}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
