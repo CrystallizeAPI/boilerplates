@@ -8,14 +8,25 @@ const query = `#graphql
     product: catalogue(path: $path, language: "en") {
     id
     name
-      components {
-        id
-        content {
-          ...on ItemRelationsContent {
-            ...itemRelation
+    components {
+      id
+      content {
+        ...on ItemRelationsContent {
+          ...itemRelation
+        }
+        ... on ContentChunkContent {
+          chunks {
+            content {
+              ... on FileContent {
+                firstFile {
+                  url
+                }
+              }
+            }
           }
         }
       }
+    }
     ... on Product {
       variants {
         name
@@ -115,6 +126,8 @@ const query = `#graphql
   `;
 
 export async function getProduct(path: string) {
-    const { product } = await crystallizeClient.catalogueApi<{ product: ApiProduct }>(query, { path, language });
+    const { product } = await crystallizeClient.catalogueApi<{
+        product: ApiProduct;
+    }>(query, { path, language });
     return productMapper(product);
 }

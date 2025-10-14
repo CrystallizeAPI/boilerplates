@@ -7,7 +7,7 @@ export function Header() {
     const { setIsOpen } = useCartContext();
 
     return (
-        <header className="bg-white px-12 py-4 flex border-b justify-between items-center">
+        <header className="bg-white px-12 py-4 flex border-b justify-between items-center shrink-0">
             <Link href="/">
                 <svg
                     width="68"
@@ -33,7 +33,7 @@ export function Header() {
 
             <button
                 type="button"
-                className="p-2 cursor-pointer pr-0 relative"
+                className="p-2 cursor-pointer relative mr-1"
                 onClick={() => setIsOpen?.(true)}
             >
                 <svg

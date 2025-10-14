@@ -20,8 +20,10 @@ type BaseItem = {
     price: Price;
 };
 
+type OptionModelConfig = { modelAttribute: string; hex?: string }[];
+
 export type Price = { value?: number; currency?: string };
-export type Option = BaseItem & { id: string };
+export type Option = BaseItem & { id: string; model: OptionModelConfig };
 export type Attribute = BaseItem & { modelAttribute: string; hex?: string };
 export type Variant = BaseItem & {
     price: Price;
@@ -33,6 +35,7 @@ export type Variant = BaseItem & {
 export type UiProduct = {
     id: string;
     name: string;
+    glb?: string;
     options?: Option[];
     variants?: Variant[];
 };

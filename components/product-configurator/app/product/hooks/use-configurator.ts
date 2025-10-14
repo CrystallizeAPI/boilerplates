@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import type {
     Skus,
@@ -10,7 +10,6 @@ import type {
 } from "@/use-cases/contracts/product";
 
 import { useUrlState } from "@/utils/use-url-state";
-import type { ModelViewerNode } from "../types";
 
 type OnChange =
     | { type: "frame"; value: string }
@@ -46,68 +45,10 @@ const getBagDependencies = ({
     return { skuOptions: nextOptions, isBagHidden: true };
 };
 
-const toggleOption = (
-    node: ModelViewerNode | null,
-    id: string,
-    isVisible: boolean
-) => {
-    const optionKey = id as keyof typeof optionMap;
-    const optionMap = {
-        frontRack: () => node?.toggleLuggageRackFront(isVisible),
-        rearRack: () => node?.toggleLuggageRackBack(isVisible),
-        leatherBag: () => node?.toggleLeatherBag(isVisible),
-    };
-
-    optionMap[optionKey]?.();
-};
-
 export const useConfigurator = (product: UiProduct) => {
     const { variants, options } = product;
-    const modelViewer = useRef<ModelViewerNode | null>(null);
     const [skus, setSkus] = useUrlState<Skus>();
     const currentVariant = variants?.find((variant) => variant.sku === skus.v);
-    const retryCountRef = useRef(0);
-    const [isModelLoaded, setIsModelLoaded] = useState(false);
-
-    const getViewer = useCallback(
-        (node: ModelViewerNode) => {
-            const setView = (node: ModelViewerNode) => {
-                if (isModelLoaded || !node) {
-                    return;
-                }
-
-                try {
-                    const { frameColor, saddles } = currentVariant ?? {};
-                    const saddle = saddles?.find(
-                        (saddle) => saddle.sku === skus.saddle
-                    );
-
-                    node.setFrameColor(frameColor?.modelAttribute);
-                    setTimeout(() => {
-                        node?.setSaddleColor(saddle?.modelAttribute);
-                    }, 100);
-
-                    const optionSkus = skus.options?.split(",") ?? [];
-                    options?.forEach((opt) => {
-                        const isVisible = optionSkus.includes(opt.sku);
-                        toggleOption(node, opt.id, isVisible);
-                    });
-
-                    modelViewer.current = node;
-                    // give some time the remove bag animation to complete
-                    setTimeout(() => setIsModelLoaded(true), 400);
-                } catch {
-                    // the model may throw is it is not loaded when trying to access it to set it up
-                    retryCountRef.current = retryCountRef.current + 1;
-                    retryCountRef.current < 50 &&
-                        setTimeout(() => setView(node), 200);
-                }
-            };
-
-            setView(node);
-        },
-        [currentVariant, skus, isModelLoaded, options]
-    );
 
     // auto select the first variant when the param is not present in the URL
     useEffect(() => {
@@ -126,7 +67,6 @@ export const useConfigurator = (product: UiProduct) => {
 
     const onChange = useCallback(
         ({ type, value }: OnChange) => {
-            const node = modelViewer.current;
             let nextSkus: Skus | undefined = undefined;
 
             switch (type) {
@@ -149,11 +89,6 @@ export const useConfigurator = (product: UiProduct) => {
                         grip,
                         options: skuOptions,
                     };
-                    isBagHidden && node?.toggleLeatherBag(false);
-                    node?.setFrameColor(frameColor?.modelAttribute);
-                    setTimeout(() => {
-                        node?.setSaddleColor(saddles?.[0]?.modelAttribute);
-                    }, 100);
 
                     break;
                 }
@@ -178,8 +113,7 @@ export const useConfigurator = (product: UiProduct) => {
                         grip: grip?.sku,
                         options: skuOptions,
                     };
-                    node?.setSaddleColor(saddle?.modelAttribute);
-                    isBagHidden && node?.toggleLeatherBag(false);
+
                     break;
                 }
                 case "grip": {
@@ -203,15 +137,10 @@ export const useConfigurator = (product: UiProduct) => {
                         saddle: saddle?.sku,
                         options: skuOptions,
                     };
-                    node?.setSaddleColor(grip?.modelAttribute);
-                    isBagHidden && node?.toggleLeatherBag(false);
+
                     break;
                 }
                 case "options": {
-                    options?.forEach((opt) => {
-                        const isVisible = value?.includes(opt.sku) ?? false;
-                        toggleOption(node, opt.id, isVisible);
-                    });
                     nextSkus = {
                         ...skus,
                         options: !value ? undefined : value,
@@ -233,9 +162,6 @@ export const useConfigurator = (product: UiProduct) => {
         skus,
         setSkus,
         currentVariant,
-        getViewer,
-        isModelLoaded,
         onChange,
-        modelViewer: modelViewer.current,
     };
 };

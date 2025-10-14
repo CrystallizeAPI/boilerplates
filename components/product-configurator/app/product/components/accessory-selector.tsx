@@ -23,11 +23,13 @@ export const AccessorySelector = ({
     return (
         <div className="flex flex-col gap-1">
             {options?.map((option) => {
-                const disabled = option?.id === "leatherBag" && isBagDisabled;
+                const disabled =
+                    option?.model?.[0].modelAttribute === "leatherBag" &&
+                    isBagDisabled;
                 const isSelected = getIsSelected(option.sku);
                 return (
                     <div
-                        key={option?.id}
+                        key={option?.sku}
                         role="button"
                         onClick={() => !disabled && onOptionChange(option)}
                         className={`bg-white overflow-hidden border border-solid py-4 rounded-lg hover:bg-gray-50 flex items-center ${

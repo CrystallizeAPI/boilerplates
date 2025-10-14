@@ -1,7 +1,6 @@
 "use client";
 
-import type { Skus } from "../types";
-import type { Variant } from "@/use-cases/contracts/product";
+import type { Variant, Skus } from "@/use-cases/contracts/product";
 
 type VariantSelectorProps = {
     variant: Variant;
@@ -9,7 +8,11 @@ type VariantSelectorProps = {
     onChange: (value: string) => void;
 };
 
-export default function VariantSelector({ skus, variant, onChange }: VariantSelectorProps) {
+export default function VariantSelector({
+    skus,
+    variant,
+    onChange,
+}: VariantSelectorProps) {
     return (
         <div
             onClick={() => onChange(variant.sku)}
@@ -17,8 +20,13 @@ export default function VariantSelector({ skus, variant, onChange }: VariantSele
                 skus.v === variant.sku ? "border-gray-400" : "border-gray-200"
             }`}
         >
-            <div style={{ background: variant.frameColor?.hex }} className="w-full aspect-square rounded-lg" />
-            <div className="pt-2 text-[12px] font-normal text-gray-600 flex text-left w-1/2">{variant.name}</div>
+            <div
+                style={{ background: variant.frameColor?.hex }}
+                className="w-full aspect-square rounded-lg"
+            />
+            <div className="pt-2 text-[12px] font-normal text-gray-600 flex text-left w-1/2">
+                {variant.name}
+            </div>
         </div>
     );
 }

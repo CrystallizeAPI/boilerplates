@@ -15,7 +15,7 @@ export const PriceBar = ({ currentVariant, options }: PriceBarProps) => {
 
     return (
         <div className="flex flex-col  justify-between items-center">
-            <h3 className="flex flex-col w-full border-t border-b py-4">
+            <h3 className="flex flex-col w-full border-t py-4">
                 <span className="text-sm font-medium text-gray-600">Total</span>
                 <span className="text-3xl font-medium">
                     {formatPrice({
@@ -24,11 +24,11 @@ export const PriceBar = ({ currentVariant, options }: PriceBarProps) => {
                     })}
                 </span>
             </h3>
-            <form action={onUpdateCart}>
+            <form action={onUpdateCart} className="w-full">
                 <input
                     type="hidden"
                     name="items"
-                    value={JSON.stringify(cart?.items)}
+                    value={JSON.stringify(cart?.items) ?? ""}
                 />
                 <button
                     type="submit"

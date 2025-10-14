@@ -23,14 +23,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <head>
-                <script
-                    async
-                    type="module"
-                    src="https://cdn2.charpstar.net/ConfigFiles/Crystallize/SpeedCurve/mvc.js"
-                />
-            </head>
-            <body className={`${roboto.className} bg-white`}>
+            <body
+                className={`${roboto.className} bg-white flex h-screen flex-col`}
+            >
                 <CartProvider>
                     <Header />
                     {children}
