@@ -1,41 +1,42 @@
 "use server";
 
-import type { CartItem } from "@/use-cases/contracts/cart";
-import { createOrder } from "@/use-cases/create-order";
+import { crystallizeClient } from "@/core/crystallize-client.server";
+import { CartItemInput } from "@/use-cases/contracts/cart-items-input";
+import { createOrderManager } from "@crystallize/js-api-client";
+import { RegisterOrderInput } from "@crystallize/schema/pim";
 
 export async function placeOrder(
-    initialSate: string | null,
+    _: unknown,
     formData: FormData
 ) {
     const fullName = formData.get("name") as string;
     const [firstName, lastName] = fullName.split(" ");
-    const email = formData.get("email");
-    const street = formData.get("address");
-    const city = formData.get("city");
-    const country = formData.get("country");
-    const postalCode = formData.get("zip");
-    const items = JSON.parse(formData.get("items") as string) as CartItem[];
-
-    const customer = {
+    const email = formData.get("email")?.toString().toLowerCase() || "";
+    const street = formData.get("address")?.toString() || "";
+    const city = formData.get("city")?.toString() || "";
+    const country = formData.get("country")?.toString() || "";
+    const postalCode = formData.get("zip")?.toString() || "";
+    const items = JSON.parse(formData.get("items") as string) as CartItemInput[];
+    const customer: RegisterOrderInput['customer'] = {
         firstName,
         ...(lastName && { lastName }),
         type: "individual",
         email,
-        identifier: email,
+        identifier: `${email}`,
         addresses: [
             {
                 street,
                 country,
                 postalCode,
                 city,
-                type: "delivery",
+                type: "delivery" as const,
             },
         ],
     };
 
     const [main, ...bom] = items;
     const parts = bom.flatMap((item) => ({
-        name: item.name,
+        name: item.name || "Part",
         sku: item.variant.sku,
         quantity: item.quantity ?? 1,
         imageUrl: item.images?.[0].url,
@@ -43,9 +44,9 @@ export async function placeOrder(
         meta: [{ key: "type", value: "Composable" }],
     }));
 
-    const cart = [
+    const cart: RegisterOrderInput['cart'] = [
         {
-            name: main.name,
+            name: main.name || "Product",
             sku: main.variant.sku,
             quantity: main.quantity ?? 1,
             imageUrl: main.images?.[0].url,
@@ -64,8 +65,8 @@ export async function placeOrder(
         ...(parts ?? []),
     ];
 
-    const orderIntent = { cart, customer } as any;
-    const confirmation = await createOrder(orderIntent);
-
+    const orderIntent = { cart, customer };
+    const orderManger = createOrderManager(crystallizeClient);
+    const confirmation = await orderManger.register(orderIntent);
     return confirmation.id;
 }

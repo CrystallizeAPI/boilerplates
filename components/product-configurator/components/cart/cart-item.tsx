@@ -1,4 +1,4 @@
-import { Cart } from "@/use-cases/contracts/cart";
+import { Cart } from "@crystallize/schema/shop";
 import Image from "next/image";
 
 type CartItemProps = {

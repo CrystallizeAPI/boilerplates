@@ -1,7 +1,7 @@
 import { crystallizeClient } from "@/core/crystallize-client.server";
 import type { ApiGrid } from "@/use-cases/contracts/grid";
 import { gridMapper } from "./grid-mapper";
-import { language } from "./variables";
+import { config } from "../core/config";
 
 const query = `#graphql
     query GET_GRID($id: ID!, $language: String!) {
@@ -68,6 +68,6 @@ const query = `#graphql
   `;
 
 export async function getGrid(id: string) {
-    const { grid } = await crystallizeClient.catalogueApi<{ grid: ApiGrid }>(query, { id, language });
+    const { grid } = await crystallizeClient.catalogueApi<{ grid: ApiGrid }>(query, { id, language: config.language });
     return gridMapper(grid);
 }

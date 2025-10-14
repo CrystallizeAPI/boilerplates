@@ -12,12 +12,14 @@
     },
     "dependencies": {
         "@crystallize/js-api-client": "^5",
-        "@crystallize/node-service-api-request-handlers": "^4.2.0",
+        "@crystallize/node-service-api-request-handlers": "^5",
         "@crystallize/reactjs-components": "^5",
+        "@crystallize/schema": "^5",
         "@google/model-viewer": "^4.1.0",
         "@stripe/react-stripe-js": "^3.1.1",
         "@stripe/stripe-js": "^5.6.0",
         "classnames": "^2.5.1",
+        "json-to-graphql-query": "^2.3.0",
         "next": "15.1.6",
         "react": "19.0.0",
         "react-dom": "19.0.0"

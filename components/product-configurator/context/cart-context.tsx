@@ -10,9 +10,10 @@ import {
     useTransition,
 } from "react";
 
-import { getNextCart } from "@/use-cases/get-next-cart";
-import type { Cart, CartItem } from "@/use-cases/contracts/cart";
+import { computeGrossCartTotal } from "@/use-cases/compute-gross-cart-total";
+import type { CartItemInput } from "@/use-cases/contracts/cart-items-input";
 import { updateCart } from "@/app/actions/update-cart";
+import type { Cart } from "@crystallize/schema/shop";
 
 type CartContextProps = {
     cart: Cart | null;
@@ -33,6 +34,8 @@ type CartProviderProps = {
     children: React.ReactNode;
 };
 
+
+
 export function CartProvider({ children }: CartProviderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [initialCart, setInitialCart] = useState<Cart | null>(null);
@@ -40,7 +43,7 @@ export function CartProvider({ children }: CartProviderProps) {
         updateCart,
         initialCart
     );
-    const [cart, setOptimisticCart] = useOptimistic(serverCart ?? initialCart);
+    const [cart, setOptimisticCart] = useOptimistic<Cart | null>(serverCart ?? initialCart);
     const [, startTransition] = useTransition();
 
     useEffect(() => {
@@ -53,14 +56,13 @@ export function CartProvider({ children }: CartProviderProps) {
     }, []);
 
     const onUpdateCart = (formData: FormData) => {
-        setOptimisticCart((prevCart: Cart | null) => {
+        setOptimisticCart((prevCart: any) => {
             const items = JSON.parse(
                 formData.get("items") as string
-            ) as CartItem[];
-
-            console.log(getNextCart({ ...prevCart, items }));
-
-            return getNextCart({ ...prevCart, items });
+            ) as CartItemInput[];
+            const newCart = computeGrossCartTotal({ ...prevCart, items });
+            console.log({ newCart });
+            return newCart;
         });
 
         handleCartAction(formData);

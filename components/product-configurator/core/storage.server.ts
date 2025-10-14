@@ -1,22 +1,32 @@
 import { cookies } from "next/headers";
 
-const getCartId = (isTemp?: boolean) => (isTemp ? "tempCartId" : "cartId");
+const createStorage = (key: string) => {
+    return {
+        getCartId: async () => {
+            const cookieStore = await cookies();
+            const value = cookieStore.get(key);
+            if (!value) {
+                return undefined;
+            }
+            return value.value;
+        },
+        setCartId: async (value: string) => {
+            const cookieStore = await cookies();
+            cookieStore.set(key, value);
+        },
+        delete: async () => {
+            const cookieStore = await cookies();
+            cookieStore.delete(key);
+        },
+    };
+}
 
 export const storage = {
-    getCartId: async (opt?: { isTemp?: boolean }) => {
+    temp: createStorage("tempCartId"),
+    real: createStorage("cartId"),
+    destroy: async () => {
         const cookieStore = await cookies();
-        const cartId = cookieStore.get(getCartId(opt?.isTemp));
-        if (!cartId) {
-            return undefined;
-        }
-        return cartId.value;
-    },
-    setCartId: async (cartId: string, opt?: { isTemp?: boolean }) => {
-        const cookieStore = await cookies();
-        cookieStore.set(getCartId(opt?.isTemp), cartId);
-    },
-    delete: async (opt?: { isTemp?: boolean }) => {
-        const cookieStore = await cookies();
-        cookieStore.delete(getCartId(opt?.isTemp));
-    },
+        cookieStore.delete("cartId");
+        cookieStore.delete("tempCartId");
+    }
 };

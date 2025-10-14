@@ -1,11 +1,11 @@
 import { crystallizeClient } from "@/core/crystallize-client.server";
 import type { ApiProduct } from "@/use-cases/contracts/product";
 import { productMapper } from "./product-mapper";
-import { language } from "./variables";
+import { config } from "../core/config";
 
 const query = `#graphql
-  query($path: String!) {
-    product: catalogue(path: $path, language: "en") {
+  query($path: String!, $language: String!) {
+    product: catalogue(path: $path, language: $language) {
     id
     name
     components {
@@ -128,6 +128,6 @@ const query = `#graphql
 export async function getProduct(path: string) {
     const { product } = await crystallizeClient.catalogueApi<{
         product: ApiProduct;
-    }>(query, { path, language });
+    }>(query, { path, language: config.language });
     return productMapper(product);
 }

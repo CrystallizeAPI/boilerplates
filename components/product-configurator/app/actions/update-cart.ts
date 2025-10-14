@@ -1,25 +1,22 @@
 "use server";
 
 import { hydrateCart } from "@/use-cases/hydrate-cart";
-import type { Cart, CartItem } from "@/use-cases/contracts/cart";
-
 import { storage } from "@/core/storage.server";
 
-export async function updateCart(initialSate: Cart | null, formData: FormData) {
+export async function updateCart(_: unknown, formData: FormData) {
     const type = formData.get("type") as string;
 
     if (type === "reset") {
-        await storage.delete();
-        await storage.delete({ isTemp: true });
+        await storage.destroy();
         return null;
     }
 
-    const prevCartId = await storage.getCartId();
-    const tempCartId = await storage.getCartId({ isTemp: true });
+    const prevCartId = await storage.real.getCartId();
+    const tempCartId = await storage.temp.getCartId();
     const cartId = prevCartId ?? tempCartId;
-    cartId === tempCartId && (await storage.delete({ isTemp: true }));
+    cartId === tempCartId && (await storage.temp.delete());
 
-    const itemsData = JSON.parse(formData.get("items") as string) as CartItem[];
+    const itemsData = JSON.parse(formData.get("items") as string) as { variant: { sku: string }; quantity?: number }[];
     const items = itemsData.map((item) => ({
         sku: item.variant.sku,
         quantity: item.quantity ?? 1,
@@ -27,9 +24,8 @@ export async function updateCart(initialSate: Cart | null, formData: FormData) {
 
     try {
         const cart = await hydrateCart({ id: cartId, items });
-        !!cart?.id && (await storage.setCartId(cart.id));
-
-        return cart as Cart;
+        !!cart?.id && (await storage.real.setCartId(cart.id));
+        return cart
     } catch (error) {
         console.error("Cart update failed:", error);
         return null;

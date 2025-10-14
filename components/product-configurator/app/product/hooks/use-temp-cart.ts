@@ -7,11 +7,12 @@ import {
     startTransition,
 } from "react";
 
-import { getTempCart } from "@/app/actions/get-temp-cart";
-import type { Cart, CartItem } from "@/use-cases/contracts/cart";
 import type { Option, Skus, Variant } from "@/use-cases/contracts/product";
-import { currency } from "@/use-cases/variables";
+import { config } from "@/core/config";
 import { useUrlState } from "@/utils/use-url-state";
+import { handleCartAction } from "@/app/actions/handle-cart";
+import { Cart } from "@crystallize/schema/shop";
+import { CartItemInput } from "@/use-cases/contracts/cart-items-input";
 
 type UseCurrentTotalProps = {
     currentVariant?: Variant;
@@ -23,8 +24,8 @@ export const useTempCart = ({
     options,
 }: UseCurrentTotalProps) => {
     const [skus] = useUrlState<Skus>();
-    const [serverCart, handleCart] = useActionState<Cart | null, FormData>(
-        getTempCart,
+    const [serverCart, handleCart] = useActionState<Partial<Cart> | null, FormData>(
+        handleCartAction,
         null
     );
 
@@ -32,19 +33,19 @@ export const useTempCart = ({
 
     useEffect(() => {
         const items = (Object.keys(skus) as Array<keyof Skus>).reduce<
-            CartItem[]
+            CartItemInput[]
         >((acc, key) => {
             key === "options"
                 ? skus.options?.length &&
-                  acc.push(
-                      ...skus.options
-                          .split(",")
-                          .map((sku) => ({ quantity: 1, variant: { sku } }))
-                  )
+                acc.push(
+                    ...skus.options
+                        .split(",")
+                        .map((sku) => ({ quantity: 1, variant: { sku } }))
+                )
                 : acc.push({
-                      quantity: 1,
-                      variant: { sku: skus[key] as string },
-                  });
+                    quantity: 1,
+                    variant: { sku: skus[key] as string },
+                });
 
             return acc;
         }, []);
@@ -64,10 +65,21 @@ export const useTempCart = ({
             return acc + (variant?.price.value ?? 0);
         }, 0);
 
+
         startTransition(() => {
             setOptimisticTotal((prev) => ({
                 ...prev,
-                total: { gross, currency },
+                total:
+
+                {
+                    gross,
+                    currency: config.currency,
+                    // in a real life scenario, you would also calculate net, taxAmount and discounts optimistically
+                    net: gross,
+                    taxAmount: 0,
+                    discounts: [],
+
+                },
             }));
 
             const form = new FormData();

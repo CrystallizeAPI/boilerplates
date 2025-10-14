@@ -1,0 +1,64 @@
+{
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "typescript.suggest.paths": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/node_modules": true,
+        "**/.contentlayer": true,
+        "**/build": true,
+        "**/dist": true,
+        "**/__generated__": true,
+        "**/.next": true,
+        "**/.turbo": true,
+        "**/.cache": true
+    },
+    "todo-tree.general.tags": ["@todo:", "@fixme:", "@bug:"],
+    "todo-tree.general.statusBar": "top three",
+    "todo-tree.tree.groupedByTag": true,
+    "todo-tree.general.statusBarClickBehaviour": "reveal",
+    "todo-tree.general.tagGroups": {
+        "TODOs": ["@todo:"],
+        "BUGs": ["@fixme:", "@bug:"]
+    },
+    "todo-tree.highlights.customHighlight": {
+        "TODOs": {
+            "icon": "flame",
+            "foreground": "#ff9900"
+        },
+        "BUGs": {
+            "icon": "bug",
+            "foreground": "#ff0000"
+        }
+    },
+    "files.associations": {
+        "**/web-app/**/*.css": "tailwindcss"
+    },
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#663e00",
+        "activityBar.background": "#663e00",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#000000",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#663e00",
+        "statusBar.background": "#331f00",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#663e00",
+        "statusBarItem.remoteBackground": "#331f00",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#331f00",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#331f0099",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#331f00",
+}
