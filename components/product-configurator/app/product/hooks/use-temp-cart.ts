@@ -24,10 +24,10 @@ export const useTempCart = ({
     options,
 }: UseCurrentTotalProps) => {
     const [skus] = useUrlState<Skus>();
-    const [serverCart, handleCart] = useActionState<Partial<Cart> | null, FormData>(
-        handleCartAction,
-        null
-    );
+    const [serverCart, handleCart] = useActionState<
+        Partial<Cart> | null,
+        FormData
+    >(handleCartAction, null);
 
     const [cart, setOptimisticTotal] = useOptimistic(serverCart);
 
@@ -37,15 +37,15 @@ export const useTempCart = ({
         >((acc, key) => {
             key === "options"
                 ? skus.options?.length &&
-                acc.push(
-                    ...skus.options
-                        .split(",")
-                        .map((sku) => ({ quantity: 1, variant: { sku } }))
-                )
+                  acc.push(
+                      ...skus.options
+                          .split(",")
+                          .map((sku) => ({ quantity: 1, variant: { sku } }))
+                  )
                 : acc.push({
-                    quantity: 1,
-                    variant: { sku: skus[key] as string },
-                });
+                      quantity: 1,
+                      variant: { sku: skus[key] as string },
+                  });
 
             return acc;
         }, []);
@@ -65,20 +65,16 @@ export const useTempCart = ({
             return acc + (variant?.price.value ?? 0);
         }, 0);
 
-
         startTransition(() => {
             setOptimisticTotal((prev) => ({
                 ...prev,
-                total:
-
-                {
+                total: {
                     gross,
                     currency: config.currency,
                     // in a real life scenario, you would also calculate net, taxAmount and discounts optimistically
                     net: gross,
                     taxAmount: 0,
                     discounts: [],
-
                 },
             }));
 
