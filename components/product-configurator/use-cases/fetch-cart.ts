@@ -1,8 +1,7 @@
 import { storage } from "@/core/storage.server";
 import { crystallizeClient } from "@/core/crystallize-client.server";
 import { cartHydrationQuery, hydrateCart } from "./hydrate-cart";
-import { Cart } from "@crystallize/schema/shop";
-import { jsonToGraphQLQuery } from "json-to-graphql-query";
+import { createCartManager } from "@crystallize/js-api-client";
 
 export async function fetchCart(id?: string) {
     if (!id) {
@@ -13,16 +12,8 @@ export async function fetchCart(id?: string) {
     }
 
     try {
-
-        const query = {
-            cart: {
-                __args: { id },
-                ...cartHydrationQuery,
-
-            }
-        }
-        const data = await crystallizeClient.shopCartApi<{ cart: Cart }>(jsonToGraphQLQuery({ query }));
-        return data.cart;
+        const { fetch } = createCartManager(crystallizeClient);
+        return await fetch(id, cartHydrationQuery);
     } catch (exception) {
         console.error(exception);
     }

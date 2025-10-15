@@ -11,8 +11,7 @@
         "prettier": "prettier --write ."
     },
     "dependencies": {
-        "@crystallize/js-api-client": "^5",
-        "@crystallize/node-service-api-request-handlers": "^5",
+        "@crystallize/js-api-client": "^5.2.0",
         "@crystallize/reactjs-components": "^5",
         "@crystallize/schema": "^5",
         "@google/model-viewer": "^4.1.0",
