@@ -1,14 +1,15 @@
 "use server";
 
 import { crystallizeClient } from "@/core/crystallize-client.server";
+import { storage } from "@/core/storage.server";
 import { CartItemInput } from "@/use-cases/contracts/cart-items-input";
-import { createOrderManager } from "@crystallize/js-api-client";
+import {
+    createOrderManager,
+    createCartManager,
+} from "@crystallize/js-api-client";
 import { RegisterOrderInput } from "@crystallize/schema/pim";
 
-export async function placeOrder(
-    _: unknown,
-    formData: FormData
-) {
+export async function placeOrder(_: unknown, formData: FormData) {
     const fullName = formData.get("name") as string;
     const [firstName, lastName] = fullName.split(" ");
     const email = formData.get("email")?.toString().toLowerCase() || "";
@@ -16,8 +17,10 @@ export async function placeOrder(
     const city = formData.get("city")?.toString() || "";
     const country = formData.get("country")?.toString() || "";
     const postalCode = formData.get("zip")?.toString() || "";
-    const items = JSON.parse(formData.get("items") as string) as CartItemInput[];
-    const customer: RegisterOrderInput['customer'] = {
+    const items = JSON.parse(
+        formData.get("items") as string
+    ) as CartItemInput[];
+    const customer: RegisterOrderInput["customer"] = {
         firstName,
         ...(lastName && { lastName }),
         type: "individual",
@@ -44,7 +47,7 @@ export async function placeOrder(
         meta: [{ key: "type", value: "Composable" }],
     }));
 
-    const cart: RegisterOrderInput['cart'] = [
+    const cart: RegisterOrderInput["cart"] = [
         {
             name: main.name || "Product",
             sku: main.variant.sku,
@@ -65,8 +68,13 @@ export async function placeOrder(
         ...(parts ?? []),
     ];
 
+    const cartId = (await storage.real.getCartId()) as string;
+    const cartManager = createCartManager(crystallizeClient);
+    await cartManager.place(cartId);
+
     const orderIntent = { cart, customer };
     const orderManger = createOrderManager(crystallizeClient);
     const confirmation = await orderManger.register(orderIntent);
+
     return confirmation.id;
 }
