@@ -61,7 +61,6 @@ export function CartProvider({ children }: CartProviderProps) {
                 formData.get("items") as string
             ) as CartItemInput[];
             const newCart = computeGrossCartTotal({ ...prevCart, items });
-            console.log({ newCart });
             return newCart;
         });
 
