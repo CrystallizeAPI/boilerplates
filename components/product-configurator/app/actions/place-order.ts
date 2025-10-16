@@ -74,7 +74,9 @@ export async function placeOrder(_: unknown, formData: FormData) {
 
     const orderIntent = { cart, customer };
     const orderManger = createOrderManager(crystallizeClient);
-    const confirmation = await orderManger.register(orderIntent);
+    const order = await orderManger.register(orderIntent);
 
-    return confirmation.id;
+    await cartManager.fulfill(cartId, order.id);
+
+    return order.id;
 }
