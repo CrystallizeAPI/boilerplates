@@ -7,11 +7,12 @@ module.exports = async function stripeToCrystallizeOrderModel({
   const { getClient } = require("./utils");
 
   const paymentIntent = await getClient().paymentIntents.retrieve(
-    paymentIntentId
+    paymentIntentId, {
+    expand: ['latest_charge']
+    }
   );
 
-  const { data } = paymentIntent.charges;
-  const charge = data[0];
+  const charge = paymentIntent.latest_charge;
 
   const customerName = charge.billing_details.name.split(" ");
   let email = charge.receipt_email;
